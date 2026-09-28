@@ -1,0 +1,159 @@
+{
+ "schema": "lenta-calendar-v1",
+ "as_of": "2026-09-28",
+ "purpose": "Фикстура тестов слоя индикаторов: выписка событий календаря книги (lenta-calendar-v1) — отчёты Ленты окнами, одно решение ЦБ, одна оферта, один отчёт аналога.",
+ "events": [
+  {
+   "id": "cbr.key_rate.2026-10-23",
+   "when": "2026-10-23",
+   "precision": "day",
+   "when_rule": "exact",
+   "title": "ЦБ: опорное заседание по ключевой ставке и новый среднесрочный прогноз",
+   "gives": [
+    "key_rate",
+    "cbr_forecast"
+   ],
+   "prior_for": "worlds_source.json",
+   "note": "фикстура: выписка календаря черновика книги 28.09.2026 (поля note/source сокращены)"
+  },
+  {
+   "id": "lenta.q3_2026",
+   "when": "2026-10-29",
+   "precision": "window",
+   "when_rule": "central",
+   "window": {
+    "from": "2026-10-26",
+    "to": "2026-11-03"
+   },
+   "title": "Лента: операционные и финансовые результаты 3 кв. и 9 мес. 2026 (пресс-релиз, датабук)",
+   "gives": [
+    "revenue",
+    "ebitda_margin_pre16",
+    "lfl_ticket",
+    "lfl_traffic",
+    "net_debt",
+    "selling_space",
+    "stores"
+   ],
+   "prior_for": null,
+   "note": "фикстура: выписка календаря черновика книги 28.09.2026 (поля note/source сокращены)"
+  },
+  {
+   "id": "x5.q3_2026",
+   "when": "2026-10-30",
+   "precision": "month",
+   "when_rule": "central",
+   "window": {
+    "from": "2026-10-01",
+    "to": "2026-10-31"
+   },
+   "title": "ИКС 5: операционные и финансовые результаты 3 кв. 2026",
+   "gives": [
+    "margin_yoy",
+    "lfl_ticket",
+    "lfl_traffic"
+   ],
+   "prior_for": null,
+   "note": "фикстура: выписка календаря черновика книги 28.09.2026 (поля note/source сокращены)"
+  },
+  {
+   "id": "lenta.q4_2026_ops",
+   "when": "2027-02-05",
+   "precision": "window",
+   "when_rule": "central",
+   "window": {
+    "from": "2027-02-03",
+    "to": "2027-02-12"
+   },
+   "title": "Лента: операционные результаты 4 кв. и 2026 года (выручка, LFL, площадь)",
+   "gives": [
+    "revenue",
+    "lfl_ticket",
+    "lfl_traffic",
+    "selling_space",
+    "stores"
+   ],
+   "prior_for": null,
+   "note": "фикстура: выписка календаря черновика книги 28.09.2026 (поля note/source сокращены)"
+  },
+  {
+   "id": "okey.bond_b1p8_put",
+   "when": "2027-02-09",
+   "precision": "day",
+   "when_rule": "exact",
+   "title": "Пут-оферта О'КЕЙ Б1Р8 (RU000A10CCN3): 3,0 млрд ₽ по 100 % номинала",
+   "gives": [
+    "refinancing",
+    "coupon_reset"
+   ],
+   "prior_for": "financing.rate_baskets[okey_bonds_put_2027]",
+   "note": "фикстура: выписка календаря черновика книги 28.09.2026 (поля note/source сокращены)"
+  },
+  {
+   "id": "lenta.fy2026",
+   "when": "2027-03-26",
+   "precision": "window",
+   "when_rule": "central",
+   "window": {
+    "from": "2027-03-24",
+    "to": "2027-03-29"
+   },
+   "title": "Лента: финансовые результаты 4 кв. и 2026 года (МСФО 12М, аудит; пресс-релиз и датабук)",
+   "gives": [
+    "revenue",
+    "ebitda_margin_pre16",
+    "net_interest",
+    "net_debt",
+    "capex",
+    "nwc",
+    "tax"
+   ],
+   "prior_for": null,
+   "note": "фикстура: выписка календаря черновика книги 28.09.2026 (поля note/source сокращены)"
+  },
+  {
+   "id": "lenta.q1_2027",
+   "when": "2027-04-29",
+   "precision": "window",
+   "when_rule": "central",
+   "window": {
+    "from": "2027-04-26",
+    "to": "2027-05-03"
+   },
+   "title": "Лента: операционные и финансовые результаты 1 кв. 2027",
+   "gives": [
+    "revenue",
+    "ebitda_margin_pre16",
+    "lfl_ticket",
+    "lfl_traffic",
+    "net_debt",
+    "selling_space",
+    "stores"
+   ],
+   "prior_for": null,
+   "note": "фикстура: выписка календаря черновика книги 28.09.2026 (поля note/source сокращены)"
+  },
+  {
+   "id": "lenta.h1_2027",
+   "when": "2027-07-30",
+   "precision": "window",
+   "when_rule": "central",
+   "window": {
+    "from": "2027-07-29",
+    "to": "2027-08-06"
+   },
+   "title": "Лента: результаты 2 кв. и 1П2027 (МСФО 6М, обзор; пресс-релиз и датабук)",
+   "gives": [
+    "revenue",
+    "ebitda_margin_pre16",
+    "net_interest",
+    "net_debt",
+    "capex",
+    "nwc",
+    "tax"
+   ],
+   "prior_for": null,
+   "note": "фикстура: выписка календаря черновика книги 28.09.2026 (поля note/source сокращены)"
+  }
+ ]
+}

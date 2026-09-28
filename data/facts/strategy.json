@@ -1,0 +1,111 @@
+{
+ "schema": "lenta-facts-strategy-v1",
+ "purpose": "Цели «Стратегии Группы Лента 2025–2028» — сверка пути модели (экран «Стратегия и гайденс», блок выпуска `strategy`). В ядро не входят: цели поставлены на периметре с будущими сделками (D3), модель их не содержит.",
+ "unit": "млрд ₽ (выручка); доли (маржа, capex); раз (ЧД/EBITDA); магазинов в год (открытия)",
+ "basis": "IAS 17 (до МСФО 16): «Финансовые показатели до применения IFRS-16» (с. 33)",
+ "source": {
+  "id": "STRATEGY_2028",
+  "path": "Lenta_strategy-presentation-2028.pdf",
+  "title": "Презентация «Стратегия „Группы Лента“ 2025–2028»",
+  "published": "2025-11-27",
+  "url": "https://www.lentagroup.ru/files/strategy/strategy-presentation-2028.pdf",
+  "sha256": "a06c175fd9ed1971fbc0a6dc020f44afc65d5171200076d6063ad76b44ad4530",
+  "sha256_note": "совпадает с MANIFEST первички (строка Lenta_strategy-presentation-2028.pdf); текстовый слой — с. 32–34"
+ },
+ "targets": [
+  {
+   "id": "revenue_2028",
+   "title": "Выручка 2028 года",
+   "kind": "level",
+   "years": [2028],
+   "value": 2200.0,
+   "unit": "bn",
+   "includes_ma": true,
+   "page": 33,
+   "quote": "Рост выручки с CAGR >20% до 2,2 трлн руб. … за счет органического роста преимущественно малых форматов и сделок M&A",
+   "note": "цель включает будущие сделки; модель сделок не содержит (D3) — только сверка"
+  },
+  {
+   "id": "margin_2025_2027",
+   "title": "Рентабельность EBITDA 2025–2027 годов",
+   "kind": "min",
+   "years": [2025, 2026, 2027],
+   "value": 0.07,
+   "unit": "share",
+   "includes_ma": true,
+   "page": 33,
+   "quote": "Лидерство по рентабельности … не ниже 7% в 2025-2027 годах"
+  },
+  {
+   "id": "margin_2028",
+   "title": "Рентабельность EBITDA 2028 года",
+   "kind": "min",
+   "years": [2028],
+   "value": 0.08,
+   "unit": "share",
+   "includes_ma": true,
+   "page": 33,
+   "quote": "EBITDA 8% в 2028"
+  },
+  {
+   "id": "nd_ebitda",
+   "title": "Чистый долг / EBITDA",
+   "kind": "range",
+   "years": [2025, 2026, 2027, 2028],
+   "low": 1.0,
+   "high": 1.5,
+   "high_with_ma": 2.0,
+   "unit": "times",
+   "includes_ma": true,
+   "page": 33,
+   "quote": "Поддержание комфортного уровня Net Debt/EBITDA в пределах 1,0-1,5х; при условии сделок M&A целевой коэффициент не более 2,0х"
+  },
+  {
+   "id": "capex_pct",
+   "title": "CapEx от выручки группы",
+   "kind": "max",
+   "years": [2025, 2026, 2027, 2028],
+   "value": 0.055,
+   "unit": "share",
+   "includes_ma": false,
+   "page": 33,
+   "quote": "CapEx от выручки Группы не более 5,5% без учета потенциальных M&A сделок при строгом контроле доходности всех проектов развития"
+  },
+  {
+   "id": "openings_conv",
+   "title": "Открытия магазинов у дома («Монетка»)",
+   "kind": "min",
+   "years": [2025, 2026, 2027, 2028],
+   "value": 1000,
+   "unit": "stores_per_year",
+   "segment": "conv",
+   "includes_ma": false,
+   "page": 32,
+   "quote": "Ускорить экспансию, эффективно открывая 1 000+ магазинов в год"
+  },
+  {
+   "id": "openings_droge",
+   "title": "Открытия дрогери («Улыбка радуги»)",
+   "kind": "min",
+   "years": [2025, 2026, 2027, 2028],
+   "value": 350,
+   "unit": "stores_per_year",
+   "segment": "droge",
+   "includes_ma": false,
+   "page": 32,
+   "quote": "Сохранить темпы развития, запуская 350+ магазинов в год"
+  },
+  {
+   "id": "openings_super",
+   "title": "Открытия супермаркетов («Супер Лента»)",
+   "kind": "min",
+   "years": [2025, 2026, 2027, 2028],
+   "value": 50,
+   "unit": "stores_per_year",
+   "segment": "super",
+   "includes_ma": false,
+   "page": 32,
+   "quote": "Ускорить развитие, ежегодно запуская 50+ магазинов"
+  }
+ ]
+}

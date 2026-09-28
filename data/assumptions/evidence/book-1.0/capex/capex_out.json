@@ -1,0 +1,1724 @@
+{
+ "meta": {
+  "sheet": "book-1.0/capex",
+  "date": "2026-09-28",
+  "basis": "IAS 17",
+  "prices": "2026"
+ },
+ "citations": [
+  {
+   "file": "Lenta_Q2-2026_Investor-Presentation_rus.pdf",
+   "page": 24,
+   "what": "структура capex 2025 (46,1 млрд) и квартальный capex 2кв25–2кв26",
+   "ok": true
+  },
+  {
+   "file": "ifrs_FY2025.pdf",
+   "page": 42,
+   "what": "прим. 7 МСФО 2025: ОС по классам, амортизация, выбытие",
+   "ok": true
+  },
+  {
+   "file": "ifrs_FY2025.pdf",
+   "page": 19,
+   "what": "учётные сроки ОС (здания до 30, машины 2–15, благоустройство 7)",
+   "ok": true
+  },
+  {
+   "file": "ifrs_FY2025.pdf",
+   "page": 56,
+   "what": "прим. 13 МСФО 2025: НМА",
+   "ok": true
+  },
+  {
+   "file": "ifrs_1H2026.pdf",
+   "page": 15,
+   "what": "прим. 4 МСФО 1П2026: ОС по классам, приобретение дочерних",
+   "ok": true
+  },
+  {
+   "file": "ifrs_1H2026.pdf",
+   "page": 16,
+   "what": "прим. 4: состав амортизации 1П2026",
+   "ok": true
+  },
+  {
+   "file": "ifrs_1H2026.pdf",
+   "page": 17,
+   "what": "прим. 5: ОС «О'КЕЙ» по справедливой стоимости",
+   "ok": true
+  },
+  {
+   "file": "ifrs_1H2026.pdf",
+   "page": 25,
+   "what": "прим. 10: НМА 1П2026",
+   "ok": true
+  },
+  {
+   "file": "ifrs_1H2026.pdf",
+   "page": 37,
+   "what": "прим. 31: договорные обязательства по капвложениям",
+   "ok": true
+  },
+  {
+   "file": "Lenta_Group_Q425_Financial_Results_ENG_vF.pdf",
+   "page": 5,
+   "what": "валовые открытия 4 кв. 2025",
+   "ok": true
+  },
+  {
+   "file": "Lenta_Group_Q126_Financial_Results_ENG_vF.pdf",
+   "page": 7,
+   "what": "валовые открытия 1 кв. 2026",
+   "ok": true
+  },
+  {
+   "file": "lenta_annual_report_2025_ru.pdf",
+   "page": 11,
+   "what": "ГО-2025: 1 200 собственных грузовиков",
+   "ok": true
+  },
+  {
+   "file": "lenta_annual_report_2025_ru.pdf",
+   "page": 17,
+   "what": "ГО-2025: 9 гипермаркетов (с «Молнией»), городской гипер 2,5 тыс. м²",
+   "ok": true
+  },
+  {
+   "file": "lenta_annual_report_2025_ru.pdf",
+   "page": 19,
+   "what": "ГО-2025: супермаркеты — 34 открытия и 71 реконструкция",
+   "ok": true
+  },
+  {
+   "file": "lenta_annual_report_2025_ru.pdf",
+   "page": 21,
+   "what": "ГО-2025: «Монетка» открыла более 1 000 магазинов",
+   "ok": true
+  },
+  {
+   "file": "lenta_annual_report_2025_ru.pdf",
+   "page": 22,
+   "what": "ГО-2025: «Улыбка радуги» 322 магазина (с учётом закрытий)",
+   "ok": true
+  },
+  {
+   "file": "Lenta_strategy-presentation-2028.pdf",
+   "page": 30,
+   "what": "стратегия-2028: ИТ-затраты (capex + opex) ≤ 1 % выручки",
+   "ok": true
+  },
+  {
+   "file": "Lenta_strategy-presentation-2028.pdf",
+   "page": 33,
+   "what": "стратегия-2028: capex ≤ 5,5 % выручки без M&A",
+   "ok": true
+  },
+  {
+   "file": "2026-06-02_gruppa-lenta-priobretaet-gipermarkety-o-key.txt",
+   "page": null,
+   "what": "релиз 02.06.2026: ребрендинг «О'КЕЙ» в «Гипер Ленту»",
+   "ok": true
+  },
+  {
+   "file": "2026-04-30_gruppa-lenta-obyavlyaet-o-roste-vyruchki-na-23-4-v-1-kvartale-2026-god.txt",
+   "page": null,
+   "what": "релиз 30.04.2026: ребрендинг «Дом Лента» завершён в 1 кв.",
+   "ok": true
+  }
+ ],
+ "history_half": {
+  "2014H1": {
+   "revenue": 85.8991,
+   "da": 1.6954,
+   "capex": 11.792,
+   "capex_ppe": 11.1244,
+   "capex_intang": 0.1658,
+   "capex_lease": 0.5018,
+   "proceeds": 0.0,
+   "disposal_loss": 0.0222,
+   "proceeds_net_of_gain": 0.0222,
+   "preopening": 0.2576,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 542.2772
+  },
+  "2014H2": {
+   "revenue": 108.0892,
+   "da": 1.9636,
+   "capex": 23.3231,
+   "capex_ppe": 22.4696,
+   "capex_intang": 0.2536,
+   "capex_lease": 0.5999,
+   "proceeds": 0.0044,
+   "disposal_loss": 0.0723,
+   "proceeds_net_of_gain": 0.0767,
+   "preopening": 0.4055,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 701.1502
+  },
+  "2015H1": {
+   "revenue": 114.8972,
+   "da": 2.682,
+   "capex": 11.7881,
+   "capex_ppe": 11.554,
+   "capex_intang": 0.2341,
+   "capex_lease": -0.0,
+   "proceeds": 0.0128,
+   "disposal_loss": 0.0106,
+   "proceeds_net_of_gain": 0.0233,
+   "preopening": 0.2163,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 751.4472
+  },
+  "2015H2": {
+   "revenue": 137.8659,
+   "da": 2.9893,
+   "capex": 19.6908,
+   "capex_ppe": 18.8808,
+   "capex_intang": 0.2522,
+   "capex_lease": 0.5578,
+   "proceeds": 0.0965,
+   "disposal_loss": 0.1087,
+   "proceeds_net_of_gain": 0.2052,
+   "preopening": 0.4243,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 882.3833
+  },
+  "2016H1": {
+   "revenue": 140.0866,
+   "da": 3.6001,
+   "capex": 16.3684,
+   "capex_ppe": 16.0996,
+   "capex_intang": 0.2264,
+   "capex_lease": 0.0424,
+   "proceeds": 0.2401,
+   "disposal_loss": 0.158,
+   "proceeds_net_of_gain": 0.3981,
+   "preopening": 0.1669,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 922.865
+  },
+  "2016H2": {
+   "revenue": 166.2655,
+   "da": 4.0945,
+   "capex": 27.0403,
+   "capex_ppe": 25.5894,
+   "capex_intang": 0.8623,
+   "capex_lease": 0.5886,
+   "proceeds": 0.0118,
+   "disposal_loss": 0.1054,
+   "proceeds_net_of_gain": 0.1172,
+   "preopening": 0.5765,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 1146.1483
+  },
+  "2017H1": {
+   "revenue": 163.5309,
+   "da": 4.7387,
+   "capex": 10.069,
+   "capex_ppe": 9.7565,
+   "capex_intang": 0.1928,
+   "capex_lease": 0.1197,
+   "proceeds": 0.0343,
+   "disposal_loss": 0.0625,
+   "proceeds_net_of_gain": 0.0967,
+   "preopening": 0.1825,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 1173.416
+  },
+  "2017H2": {
+   "revenue": 201.6467,
+   "da": 4.9528,
+   "capex": 17.5316,
+   "capex_ppe": 17.0047,
+   "capex_intang": 0.1845,
+   "capex_lease": 0.3424,
+   "proceeds": 0.173,
+   "disposal_loss": -0.041,
+   "proceeds_net_of_gain": 0.132,
+   "preopening": 0.8127,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 1382.111
+  },
+  "2018H1": {
+   "revenue": 193.2202,
+   "da": 6.0851,
+   "capex": 10.7973,
+   "capex_ppe": 10.4638,
+   "capex_intang": 0.1836,
+   "capex_lease": 0.15,
+   "proceeds": 0.0019,
+   "disposal_loss": 0.0654,
+   "proceeds_net_of_gain": 0.0674,
+   "preopening": 0.1797,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 1403.145
+  },
+  "2018H2": {
+   "revenue": 220.342,
+   "da": 5.8924,
+   "capex": 11.5241,
+   "capex_ppe": 10.9475,
+   "capex_intang": 0.4589,
+   "capex_lease": 0.1176,
+   "proceeds": 0.1751,
+   "disposal_loss": -0.0389,
+   "proceeds_net_of_gain": 0.1362,
+   "preopening": -0.1797,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 1467.482
+  },
+  "2019H1": {
+   "revenue": 199.2109,
+   "da": 7.3878,
+   "capex": 5.8226,
+   "capex_ppe": 5.5808,
+   "capex_intang": 0.2418,
+   "capex_lease": -0.0,
+   "proceeds": 0.0083,
+   "disposal_loss": 0.2884,
+   "proceeds_net_of_gain": 0.2967,
+   "preopening": -0.0,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 1472.9373
+  },
+  "2019H2": {
+   "revenue": 218.2891,
+   "da": 7.3203,
+   "capex": 8.2624,
+   "capex_ppe": 7.6174,
+   "capex_intang": 0.645,
+   "capex_lease": -0.0,
+   "proceeds": 0.0687,
+   "disposal_loss": 0.1342,
+   "proceeds_net_of_gain": 0.2029,
+   "preopening": -0.0,
+   "net_new_area_k": null,
+   "net_new_area_fmt_k": null,
+   "area_end_k": 1489.497
+  },
+  "2020H1": {
+   "revenue": 216.9751,
+   "da": 7.3763,
+   "capex": 3.5326,
+   "capex_ppe": 3.169,
+   "capex_intang": 0.3636,
+   "capex_lease": -0.0,
+   "proceeds": 0.0143,
+   "disposal_loss": 0.0421,
+   "proceeds_net_of_gain": 0.0564,
+   "preopening": -0.0,
+   "net_new_area_k": -7.162,
+   "net_new_area_fmt_k": {
+    "hyper": -7.641,
+    "super": 0.479,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 1482.067
+  },
+  "2020H2": {
+   "revenue": 228.5687,
+   "da": 7.3482,
+   "capex": 4.1148,
+   "capex_ppe": 3.7004,
+   "capex_intang": 0.4144,
+   "capex_lease": -0.0,
+   "proceeds": 0.224,
+   "disposal_loss": 0.1178,
+   "proceeds_net_of_gain": 0.3418,
+   "preopening": -0.0,
+   "net_new_area_k": 36.531,
+   "net_new_area_fmt_k": {
+    "hyper": 29.86,
+    "super": 6.671,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 1518.598
+  },
+  "2021H1": {
+   "revenue": 218.0875,
+   "da": 7.6159,
+   "capex": 4.992,
+   "capex_ppe": 4.5848,
+   "capex_intang": 0.4072,
+   "capex_lease": 0.0,
+   "proceeds": 0.125,
+   "disposal_loss": 0.0352,
+   "proceeds_net_of_gain": 0.1602,
+   "preopening": -0.0,
+   "net_new_area_k": 10.577,
+   "net_new_area_fmt_k": {
+    "hyper": 5.728,
+    "super": 4.849,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 1529.175
+  },
+  "2021H2": {
+   "revenue": 265.5534,
+   "da": 8.4415,
+   "capex": 4.384,
+   "capex_ppe": 3.8046,
+   "capex_intang": 0.5794,
+   "capex_lease": -0.0,
+   "proceeds": 0.0199,
+   "disposal_loss": 0.2248,
+   "proceeds_net_of_gain": 0.2447,
+   "preopening": -0.0,
+   "net_new_area_k": 225.8082,
+   "net_new_area_fmt_k": {
+    "hyper": 4.052,
+    "super": 221.7565,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 1754.9832
+  },
+  "2022H1": {
+   "revenue": 262.4588,
+   "da": 8.8167,
+   "capex": 7.1518,
+   "capex_ppe": 6.5745,
+   "capex_intang": 0.5773,
+   "capex_lease": -0.0,
+   "proceeds": 0.1091,
+   "disposal_loss": -0.0303,
+   "proceeds_net_of_gain": 0.0789,
+   "preopening": -0.0,
+   "net_new_area_k": 23.719,
+   "net_new_area_fmt_k": {
+    "hyper": 0.0,
+    "super": 23.719,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 1778.7022
+  },
+  "2022H2": {
+   "revenue": 274.9419,
+   "da": 9.4176,
+   "capex": 3.7049,
+   "capex_ppe": 2.7398,
+   "capex_intang": 0.9652,
+   "capex_lease": -0.0,
+   "proceeds": 0.5054,
+   "disposal_loss": 0.1529,
+   "proceeds_net_of_gain": 0.6583,
+   "preopening": -0.0,
+   "net_new_area_k": 9.5139,
+   "net_new_area_fmt_k": {
+    "hyper": 5.252,
+    "super": 4.261909999999999,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 1788.2161
+  },
+  "2023H1": {
+   "revenue": 257.1529,
+   "da": 8.5897,
+   "capex": 3.9328,
+   "capex_ppe": 2.6466,
+   "capex_intang": 1.2863,
+   "capex_lease": -0.0,
+   "proceeds": 0.6582,
+   "disposal_loss": -0.0112,
+   "proceeds_net_of_gain": 0.647,
+   "preopening": -0.0,
+   "net_new_area_k": -20.0213,
+   "net_new_area_fmt_k": {
+    "hyper": 5.335,
+    "super": -25.356309999999997,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 1768.1948
+  },
+  "2023H2": {
+   "revenue": 358.7702,
+   "da": 11.0922,
+   "capex": 7.1617,
+   "capex_ppe": 5.2635,
+   "capex_intang": 1.8982,
+   "capex_lease": -0.0,
+   "proceeds": 1.0406,
+   "disposal_loss": -0.3246,
+   "proceeds_net_of_gain": 0.716,
+   "preopening": -0.0,
+   "net_new_area_k": 542.8185,
+   "net_new_area_fmt_k": {
+    "hyper": -7.316,
+    "super": -58.6397,
+    "conv": 608.7742099999991,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 2289.5592
+  },
+  "2024H1": {
+   "revenue": 413.602,
+   "da": 11.5125,
+   "capex": 11.3124,
+   "capex_ppe": 9.4829,
+   "capex_intang": 1.8295,
+   "capex_lease": -0.0,
+   "proceeds": 0.409,
+   "disposal_loss": -0.0722,
+   "proceeds_net_of_gain": 0.3368,
+   "preopening": -0.0,
+   "net_new_area_k": 69.59,
+   "net_new_area_fmt_k": {
+    "hyper": 4.57916087100003,
+    "super": -5.526241355999978,
+    "conv": 70.53712537700001,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 2357.8536
+  },
+  "2024H2": {
+   "revenue": 474.7048,
+   "da": 12.1463,
+   "capex": 19.2269,
+   "capex_ppe": 16.9612,
+   "capex_intang": 2.3657,
+   "capex_lease": -0.1,
+   "proceeds": 0.6307,
+   "disposal_loss": -0.2659,
+   "proceeds_net_of_gain": 0.3648,
+   "preopening": -0.0,
+   "net_new_area_k": 252.3695,
+   "net_new_area_fmt_k": {
+    "hyper": -33.04220548899895,
+    "super": -4.929776966000034,
+    "conv": 69.056450000001,
+    "droge": 221.285,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0
+   },
+   "area_end_k": 2610.2229
+  },
+  "2025H1": {
+   "revenue": 513.9333,
+   "da": 12.5857,
+   "capex": 19.6369,
+   "capex_ppe": 16.6625,
+   "capex_intang": 2.9744,
+   "capex_lease": -0.0,
+   "proceeds": 0.3226,
+   "disposal_loss": -0.0482,
+   "proceeds_net_of_gain": 0.2744,
+   "preopening": -0.0,
+   "net_new_area_k": 179.6792,
+   "net_new_area_fmt_k": {
+    "hyper": 9.897800739,
+    "super": 36.335828261,
+    "conv": 114.11117,
+    "droge": 17.631,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 1.703418964
+   },
+   "area_end_k": 2787.0425
+  },
+  "2025H2": {
+   "revenue": 589.7294,
+   "da": 13.6973,
+   "capex": 26.6214,
+   "capex_ppe": 23.3758,
+   "capex_intang": 3.2456,
+   "capex_lease": -0.0,
+   "proceeds": 0.5124,
+   "disposal_loss": -0.1509,
+   "proceeds_net_of_gain": 0.3616,
+   "preopening": -0.0,
+   "net_new_area_k": 167.7565,
+   "net_new_area_fmt_k": {
+    "hyper": 4.682469041,
+    "super": 13.832020392999999,
+    "conv": 118.22739999999999,
+    "droge": 23.993,
+    "remi": 1.699,
+    "diy": 0.0,
+    "other": 5.3226
+   },
+   "area_end_k": 3043.3181
+  },
+  "2026H1": {
+   "revenue": 648.4881,
+   "da": 15.7949,
+   "capex": 22.4816,
+   "capex_ppe": 18.6578,
+   "capex_intang": 3.8238,
+   "capex_lease": -0.0,
+   "proceeds": 0.1764,
+   "disposal_loss": -0.0637,
+   "proceeds_net_of_gain": 0.1127,
+   "preopening": -0.0,
+   "net_new_area_k": 862.3956,
+   "net_new_area_fmt_k": {
+    "hyper": 458.12460063,
+    "super": 14.1838,
+    "conv": 108.00914999999999,
+    "droge": 6.856,
+    "remi": 0.0,
+    "diy": 270.5754,
+    "other": 4.6466
+   },
+   "area_end_k": 3932.3829
+  }
+ },
+ "history_year": {
+  "2014": {
+   "revenue": 193.9882,
+   "da": 3.659,
+   "capex": 35.1151,
+   "proceeds": 0.0044,
+   "disposal_loss": 0.0945,
+   "proceeds_net_of_gain": 0.099,
+   "preopening": 0.6631,
+   "share_h2_capex": 0.6642,
+   "share_h1_rev": 0.4428
+  },
+  "2015": {
+   "revenue": 252.7631,
+   "da": 5.6712,
+   "capex": 31.4789,
+   "proceeds": 0.1093,
+   "disposal_loss": 0.1193,
+   "proceeds_net_of_gain": 0.2286,
+   "preopening": 0.6406,
+   "share_h2_capex": 0.6255,
+   "share_h1_rev": 0.4546
+  },
+  "2016": {
+   "revenue": 306.3521,
+   "da": 7.6946,
+   "capex": 43.4087,
+   "proceeds": 0.2519,
+   "disposal_loss": 0.2633,
+   "proceeds_net_of_gain": 0.5153,
+   "preopening": 0.7433,
+   "share_h2_capex": 0.6229,
+   "share_h1_rev": 0.4573
+  },
+  "2017": {
+   "revenue": 365.1776,
+   "da": 9.6914,
+   "capex": 27.6005,
+   "proceeds": 0.2073,
+   "disposal_loss": 0.0214,
+   "proceeds_net_of_gain": 0.2288,
+   "preopening": 0.9952,
+   "share_h2_capex": 0.6352,
+   "share_h1_rev": 0.4478
+  },
+  "2018": {
+   "revenue": 413.5622,
+   "da": 11.9775,
+   "capex": 22.3214,
+   "proceeds": 0.1771,
+   "disposal_loss": 0.0265,
+   "proceeds_net_of_gain": 0.2036,
+   "preopening": 0.0,
+   "share_h2_capex": 0.5163,
+   "share_h1_rev": 0.4672
+  },
+  "2019": {
+   "revenue": 417.5,
+   "da": 14.708,
+   "capex": 14.0851,
+   "proceeds": 0.077,
+   "disposal_loss": 0.4227,
+   "proceeds_net_of_gain": 0.4996,
+   "preopening": -0.0,
+   "share_h2_capex": 0.5866,
+   "share_h1_rev": 0.4772
+  },
+  "2020": {
+   "revenue": 445.5438,
+   "da": 14.7244,
+   "capex": 7.6474,
+   "proceeds": 0.2383,
+   "disposal_loss": 0.1599,
+   "proceeds_net_of_gain": 0.3982,
+   "preopening": -0.0,
+   "share_h2_capex": 0.5381,
+   "share_h1_rev": 0.487
+  },
+  "2021": {
+   "revenue": 483.6409,
+   "da": 16.0574,
+   "capex": 9.376,
+   "proceeds": 0.1449,
+   "disposal_loss": 0.26,
+   "proceeds_net_of_gain": 0.4049,
+   "preopening": -0.0,
+   "share_h2_capex": 0.4676,
+   "share_h1_rev": 0.4509
+  },
+  "2022": {
+   "revenue": 537.4007,
+   "da": 18.2343,
+   "capex": 10.8567,
+   "proceeds": 0.6145,
+   "disposal_loss": 0.1227,
+   "proceeds_net_of_gain": 0.7371,
+   "preopening": -0.0,
+   "share_h2_capex": 0.3413,
+   "share_h1_rev": 0.4884
+  },
+  "2023": {
+   "revenue": 615.9231,
+   "da": 19.682,
+   "capex": 11.0946,
+   "proceeds": 1.6988,
+   "disposal_loss": -0.3358,
+   "proceeds_net_of_gain": 1.363,
+   "preopening": -0.0,
+   "share_h2_capex": 0.6455,
+   "share_h1_rev": 0.4175
+  },
+  "2024": {
+   "revenue": 888.3068,
+   "da": 23.6588,
+   "capex": 30.5393,
+   "proceeds": 1.0398,
+   "disposal_loss": -0.3382,
+   "proceeds_net_of_gain": 0.7016,
+   "preopening": -0.0,
+   "share_h2_capex": 0.6296,
+   "share_h1_rev": 0.4656
+  },
+  "2025": {
+   "revenue": 1103.6627,
+   "da": 26.283,
+   "capex": 46.2583,
+   "proceeds": 0.835,
+   "disposal_loss": -0.1991,
+   "proceeds_net_of_gain": 0.6359,
+   "preopening": -0.0,
+   "share_h2_capex": 0.5755,
+   "share_h1_rev": 0.4657
+  }
+ },
+ "seasonality": {
+  "sample": [
+   2014,
+   2015,
+   2016,
+   2017,
+   2018,
+   2019,
+   2020,
+   2023,
+   2024,
+   2025
+  ],
+  "excluded": [
+   2021,
+   2022
+  ],
+  "m1": 0.86,
+  "m2": 1.11,
+  "m1_sd": 0.0819,
+  "m2_sd": 0.0671,
+  "s1_2027_proxy": 0.4656,
+  "k": 1.00644,
+  "m1_norm": 0.8655,
+  "m2_norm": 1.1171,
+  "by_year": {
+   "2014": {
+    "ratio": 1.9779,
+    "share2": 0.6642,
+    "m1": 0.7584,
+    "m2": 1.192,
+    "s1": 0.4428
+   },
+   "2015": {
+    "ratio": 1.6704,
+    "share2": 0.6255,
+    "m1": 0.8238,
+    "m2": 1.1468,
+    "s1": 0.4546
+   },
+   "2016": {
+    "ratio": 1.652,
+    "share2": 0.6229,
+    "m1": 0.8246,
+    "m2": 1.1478,
+    "s1": 0.4573
+   },
+   "2017": {
+    "ratio": 1.7411,
+    "share2": 0.6352,
+    "m1": 0.8147,
+    "m2": 1.1503,
+    "s1": 0.4478
+   },
+   "2018": {
+    "ratio": 1.0673,
+    "share2": 0.5163,
+    "m1": 1.0353,
+    "m2": 0.969,
+    "s1": 0.4672
+   },
+   "2019": {
+    "ratio": 1.419,
+    "share2": 0.5866,
+    "m1": 0.8664,
+    "m2": 1.1219,
+    "s1": 0.4772
+   },
+   "2020": {
+    "ratio": 1.1648,
+    "share2": 0.5381,
+    "m1": 0.9485,
+    "m2": 1.0488,
+    "s1": 0.487
+   },
+   "2021": {
+    "ratio": 0.8782,
+    "share2": 0.4676,
+    "m1": 1.1807,
+    "m2": 0.8516,
+    "s1": 0.4509
+   },
+   "2022": {
+    "ratio": 0.518,
+    "share2": 0.3413,
+    "m1": 1.3488,
+    "m2": 0.667,
+    "s1": 0.4884
+   },
+   "2023": {
+    "ratio": 1.821,
+    "share2": 0.6455,
+    "m1": 0.849,
+    "m2": 1.1082,
+    "s1": 0.4175
+   },
+   "2024": {
+    "ratio": 1.6996,
+    "share2": 0.6296,
+    "m1": 0.7956,
+    "m2": 1.1781,
+    "s1": 0.4656
+   },
+   "2025": {
+    "ratio": 1.3557,
+    "share2": 0.5755,
+    "m1": 0.9116,
+    "m2": 1.077,
+    "s1": 0.4657
+   }
+  }
+ },
+ "structure_2025": {
+  "openings": 22.451,
+  "reconstructions": 5.624,
+  "maint_operation": 5.117,
+  "it": 5.117,
+  "logistics": 3.504,
+  "other": 4.287
+ },
+ "network_crosscheck_k": 70.7284,
+ "owned_hyper_era": {
+  "2014": {
+   "capex": 35.115145999999996,
+   "net_new_k": 195.483,
+   "per_m2": 179.63273532736858,
+   "per_m2_2026": 404.69592291181647
+  },
+  "2015": {
+   "capex": 31.478890101694915,
+   "net_new_k": 181.23310000000004,
+   "per_m2": 173.69283040291708,
+   "per_m2_2026": 348.9750864077203
+  },
+  "2016": {
+   "capex": 43.408691000000005,
+   "net_new_k": 221.265,
+   "per_m2": 196.1841728244413,
+   "per_m2_2026": 361.3526118193453
+  },
+  "2017": {
+   "capex": 27.600534,
+   "net_new_k": 235.9626800000001,
+   "per_m2": 116.96991236071734,
+   "per_m2_2026": 207.2802859154932
+  }
+ },
+ "openings": {
+  "open_2025_bn": 22.451,
+  "area_2025_k": {
+   "conv": 234.0,
+   "droge": 52.0,
+   "super": 23.8,
+   "hyper": 10.0,
+   "vingarazh": 7.2
+  },
+  "conv_cost_2025": 68.25,
+  "conv_cost_2025_range": [
+   58.565,
+   76.757
+  ],
+  "per_m2_2025": {
+   "conv": 68.24958200334397,
+   "droge": 59.71838425292598,
+   "super": 85.31197750417996,
+   "hyper": 85.31197750417996,
+   "vingarazh": 68.24958200334397
+  },
+  "per_m2_2026": {
+   "conv": 72.35820683994528,
+   "droge": 63.31343098495213,
+   "super": 90.4477585499316,
+   "hyper": 90.4477585499316,
+   "vingarazh": 72.35820683994528
+  },
+  "growth_capex_per_m2": {
+   "hyper": 0.09,
+   "okey": 0.09,
+   "super": 0.09,
+   "conv": 0.072,
+   "droge": 0.063,
+   "remi": 0.09,
+   "diy": 0.045
+  },
+  "check_1h26": {
+   "openings_bn": 10.795,
+   "capex_bn": 22.482,
+   "non_open_pct_rev": 0.01802
+  },
+  "check_2024": {
+   "openings_bn": 11.042,
+   "non_open_pct_rev": 0.02195
+  }
+ },
+ "stationary": {
+  "low": {
+   "items": {
+    "reconstruction": 7.527,
+    "maint_operation": 6.213,
+    "fleet": 1.2,
+    "dc_equipment": 0.785,
+    "dc_buildings": 0.17,
+    "it": 4.784,
+    "other": 1.452
+   },
+   "by_format": {
+    "hyper": 1.662,
+    "okey": 0.579,
+    "super": 0.988,
+    "conv": 3.219,
+    "droge": 0.62,
+    "remi": 0.338,
+    "diy": 0.121
+   },
+   "total_bn": 22.13,
+   "pct": 0.0148,
+   "phys_share": 0.664
+  },
+  "base": {
+   "items": {
+    "reconstruction": 11.103,
+    "maint_operation": 7.309,
+    "fleet": 1.8,
+    "dc_equipment": 0.981,
+    "dc_buildings": 0.242,
+    "it": 6.28,
+    "other": 2.904
+   },
+   "by_format": {
+    "hyper": 2.549,
+    "okey": 0.888,
+    "super": 1.446,
+    "conv": 4.675,
+    "droge": 0.845,
+    "remi": 0.492,
+    "diy": 0.21
+   },
+   "total_bn": 30.619,
+   "pct": 0.02048,
+   "phys_share": 0.6413
+  },
+  "high": {
+   "items": {
+    "reconstruction": 15.124,
+    "maint_operation": 8.771,
+    "fleet": 2.4,
+    "dc_equipment": 1.177,
+    "dc_buildings": 0.363,
+    "it": 7.476,
+    "other": 4.356
+   },
+   "by_format": {
+    "hyper": 3.499,
+    "okey": 1.219,
+    "super": 1.871,
+    "conv": 6.409,
+    "droge": 1.175,
+    "remi": 0.674,
+    "diy": 0.277
+   },
+   "total_bn": 39.666,
+   "pct": 0.02653,
+   "phys_share": 0.6412
+  }
+ },
+ "bottom_up_inputs": {
+  "area_k": {
+   "hyper": 1372.007,
+   "okey": 478.0,
+   "super": 297.4728,
+   "conv": 1136.6439599999999,
+   "droge": 270.534,
+   "remi": 107.15,
+   "diy": 270.57514000000003
+  },
+  "rev_2026e_pf": 1495.13,
+  "rev_1h26_pf": 705.248,
+  "m2h": 1.12,
+  "redesign_cost_k_per_m2": {
+   "conv": 51.259121487853804,
+   "droge": 38.49922981513287,
+   "super": 57.168210211347535,
+   "remi": 57.168210211347535,
+   "hyper": 30.0,
+   "okey": 30.0,
+   "diy": 15.0
+  },
+  "levels": {
+   "low": {
+    "cost": 0.85,
+    "cycle": {
+     "hyper": 16,
+     "okey": 16,
+     "super": 12,
+     "conv": 12.5,
+     "droge": 10,
+     "remi": 12.5,
+     "diy": 20
+    },
+    "mo": 0.85,
+    "it": 0.0032,
+    "other_share": 0.25,
+    "fleet_cycle": 10,
+    "dc_eq_cycle": 15,
+    "dc_bld": 0.007,
+    "fleet_cost": 10.0
+   },
+   "base": {
+    "cost": 1.0,
+    "cycle": {
+     "hyper": 13,
+     "okey": 13,
+     "super": 10,
+     "conv": 10.5,
+     "droge": 9,
+     "remi": 10.5,
+     "diy": 15
+    },
+    "mo": 1.0,
+    "it": 0.0042,
+    "other_share": 0.5,
+    "fleet_cycle": 8,
+    "dc_eq_cycle": 12,
+    "dc_bld": 0.01,
+    "fleet_cost": 12.0
+   },
+   "high": {
+    "cost": 1.0,
+    "cycle": {
+     "hyper": 10,
+     "okey": 10,
+     "super": 8,
+     "conv": 8,
+     "droge": 7,
+     "remi": 8,
+     "diy": 12
+    },
+    "mo": 1.2,
+    "it": 0.005,
+    "other_share": 0.75,
+    "fleet_cycle": 7,
+    "dc_eq_cycle": 10,
+    "dc_bld": 0.015,
+    "fleet_cost": 14.0
+   }
+  },
+  "closures": {
+   "hyper": 0.015,
+   "okey": 0.015,
+   "super": 0.015,
+   "conv": 0.015,
+   "droge": 0.03,
+   "remi": 0.015,
+   "diy": 0.015
+  },
+  "equip_weights": {
+   "hyper": 1.0,
+   "okey": 1.0,
+   "super": 1.5,
+   "conv": 1.5,
+   "droge": 1.0,
+   "remi": 1.2,
+   "diy": 0.5
+  },
+  "mo_unit_k_per_wm2": 1.6115,
+  "dc_all_k": 784.5793099939455,
+  "dc_own_k": 440.30154999999996,
+  "trucks": 1200
+ },
+ "path": {
+  "low": {
+   "2026": {
+    "pct": 0.01201,
+    "total_bn": 17.96,
+    "recon_bn": 4.011,
+    "logistics_bn": 1.5
+   },
+   "2027": {
+    "pct": 0.01246,
+    "total_bn": 18.624,
+    "recon_bn": 4.511,
+    "logistics_bn": 1.664
+   },
+   "2028": {
+    "pct": 0.01289,
+    "total_bn": 19.27,
+    "recon_bn": 4.994,
+    "logistics_bn": 1.827
+   },
+   "2029": {
+    "pct": 0.01346,
+    "total_bn": 20.128,
+    "recon_bn": 5.689,
+    "logistics_bn": 1.991
+   },
+   "2030": {
+    "pct": 0.0142,
+    "total_bn": 21.236,
+    "recon_bn": 6.633,
+    "logistics_bn": 2.154
+   },
+   "2031": {
+    "pct": 0.01431,
+    "total_bn": 21.391,
+    "recon_bn": 6.787,
+    "logistics_bn": 2.154
+   },
+   "2032": {
+    "pct": 0.01472,
+    "total_bn": 22.007,
+    "recon_bn": 7.404,
+    "logistics_bn": 2.154
+   },
+   "2033": {
+    "pct": 0.0147,
+    "total_bn": 21.976,
+    "recon_bn": 7.373,
+    "logistics_bn": 2.154
+   },
+   "2034": {
+    "pct": 0.01566,
+    "total_bn": 23.413,
+    "recon_bn": 8.809,
+    "logistics_bn": 2.154
+   },
+   "2035": {
+    "pct": 0.01549,
+    "total_bn": 23.162,
+    "recon_bn": 8.559,
+    "logistics_bn": 2.154
+   },
+   "2036": {
+    "pct": 0.0148,
+    "total_bn": 22.13,
+    "recon_bn": 7.527,
+    "logistics_bn": 2.154
+   }
+  },
+  "base": {
+   "2026": {
+    "pct": 0.01749,
+    "total_bn": 26.143,
+    "recon_bn": 8.151,
+    "logistics_bn": 1.5
+   },
+   "2027": {
+    "pct": 0.0182,
+    "total_bn": 27.206,
+    "recon_bn": 8.833,
+    "logistics_bn": 1.881
+   },
+   "2028": {
+    "pct": 0.0189,
+    "total_bn": 28.264,
+    "recon_bn": 9.509,
+    "logistics_bn": 2.261
+   },
+   "2029": {
+    "pct": 0.01901,
+    "total_bn": 28.424,
+    "recon_bn": 9.29,
+    "logistics_bn": 2.642
+   },
+   "2030": {
+    "pct": 0.0195,
+    "total_bn": 29.152,
+    "recon_bn": 9.637,
+    "logistics_bn": 3.023
+   },
+   "2031": {
+    "pct": 0.0191,
+    "total_bn": 28.562,
+    "recon_bn": 9.047,
+    "logistics_bn": 3.023
+   },
+   "2032": {
+    "pct": 0.02041,
+    "total_bn": 30.52,
+    "recon_bn": 11.004,
+    "logistics_bn": 3.023
+   },
+   "2033": {
+    "pct": 0.02007,
+    "total_bn": 30.001,
+    "recon_bn": 10.486,
+    "logistics_bn": 3.023
+   },
+   "2034": {
+    "pct": 0.02183,
+    "total_bn": 32.636,
+    "recon_bn": 13.12,
+    "logistics_bn": 3.023
+   },
+   "2035": {
+    "pct": 0.02126,
+    "total_bn": 31.782,
+    "recon_bn": 12.267,
+    "logistics_bn": 3.023
+   },
+   "2036": {
+    "pct": 0.02048,
+    "total_bn": 30.619,
+    "recon_bn": 11.103,
+    "logistics_bn": 3.023
+   }
+  },
+  "high": {
+   "2026": {
+    "pct": 0.02413,
+    "total_bn": 36.075,
+    "recon_bn": 13.972,
+    "logistics_bn": 1.5
+   },
+   "2027": {
+    "pct": 0.02464,
+    "total_bn": 36.835,
+    "recon_bn": 14.123,
+    "logistics_bn": 2.11
+   },
+   "2028": {
+    "pct": 0.02497,
+    "total_bn": 37.328,
+    "recon_bn": 14.005,
+    "logistics_bn": 2.72
+   },
+   "2029": {
+    "pct": 0.0257,
+    "total_bn": 38.42,
+    "recon_bn": 14.487,
+    "logistics_bn": 3.33
+   },
+   "2030": {
+    "pct": 0.02508,
+    "total_bn": 37.503,
+    "recon_bn": 12.96,
+    "logistics_bn": 3.94
+   },
+   "2031": {
+    "pct": 0.02674,
+    "total_bn": 39.974,
+    "recon_bn": 15.431,
+    "logistics_bn": 3.94
+   },
+   "2032": {
+    "pct": 0.02755,
+    "total_bn": 41.189,
+    "recon_bn": 16.646,
+    "logistics_bn": 3.94
+   },
+   "2033": {
+    "pct": 0.02778,
+    "total_bn": 41.531,
+    "recon_bn": 16.989,
+    "logistics_bn": 3.94
+   },
+   "2034": {
+    "pct": 0.02803,
+    "total_bn": 41.902,
+    "recon_bn": 17.359,
+    "logistics_bn": 3.94
+   },
+   "2035": {
+    "pct": 0.02721,
+    "total_bn": 40.686,
+    "recon_bn": 16.144,
+    "logistics_bn": 3.94
+   },
+   "2036": {
+    "pct": 0.02653,
+    "total_bn": 39.666,
+    "recon_bn": 15.124,
+    "logistics_bn": 3.94
+   }
+  }
+ },
+ "maintenance_pct": {
+  "low": {
+   "2026H2": 0.0133,
+   "2027H1": 0.0108,
+   "2027H2": 0.0139,
+   "2027": 0.0125,
+   "2028": 0.0129,
+   "2029": 0.0135,
+   "2030": 0.0142,
+   "2031": 0.0143,
+   "2032": 0.0147,
+   "2033": 0.0147,
+   "2034": 0.0157,
+   "2035": 0.0155,
+   "2036": 0.0148,
+   "LT": 0.0148
+  },
+  "base": {
+   "2026H2": 0.0194,
+   "2027H1": 0.0157,
+   "2027H2": 0.0203,
+   "2027": 0.0182,
+   "2028": 0.0189,
+   "2029": 0.019,
+   "2030": 0.0195,
+   "2031": 0.0191,
+   "2032": 0.0204,
+   "2033": 0.0201,
+   "2034": 0.0218,
+   "2035": 0.0213,
+   "2036": 0.0205,
+   "LT": 0.0205
+  },
+  "high": {
+   "2026H2": 0.0268,
+   "2027H1": 0.0213,
+   "2027H2": 0.0275,
+   "2027": 0.0246,
+   "2028": 0.025,
+   "2029": 0.0257,
+   "2030": 0.0251,
+   "2031": 0.0267,
+   "2032": 0.0275,
+   "2033": 0.0278,
+   "2034": 0.028,
+   "2035": 0.0272,
+   "2036": 0.0265,
+   "LT": 0.0265
+  }
+ },
+ "cohort_diag": {
+  "low": {
+   "hyper": {
+    "old_area": 234.7,
+    "backlog": 12.7,
+    "known": 131.39999999999998,
+    "backlog_net": 0.0
+   },
+   "okey": {
+    "old_area": 478.0,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "super": {
+    "old_area": 175.6,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "conv": {
+    "old_area": 374.7,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "droge": {
+    "old_area": 204.0,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "remi": {
+    "old_area": 107.2,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "diy": {
+    "old_area": 270.6,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   }
+  },
+  "base": {
+   "hyper": {
+    "old_area": 234.7,
+    "backlog": 178.5,
+    "known": 131.39999999999998,
+    "backlog_net": 47.1
+   },
+   "okey": {
+    "old_area": 478.0,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "super": {
+    "old_area": 175.6,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "conv": {
+    "old_area": 374.7,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "droge": {
+    "old_area": 204.0,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "remi": {
+    "old_area": 107.2,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "diy": {
+    "old_area": 270.6,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   }
+  },
+  "high": {
+   "hyper": {
+    "old_area": 234.7,
+    "backlog": 592.0,
+    "known": 131.39999999999998,
+    "backlog_net": 460.6
+   },
+   "okey": {
+    "old_area": 478.0,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "super": {
+    "old_area": 175.6,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "conv": {
+    "old_area": 374.7,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "droge": {
+    "old_area": 204.0,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "remi": {
+    "old_area": 107.2,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   },
+   "diy": {
+    "old_area": 270.6,
+    "backlog": 0.0,
+    "known": 0,
+    "backlog_net": 0.0
+   }
+  }
+ },
+ "strategy_check_2027": {
+  "total_bn": 58.53,
+  "pct": 0.03559
+ },
+ "ak5": {
+  "conv": {
+   "density_k": 389.6,
+   "capex_mn": 16.28,
+   "rev_mature_mn": 67.06,
+   "irr": 0.2479,
+   "payback_years": 3.47
+  },
+  "droge": {
+   "density_k": 203.0,
+   "capex_mn": 8.23,
+   "rev_mature_mn": 20.19,
+   "irr": 0.1421,
+   "payback_years": 5.83
+  },
+  "super": {
+   "density_k": 447.2,
+   "capex_mn": 63.31,
+   "rev_mature_mn": 239.45,
+   "irr": 0.2282,
+   "payback_years": 3.78
+  },
+  "other": {
+   "density_k": 471.7,
+   "capex_mn": 6.51,
+   "rev_mature_mn": 32.47,
+   "irr": 0.296,
+   "payback_years": 2.86
+  },
+  "hyper": {
+   "density_k": 417.1,
+   "capex_mn": 226.12,
+   "rev_mature_mn": 797.63,
+   "irr": 0.2129,
+   "payback_years": 4.05
+  }
+ },
+ "maintenance_area_share": 0.64,
+ "crosscheck_replacement": {
+  "at_2026h1": {
+   "classes": {
+    "здания": {
+     "gross": 210.964481,
+     "life": 17.0,
+     "age": 5.6,
+     "index": 1.497,
+     "repl_bn": 18.55
+    },
+    "машины и обор.": {
+     "gross": 137.921505,
+     "life": 10.3,
+     "age": 5.9,
+     "index": 1.521,
+     "repl_bn": 20.46
+    },
+    "благоустройство": {
+     "gross": 14.161425,
+     "life": 7.0,
+     "age": 6.8,
+     "index": 1.635,
+     "repl_bn": 3.31
+    },
+    "ПО (НМА)": {
+     "gross": 25.495328,
+     "life": 8.1,
+     "age": 3.5,
+     "index": 1.312,
+     "repl_bn": 4.11
+    }
+   },
+   "total_bn": 46.43,
+   "pct": [
+    0.02389,
+    0.03105
+   ]
+  },
+  "at_2025": {
+   "classes": {
+    "здания": {
+     "gross": 179.682413,
+     "life": 17.2,
+     "age": 6.1,
+     "index": 1.552,
+     "repl_bn": 16.18
+    },
+    "машины и обор.": {
+     "gross": 127.349575,
+     "life": 11.2,
+     "age": 6.5,
+     "index": 1.599,
+     "repl_bn": 18.21
+    },
+    "благоустройство": {
+     "gross": 14.145449,
+     "life": 7.0,
+     "age": 6.7,
+     "index": 1.625,
+     "repl_bn": 3.28
+    },
+    "ПО (НМА)": {
+     "gross": 21.992124,
+     "life": 10.4,
+     "age": 4.4,
+     "index": 1.396,
+     "repl_bn": 2.96
+    }
+   },
+   "total_bn": 40.64,
+   "pct": [
+    0.02832,
+    0.03682
+   ]
+  },
+  "model_ak1_plus_repl_open": {
+   "bn": 35.58,
+   "pct": 0.0238,
+   "repl_open_bn": 4.965
+  }
+ },
+ "crosscheck_capex_da": {
+  "10": {
+   "0.04": 1.233,
+   "0.056": 1.333,
+   "0.08": 1.49,
+   "0.1": 1.627
+  },
+  "12": {
+   "0.04": 1.279,
+   "0.056": 1.4,
+   "0.08": 1.592,
+   "0.1": 1.761
+  },
+  "14": {
+   "0.04": 1.325,
+   "0.056": 1.469,
+   "0.08": 1.698,
+   "0.1": 1.9
+  }
+ },
+ "asset_life": {
+  "implied_lives": {
+   "здания": 16.489102617893938,
+   "машины и обор.": 10.277198993681974,
+   "ПО (НМА)": 8.885990890959203
+  },
+  "mix_2025": {
+   "здания": 16.575895,
+   "машины и обор.": 25.243613,
+   "благоустройство": 0.262998,
+   "ПО (НМА)": 6.176443
+  },
+  "pv_equivalent": {
+   "0.14": 12.0,
+   "0.17": 12.0,
+   "0.2": 12.0
+  },
+  "harmonic": 11.51,
+  "pv_equiv_policy_buildings30": 14.0,
+  "chosen": 12
+ },
+ "da_anchor": {
+  "reported": 15.795,
+  "trademark_amort_1h26": 0.810496,
+  "okey_5m": {
+   "center": 0.701,
+   "low": 0.523,
+   "high": 0.969
+  },
+  "pro_forma": 16.496,
+  "capex_1h26": 22.482
+ },
+ "disposal": {
+  "w_2024_1h26": 0.000549,
+  "w_2022_1h26": 0.000936,
+  "w_2022_1h26_ex2023": 0.000688,
+  "chosen": 0.0005
+ },
+ "integration_capex": {
+  "2026H2": 1.0,
+  "2027H1": 0.5,
+  "2027H2": 0.5
+ },
+ "cost_of_error": {
+  "maint_plus_0_1pp_rub": {
+   "0.09": 126.8,
+   "0.11": 103.8,
+   "0.13": 87.8
+  },
+  "openings_10k_per_m2_rub": 122.7,
+  "integration_1bn_rub": 7.2,
+  "disposal_0_02pp_rub": 23.4,
+  "life_10_vs_12_rub": 47.6
+ },
+ "capex_prob_given_regime": {
+  "stress": {
+   "low": 0.35,
+   "base": 0.5,
+   "high": 0.15
+  },
+  "floor": {
+   "low": 0.2,
+   "base": 0.6,
+   "high": 0.2
+  },
+  "partial": {
+   "low": 0.2,
+   "base": 0.6,
+   "high": 0.2
+  },
+  "full": {
+   "low": 0.15,
+   "base": 0.6,
+   "high": 0.25
+  }
+ },
+ "fail": []
+}

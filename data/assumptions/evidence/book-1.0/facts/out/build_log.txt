@@ -1,0 +1,13 @@
+LENTA_PRIMARY_DIR = <каталог первички> (primary)
+[sources] документов: 17, хэш = MANIFEST: 17
+[notes] транскрипций чисел: 230, цитат: 17, не найдено: 0
+[ifrs16↔PDF] проверено чисел: 369, найдено в первичных формах: 352
+[out] facts → <каталог фактов> (facts)
+  accounting_base.json: 688497 байт
+  anchor.json: 6980 байт
+  shares.json: 2380 байт
+  debt.json: 16994 байт
+  bridge_balance.json: 7426 байт
+  inorganic.json: 12924 байт
+  peers.json: 11561 байт
+  sources.json: 12780 байт

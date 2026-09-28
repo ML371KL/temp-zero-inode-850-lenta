@@ -1,0 +1,1207 @@
+{
+ "revenue": {
+  "ltm_reported": {
+   "FY 2020": 445.5438,
+   "1H 2020": 435.2642,
+   "FY 2021": 483.6409,
+   "1H 2021": 446.6562,
+   "FY 2022": 537.4007,
+   "1H 2022": 528.0122,
+   "FY 2023": 615.9231,
+   "1H 2023": 532.0948,
+   "FY 2024": 888.3068,
+   "1H 2024": 772.3722,
+   "FY 2025": 1103.6627,
+   "1H 2025": 988.6381,
+   "1H 2026": 1238.2175
+  },
+  "ltm_pro_forma": {
+   "FY 2020": 445.5438,
+   "1H 2020": 435.2642,
+   "FY 2021": 505.2608,
+   "1H 2021": 446.6562,
+   "FY 2022": 537.4007,
+   "1H 2022": 528.0122,
+   "FY 2023": 767.5875,
+   "1H 2023": 532.0948,
+   "FY 2024": 925.1643,
+   "1H 2024": 822.927,
+   "FY 2025": 1164.2028,
+   "1H 2025": 1024.8069,
+   "1H 2026": 1408.9573
+  },
+  "pro_forma_notes": {
+   "FY 2020": "",
+   "1H 2020": "",
+   "FY 2021": "Billa ×7/5 + «Семья» ×8/4 (вклад с даты покупки, расчёт)",
+   "1H 2021": "",
+   "FY 2022": "",
+   "1H 2022": "",
+   "FY 2023": "проформа группы 2023 767,6 (КФО 2023 прим. 8, с. 49) − отчёт",
+   "1H 2023": "",
+   "FY 2024": "«Улыбка» 41,57 − 4,71 (КФО 2024 прим. 8, с. 44)",
+   "1H 2024": "«Монетка» 3 кв. 2023 = треть январь–сентябрь (расчёт)",
+   "FY 2025": "«Реми» январь–ноябрь (55,49 − 5,10) + «Молния» январь–июнь (19,80 − 9,64)",
+   "1H 2025": "«Улыбка» июль–ноябрь 2024 + «Молния» год (с 24.06.2025 в балансе)",
+   "1H 2026": "«О'КЕЙ» 2П2025 (142 × доля 2П гипермаркетов) + январь–май 2026 (66,12 − 9,36) + «Реми» июль–ноябрь 2025 + «Дом Лента» 2П2025 и 1П2026 вне отчёта (2 × 2 кв. 2026)"
+  },
+  "h1_2026_pro_forma_okey_only": 705.249,
+  "okey_2025h2_est": 75.431,
+  "okey_2026_jan_may": 56.7609,
+  "remi_jul_nov_2025_est": 22.9036,
+  "domlenta_2025h2_est": 11.8021,
+  "domlenta_2026_pre_est": 3.8421,
+  "hyper_h2_share_2025": 0.5312
+ },
+ "nwc": {
+  "definition": "запасы + торговая и прочая дебиторка + авансы выданные + налоги к возмещению + предоплаченные расходы + компенсирующий актив (Реми) − (торговая и прочая кредиторка − за ОС/НМА/приобретение бизнеса − по опциону) − обязательства по договорам − авансы полученные − обязательства по прочим налогам; IAS 17 (датабук BS), разбивка кредиторки — прим. МСФО; налог на прибыль, займы выданные, касса и ограниченные ДС — вне ОК",
+  "series": {
+   "FY 2020": {
+    "inventories": 42.0715,
+    "receivables": 10.9028,
+    "advances_paid": 1.8913,
+    "taxes_recoverable": 0.3614,
+    "prepaid": 0.3064,
+    "comp_asset": 0.0,
+    "payables_total": 61.4833,
+    "payables_capex_business": 3.5229,
+    "payables_put": 0.0,
+    "contract_liab": 0.7901,
+    "advances_received": 0.1731,
+    "other_taxes": 1.4077,
+    "payables_operating": 57.9604,
+    "nwc": -4.7979,
+    "nwc_incl_capex_payables": -8.3208,
+    "rev_ltm_reported": 445.5438,
+    "rev_ltm_pro_forma": 445.5438,
+    "cogs_ltm": 344.0503,
+    "nwc_pct_reported": -0.0108,
+    "nwc_pct_pro_forma": -0.0108,
+    "inventory_days": 44.6333,
+    "trade_payable_days": 61.4897,
+    "receivable_days": 8.9319,
+    "src_payables": "ifrs_mkpao/ifrs_FY2020.pdf с. 62"
+   },
+   "1H 2021": {
+    "inventories": 39.2962,
+    "receivables": 8.0061,
+    "advances_paid": 2.0288,
+    "taxes_recoverable": 0.0,
+    "prepaid": 0.2688,
+    "comp_asset": 0.0,
+    "payables_total": 41.2406,
+    "payables_capex_business": 1.0027,
+    "payables_put": 0.0,
+    "contract_liab": 0.7078,
+    "advances_received": 0.1416,
+    "other_taxes": 3.0113,
+    "payables_operating": 40.2379,
+    "nwc": 5.5013,
+    "nwc_incl_capex_payables": 4.4986,
+    "rev_ltm_reported": 446.6562,
+    "rev_ltm_pro_forma": 446.6562,
+    "cogs_ltm": 345.9808,
+    "nwc_pct_reported": 0.0123,
+    "nwc_pct_pro_forma": 0.0123,
+    "inventory_days": 41.4564,
+    "trade_payable_days": 42.4499,
+    "receivable_days": 6.5425,
+    "src_payables": "ifrs_mkpao/ifrs_1H2021.pdf с. 23"
+   },
+   "FY 2021": {
+    "inventories": 51.353,
+    "receivables": 13.1245,
+    "advances_paid": 3.3827,
+    "taxes_recoverable": 0.0633,
+    "prepaid": 0.2368,
+    "comp_asset": 0.0,
+    "payables_total": 74.2677,
+    "payables_capex_business": 2.9877,
+    "payables_put": 0.0,
+    "contract_liab": 1.1084,
+    "advances_received": 0.3502,
+    "other_taxes": 2.4565,
+    "payables_operating": 71.28,
+    "nwc": -7.0349,
+    "nwc_incl_capex_payables": -10.0226,
+    "rev_ltm_reported": 483.6409,
+    "rev_ltm_pro_forma": 505.2608,
+    "cogs_ltm": 372.5336,
+    "nwc_pct_reported": -0.0145,
+    "nwc_pct_pro_forma": -0.0139,
+    "inventory_days": 48.1615,
+    "trade_payable_days": 66.8501,
+    "receivable_days": 9.4812,
+    "src_payables": "ifrs_mkpao/ifrs_FY2021.pdf с. 62"
+   },
+   "FY 2022": {
+    "inventories": 57.6807,
+    "receivables": 9.695,
+    "advances_paid": 7.1354,
+    "taxes_recoverable": 0.1963,
+    "prepaid": 0.1033,
+    "comp_asset": 0.0,
+    "payables_total": 74.6039,
+    "payables_capex_business": 1.6078,
+    "payables_put": 0.0,
+    "contract_liab": 1.2742,
+    "advances_received": 0.3055,
+    "other_taxes": 4.0846,
+    "payables_operating": 72.9961,
+    "nwc": -3.8498,
+    "nwc_incl_capex_payables": -5.4576,
+    "rev_ltm_reported": 537.4007,
+    "rev_ltm_pro_forma": 537.4007,
+    "cogs_ltm": 416.6617,
+    "nwc_pct_reported": -0.0072,
+    "nwc_pct_pro_forma": -0.0072,
+    "inventory_days": 50.5288,
+    "trade_payable_days": 63.9453,
+    "receivable_days": 6.5848,
+    "src_payables": "ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf с. 65"
+   },
+   "1H 2023": {
+    "inventories": 52.9332,
+    "receivables": 8.168,
+    "advances_paid": 4.9829,
+    "taxes_recoverable": 0.0,
+    "prepaid": 0.1154,
+    "comp_asset": 0.0,
+    "payables_total": 56.3466,
+    "payables_capex_business": 0.9247,
+    "payables_put": 0.0,
+    "contract_liab": 1.0018,
+    "advances_received": 0.3466,
+    "other_taxes": 5.27,
+    "payables_operating": 55.422,
+    "nwc": 4.159,
+    "nwc_incl_capex_payables": 3.2343,
+    "rev_ltm_reported": 532.0948,
+    "rev_ltm_pro_forma": 532.0948,
+    "cogs_ltm": 422.4165,
+    "nwc_pct_reported": 0.0078,
+    "nwc_pct_pro_forma": 0.0078,
+    "inventory_days": 45.7383,
+    "trade_payable_days": 47.8888,
+    "receivable_days": 5.603,
+    "src_payables": "ifrs_mkpao/ifrs_1H2023.pdf с. 26"
+   },
+   "FY 2023": {
+    "inventories": 67.8005,
+    "receivables": 12.5607,
+    "advances_paid": 7.0413,
+    "taxes_recoverable": 0.1977,
+    "prepaid": 0.1106,
+    "comp_asset": 0.0,
+    "payables_total": 101.0466,
+    "payables_capex_business": 1.8464,
+    "payables_put": 0.0,
+    "contract_liab": 1.4139,
+    "advances_received": 0.4522,
+    "other_taxes": 7.2916,
+    "payables_operating": 99.2002,
+    "nwc": -20.6472,
+    "nwc_incl_capex_payables": -22.4935,
+    "rev_ltm_reported": 615.9231,
+    "rev_ltm_pro_forma": 767.5875,
+    "cogs_ltm": 486.6263,
+    "nwc_pct_reported": -0.0335,
+    "nwc_pct_pro_forma": -0.0269,
+    "inventory_days": 40.8064,
+    "trade_payable_days": 59.7047,
+    "receivable_days": 5.9728,
+    "src_payables": "ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf с. 65"
+   },
+   "1H 2024": {
+    "inventories": 68.4897,
+    "receivables": 5.4789,
+    "advances_paid": 4.3827,
+    "taxes_recoverable": 0.1349,
+    "prepaid": 0.1836,
+    "comp_asset": 0.0,
+    "payables_total": 84.0604,
+    "payables_capex_business": 2.422,
+    "payables_put": 0.0,
+    "contract_liab": 1.1949,
+    "advances_received": 0.4704,
+    "other_taxes": 5.9556,
+    "payables_operating": 81.6383,
+    "nwc": -10.5894,
+    "nwc_incl_capex_payables": -13.0115,
+    "rev_ltm_reported": 772.3722,
+    "rev_ltm_pro_forma": 822.927,
+    "cogs_ltm": 605.4803,
+    "nwc_pct_reported": -0.0137,
+    "nwc_pct_pro_forma": -0.0129,
+    "inventory_days": 38.751,
+    "trade_payable_days": 46.1905,
+    "receivable_days": 2.4301,
+    "src_payables": "ifrs_mkpao/ifrs_1H2024.pdf с. 28"
+   },
+   "FY 2024": {
+    "inventories": 88.5821,
+    "receivables": 7.7325,
+    "advances_paid": 7.8001,
+    "taxes_recoverable": 0.5141,
+    "prepaid": 0.2482,
+    "comp_asset": 0.0,
+    "payables_total": 126.4344,
+    "payables_capex_business": 3.7884,
+    "payables_put": 0.0,
+    "contract_liab": 1.8868,
+    "advances_received": 0.5232,
+    "other_taxes": 6.4907,
+    "payables_operating": 122.646,
+    "nwc": -26.6697,
+    "nwc_incl_capex_payables": -30.4581,
+    "rev_ltm_reported": 888.3068,
+    "rev_ltm_pro_forma": 925.1643,
+    "cogs_ltm": 696.073,
+    "nwc_pct_reported": -0.03,
+    "nwc_pct_pro_forma": -0.0288,
+    "inventory_days": 44.5993,
+    "trade_payable_days": 61.7498,
+    "receivable_days": 3.0506,
+    "src_payables": "ifrs_mkpao/ifrs_FY2024.pdf с. 63"
+   },
+   "1H 2025": {
+    "inventories": 89.2904,
+    "receivables": 6.7352,
+    "advances_paid": 4.5485,
+    "taxes_recoverable": 0.2041,
+    "prepaid": 0.3731,
+    "comp_asset": 0.0,
+    "payables_total": 107.9668,
+    "payables_capex_business": 2.974,
+    "payables_put": 0.0,
+    "contract_liab": 1.6491,
+    "advances_received": 0.6648,
+    "other_taxes": 9.2675,
+    "payables_operating": 104.9927,
+    "nwc": -15.4229,
+    "nwc_incl_capex_payables": -18.397,
+    "rev_ltm_reported": 988.6381,
+    "rev_ltm_pro_forma": 1024.8069,
+    "cogs_ltm": 769.4707,
+    "nwc_pct_reported": -0.0156,
+    "nwc_pct_pro_forma": -0.015,
+    "inventory_days": 40.8602,
+    "trade_payable_days": 48.0458,
+    "receivable_days": 2.3988,
+    "src_payables": "ifrs_mkpao/ifrs_1H2025.pdf с. 30"
+   },
+   "FY 2025": {
+    "inventories": 107.0154,
+    "receivables": 8.9871,
+    "advances_paid": 7.3208,
+    "taxes_recoverable": 0.2891,
+    "prepaid": 0.3247,
+    "comp_asset": 2.4715,
+    "payables_total": 167.914,
+    "payables_capex_business": 16.4998,
+    "payables_put": 0.0,
+    "contract_liab": 2.8642,
+    "advances_received": 0.7595,
+    "other_taxes": 10.389,
+    "payables_operating": 151.4142,
+    "nwc": -39.0183,
+    "nwc_incl_capex_payables": -55.5181,
+    "rev_ltm_reported": 1103.6627,
+    "rev_ltm_pro_forma": 1164.2028,
+    "cogs_ltm": 851.5955,
+    "nwc_pct_reported": -0.0354,
+    "nwc_pct_pro_forma": -0.0335,
+    "inventory_days": 43.4824,
+    "trade_payable_days": 61.5225,
+    "receivable_days": 2.8176,
+    "src_payables": "ifrs_mkpao/ifrs_FY2025.pdf с. 68"
+   },
+   "1H 2026": {
+    "inventories": 126.7809,
+    "receivables": 10.321,
+    "advances_paid": 7.2703,
+    "taxes_recoverable": 2.9282,
+    "prepaid": 0.332,
+    "comp_asset": 2.4715,
+    "payables_total": 157.6027,
+    "payables_capex_business": 9.1196,
+    "payables_put": 5.2142,
+    "contract_liab": 2.4778,
+    "advances_received": 1.0772,
+    "other_taxes": 14.236,
+    "payables_operating": 143.2689,
+    "nwc": -10.9559,
+    "nwc_incl_capex_payables": -20.0755,
+    "rev_ltm_reported": 1238.2175,
+    "rev_ltm_pro_forma": 1408.9573,
+    "cogs_ltm": 957.2803,
+    "nwc_pct_reported": -0.0088,
+    "nwc_pct_pro_forma": -0.0078,
+    "inventory_days": 42.4822,
+    "trade_payable_days": 48.007,
+    "receivable_days": 2.6737,
+    "src_payables": "ifrs_mkpao/ifrs_1H2026.pdf с. 33"
+   }
+  },
+  "june_excess_by_year": {
+   "2021": {
+    "excess_pct": 0.0247,
+    "excess_bn_at_june": 11.0157,
+    "vs_prev_dec_pct": 0.0231
+   },
+   "2023": {
+    "excess_pct": 0.0248,
+    "excess_bn_at_june": 13.2212,
+    "vs_prev_dec_pct": 0.015
+   },
+   "2024": {
+    "excess_pct": 0.015,
+    "excess_bn_at_june": 12.3397,
+    "vs_prev_dec_pct": 0.014
+   },
+   "2025": {
+    "excess_pct": 0.0161,
+    "excess_bn_at_june": 16.5213,
+    "vs_prev_dec_pct": 0.0138
+   }
+  },
+  "june_excess_pct_mean": 0.0202,
+  "june_excess_pct_recent": 0.0156,
+  "seasonal_june_excess_bn": 28.4,
+  "wc_flow_quarterly_ias17": {
+   "2021": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "2022": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "2023": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "2024": [
+    -11.792,
+    0.832,
+    -4.373,
+    23.636
+   ],
+   "2025": [
+    -15.912,
+    5.414,
+    -0.939,
+    24.952
+   ],
+   "2026": [
+    -20.105,
+    1.036,
+    null,
+    null
+   ]
+  },
+  "nwc_start_bn": -10.956,
+  "revenue_ltm_pro_forma": 1408.96,
+  "nwc_pct_start": -0.027932,
+  "december_pct": {
+   "FY 2020": -0.0108,
+   "FY 2021": -0.0139,
+   "FY 2022": -0.0072,
+   "FY 2023": -0.0269,
+   "FY 2024": -0.0288,
+   "FY 2025": -0.0335
+  },
+  "december_mean_2023_2025": -0.0297,
+  "hold_from_start": -0.029449,
+  "december_basis_perimeter": -0.030728,
+  "one_off_2026h2_if_hold_is_dec_basis_bn": 1.8,
+  "h2_flow_ratio": {
+   "2024": 0.0174,
+   "2025": 0.0203
+  },
+  "h2_flow_expected_2026_bn": 27.8,
+  "revenue_annual_2026h2_est": 1478.9,
+  "dec2026_implied_pct": -0.0262,
+  "book": {
+   "seasonal_june_excess": 27.9,
+   "excess_pct": 0.02,
+   "nwc_pct_start": -0.027887,
+   "hold": -0.029,
+   "acquired_path": {
+    "2026H2": 0.00153,
+    "2027": 0.00076,
+    "2028": 0.0,
+    "LT": 0.0
+   },
+   "one_off_2026h2_bn": -0.58,
+   "revenue_ltm_denominator": 1393.313037
+  },
+  "capex_payables_ex_obi_1h2026": 5.049,
+  "okey": {
+   "nwc_at_acquisition": 3.467,
+   "nwc_with_income_tax": 4.251,
+   "revenue_annual_pf": 132.24,
+   "target_pre_monetka": 1.331,
+   "target_group_jun2025": -1.99,
+   "gap_bn": 2.136,
+   "gap_bn_vs_group": 5.457,
+   "gap_pct_group_rev": 0.001516,
+   "inventory_days": 57.9,
+   "page": 17
+  },
+  "domlenta_nwc_at_acquisition": 6.271,
+  "domlenta_rev_annual_run_rate": 23.6,
+  "remi_comp_asset": 2.471,
+  "remi_other_taxes_at_acq": 2.932,
+  "remi_income_tax_at_acq": 1.257
+ },
+ "cash": {
+  "series": {
+   "FY 2020": {
+    "deposits": 18.4895,
+    "bank": 1.5275,
+    "transit": 1.0652,
+    "on_hand": 0.2763,
+    "fx_bank": 0.0956,
+    "fx_deposits": 0.3547,
+    "_src": "ifrs_mkpao/ifrs_FY2021.pdf с. 57",
+    "total": 21.8089,
+    "bs_cash": 21.8089,
+    "physical": 1.3415,
+    "operating_wide": 2.869,
+    "physical_pct": 0.003,
+    "operating_wide_pct": 0.0064,
+    "total_pct": 0.0489
+   },
+   "1H 2021": {
+    "deposits": 8.85,
+    "bank": 1.1647,
+    "transit": 0.4349,
+    "on_hand": 0.292,
+    "fx_bank": 19.1189,
+    "fx_deposits": 0.0,
+    "_src": "ifrs_mkpao/ifrs_1H2021.pdf с. 20",
+    "total": 29.8606,
+    "bs_cash": 29.8606,
+    "physical": 0.727,
+    "operating_wide": 1.8917,
+    "physical_pct": 0.0016,
+    "operating_wide_pct": 0.0042,
+    "total_pct": 0.0669
+   },
+   "FY 2021": {
+    "deposits": 22.9778,
+    "bank": 7.6115,
+    "transit": 1.5019,
+    "on_hand": 0.4758,
+    "fx_bank": 0.7595,
+    "fx_deposits": 0.0,
+    "_src": "ifrs_mkpao/ifrs_FY2021.pdf с. 57",
+    "total": 33.3265,
+    "bs_cash": 33.3265,
+    "physical": 1.9777,
+    "operating_wide": 9.5892,
+    "physical_pct": 0.0039,
+    "operating_wide_pct": 0.019,
+    "total_pct": 0.066
+   },
+   "FY 2022": {
+    "deposits": 19.6981,
+    "bank": 7.806,
+    "transit": 1.1527,
+    "on_hand": 0.3608,
+    "_src": "ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf с. 59",
+    "total": 29.0176,
+    "bs_cash": 29.0196,
+    "physical": 1.5135,
+    "operating_wide": 9.3196,
+    "physical_pct": 0.0028,
+    "operating_wide_pct": 0.0173,
+    "total_pct": 0.054
+   },
+   "1H 2023": {
+    "deposits": 27.7125,
+    "bank": 1.3421,
+    "transit": 0.4155,
+    "on_hand": 0.3866,
+    "_src": "ifrs_mkpao/ifrs_1H2023.pdf с. 24",
+    "total": 29.8567,
+    "bs_cash": 29.8567,
+    "physical": 0.8021,
+    "operating_wide": 2.1442,
+    "physical_pct": 0.0015,
+    "operating_wide_pct": 0.004,
+    "total_pct": 0.0561
+   },
+   "FY 2023": {
+    "deposits": 25.8004,
+    "bank": 15.0486,
+    "transit": 3.1201,
+    "on_hand": 0.5471,
+    "_src": "ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf с. 59",
+    "total": 44.5162,
+    "bs_cash": 44.5162,
+    "physical": 3.6672,
+    "operating_wide": 18.7158,
+    "physical_pct": 0.0048,
+    "operating_wide_pct": 0.0244,
+    "total_pct": 0.058
+   },
+   "1H 2024": {
+    "deposits": 31.7076,
+    "bank": 7.3419,
+    "transit": 1.8667,
+    "on_hand": 0.5483,
+    "_src": "ifrs_mkpao/ifrs_1H2024.pdf с. 25",
+    "total": 41.4645,
+    "bs_cash": 41.4645,
+    "physical": 2.415,
+    "operating_wide": 9.757,
+    "physical_pct": 0.0029,
+    "operating_wide_pct": 0.0119,
+    "total_pct": 0.0504
+   },
+   "FY 2024": {
+    "deposits": 18.7546,
+    "bank": 22.4069,
+    "transit": 5.1488,
+    "on_hand": 0.722,
+    "_src": "ifrs_mkpao/ifrs_FY2024.pdf с. 57",
+    "total": 47.0323,
+    "bs_cash": 47.0323,
+    "physical": 5.8709,
+    "operating_wide": 28.2778,
+    "physical_pct": 0.0063,
+    "operating_wide_pct": 0.0306,
+    "total_pct": 0.0508
+   },
+   "1H 2025": {
+    "deposits": 25.2759,
+    "bank": 3.4815,
+    "transit": 1.4199,
+    "on_hand": 0.7585,
+    "_src": "ifrs_mkpao/ifrs_1H2025.pdf с. 27",
+    "total": 30.9358,
+    "bs_cash": 30.9358,
+    "physical": 2.1784,
+    "operating_wide": 5.6599,
+    "physical_pct": 0.0021,
+    "operating_wide_pct": 0.0055,
+    "total_pct": 0.0302
+   },
+   "FY 2025": {
+    "deposits": 33.6304,
+    "bank": 13.116,
+    "transit": 3.3598,
+    "on_hand": 0.9573,
+    "_src": "ifrs_mkpao/ifrs_FY2025.pdf с. 62",
+    "total": 51.0635,
+    "bs_cash": 51.0635,
+    "physical": 4.3172,
+    "operating_wide": 17.4332,
+    "physical_pct": 0.0037,
+    "operating_wide_pct": 0.015,
+    "total_pct": 0.0439
+   },
+   "1H 2026": {
+    "deposits": 19.4578,
+    "bank": 3.2904,
+    "transit": 1.311,
+    "on_hand": 1.1134,
+    "_src": "ifrs_mkpao/ifrs_1H2026.pdf с. 28",
+    "total": 25.1725,
+    "bs_cash": 25.1725,
+    "physical": 2.4243,
+    "operating_wide": 5.7147,
+    "physical_pct": 0.0017,
+    "operating_wide_pct": 0.0041,
+    "total_pct": 0.0179
+   }
+  },
+  "physical_mean_pct": 0.0031,
+  "physical_jun_pct": 0.002,
+  "physical_dec_pct": 0.0041,
+  "bank_jun_mean_pct": 0.004,
+  "wide_mean_pct": 0.0129,
+  "wide_jun_pct": 0.0059,
+  "wide_dec_pct": 0.0188,
+  "total_min_pct": 0.0179,
+  "total_jun_min_pct": 0.0179,
+  "operating_cash_pct": 0.007,
+  "operating_cash_bn_2026h1": 9.86,
+  "deposit_yield": {
+   "2024H1": {
+    "interest": 2.3269,
+    "dep_avg": 28.754,
+    "key": 0.16,
+    "k_deposits": 1.0116,
+    "k_dep_plus_bank": 0.7281,
+    "k_total_endpoints": 0.6766,
+    "k_total_june": 0.7015
+   },
+   "2024H2": {
+    "interest": 2.4962,
+    "dep_avg": 25.2311,
+    "key": 0.1898,
+    "k_deposits": 1.0423,
+    "k_dep_plus_bank": 0.6557,
+    "k_total_endpoints": 0.5943,
+    "k_total_june": 0.6342
+   },
+   "2025H1": {
+    "interest": 2.4082,
+    "dep_avg": 22.0152,
+    "key": 0.2088,
+    "k_deposits": 1.0479,
+    "k_dep_plus_bank": 0.6599,
+    "k_total_endpoints": 0.5918,
+    "k_total_june": 0.7457
+   },
+   "2025H2": {
+    "interest": 1.6361,
+    "dep_avg": 29.4531,
+    "key": 0.175,
+    "k_deposits": 0.6349,
+    "k_dep_plus_bank": 0.4953,
+    "k_total_endpoints": 0.4561,
+    "k_total_june": 0.6044
+   },
+   "2026H1": {
+    "interest": 1.7038,
+    "dep_avg": 26.5441,
+    "key": 0.1516,
+    "k_deposits": 0.8468,
+    "k_dep_plus_bank": 0.6469,
+    "k_total_endpoints": 0.5897,
+    "k_total_june": 0.893
+   }
+  },
+  "k_median": 1.0116,
+  "k_mean": 0.9167,
+  "k_total_endpoints_mean": 0.5817,
+  "k_total_june_mean": 0.7158,
+  "cash_yield_k_book": 0.65
+ },
+ "tax": {
+  "reconciliation": {
+   "1H 2026": {
+    "pbt": 15.0777,
+    "statutory": -3.7694,
+    "nondeductible": -0.6372,
+    "tax": -4.4087,
+    "current_tax": -3.5837,
+    "deferred_tax": -0.8251,
+    "src": "ifrs_mkpao/ifrs_1H2026.pdf с. 33",
+    "etr": 0.2924,
+    "pbt_ias17": 18.3693,
+    "cash_paid": 2.2456,
+    "current_over_pbt17": 0.1951,
+    "paid_over_pbt17": 0.1222,
+    "addback_pct_rev": 0.0039,
+    "revenue": 648.4881
+   },
+   "1H 2025": {
+    "pbt": 19.571,
+    "statutory": -4.8927,
+    "nondeductible": -0.3498,
+    "tax": -5.2568,
+    "current_tax": -3.271,
+    "deferred_tax": -1.9858,
+    "src": "ifrs_mkpao/ifrs_1H2026.pdf с. 33",
+    "etr": 0.2686,
+    "pbt_ias17": 21.6295,
+    "cash_paid": 2.6489,
+    "current_over_pbt17": 0.1512,
+    "paid_over_pbt17": 0.1225,
+    "addback_pct_rev": 0.0027,
+    "revenue": 513.9333
+   },
+   "FY 2025": {
+    "pbt": 44.4025,
+    "statutory": -11.1006,
+    "nondeductible": -0.4798,
+    "tax": -9.5512,
+    "loss_recovery": 2.0496,
+    "current_tax": -6.3678,
+    "deferred_tax": -3.1834,
+    "src": "ifrs_mkpao/ifrs_FY2025.pdf с. 65",
+    "etr": 0.2151,
+    "pbt_ias17": 49.1328,
+    "cash_paid": 6.7295,
+    "current_over_pbt17": 0.1296,
+    "paid_over_pbt17": 0.137,
+    "addback_pct_rev": 0.0017,
+    "revenue": 1103.6627
+   },
+   "FY 2024": {
+    "pbt": 30.1375,
+    "statutory": -6.0275,
+    "nondeductible": -0.1597,
+    "tax": -7.6741,
+    "loss_recovery": 0.4,
+    "current_tax": -4.5515,
+    "deferred_tax": -0.9351,
+    "src": "ifrs_mkpao/ifrs_FY2025.pdf с. 65",
+    "etr": 0.2546,
+    "pbt_ias17": 32.8797,
+    "cash_paid": 3.3288,
+    "current_over_pbt17": 0.1384,
+    "paid_over_pbt17": 0.1012,
+    "addback_pct_rev": 0.0007,
+    "revenue": 888.3068
+   }
+  },
+  "addback_1h2026_ex_okey_june": 0.0025,
+  "deferred": {
+   "2025": {
+    "loss_dta_open": 3.3586,
+    "loss_dta_pl": -1.3081,
+    "loss_dta_close": 2.0505,
+    "loss_dta_acq": 0.0,
+    "ppe_dtl_open": -16.7564,
+    "ppe_dtl_pl": -3.9002,
+    "ppe_dtl_close": -21.3392,
+    "src": "ifrs_mkpao/ifrs_FY2025.pdf с. 66"
+   },
+   "2024": {
+    "loss_dta_open": 4.3149,
+    "loss_dta_pl": -0.9563,
+    "loss_dta_close": 3.3586,
+    "loss_dta_acq": 0.0,
+    "ppe_dtl_open": -12.885,
+    "ppe_dtl_pl": -3.7967,
+    "ppe_dtl_close": -16.7564,
+    "src": "ifrs_mkpao/ifrs_FY2025.pdf с. 67"
+   },
+   "2023": {
+    "loss_dta_open": 4.983,
+    "loss_dta_pl": -0.6681,
+    "loss_dta_close": 4.3149,
+    "loss_dta_acq": 0.0,
+    "ppe_dtl_open": -10.9078,
+    "ppe_dtl_pl": 0.8496,
+    "ppe_dtl_close": -12.885,
+    "src": "ifrs_mkpao/ifrs_FY2024.pdf с. 62"
+   },
+   "2022": {
+    "loss_dta_open": 0.1327,
+    "loss_dta_pl": -0.7031,
+    "loss_dta_close": 4.983,
+    "loss_dta_acq": 5.5533,
+    "ppe_dtl_open": -11.0325,
+    "ppe_dtl_pl": 0.3963,
+    "ppe_dtl_close": -10.9078,
+    "src": "ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf с. 64"
+   }
+  },
+  "unrecognised_loss_dta": {
+   "2025": 0.6773,
+   "2024": 2.7118,
+   "2023": 2.5686
+  },
+  "ppe_dtl_pl_operational": {
+   "2022": 0.3963,
+   "2023": 0.8496,
+   "2024": -0.5754,
+   "2025": -3.9002
+  },
+  "capex_ias17": {
+   "2012": 14.3243,
+   "2013": 22.7707,
+   "2014": 34.0134,
+   "2015": 30.9211,
+   "2016": 42.7777,
+   "2017": 27.1384,
+   "2018": 22.0538,
+   "2019": 14.0851,
+   "2020": 7.6474,
+   "2021": 9.376,
+   "2022": 10.8567,
+   "2023": 11.0946,
+   "2024": 30.6393,
+   "2025": 46.2583
+  },
+  "da_ias17": {
+   "2012": 1.5764,
+   "2013": 2.2587,
+   "2014": 3.659,
+   "2015": 5.6712,
+   "2016": 7.6946,
+   "2017": 9.6914,
+   "2018": 11.9775,
+   "2019": 14.708,
+   "2020": 14.7244,
+   "2021": 16.0574,
+   "2022": 18.2343,
+   "2023": 19.682,
+   "2024": 23.6588,
+   "2025": 26.283
+  },
+  "nol_dec2025_recognised": 8.2018,
+  "nol_dec2025_unrecognised": 2.7091,
+  "nol_used_1h2026_est": 1.7467,
+  "nol_start_est": 6.4551,
+  "okey_rsbu": {
+   "2021": {
+    "revenue": 156.146263,
+    "pbt": 1.272628,
+    "interest_payable": 2.486971,
+    "current_tax": 0.368025,
+    "dta": 0.878112,
+    "dtl": 0.121022,
+    "fin_inv_lt": 38.729424,
+    "fin_inv_st": 5.971,
+    "loans_lt": 27.508732,
+    "loans_st": 6.97901
+   },
+   "2022": {
+    "revenue": 152.01407,
+    "pbt": 0.236637,
+    "interest_payable": 6.551318,
+    "current_tax": 0.211046,
+    "dta": 8.770872,
+    "dtl": 7.846361,
+    "fin_inv_lt": 42.840434,
+    "fin_inv_st": 5.084153,
+    "loans_lt": 33.160005,
+    "loans_st": 7.874973
+   },
+   "2023": {
+    "revenue": 147.471923,
+    "pbt": -3.821644,
+    "interest_payable": 7.936953,
+    "current_tax": 0.0,
+    "dta": 9.445751,
+    "dtl": 7.777087,
+    "fin_inv_lt": 44.815434,
+    "fin_inv_st": 6.935177,
+    "loans_lt": 43.90528,
+    "loans_st": 4.588876
+   },
+   "2024": {
+    "revenue": 150.619116,
+    "pbt": -2.26135,
+    "interest_payable": 9.853935,
+    "current_tax": 0.0,
+    "dta": 11.429889,
+    "dtl": 9.073629,
+    "fin_inv_lt": 44.407804,
+    "fin_inv_st": 9.336278,
+    "loans_lt": 40.878255,
+    "loans_st": 13.010079
+   }
+  },
+  "acquired_nol_components": {
+   "okey_2023_2024_rsbu": 6.083,
+   "okey_2025_operating": 5.0,
+   "okey_2026h1": 4.4241,
+   "domlenta_2026h1": 2.9638
+  },
+  "acquired_nol": 18.5,
+  "locked_addback": {
+   "2026H2": 6.0,
+   "2027H1": 5.8,
+   "2027H2": 3.2,
+   "2028H1": 3.6,
+   "2028H2": 1.5
+  },
+  "share_debt_okey": 0.2733,
+  "alpha_min_2027": 0.1923,
+  "tax_depreciation": {
+   "observed_tax_minus_book_da": {
+    "2022": -1.9815,
+    "2023": -4.2479,
+    "2024": 2.3018,
+    "2025": 15.6007
+   },
+   "fit_b": 0.75,
+   "fit_L": 9,
+   "fit_pred": {
+    "2022": -4.2367,
+    "2023": -5.8369,
+    "2024": 4.2081,
+    "2025": 13.2904
+   },
+   "near_fits": [
+    [
+     0.75,
+     9
+    ],
+    [
+     0.75,
+     10
+    ],
+    [
+     0.7,
+     10
+    ],
+    [
+     0.7,
+     9
+    ],
+    [
+     0.8,
+     9
+    ],
+    [
+     0.75,
+     8
+    ],
+    [
+     0.8,
+     8
+    ],
+    [
+     0.8,
+     10
+    ],
+    [
+     0.8,
+     7
+    ],
+    [
+     0.75,
+     7
+    ],
+    [
+     0.65,
+     10
+    ],
+    [
+     0.7,
+     8
+    ]
+   ],
+   "pv_fit_bn": 81.3,
+   "pv_fit_rub_per_share": 636,
+   "pv_premium10_bn": 10.7,
+   "pv_premium10_rub_per_share": 83,
+   "pv_by_premium_bn": {
+    "0.1": 10.7,
+    "0.2": 21.3,
+    "0.3": 32.0
+   },
+   "pv_by_premium_rub": {
+    "0.1": 83,
+    "0.2": 167,
+    "0.3": 250
+   },
+   "tax_formula_2025": 12.76,
+   "loss_use_2025_tax": 3.358
+  }
+ },
+ "cost_of_error": {
+  "rub_per_bn": 7.821,
+  "r_disc": 0.16,
+  "nwc_level_1pp_bn": 12.4,
+  "addback_0p1pp_rub": 40,
+  "cash_yield_0p1_rub": 8,
+  "buffer_0p5pp_rub": 15,
+  "june_excess_10bn_bn": 8.71,
+  "nwc_level_1pp_rub": 97,
+  "hold_1pp_with_one_off_rub": 209,
+  "june_excess_10bn_rub": 68,
+  "okey_gap_release_rub": 14,
+  "opcash_0p1pp_rub": 21,
+  "nol_1bn_rub": 1.8,
+  "locked_rule_minus_naive_rub": 11,
+  "locked_grid_rub": {
+   "2027H2/h0.0": 28,
+   "2027H2/h0.25": 15,
+   "2027H2/h0.5": 3,
+   "2027H2/h1.0": -21,
+   "2028H1/h0.0": 24,
+   "2028H1/h0.25": 11,
+   "2028H1/h0.5": -1,
+   "2028H1/h1.0": -27,
+   "2029H1/h0.0": 16,
+   "2029H1/h0.25": 3,
+   "2029H1/h0.5": -9,
+   "2029H1/h1.0": -34,
+   "2031H1/h0.0": 3,
+   "2031H1/h0.25": -6,
+   "2031H1/h0.5": -16,
+   "2031H1/h1.0": -34
+  }
+ },
+ "checks": [
+  {
+   "name": "sha256 первички = MANIFEST",
+   "ok": true,
+   "detail": "(12 файлов)"
+  },
+  {
+   "name": "опцион «Реми» в кредиторке 30.06.2026 = 5,2142",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "кредиторка за ОС/НМА/бизнес 30.06.2026 = 9,1196",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "остаток «ОБИ» 17,303 − 4,499 − 8,734 = 4,070 ≤ кредиторки за бизнес",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "NWC 30.06.2026 = −10,956",
+   "ok": true,
+   "detail": "(-10.9559)"
+  },
+  {
+   "name": "NWC 30.06.2026 не содержит опциона и ОБИ (пересборка из строк)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "состав кассы = кассе баланса на 11 датах",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "проформа 1П2026 = 648,49 + 66,12 − 9,36 = 705,25",
+   "ok": true,
+   "detail": "(705.2490)"
+  },
+  {
+   "name": "ОК «О'КЕЙ» при покупке = 3,467",
+   "ok": true,
+   "detail": "(3.4672)"
+  },
+  {
+   "name": "излишек: среднее 4 лет 1,5–2,5 %",
+   "ok": true,
+   "detail": "(2.0157%)"
+  },
+  {
+   "name": "hold книги в пределах 0,1 п.п. от hold из старта",
+   "ok": true,
+   "detail": "(-0.029 против -0.02945)"
+  },
+  {
+   "name": "разовый поток 2П2026 от выбора hold по модулю < 1 млрд",
+   "ok": true,
+   "detail": "(-0.58)"
+  },
+  {
+   "name": "ЭСН 1П2026 = 29,24 %",
+   "ok": true,
+   "detail": "(29.2402%)"
+  },
+  {
+   "name": "сверка налога 1П2026: 3,769 + 0,002 + 0,637 = 4,409",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "актив по убыткам 31.12.2025 = 2,050; непризнанный = 0,677",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "движение ОНО по ОС 2025 в П/У = −3,900",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "налог по формуле ядра 2025 − текущий = зачёт убытков + ОС ± 1 млрд",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "пул приобретённых = сумма слагаемых",
+   "ok": true,
+   "detail": "(18.47)"
+  },
+  {
+   "name": "операционная касса 0,4–1,0 % выручки",
+   "ok": true,
+   "detail": "(0.700%)"
+  },
+  {
+   "name": "знаменатель книги = своя проформа без «Дом Ленты» до консолидации ± 0,1",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ОК якоря из ключей книги = балансу ± 0,05",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "k книги между оценками по концам и по июньской точке",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "sources": {
+  "Lenta_Q22026_DATABOOK.xlsx": {
+   "sha256": "0d290ed28fc13a0b44cdf3dd9e0f5dd519b2fa92f9206f4b4d731a01f95b3339",
+   "manifest": "0d290ed28fc13a0b44cdf3dd9e0f5dd519b2fa92f9206f4b4d731a01f95b3339",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf": {
+   "sha256": "23916ddade6fabb97f790ef79c45d8a5e0f77c70121fea50f60cd7b8035df8d7",
+   "manifest": "23916ddade6fabb97f790ef79c45d8a5e0f77c70121fea50f60cd7b8035df8d7",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_FY2024.pdf": {
+   "sha256": "7b0bad288251b44e792fb9ecffa1638dc993ca80d4b1586b05e1d3d906aa46fc",
+   "manifest": "7b0bad288251b44e792fb9ecffa1638dc993ca80d4b1586b05e1d3d906aa46fc",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_FY2025.pdf": {
+   "sha256": "4864a271babf7b34d17a4220f264bcc4d605f1e39964a65377c5b083c5de53a4",
+   "manifest": "4864a271babf7b34d17a4220f264bcc4d605f1e39964a65377c5b083c5de53a4",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_FY2021.pdf": {
+   "sha256": "068940c25f9e23eaab1702fa7f96d330892c92e8f8b523ff9265cbc6d9d74c9b",
+   "manifest": "068940c25f9e23eaab1702fa7f96d330892c92e8f8b523ff9265cbc6d9d74c9b",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_1H2026.pdf": {
+   "sha256": "235bdec9366875c0b1e7d410e4b2be15072ecde04d40fd56777947c5f4588797",
+   "manifest": "235bdec9366875c0b1e7d410e4b2be15072ecde04d40fd56777947c5f4588797",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_FY2020.pdf": {
+   "sha256": "9f2dfeae9c5ae1bf7669fb1591d077ef757df2bd070b323d2c94f2f6cfda4393",
+   "manifest": "9f2dfeae9c5ae1bf7669fb1591d077ef757df2bd070b323d2c94f2f6cfda4393",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_1H2021.pdf": {
+   "sha256": "c93f10dd2a77f9e93b5a209505484516ed976ddab42e8900c71fdd9f2b0db69d",
+   "manifest": "c93f10dd2a77f9e93b5a209505484516ed976ddab42e8900c71fdd9f2b0db69d",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_1H2023.pdf": {
+   "sha256": "b9c7e2747664d27d7fe19b14b5add7804692529e1b9ac66b275682eb9649a88e",
+   "manifest": "b9c7e2747664d27d7fe19b14b5add7804692529e1b9ac66b275682eb9649a88e",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_1H2024.pdf": {
+   "sha256": "86b0bf3ebb5acee2aaef71a7181f2b4a2a3d87bda302cccccc90a632fcd57236",
+   "manifest": "86b0bf3ebb5acee2aaef71a7181f2b4a2a3d87bda302cccccc90a632fcd57236",
+   "match": true
+  },
+  "ifrs_mkpao/ifrs_1H2025.pdf": {
+   "sha256": "5b608efb2757407b6230fc0c7e5119acd2d428c5356442a92b8fb75769176e6f",
+   "manifest": "5b608efb2757407b6230fc0c7e5119acd2d428c5356442a92b8fb75769176e6f",
+   "match": true
+  },
+  "rsbu_bo_nalog/bo_nalog_OOO_OKEY_7826087713_bfo_2021-2024.json": {
+   "sha256": "fff752447d2ae8b17332ede9ff0b0288727fbbb33d785aebe829535b191da4f3",
+   "manifest": "fff752447d2ae8b17332ede9ff0b0288727fbbb33d785aebe829535b191da4f3",
+   "match": true
+  }
+ }
+}

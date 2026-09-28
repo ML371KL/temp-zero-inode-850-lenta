@@ -1,0 +1,1171 @@
+{
+ "status": "200",
+ "meta": {
+  "total": 40,
+  "limit": 100
+ },
+ "results": {
+  "vacancies": [
+   {
+    "vacancy": {
+     "id": "24f67fa8-a225-11f1-b956-512fe6f6cdc2",
+     "creation-date": "2026-08-27",
+     "date_modify": "2026-09-25T15:36:41+0300",
+     "salary_min": 40000,
+     "salary_max": 50000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 2,
+     "region": {
+      "region_code": "4700000000000",
+      "name": "Ленинградская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/24f67fa8-a225-11f1-b956-512fe6f6cdc2"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "982d01b8-b8af-11f1-adb0-c78f30a32c76",
+     "creation-date": "2026-09-25",
+     "date_modify": "2026-09-25T11:48:13+0300",
+     "salary_min": 27100,
+     "salary_max": 28000,
+     "currency": "«руб.»",
+     "job-name": "Комплектовщик",
+     "typicalPosition": "Комплектовщик / Сборщик заказов",
+     "code_profession": "101638",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "4600000000000",
+      "name": "Курская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/982d01b8-b8af-11f1-adb0-c78f30a32c76"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "f6995428-b8ae-11f1-8936-155fc3dbaa44",
+     "creation-date": "2026-09-25",
+     "date_modify": "2026-09-25T11:18:43+0300",
+     "salary_min": 27100,
+     "salary_max": 28000,
+     "currency": "«руб.»",
+     "job-name": "Комплектовщик",
+     "typicalPosition": "Комплектовщик / Сборщик заказов",
+     "code_profession": "101638",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "4600000000000",
+      "name": "Курская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/f6995428-b8ae-11f1-8936-155fc3dbaa44"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "2f801e5d-3992-11f1-9a2a-17c964ea3db7",
+     "creation-date": "2026-04-16",
+     "date_modify": "2026-09-25T09:32:46+0300",
+     "salary_min": 27100,
+     "salary_max": 28000,
+     "currency": "«руб.»",
+     "job-name": "Ассистент",
+     "typicalPosition": "Личный помощник руководителя",
+     "code_profession": "200135",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 2,
+     "region": {
+      "region_code": "4600000000000",
+      "name": "Курская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/2f801e5d-3992-11f1-9a2a-17c964ea3db7"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "e21c9499-4e9a-11f1-97f3-f7576f65caec",
+     "creation-date": "2026-05-13",
+     "date_modify": "2026-09-23T16:28:51+0300",
+     "salary_min": 115000,
+     "salary_max": 167000,
+     "currency": "«руб.»",
+     "job-name": "Водитель автомобиля грузового/специального",
+     "typicalPosition": "Водитель автомобиля грузового/специального",
+     "code_profession": "100817",
+     "schedule": "Сменная работа",
+     "work_places": 10,
+     "region": {
+      "region_code": "6100000000000",
+      "name": "Ростовская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/e21c9499-4e9a-11f1-97f3-f7576f65caec"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "99206478-b564-11f1-ab8c-951de311dd61",
+     "creation-date": "2026-09-21",
+     "date_modify": "2026-09-23T09:39:24+0300",
+     "salary_min": 76500,
+     "salary_max": 101000,
+     "currency": "«руб.»",
+     "job-name": "Комплектовщик",
+     "typicalPosition": "Комплектовщик / Сборщик заказов",
+     "code_profession": "101638",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/99206478-b564-11f1-ab8c-951de311dd61"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "b01bffe9-0727-11f1-854c-672d91331a28",
+     "creation-date": "2026-02-11",
+     "date_modify": "2026-09-23T08:37:47+0300",
+     "salary_min": 36000,
+     "salary_max": 48000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-консультант",
+     "typicalPosition": "Продавец-консультант",
+     "code_profession": "104094",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "6600000000000",
+      "name": "Свердловская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/b01bffe9-0727-11f1-854c-672d91331a28"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "b883f17d-a1ea-11f1-b956-512fe6f6cdc2",
+     "creation-date": "2026-08-27",
+     "date_modify": "2026-09-23T08:37:38+0300",
+     "salary_min": 46000,
+     "salary_max": 61000,
+     "currency": "«руб.»",
+     "job-name": "Пекарь",
+     "typicalPosition": "Пекарь",
+     "code_profession": "103643",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "6600000000000",
+      "name": "Свердловская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/b883f17d-a1ea-11f1-b956-512fe6f6cdc2"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "8816e99e-b683-11f1-80a9-795f97aab242",
+     "creation-date": "2026-09-22",
+     "date_modify": "2026-09-22T15:53:41+0300",
+     "salary_min": 45000,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Комплектовщик / Сборщик заказов",
+     "typicalPosition": "Комплектовщик / Сборщик заказов",
+     "code_profession": "104502",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "6300000000000",
+      "name": "Самарская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/8816e99e-b683-11f1-80a9-795f97aab242"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "584d000d-b656-11f1-80a9-795f97aab242",
+     "creation-date": "2026-09-22",
+     "date_modify": "2026-09-22T14:35:13+0300",
+     "salary_min": 50000,
+     "salary_max": 53000,
+     "currency": "«руб.»",
+     "job-name": "Администратор клиентского сервиса",
+     "typicalPosition": "Менеджер по работе с клиентами",
+     "code_profession": "202086",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "1600000000000",
+      "name": "Республика Татарстан (Татарстан)"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/584d000d-b656-11f1-80a9-795f97aab242"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "4bdb7498-b648-11f1-85fc-83a545b8b137",
+     "creation-date": "2026-09-22",
+     "date_modify": "2026-09-22T14:34:09+0300",
+     "salary_min": 59000,
+     "salary_max": 60000,
+     "currency": "«руб.»",
+     "job-name": "Менеджер по уборке",
+     "typicalPosition": "Менеджер по клинингу",
+     "code_profession": "202058",
+     "schedule": "Полный рабочий день",
+     "work_places": 1,
+     "region": {
+      "region_code": "1600000000000",
+      "name": "Республика Татарстан (Татарстан)"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Административная работа, секретариат, АХО"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/4bdb7498-b648-11f1-85fc-83a545b8b137"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "cb8e4d38-b647-11f1-80a9-795f97aab242",
+     "creation-date": "2026-09-22",
+     "date_modify": "2026-09-22T14:33:30+0300",
+     "salary_min": 50000,
+     "salary_max": 64000,
+     "currency": "«руб.»",
+     "job-name": "Электромеханик",
+     "typicalPosition": "Электромеханик",
+     "code_profession": "204301",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "1600000000000",
+      "name": "Республика Татарстан (Татарстан)"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/cb8e4d38-b647-11f1-80a9-795f97aab242"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "7d3a2b78-b563-11f1-ab8c-951de311dd61",
+     "creation-date": "2026-09-21",
+     "date_modify": "2026-09-22T14:00:49+0300",
+     "salary_min": 80000,
+     "salary_max": 106000,
+     "currency": "«руб.»",
+     "job-name": "Оператор клиентского сервиса",
+     "typicalPosition": "Менеджер по работе с клиентами",
+     "code_profession": "201745",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/7d3a2b78-b563-11f1-ab8c-951de311dd61"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "e9b7ad68-b561-11f1-ab8c-951de311dd61",
+     "creation-date": "2026-09-21",
+     "date_modify": "2026-09-22T13:59:10+0300",
+     "salary_min": 99000,
+     "salary_max": 111000,
+     "currency": "«руб.»",
+     "job-name": "Комплектовщик",
+     "typicalPosition": "Комплектовщик / Сборщик заказов",
+     "code_profession": "101638",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/e9b7ad68-b561-11f1-ab8c-951de311dd61"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "3b4b7b98-75e1-11f1-a2da-0bd5dfcfe61e",
+     "creation-date": "2026-07-02",
+     "date_modify": "2026-09-21T09:41:37+0300",
+     "salary_min": 40000,
+     "salary_max": 40000,
+     "currency": "«руб.»",
+     "job-name": "Ассистент продавца",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "200135",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/3b4b7b98-75e1-11f1-a2da-0bd5dfcfe61e"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "05ae36e8-75e5-11f1-aa9f-710e11d7f6c9",
+     "creation-date": "2026-07-02",
+     "date_modify": "2026-09-21T09:41:33+0300",
+     "salary_min": 40000,
+     "salary_max": 40000,
+     "currency": "«руб.»",
+     "job-name": "Ассистент продавца",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "200135",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/05ae36e8-75e5-11f1-aa9f-710e11d7f6c9"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "a24ed4d8-75e2-11f1-aa3e-ab0d9cf47236",
+     "creation-date": "2026-07-02",
+     "date_modify": "2026-09-21T09:41:31+0300",
+     "salary_min": 40000,
+     "salary_max": 40000,
+     "currency": "«руб.»",
+     "job-name": "Ассистент продавца",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "200135",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/a24ed4d8-75e2-11f1-aa3e-ab0d9cf47236"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "94b738d9-7538-11f1-b9b5-65617fd8588f",
+     "creation-date": "2026-07-01",
+     "date_modify": "2026-09-21T09:41:28+0300",
+     "salary_min": 40000,
+     "salary_max": 40000,
+     "currency": "«руб.»",
+     "job-name": "Ассистент продавца",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "200135",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/94b738d9-7538-11f1-b9b5-65617fd8588f"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "65b55828-75e5-11f1-aa3e-ab0d9cf47236",
+     "creation-date": "2026-07-02",
+     "date_modify": "2026-09-21T09:41:24+0300",
+     "salary_min": 40000,
+     "salary_max": 40000,
+     "currency": "«руб.»",
+     "job-name": "Ассистент продавца",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "200135",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 2,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/65b55828-75e5-11f1-aa3e-ab0d9cf47236"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "e64c7da8-75e1-11f1-a2da-0bd5dfcfe61e",
+     "creation-date": "2026-07-02",
+     "date_modify": "2026-09-21T09:41:07+0300",
+     "salary_min": 40000,
+     "salary_max": 40000,
+     "currency": "«руб.»",
+     "job-name": "Ассистент продавца",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "200135",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/e64c7da8-75e1-11f1-a2da-0bd5dfcfe61e"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "c4e38d80-7540-11f1-ad26-3ba0911813e6",
+     "creation-date": "2026-07-01",
+     "date_modify": "2026-09-21T09:41:01+0300",
+     "salary_min": 40000,
+     "salary_max": 40000,
+     "currency": "«руб.»",
+     "job-name": "Ассистент продавца",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "200135",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7700000000000",
+      "name": "Город Москва"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/c4e38d80-7540-11f1-ad26-3ba0911813e6"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "28c19b49-ad03-11f1-84d6-0b35eb1e307b",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-18T09:40:59+0300",
+     "salary_min": 34375,
+     "salary_max": 34375,
+     "currency": "«руб.»",
+     "job-name": "Ассистент",
+     "typicalPosition": "Личный помощник руководителя",
+     "code_profession": "200135",
+     "schedule": "Полный рабочий день",
+     "work_places": 2,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/28c19b49-ad03-11f1-84d6-0b35eb1e307b"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "588cc8b9-ad01-11f1-afa4-fb20fcdf567f",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-18T06:03:46+0300",
+     "salary_min": 34375,
+     "salary_max": 34375,
+     "currency": "«руб.»",
+     "job-name": "Ассистент",
+     "typicalPosition": "Личный помощник руководителя",
+     "code_profession": "200135",
+     "schedule": "Полный рабочий день",
+     "work_places": 2,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/588cc8b9-ad01-11f1-afa4-fb20fcdf567f"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "b5b44968-ada0-11f1-987b-b1d3bf2d14ab",
+     "creation-date": "2026-09-11",
+     "date_modify": "2026-09-18T05:56:04+0300",
+     "salary_min": 34375,
+     "salary_max": 34375,
+     "currency": "«руб.»",
+     "job-name": "Ассистент",
+     "typicalPosition": "Личный помощник руководителя",
+     "code_profession": "200135",
+     "schedule": "Полный рабочий день",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/b5b44968-ada0-11f1-987b-b1d3bf2d14ab"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "27751dd8-ada2-11f1-b99e-4972ddb33ebb",
+     "creation-date": "2026-09-11",
+     "date_modify": "2026-09-18T05:49:22+0300",
+     "salary_min": 34375,
+     "salary_max": 34375,
+     "currency": "«руб.»",
+     "job-name": "Ассистент",
+     "typicalPosition": "Личный помощник руководителя",
+     "code_profession": "200135",
+     "schedule": "Полный рабочий день",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/27751dd8-ada2-11f1-b99e-4972ddb33ebb"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "3ca6ee58-b265-11f1-98bc-350b59df29cf",
+     "creation-date": "2026-09-17",
+     "date_modify": "2026-09-17T10:17:55+0300",
+     "salary_min": 58000,
+     "salary_max": 70000,
+     "currency": "«руб.»",
+     "job-name": "Продавец продовольственных товаров",
+     "typicalPosition": "Продавец-кассир продовольственных товаров",
+     "code_profession": "104095",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 2,
+     "region": {
+      "region_code": "4700000000000",
+      "name": "Ленинградская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Пищевая промышленность"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/f1a521c0-903d-11ee-adf7-e7d0d2cf29b1/3ca6ee58-b265-11f1-98bc-350b59df29cf"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "8ef8f4b8-b264-11f1-8ba9-0db939d1b69f",
+     "creation-date": "2026-09-17",
+     "date_modify": "2026-09-17T10:17:29+0300",
+     "salary_min": 58000,
+     "salary_max": 70000,
+     "currency": "«руб.»",
+     "job-name": "Повар холодного цеха",
+     "typicalPosition": "Повар",
+     "code_profession": "103759",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 2,
+     "region": {
+      "region_code": "4700000000000",
+      "name": "Ленинградская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Пищевая промышленность"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/f1a521c0-903d-11ee-adf7-e7d0d2cf29b1/8ef8f4b8-b264-11f1-8ba9-0db939d1b69f"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "a450c820-b263-11f1-8f25-050fe90a236a",
+     "creation-date": "2026-09-17",
+     "date_modify": "2026-09-17T10:17:19+0300",
+     "salary_min": 58000,
+     "salary_max": 70000,
+     "currency": "«руб.»",
+     "job-name": "Пекарь",
+     "typicalPosition": "Пекарь",
+     "code_profession": "103643",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 2,
+     "region": {
+      "region_code": "4700000000000",
+      "name": "Ленинградская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Пищевая промышленность"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/f1a521c0-903d-11ee-adf7-e7d0d2cf29b1/a450c820-b263-11f1-8f25-050fe90a236a"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "a350fbe8-b1d5-11f1-8f25-050fe90a236a",
+     "creation-date": "2026-09-16",
+     "date_modify": "2026-09-17T06:58:02+0300",
+     "salary_min": 52500,
+     "salary_max": 59500,
+     "currency": "«руб.»",
+     "job-name": "Специалист по обеспечению бизнеса",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "103109",
+     "schedule": "Полный рабочий день",
+     "work_places": 1,
+     "region": {
+      "region_code": "6300000000000",
+      "name": "Самарская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Безопасность, службы охраны"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/f1a521c0-903d-11ee-adf7-e7d0d2cf29b1/a350fbe8-b1d5-11f1-8f25-050fe90a236a"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "903e56e8-affc-11f1-b99e-4972ddb33ebb",
+     "creation-date": "2026-09-14",
+     "date_modify": "2026-09-16T08:35:57+0300",
+     "salary_min": 40500,
+     "salary_max": 42200,
+     "currency": "«руб.»",
+     "job-name": "Продавец продовольственных товаров",
+     "typicalPosition": "Продавец-кассир продовольственных товаров",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 1,
+     "region": {
+      "region_code": "5500000000000",
+      "name": "Омская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/903e56e8-affc-11f1-b99e-4972ddb33ebb"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "1af18ffd-b0d4-11f1-9b06-338bb3104f83",
+     "creation-date": "2026-09-15",
+     "date_modify": "2026-09-15T12:15:54+0300",
+     "salary_min": 53000,
+     "salary_max": 60000,
+     "currency": "«руб.»",
+     "job-name": "Администратор клиентского сервиса",
+     "typicalPosition": "Менеджер по работе с клиентами",
+     "code_profession": "202086",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "6300000000000",
+      "name": "Самарская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/1af18ffd-b0d4-11f1-9b06-338bb3104f83"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "fbff09f8-b025-11f1-b99e-4972ddb33ebb",
+     "creation-date": "2026-09-14",
+     "date_modify": "2026-09-15T11:02:42+0300",
+     "salary_min": 59000,
+     "salary_max": 68700,
+     "currency": "«руб.»",
+     "job-name": "Повар мясного цеха",
+     "typicalPosition": "Повар",
+     "code_profession": "103759",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "7000000000000",
+      "name": "Томская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Производство"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/fbff09f8-b025-11f1-b99e-4972ddb33ebb"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "27adfb98-b028-11f1-987b-b1d3bf2d14ab",
+     "creation-date": "2026-09-14",
+     "date_modify": "2026-09-15T11:01:43+0300",
+     "salary_min": 46600,
+     "salary_max": 53000,
+     "currency": "«руб.»",
+     "job-name": "Продавец продовольственных товаров",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 2,
+     "region": {
+      "region_code": "7000000000000",
+      "name": "Томская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/27adfb98-b028-11f1-987b-b1d3bf2d14ab"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "85b315d8-b029-11f1-987b-b1d3bf2d14ab",
+     "creation-date": "2026-09-14",
+     "date_modify": "2026-09-15T11:01:00+0300",
+     "salary_min": 57000,
+     "salary_max": 70000,
+     "currency": "«руб.»",
+     "job-name": "Водитель погрузчика",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "100841",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "7000000000000",
+      "name": "Томская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/85b315d8-b029-11f1-987b-b1d3bf2d14ab"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "4554d548-b0b6-11f1-b99e-4972ddb33ebb",
+     "creation-date": "2026-09-15",
+     "date_modify": "2026-09-15T07:34:08+0300",
+     "salary_min": 50000,
+     "salary_max": 50500,
+     "currency": "«руб.»",
+     "job-name": "Специалист по обеспечению бизнеса",
+     "typicalPosition": "Бизнес аналитик",
+     "code_profession": "203541",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/4554d548-b0b6-11f1-b99e-4972ddb33ebb"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "c4e4e518-b030-11f1-b99e-4972ddb33ebb",
+     "creation-date": "2026-09-14",
+     "date_modify": "2026-09-15T04:39:33+0300",
+     "salary_min": 59000,
+     "salary_max": 69000,
+     "currency": "«руб.»",
+     "job-name": "Специалист службы охраны и безопасности",
+     "typicalPosition": "Специалист службы охраны и безопасности",
+     "code_profession": "203541",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/c4e4e518-b030-11f1-b99e-4972ddb33ebb"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "95b5f778-ad9c-11f1-9b06-338bb3104f83",
+     "creation-date": "2026-09-11",
+     "date_modify": "2026-09-14T14:15:29+0300",
+     "salary_min": 64000,
+     "salary_max": 72000,
+     "currency": "«руб.»",
+     "job-name": "Кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "201745",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7800000000000",
+      "name": "Город Санкт-Петербург"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/95b5f778-ad9c-11f1-9b06-338bb3104f83"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "566ef188-ada0-11f1-987b-b1d3bf2d14ab",
+     "creation-date": "2026-09-11",
+     "date_modify": "2026-09-14T14:14:56+0300",
+     "salary_min": 64000,
+     "salary_max": 72000,
+     "currency": "«руб.»",
+     "job-name": "Пекарь-универсал",
+     "typicalPosition": "Повар",
+     "code_profession": "103643",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "7800000000000",
+      "name": "Город Санкт-Петербург"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/566ef188-ada0-11f1-987b-b1d3bf2d14ab"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "628aa5c5-b028-11f1-b99e-4972ddb33ebb",
+     "creation-date": "2026-09-14",
+     "date_modify": "2026-09-14T13:48:07+0300",
+     "salary_min": 67000,
+     "salary_max": 67000,
+     "currency": "«руб.»",
+     "job-name": "Повар",
+     "typicalPosition": "Повар",
+     "code_profession": "103759",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Пищевая промышленность"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/628aa5c5-b028-11f1-b99e-4972ddb33ebb"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "9cda8488-aff9-11f1-9b06-338bb3104f83",
+     "creation-date": "2026-09-14",
+     "date_modify": "2026-09-14T10:57:07+0300",
+     "salary_min": 66000,
+     "salary_max": 92000,
+     "currency": "«руб.»",
+     "job-name": "Мойщик посуды",
+     "typicalPosition": "Мойщик",
+     "code_profession": "102605",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 2,
+     "region": {
+      "region_code": "4700000000000",
+      "name": "Ленинградская область"
+     },
+     "company": {
+      "inn": "7814148471",
+      "ogrn": "1037832048605",
+      "kpp": "781401001",
+      "name": "ООО \"ЛЕНТА\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1037832048605/9cda8488-aff9-11f1-9b06-338bb3104f83"
+    }
+   }
+  ]
+ }
+}

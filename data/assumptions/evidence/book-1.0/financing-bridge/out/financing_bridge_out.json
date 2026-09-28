@@ -1,0 +1,297 @@
+{
+  "meta": {
+    "script": "financing_bridge.py",
+    "facts_date": "2026-06-30",
+    "valuation_date": "2026-09-18",
+    "units": "млрд руб., если не сказано иное"
+  },
+  "facts": {
+    "anchor": {
+      "net_debt": 117.411168,
+      "net_debt_databook": 117.41,
+      "cash": 25.172516,
+      "gross_debt": 142.583684,
+      "ebitda_ltm_implied": 84.432
+    },
+    "undrawn_credit_lines": 283.863,
+    "credit_limit": 426.447
+  },
+  "rate_baskets": [
+    {
+      "name": "lenta_fixed_12m",
+      "share": 0.216003,
+      "amount_bn": 30.6558,
+      "rate": {
+        "fixed": 0.136
+      },
+      "until": "2026H2"
+    },
+    {
+      "name": "lenta_float_12m",
+      "share": 0.03523,
+      "amount_bn": 5.0,
+      "rate": {
+        "key_plus": 0.015
+      },
+      "until": "2026H2"
+    },
+    {
+      "name": "lenta_fixed_2027",
+      "share": 0.260594,
+      "amount_bn": 36.9843,
+      "rate": {
+        "fixed": 0.136
+      },
+      "until": "2027H2"
+    },
+    {
+      "name": "severgroup_2029",
+      "share": 0.214905,
+      "amount_bn": 30.5,
+      "rate": {
+        "fixed": 0.1
+      },
+      "until": "2029H1"
+    },
+    {
+      "name": "okey_alfa_float_2031",
+      "share": 0.225474,
+      "amount_bn": 32.0,
+      "rate": {
+        "key_plus": 0.02
+      },
+      "until": "2031H2"
+    },
+    {
+      "name": "okey_bonds_put_2027",
+      "share": 0.045799,
+      "amount_bn": 6.5,
+      "rate": {
+        "fixed": 0.1615
+      },
+      "until": "2027H1"
+    },
+    {
+      "name": "okey_bonds_2029",
+      "share": 0.001995,
+      "amount_bn": 0.2832,
+      "rate": {
+        "fixed": 0.18
+      },
+      "until": "2029H1"
+    }
+  ],
+  "severgroup_rate_by_drawdown": {
+    "договор 25.05": 0.0874,
+    "закрытие «О'КЕЙ» 02.06": 0.1124,
+    "09.06": 0.1498
+  },
+  "fixed_debt_fv_premium_bn": 2.699048,
+  "bridge_items": [
+    {
+      "id": "remi_put",
+      "kind": "claim",
+      "amount": 5.214174,
+      "accrete_rate_half": 0.094012,
+      "settle_period": "2027H1",
+      "haircut": 0.0
+    },
+    {
+      "id": "obi_remaining",
+      "kind": "claim",
+      "amount": 4.070211,
+      "accrete_rate_half": 0.0,
+      "settle_period": "2026H2",
+      "haircut": 0.0
+    },
+    {
+      "id": "ltip_long_term",
+      "kind": "claim",
+      "amount": 2.000523,
+      "accrete_rate_half": 0.0,
+      "settle_period": "2028H1",
+      "haircut": 0.0
+    },
+    {
+      "id": "nci_ex_remi",
+      "kind": "claim",
+      "amount": 0.0,
+      "accrete_rate_half": 0.0,
+      "settle_period": null,
+      "haircut": 0.0
+    },
+    {
+      "id": "loans_issued",
+      "kind": "asset",
+      "amount": 3.33989,
+      "accrete_rate_half": 0.0,
+      "settle_period": "2026H2",
+      "haircut": 0.0
+    },
+    {
+      "id": "fixed_debt_fv_premium",
+      "kind": "claim",
+      "amount": 2.699048,
+      "accrete_rate_half": 0.0,
+      "settle_period": null,
+      "haircut": 0.0
+    },
+    {
+      "id": "remi_indemnification_asset",
+      "kind": "asset",
+      "amount": 2.471493,
+      "accrete_rate_half": 0.0,
+      "settle_period": null,
+      "haircut": 1.0
+    }
+  ],
+  "bridge_totals_bn": {
+    "net_claims_asof": 10.6441,
+    "net_claims_valuation": 10.8491,
+    "halves_asof_to_valuation": 0.429348,
+    "remi_put_at_valuation": 5.4193,
+    "remi_put_payment_2027H1": 5.7044
+  },
+  "not_in_bridge": {
+    "supplier_finance_payables_bn": 3.0194,
+    "other_noncurrent_fin_assets_bn": 0.6243,
+    "restricted_cash_30_06_2026_bn": 0.0
+  },
+  "spread_evidence": {
+    "lenta_bonds_coupon_minus_key": {
+      "Лента ООО БО-001P-01": -0.0055,
+      "Лента ООО БО-001P-02": 0.009,
+      "Лента ООО БО-001P-03": 0.003,
+      "Лента ООО БО-001P-04": 0.008
+    },
+    "okey_bonds_2026_09_28": {
+      "RU000A1009Z8": {
+        "gspread_bp": 323,
+        "zspread_bp": 311,
+        "duration_d": 794
+      },
+      "RU000A102BK7": {
+        "gspread_bp": 206,
+        "zspread_bp": 196,
+        "duration_d": 1183
+      },
+      "RU000A1084E6": {
+        "gspread_bp": 536,
+        "zspread_bp": 534,
+        "duration_d": 163
+      },
+      "RU000A10CCN3": {
+        "gspread_bp": 482,
+        "zspread_bp": 480,
+        "duration_d": 128
+      }
+    }
+  },
+  "cash_yield_k": {
+    "by_half": {
+      "1H2025": 0.5967,
+      "2H2025": 0.4523,
+      "1H2026": 0.5946
+    },
+    "mean": 0.5479
+  },
+  "treasury_cash_share_ltm_revenue": 0.0157,
+  "rollforward": {
+    "elapsed_linear": 0.429348,
+    "w_nwc_quarterly": -0.105402,
+    "nwc_quarter_share_proposed": {
+      "Q1": 1.18,
+      "Q2": -0.18,
+      "Q3": -0.123,
+      "Q4": 1.123
+    },
+    "q3_share_by_year": {
+      "2024": -0.227,
+      "2025": -0.0391
+    },
+    "q1_share_by_year": {
+      "2024": 1.0759,
+      "2025": 1.5157,
+      "2026": 1.0543
+    },
+    "illustration": {
+      "r0.15_X20": {
+        "nd_diff_bn": 10.7,
+        "value_diff_bn": 0.612,
+        "rub_per_share": 4.8
+      },
+      "r0.15_X25": {
+        "nd_diff_bn": 13.37,
+        "value_diff_bn": 0.765,
+        "rub_per_share": 6.0
+      },
+      "r0.15_X30": {
+        "nd_diff_bn": 16.04,
+        "value_diff_bn": 0.918,
+        "rub_per_share": 7.2
+      },
+      "r0.185_X20": {
+        "nd_diff_bn": 10.7,
+        "value_diff_bn": 0.74,
+        "rub_per_share": 5.8
+      },
+      "r0.185_X25": {
+        "nd_diff_bn": 13.37,
+        "value_diff_bn": 0.925,
+        "rub_per_share": 7.2
+      },
+      "r0.185_X30": {
+        "nd_diff_bn": 16.04,
+        "value_diff_bn": 1.11,
+        "rub_per_share": 8.7
+      },
+      "r0.2_X20": {
+        "nd_diff_bn": 10.7,
+        "value_diff_bn": 0.793,
+        "rub_per_share": 6.2
+      },
+      "r0.2_X25": {
+        "nd_diff_bn": 13.37,
+        "value_diff_bn": 0.992,
+        "rub_per_share": 7.8
+      },
+      "r0.2_X30": {
+        "nd_diff_bn": 16.04,
+        "value_diff_bn": 1.19,
+        "rub_per_share": 9.3
+      }
+    }
+  },
+  "dividend_ladder": [
+    {
+      "max_leverage": 1.0,
+      "payout_max": null
+    },
+    {
+      "max_leverage": 1.5,
+      "payout_max": 1.0
+    },
+    {
+      "max_leverage": null,
+      "payout_max": 0.5
+    }
+  ],
+  "acra_trigger_nd_ebitda_equiv": [
+    1.16,
+    1.61
+  ],
+  "ebitda_2025_ias17": 83.684,
+  "cost_of_error_rub_per_share": {
+    "loans_issued_haircut_0.5": -13.1,
+    "ltip_as_operating_float": 15.6,
+    "nci_domlenta_10pct_upper": -7.0,
+    "indemnification_asset_counted": 19.3,
+    "fv_premium_dropped": 21.1,
+    "fv_premium_runoff_to_2026_12_31": 4.7,
+    "supplier_finance_as_debt": -23.6,
+    "leverage_target_1.5_vs_1.0_N": 121.0,
+    "leverage_target_1.5_vs_1.0_M": 127.0
+  },
+  "rub_per_bn_claims": 7.821,
+  "checks_failed": []
+}

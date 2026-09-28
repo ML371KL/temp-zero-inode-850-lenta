@@ -1,0 +1,19 @@
+{
+"marketdata": {
+	"columns": ["SECID", "YIELD"], 
+	"data": [
+		["SU52002RMFS1", 8.78],
+		["SU52003RMFS9", 7.2],
+		["SU52004RMFS7", 6.99],
+		["SU52005RMFS4", 6.31]
+	]
+},
+"marketdata_yields": {
+	"columns": ["SECID", "TRADEMOMENT"], 
+	"data": [
+		["SU52002RMFS1", "2026-09-18 17:21:43"],
+		["SU52003RMFS9", "2026-09-18 17:05:17"],
+		["SU52004RMFS7", "2026-09-18 17:21:10"],
+		["SU52005RMFS4", "2026-09-18 17:21:29"]
+	]
+}}

@@ -1,0 +1,53 @@
+[Unit]
+Description=Лента 850 · суточный прогон: сбор, нау-каст, выпуск, публикация в ветку release
+Documentation=https://github.com/ML371KL/temp-zero-inode-850-lenta/blob/main/ops/README.md
+# Именно network-online: первый шаг идёт на MOEX ISS и ЦБ, и запуск до поднятия
+# маршрутов дал бы прогон, где «все источники недоступны».
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+# Type=exec, а не oneshot: systemd отказывается загружать oneshot с Restart!=no.
+Type=exec
+User=dash
+Group=dash
+WorkingDirectory=/srv/dash/repo-850-lenta
+EnvironmentFile=/usr/local/etc/lenta-850/env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /srv/dash/repo-850-lenta/ops/run.sh daily
+# Упавший шаг (код 1) повторяется через 3 минуты: моргнувший push в ветку
+# release или временный отказ критического источника лечатся повтором. Тревога
+# (код 8: все шаги выполнены, выпуск на витрине, но прогон требует внимания)
+# НЕ повторяется — повтор её не снимет, а стоил бы ещё двух полных прогонов.
+# Ради этого у тревоги свой код, а не 1 (у 850oa единица значила и то и другое,
+# и моргнувший канал данных там не повторялся). 64/78 — ошибки настройки.
+Restart=on-failure
+RestartSec=180
+RestartPreventExitStatus=8 64 78
+# Потолок = прогон с запасом (сбор, нау-каст, тесты такта, сборка, публикация,
+# до 600 с сверки, прореживание) + ожидание замка (LOCK_WAIT_SECONDS = потолок
+# пересборки). Расчёт и замер — ops/budgets.json, равенство сверяет
+# tests/test_ops_units.py. ДО ЗАМЕРА НА СЕРВЕРЕ ЭТО ОЦЕНКА.
+RuntimeMaxSec=5820
+SyslogIdentifier=lenta850
+
+StateDirectory=lenta-850
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+# Репозиторий пишется: git reset при обновлении кода, pip в .venv, var/ тестов.
+# Клон ветки release живёт в StateDirectory. /srv/dash/.ssh (алиас и
+# deploy-ключ записи в release) нужен ДЛЯ ЧТЕНИЯ — его не закрывать.
+ReadWritePaths=/srv/dash/repo-850-lenta
+
+MemoryHigh=384M
+MemoryMax=512M
+Nice=10
+
+# Мост тревог (см. lenta850-collect.service).
+ExecStopPost=-+/usr/local/sbin/dash-alert %n
+
+# Секции [Install] намеренно НЕТ: юнит запускается таймером.

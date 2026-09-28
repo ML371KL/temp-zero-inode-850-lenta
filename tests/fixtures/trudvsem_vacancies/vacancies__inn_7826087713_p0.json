@@ -1,0 +1,185 @@
+{
+ "status": "200",
+ "meta": {
+  "total": 6,
+  "limit": 100
+ },
+ "results": {
+  "vacancies": [
+   {
+    "vacancy": {
+     "id": "9b912498-fa9f-11f0-a027-0dd543315e5a",
+     "creation-date": "2026-01-26",
+     "date_modify": "2026-09-14T14:35:30+0300",
+     "salary_min": 43350,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Кассир-операционист (ул.9 мая, 77)",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 1,
+     "region": {
+      "region_code": "2400000000000",
+      "name": "Красноярский край"
+     },
+     "company": {
+      "inn": "7826087713",
+      "ogrn": "1027810304950",
+      "kpp": "780601001",
+      "name": "ООО \"О`КЕЙ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1027810304950/9b912498-fa9f-11f0-a027-0dd543315e5a"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "feb813e9-63d0-11f1-875d-37533a592c34",
+     "creation-date": "2026-06-09",
+     "date_modify": "2026-09-10T17:48:54+0300",
+     "salary_min": 44800,
+     "salary_max": 53800,
+     "currency": "«руб.»",
+     "job-name": "Кассир-операционист",
+     "typicalPosition": "Кассир",
+     "code_profession": "201748",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "6100000000000",
+      "name": "Ростовская область"
+     },
+     "company": {
+      "inn": "7826087713",
+      "ogrn": "1027810304950",
+      "kpp": "780601001",
+      "name": "ООО \"О`КЕЙ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/2bbc6530-aabc-11e7-a98d-4376a32b3f45/feb813e9-63d0-11f1-875d-37533a592c34"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "ca0d7fb8-79e5-11f1-96a1-71ec6ab38b2c",
+     "creation-date": "2026-07-07",
+     "date_modify": "2026-09-10T17:47:20+0300",
+     "salary_min": 41300,
+     "salary_max": 49500,
+     "currency": "«руб.»",
+     "job-name": "Продавец продовольственных товаров",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 1,
+     "region": {
+      "region_code": "6100000000000",
+      "name": "Ростовская область"
+     },
+     "company": {
+      "inn": "7826087713",
+      "ogrn": "1027810304950",
+      "kpp": "780601001",
+      "name": "ООО \"О`КЕЙ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/2bbc6530-aabc-11e7-a98d-4376a32b3f45/ca0d7fb8-79e5-11f1-96a1-71ec6ab38b2c"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "28a0b198-76a4-11f1-a41f-c3af44321512",
+     "creation-date": "2026-07-03",
+     "date_modify": "2026-09-02T08:26:33+0300",
+     "salary_min": 34300,
+     "salary_max": 36600,
+     "currency": "«руб.»",
+     "job-name": "Продавец продовольственных товаров",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 5,
+     "region": {
+      "region_code": "6600000000000",
+      "name": "Свердловская область"
+     },
+     "company": {
+      "inn": "7826087713",
+      "ogrn": "1027810304950",
+      "kpp": "780601001",
+      "name": "ООО \"О`КЕЙ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1027810304950/28a0b198-76a4-11f1-a41f-c3af44321512"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "7263d688-0008-11f1-9391-1f9cf5899c10",
+     "creation-date": "2026-02-02",
+     "date_modify": "2026-09-01T11:22:44+0300",
+     "salary_min": 41576,
+     "salary_max": 41576,
+     "currency": "«руб.»",
+     "job-name": "Кассир",
+     "typicalPosition": "Кассир-операционист",
+     "code_profession": "201748",
+     "schedule": "Режим гибкого рабочего времени",
+     "work_places": 51,
+     "region": {
+      "region_code": "7800000000000",
+      "name": "Город Санкт-Петербург"
+     },
+     "company": {
+      "inn": "7826087713",
+      "ogrn": "1027810304950",
+      "kpp": "780601001",
+      "name": "ООО \"О`КЕЙ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1027810304950/7263d688-0008-11f1-9391-1f9cf5899c10"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "90ec8ea0-5db2-11f1-a733-0758b1506dc0",
+     "creation-date": "2026-06-01",
+     "date_modify": "2026-08-31T09:58:42+0300",
+     "salary_min": 42500,
+     "salary_max": 47000,
+     "currency": "«руб.»",
+     "job-name": "Кассир",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "201748",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "6300000000000",
+      "name": "Самарская область"
+     },
+     "company": {
+      "inn": "7826087713",
+      "ogrn": "1027810304950",
+      "kpp": "780601001",
+      "name": "ООО \"О`КЕЙ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/2bbc6530-aabc-11e7-a98d-4376a32b3f45/90ec8ea0-5db2-11f1-a733-0758b1506dc0"
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+# Заголовки безопасности для СТАТИКИ.
+#
+# Почему нужны ОБА места. Pages накладывает `_headers` только на статику, а
+# функции вызываются только для `/api/*` (`web/_routes.json`) — поэтому ответы
+# функций получают те же заголовки в `functions/_middleware.js`. Политика в двух
+# файлах ОДНА: `tests/test_edge.py::test_csp_is_the_same_in_headers_and_middleware`
+# сравнивает их посимвольно. Без CSP здесь страницы отдавались бы вовсе без
+# политики: на ответах API она бесполезна — JSON скриптов не исполняет.
+#
+# Хэш инлайн-скрипта темы (ставит тему ДО первой отрисовки, иначе ночью моргает
+# светлая) обязан совпадать с THEME_SCRIPT_HASH в `_middleware.js`. Пересчитывать
+# при любой правке скрипта в web/index.html; расхождение ловит
+# `test_theme_script_hash_matches_csp` и печатает готовую строку на замену.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-FuGfJdvXEr5tGmg6MtrIr5idnIkivcwPhVk/lN1ZVOs='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: geolocation=(), camera=(), microphone=()

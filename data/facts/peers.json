@@ -1,0 +1,338 @@
+{
+ "schema": "lenta-facts-peers-v1",
+ "unit": "млрд ₽; акции — млн",
+ "basis": "EV = капитализация по legal close 18.09.2026 (акции в обращении) + ЧД до МСФО 16 на 30.06.2026 + дивиденды, объявленные до баланса и выплаченные после; EBITDA — IAS 17 LTM на 30.06.2026 (функция 850oa peers.json)",
+ "market_price_book": {
+  "ticker": "LENT",
+  "price": 1619.5,
+  "convention": "legalclose",
+  "date": "2026-09-18",
+  "close": 1625.5,
+  "src": "research/_work05/LENT_TQBR.json",
+  "sha256": "06bfbaa52b2f042d79216b000651ec8689703c84bc0ba13cf8da0ec22b5047c4",
+  "note": "первый день после исключения из IMOEX (D7); в primary-файле ISS истории LEGALCLOSEPRICE нет — взят сырой ответ ISS из research/_work05"
+ },
+ "peers": [
+  {
+   "name": "X5",
+   "ticker": "X5",
+   "basis": "IAS 17",
+   "as_of": "2026-09-18 (цена) / 2026-06-30 (баланс, LTM)",
+   "price_legal_close": 1784,
+   "shares_mln": 245.229303,
+   "mcap": 437.489,
+   "net_debt": 310.647,
+   "dividends_after_balance": 60.081,
+   "ev": 808.217,
+   "ebitda_ltm": 287.021,
+   "revenue_ltm": 4878.555,
+   "ev_ebitda": 2.816,
+   "nd_ebitda": 1.082,
+   "ebitda_margin": 0.0588,
+   "src": "X5 databook 2026_08 (лист Debt стр. 11; лист EBITDA стр. 22; IAS 17) — транскрипция в magnit-850oa data/facts/peers.json (as_of 30.06.2026); акции 271 572 872 × (1 − 0,097 казначейских)",
+   "price_src": "research/_work05/X5_TQBR.json"
+  },
+  {
+   "name": "Магнит",
+   "ticker": "MGNT",
+   "basis": "IAS 17",
+   "as_of": "2026-09-18 (цена) / 2026-06-30 (баланс, LTM)",
+   "price_legal_close": 1579,
+   "shares_mln": 67.847277,
+   "mcap": 107.131,
+   "net_debt": 518.1,
+   "dividends_after_balance": 0.0,
+   "ev": 625.231,
+   "ebitda_ltm": 179.635043,
+   "revenue_ltm": 3723.168,
+   "ev_ebitda": 3.481,
+   "nd_ebitda": 2.884,
+   "ebitda_margin": 0.0482,
+   "src": "Magnit Databook 1H 2026 (pnl.pre_ifrs16: EBITDA 2П2025 83,648405 + 1П2026 95,986638; ЧД до МСФО 16 518,1 на 30.06.2026) — транскрипция в magnit-850oa data/facts/history.json и assumptions.yaml facts",
+   "price_src": "research/_work05/MGNT_TQBR.json"
+  }
+ ],
+ "lent": {
+  "name": "Лента",
+  "ticker": "LENT",
+  "basis": "IAS 17",
+  "as_of": "2026-09-18 / 2026-06-30",
+  "price_legal_close": 1619.5,
+  "shares_mln": 115.074675,
+  "mcap": 186.363,
+  "net_debt": 117.411168,
+  "ev": 303.775,
+  "ebitda_ltm_reported": 84.433077,
+  "ev_ebitda_reported": 3.598,
+  "nd_ebitda_reported": 1.391,
+  "ebitda_margin_reported": 0.0682,
+  "ebitda_ltm_pro_forma": null,
+  "ev_ebitda_pro_forma": null,
+  "pro_forma_pending": "EBITDA LTM на проформе — лист margin; при кандидате 84,4 ± 3 → EV/EBITDA 3,47–3,73×",
+  "note": "отчётный мультипликатор завышен: долг «О’КЕЙ» в ЧД целиком, EBITDA — один месяц; выручка LTM на проформе ≈1 393 (кандидат anchor.json) против 1 238"
+ },
+ "check_vs_850oa": {
+  "x5_matches_850oa": true,
+  "mgnt_ebitda_ltm_850oa": 179.635043
+ },
+ "price_files": {
+  "LENT": {
+   "file": "research/_work05/LENT_TQBR.json",
+   "sha256": "06bfbaa52b2f042d79216b000651ec8689703c84bc0ba13cf8da0ec22b5047c4"
+  },
+  "X5": {
+   "file": "research/_work05/X5_TQBR.json",
+   "sha256": "e9e89516da42063c62398f639e8ad797b67cf9707da7941eb965094671814dc3"
+  },
+  "MGNT": {
+   "file": "research/_work05/MGNT_TQBR.json",
+   "sha256": "523784a6d4a12fd302f346a097941eaec1c9349b5b7f17c165852b07d1fbdea3"
+  }
+ },
+ "sellside_targets": {
+  "all": [
+   {
+    "date": "2025-04-15",
+    "house": "Газпромбанк Инвестиции (торговая идея)",
+    "rating": "покупать",
+    "target": 1700.0,
+    "status": "закрыта (цель достигнута)",
+    "source": "https://www.finmarket.ru/database/analytics/6381131"
+   },
+   {
+    "date": "2025-11-28",
+    "house": "SberCIB (фавориты 2026; дата выведена из апсайда 18%)",
+    "rating": "покупать",
+    "target": 2000.0,
+    "status": "заменена 2026-09-25",
+    "source": "https://vc.ru/invest/2651944-prognozy-analitikov-sbercib-na-2026-god"
+   },
+   {
+    "date": "2026-02-09",
+    "house": "Атон (Стратегия 2026 от 12.2025; подтверждено 09.02.2026)",
+    "rating": "выше рынка",
+    "target": 2340.0,
+    "status": "действует (до O'KEY)",
+    "source": "https://www.aton.ru/ideas/lenta_finansovye_rezultaty_za_chetvertyy_kvartal_2025_goda/"
+   },
+   {
+    "date": "2026-02-05",
+    "house": "Синара",
+    "rating": "покупать",
+    "target": 2800.0,
+    "status": "действует (до O'KEY)",
+    "source": "https://smart-lab.ru/blog/news/1262227.php"
+   },
+   {
+    "date": "2026-02-09",
+    "house": "Цифра брокер",
+    "rating": "покупать",
+    "target": 2672.0,
+    "status": "заменена 2026-08-03",
+    "source": "https://www.finmarket.ru/analytics/6558057"
+   },
+   {
+    "date": "2026-02-10",
+    "house": "ПСБ",
+    "rating": "позитивный",
+    "target": 2390.0,
+    "status": "заменена 2026-08-04",
+    "source": "https://www.finmarket.ru/analytics/6558792"
+   },
+   {
+    "date": "2026-02-16",
+    "house": "АКБФ (только агрегатор)",
+    "rating": "продавать",
+    "target": 1543.0,
+    "status": "заменена 2026-08-05",
+    "source": "https://financemarker.ru/stocks/MOEX/LENT/ideas/"
+   },
+   {
+    "date": "2026-02-19",
+    "house": "Т-Инвестиции",
+    "rating": "покупать",
+    "target": 2650.0,
+    "status": "заменена",
+    "source": "https://smart-lab.ru/blog/news/1267997.php"
+   },
+   {
+    "date": "2026-04-02",
+    "house": "Т-Инвестиции",
+    "rating": "покупать",
+    "target": 2800.0,
+    "status": "заменена",
+    "source": "https://www.tbank.ru/invest/social/profile/T-Investments/lenta-povyshaem-celevuyu-cenu-do-2-800-posle-silnoj-otchetnosti/"
+   },
+   {
+    "date": "2026-05-14",
+    "house": "Т-Инвестиции (агрегатор + стратегия 18.06.2026)",
+    "rating": "покупать",
+    "target": 2300.0,
+    "status": "заменена 2026-08-12",
+    "source": "https://financemarker.ru/stocks/MOEX/LENT/ideas/ ; https://smart-lab.ru/blog/1317498.php"
+   },
+   {
+    "date": "2026-06-03",
+    "house": "Эйлер",
+    "rating": "покупать",
+    "target": 3300.0,
+    "status": "заменена 2026-09-11",
+    "source": "https://www.finmarket.ru/analytics/6635218"
+   },
+   {
+    "date": "2026-06-03",
+    "house": "Freedom Global",
+    "rating": "покупать",
+    "target": 2400.0,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/database/analytics/6635586"
+   },
+   {
+    "date": "2026-08-03",
+    "house": "Цифра брокер",
+    "rating": "покупать",
+    "target": 2790.0,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/analytics/6678652"
+   },
+   {
+    "date": "2026-08-04",
+    "house": "ПСБ",
+    "rating": "позитивный",
+    "target": 2450.0,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/analytics/6679168"
+   },
+   {
+    "date": "2026-08-04",
+    "house": "Эйлер",
+    "rating": "покупать",
+    "target": 3300.0,
+    "status": "заменена 2026-09-11",
+    "source": "https://www.finmarket.ru/database/analytics/6679109"
+   },
+   {
+    "date": "2026-08-05",
+    "house": "АКБФ",
+    "rating": "продавать",
+    "target": 1473.86,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/database/analytics/6680128"
+   },
+   {
+    "date": "2026-08-10",
+    "house": "Совкомбанк",
+    "rating": "покупать",
+    "target": null,
+    "status": "действует (без цели)",
+    "source": "https://www.finmarket.ru/database/analytics/6682829"
+   },
+   {
+    "date": "2026-08-12",
+    "house": "Т-Инвестиции",
+    "rating": "держать",
+    "target": 2000.0,
+    "status": "действует",
+    "source": "https://smart-lab.ru/blog/news/1339176.php"
+   },
+   {
+    "date": "2026-09-11",
+    "house": "Эйлер",
+    "rating": "покупать",
+    "target": 2300.0,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/database/analytics/6704957"
+   },
+   {
+    "date": "2026-09-25",
+    "house": "Сбер (СберИнвестиции)",
+    "rating": "покупать",
+    "target": 2600.0,
+    "status": "действует",
+    "source": "https://elitetrader.ru/786770-lenta-zhdet-klienta.html"
+   }
+  ],
+  "latest_by_house": [
+   {
+    "date": "2026-02-05",
+    "house": "Синара",
+    "rating": "покупать",
+    "target": 2800.0,
+    "status": "действует (до O'KEY)",
+    "source": "https://smart-lab.ru/blog/news/1262227.php"
+   },
+   {
+    "date": "2026-02-09",
+    "house": "Атон (Стратегия 2026 от 12.2025; подтверждено 09.02.2026)",
+    "rating": "выше рынка",
+    "target": 2340.0,
+    "status": "действует (до O'KEY)",
+    "source": "https://www.aton.ru/ideas/lenta_finansovye_rezultaty_za_chetvertyy_kvartal_2025_goda/"
+   },
+   {
+    "date": "2026-06-03",
+    "house": "Freedom Global",
+    "rating": "покупать",
+    "target": 2400.0,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/database/analytics/6635586"
+   },
+   {
+    "date": "2026-08-03",
+    "house": "Цифра брокер",
+    "rating": "покупать",
+    "target": 2790.0,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/analytics/6678652"
+   },
+   {
+    "date": "2026-08-04",
+    "house": "ПСБ",
+    "rating": "позитивный",
+    "target": 2450.0,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/analytics/6679168"
+   },
+   {
+    "date": "2026-08-05",
+    "house": "АКБФ",
+    "rating": "продавать",
+    "target": 1473.86,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/database/analytics/6680128"
+   },
+   {
+    "date": "2026-08-12",
+    "house": "Т-Инвестиции",
+    "rating": "держать",
+    "target": 2000.0,
+    "status": "действует",
+    "source": "https://smart-lab.ru/blog/news/1339176.php"
+   },
+   {
+    "date": "2026-09-11",
+    "house": "Эйлер",
+    "rating": "покупать",
+    "target": 2300.0,
+    "status": "действует",
+    "source": "https://www.finmarket.ru/database/analytics/6704957"
+   },
+   {
+    "date": "2026-09-25",
+    "house": "Сбер (СберИнвестиции)",
+    "rating": "покупать",
+    "target": 2600.0,
+    "status": "действует",
+    "source": "https://elitetrader.ru/786770-lenta-zhdet-klienta.html"
+   }
+  ],
+  "latest_median": 2400.0,
+  "latest_n": 9,
+  "latest_range": [
+   1473.86,
+   2800.0
+  ],
+  "src": "research/lent_sellside_targets.csv (вторичные источники с датами; класс B)"
+ },
+ "hygiene_note": "строки X5 и MGNT — публичные отчётные данные аналогов (databook X5 2026_08, Magnit Databook 1H 2026) со ссылкой на первоисточник: в публичном репозитории допустимы (решение ведущего F33; разрешение — tests/test_public_hygiene.py); databook аналогов — в первичку с sha256 (решение ведущего A5)"
+}

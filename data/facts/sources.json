@@ -1,0 +1,220 @@
+{
+ "schema": "lenta-facts-sources-v1",
+ "principle": "путь — относительно LENTA_PRIMARY_DIR; sha256 пересчитан сборкой и сверен с MANIFEST.md; дата факта ≠ дата получения",
+ "documents": {
+  "DATABOOK_Q2_2026": {
+   "path": "Lenta_Q22026_DATABOOK.xlsx",
+   "description": "Датабук компании за 2 кв. 2026 (IAS 17 и МСФО 16, полугодия 2010–1П2026, кварталы 1кв2020–2кв2026, долг, операционные данные); опубликован 03.08.2026",
+   "sha256": "0d290ed28fc13a0b44cdf3dd9e0f5dd519b2fa92f9206f4b4d731a01f95b3339",
+   "manifest_sha256": "0d290ed28fc13a0b44cdf3dd9e0f5dd519b2fa92f9206f4b4d731a01f95b3339",
+   "manifest_url": "https://www.lentagroup.ru/upload/iblock/c10/3kxf2clnhyc0d2gz3nc03510z3v6495z/Q22026_LENTA_DATABOOK.xlsx",
+   "manifest_row": "Lenta_Q22026_DATABOOK.xlsx",
+   "hash_matches_manifest": true,
+   "bytes": 1434226
+  },
+  "IFRS_1H2026": {
+   "path": "ifrs_mkpao/ifrs_1H2026.pdf",
+   "description": "Обобщённая промежуточная сокращённая КФО МСФО за 6М2026, обзор ООО «Б1 – Аудит», утверждена СД 31.07.2026",
+   "sha256": "235bdec9366875c0b1e7d410e4b2be15072ecde04d40fd56777947c5f4588797",
+   "manifest_sha256": "235bdec9366875c0b1e7d410e4b2be15072ecde04d40fd56777947c5f4588797",
+   "manifest_url": "(распакован из ifrs_1H2026.zip)",
+   "manifest_row": "ifrs_mkpao/ifrs_1H2026.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 2763894
+  },
+  "IFRS_FY2025": {
+   "path": "ifrs_mkpao/ifrs_FY2025.pdf",
+   "description": "Обобщённая годовая КФО МСФО за 2025, аудит",
+   "sha256": "4864a271babf7b34d17a4220f264bcc4d605f1e39964a65377c5b083c5de53a4",
+   "manifest_sha256": "4864a271babf7b34d17a4220f264bcc4d605f1e39964a65377c5b083c5de53a4",
+   "manifest_url": "(распакован из ifrs_FY2025.zip)",
+   "manifest_row": "ifrs_mkpao/ifrs_FY2025.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 1956214
+  },
+  "IFRS_1H2025": {
+   "path": "ifrs_mkpao/ifrs_1H2025.pdf",
+   "description": "Обобщённая промежуточная КФО МСФО за 6М2025",
+   "sha256": "5b608efb2757407b6230fc0c7e5119acd2d428c5356442a92b8fb75769176e6f",
+   "manifest_sha256": "5b608efb2757407b6230fc0c7e5119acd2d428c5356442a92b8fb75769176e6f",
+   "manifest_url": "(распакован из ifrs_1H2025.zip)",
+   "manifest_row": "ifrs_mkpao/ifrs_1H2025.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 1211923
+  },
+  "IFRS_FY2024": {
+   "path": "ifrs_mkpao/ifrs_FY2024.pdf",
+   "description": "Обобщённая годовая КФО МСФО за 2024, аудит",
+   "sha256": "7b0bad288251b44e792fb9ecffa1638dc993ca80d4b1586b05e1d3d906aa46fc",
+   "manifest_sha256": "7b0bad288251b44e792fb9ecffa1638dc993ca80d4b1586b05e1d3d906aa46fc",
+   "manifest_url": "(распакован из ifrs_FY2024.zip)",
+   "manifest_row": "ifrs_mkpao/ifrs_FY2024.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 2359696
+  },
+  "IFRS_FY2023_V2": {
+   "path": "ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf",
+   "description": "Обобщённая годовая КФО МСФО за 2023, редакция 03.09.2024 (с раскрытием приобретений)",
+   "sha256": "23916ddade6fabb97f790ef79c45d8a5e0f77c70121fea50f60cd7b8035df8d7",
+   "manifest_sha256": "23916ddade6fabb97f790ef79c45d8a5e0f77c70121fea50f60cd7b8035df8d7",
+   "manifest_url": "(распакован из ifrs_FY2023_v2_20240903.zip)",
+   "manifest_row": "ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 1683148
+  },
+  "IFRS_FY2021": {
+   "path": "ifrs_mkpao/ifrs_FY2021.pdf",
+   "description": "Годовая КФО МСФО за 2021 (EN), аудит",
+   "sha256": "068940c25f9e23eaab1702fa7f96d330892c92e8f8b523ff9265cbc6d9d74c9b",
+   "manifest_sha256": "068940c25f9e23eaab1702fa7f96d330892c92e8f8b523ff9265cbc6d9d74c9b",
+   "manifest_url": "(распакован из ifrs_FY2021.zip)",
+   "manifest_row": "ifrs_mkpao/ifrs_FY2021.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 2810521
+  },
+  "ISS_LENT_SEC": {
+   "path": "moex_iss_lent_corp/iss_securities_LENT_2026-09-28.json",
+   "description": "MOEX ISS: карточка бумаги LENT (ISSUESIZE, LISTLEVEL) на 28.09.2026",
+   "sha256": "8683963604c90b3baa4e3941decd9741e1edff4d079837b7edec3b8a4bd6d1c1",
+   "manifest_sha256": "8683963604c90b3baa4e3941decd9741e1edff4d079837b7edec3b8a4bd6d1c1",
+   "manifest_url": "https://iss.moex.com/iss/securities/LENT.json",
+   "manifest_row": "moex_iss_lent_corp/iss_securities_LENT_2026-09-28.json",
+   "hash_matches_manifest": true,
+   "bytes": 9055
+  },
+  "AGM2026_RESULTS": {
+   "path": "lenta_agm2026_results_ru.pdf",
+   "description": "Отчёт об итогах голосования ГЗОСА 25.06.2026 (голосующие акции 111 104 354 2/5)",
+   "sha256": "02ce13d693f1be63c757b894808b020749478d4435863e14c8a710d456e2129a",
+   "manifest_sha256": "02ce13d693f1be63c757b894808b020749478d4435863e14c8a710d456e2129a",
+   "manifest_url": "https://www.lentagroup.ru/upload/iblock/153/qx0msd7vp1g59uxyfjv931vas6ez40a7/otchet-ob-itogah-gzosa-2026.pdf",
+   "manifest_row": "lenta_agm2026_results_ru.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 356250
+  },
+  "ISSUER_REPORT_6M2026_EXTRACT": {
+   "path": "corp_docs/issuer_report_MKPAO_6M2026_sec1_7_extracted.txt",
+   "description": "Отчёт эмитента МКПАО за 6М2026, п. 1.7 (кредиторы, обеспечение) — извлечённый текст из RTF",
+   "sha256": "7f0d7ebc443dd796a417cdb6cdfbc7a38b2088d200bfb2cc0802f81baf85bd6a",
+   "manifest_sha256": "7f0d7ebc443dd796a417cdb6cdfbc7a38b2088d200bfb2cc0802f81baf85bd6a",
+   "manifest_url": "(извлечено из corp_docs/issuer_report_MKPAO_6M2026.rtf)",
+   "manifest_row": "corp_docs/issuer_report_MKPAO_6M2026_sec1_7_extracted.txt",
+   "hash_matches_manifest": true,
+   "bytes": 16000
+  },
+  "PR_OKEY_2026_06_02": {
+   "path": "lentagroup_news/2026-06-02_gruppa-lenta-priobretaet-gipermarkety-o-key.txt",
+   "description": "Пресс-релиз «Группа Лента приобретает гипермаркеты «О’КЕЙ»» 02.06.2026 (выручка «О’КЕЙ» 2025 — 142 млрд; гайденс 2026)",
+   "sha256": "a290a8c65a455bb6a8a96d2796b22ee2042b5229ca945d50cc357757e24dc730",
+   "manifest_sha256": "a290a8c65a455bb6…",
+   "manifest_url": "https://www.lentagroup.ru/ru/media/news-and-press-releases/gruppa-lenta-priobretaet-gipermarkety-o-key/",
+   "manifest_row": "lentagroup_news/2026-06-02_gruppa-lenta-priobretaet-gipermarkety-o-key.html (префикс sha .txt в описании)",
+   "hash_matches_manifest": true,
+   "bytes": 12528
+  },
+  "OKEY_B1P6": {
+   "path": "moex_iss_okey_bonds/RU000A1084E6_description.json",
+   "description": "MOEX ISS: облигация ООО «О’КЕЙ» БО 001Р-06",
+   "sha256": "46c4eeb1d40279a92d922c1b8c17ddde178c1b27369f4743e5cc51ee672a3c5f",
+   "manifest_sha256": "46c4eeb1d40279a92d922c1b8c17ddde178c1b27369f4743e5cc51ee672a3c5f",
+   "manifest_url": "https://iss.moex.com/iss/securities/RU000A1084E6.json?iss.meta=off",
+   "manifest_row": "moex_iss_okey_bonds/RU000A1084E6_description.json",
+   "hash_matches_manifest": true,
+   "bytes": 11968
+  },
+  "OKEY_B1P8": {
+   "path": "moex_iss_okey_bonds/RU000A10CCN3_description.json",
+   "description": "MOEX ISS: облигация ООО «О’КЕЙ» БО 001Р-08",
+   "sha256": "a46ce1bce86a1de2d68f0f29bf71d7c4a27029322a638f5511f20cee61d3af2d",
+   "manifest_sha256": "a46ce1bce86a1de2d68f0f29bf71d7c4a27029322a638f5511f20cee61d3af2d",
+   "manifest_url": "https://iss.moex.com/iss/securities/RU000A10CCN3.json?iss.meta=off",
+   "manifest_row": "moex_iss_okey_bonds/RU000A10CCN3_description.json",
+   "hash_matches_manifest": true,
+   "bytes": 10383
+  },
+  "OKEY_B1P2": {
+   "path": "moex_iss_okey_bonds/RU000A1009Z8_description.json",
+   "description": "MOEX ISS: облигация ООО «О’КЕЙ» БО 001Р-02",
+   "sha256": "fcd6ab3257ce5ac72f506b367f0952cf962ca09a050fc7618f485a133f979d88",
+   "manifest_sha256": "fcd6ab3257ce5ac72f506b367f0952cf962ca09a050fc7618f485a133f979d88",
+   "manifest_url": "https://iss.moex.com/iss/securities/RU000A1009Z8.json?iss.meta=off",
+   "manifest_row": "moex_iss_okey_bonds/RU000A1009Z8_description.json",
+   "hash_matches_manifest": true,
+   "bytes": 12949
+  },
+  "OKEY_B1P4": {
+   "path": "moex_iss_okey_bonds/RU000A102BK7_description.json",
+   "description": "MOEX ISS: облигация ООО «О’КЕЙ» БО 001Р-04",
+   "sha256": "6a865ef490c118c69d3bd9e164062b6ecb0670106e67129ea26104b255ad0e86",
+   "manifest_sha256": "6a865ef490c118c69d3bd9e164062b6ecb0670106e67129ea26104b255ad0e86",
+   "manifest_url": "https://iss.moex.com/iss/securities/RU000A102BK7.json?iss.meta=off",
+   "manifest_row": "moex_iss_okey_bonds/RU000A102BK7_description.json",
+   "hash_matches_manifest": true,
+   "bytes": 12458
+  },
+  "SF_2022_06_21": {
+   "path": "corp_filings_mkpao/2022-06-21_sf21071.pdf",
+   "description": "Сущфакт 21.06.2022: размещение 18 399 265 акций по 1 087 ₽ в оплату «Утконоса» (20 млрд)",
+   "sha256": "bbafabe2f45f647c66d9d2595f9663fc9d25a13beabfdc47b554015fe59f60a7",
+   "manifest_sha256": "bbafabe2f45f647c66d9d2595f9663fc9d25a13beabfdc47b554015fe59f60a7",
+   "manifest_url": "(см. индекс, id 21071)",
+   "manifest_row": "corp_filings_mkpao/2022-06-21_sf21071.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 20713
+  },
+  "SF_2021_12_16": {
+   "path": "corp_filings_mkpao/2021-12-16_sf20647.pdf",
+   "description": "Сущфакт 16.12.2021: сделка «Утконос», база цены 20 млрд ₽",
+   "sha256": "2e370365d009f494f5b4a9ab468ef6763a9e2af5177c7f1f7c9bc6af7dd29ddf",
+   "manifest_sha256": "2e370365d009f494f5b4a9ab468ef6763a9e2af5177c7f1f7c9bc6af7dd29ddf",
+   "manifest_url": "(см. индекс, id 20647)",
+   "manifest_row": "corp_filings_mkpao/2021-12-16_sf20647.pdf",
+   "hash_matches_manifest": true,
+   "bytes": 23294
+  }
+ },
+ "research_files": {
+  "ISS_HIST_LENT": {
+   "path_research": "research/_work05/LENT_TQBR.json",
+   "sha256": "06bfbaa52b2f042d79216b000651ec8689703c84bc0ba13cf8da0ec22b5047c4",
+   "description": "MOEX ISS история LENT TQBR (сырой ответ, research/_work05)"
+  },
+  "ISS_HIST_X5": {
+   "path_research": "research/_work05/X5_TQBR.json",
+   "sha256": "e9e89516da42063c62398f639e8ad797b67cf9707da7941eb965094671814dc3",
+   "description": "MOEX ISS история X5 TQBR (сырой ответ, research/_work05)"
+  },
+  "ISS_HIST_MGNT": {
+   "path_research": "research/_work05/MGNT_TQBR.json",
+   "sha256": "523784a6d4a12fd302f346a097941eaec1c9349b5b7f17c165852b07d1fbdea3",
+   "description": "MOEX ISS история MGNT TQBR (сырой ответ, research/_work05)"
+  },
+  "SELLSIDE_CSV": {
+   "path_research": "research/lent_sellside_targets.csv",
+   "sha256": "2c679c3602aaab29fc14fe05e7afead6402965fd03b9a3f96ced6db5d0500c3e",
+   "description": "цели инвестдомов с датами (сводка research/05; первоисточники — ссылки в CSV)"
+  }
+ },
+ "derived_files": {
+  "accounting_base.json": "0f19f2f5929fde08da45f22a20db93d36d9ae65adfb87fdcf31ddaf839190a96",
+  "anchor.json": "7e8e97a96cf4491420c09f676a948e4976a80c2e1a9388559b2d3fe978ce9d1a",
+  "shares.json": "18a3bb0acabf6676fa065d53537e117ed63865e8957cb2254d2362d99d99af3b",
+  "debt.json": "98a4f186fcff771593911676b0a3a811dc9c8c8fc932014b327a7cc06de26608",
+  "bridge_balance.json": "3133398f352eb42d0b0d718fb57fe74e49ddb8f89ab119632c5fdcbd0305bdcf",
+  "inorganic.json": "53fa3ca335cda896dd844766e7176975e9b646f0bd8e2f2a3cb3b6b3bdea04a5",
+  "peers.json": "9f32d5a861d398fbf4741bf7c0b1344baacb30c37d0cdcb72b1993854a855ee4"
+ },
+ "verification": {
+  "note_numbers": 230,
+  "note_quotes": 17,
+  "ifrs16_databook_cells_checked": 369,
+  "ifrs16_databook_cells_found": 352
+ },
+ "not_collected": [
+  "МСФО за 1П2019, 1П2020, 1П2022 и отдельная КФО 2022 (в файлах МКПАО нет; числа — датабук)",
+  "отчётность O'KEY Group / ООО «О’КЕЙ» по полугодиям 2025 (есть только годовые 142 млрд в пресс-релизе)",
+  "выручка «ОБИ Россия» до консолидации",
+  "LEGALCLOSEPRICE в primary-файле ISS истории LENT (взят сырой ответ research/_work05)",
+  "databook X5 (2026_08) и Magnit Databook 1H 2026 — в primary отсутствуют; строка аналогов опирается на транскрипцию 850oa"
+ ]
+}

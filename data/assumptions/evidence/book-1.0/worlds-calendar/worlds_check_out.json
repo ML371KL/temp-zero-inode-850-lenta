@@ -1,0 +1,656 @@
+{
+ "checks": [
+  {
+   "name": "sha256 worlds_source.json",
+   "ok": true,
+   "detail": "7296567d5200b5599efd0989de6ed8c8461d56c5c5dda244ab7d622303969fec"
+  },
+  {
+   "name": "sha256 worlds_source.csv",
+   "ok": true,
+   "detail": "2faae142d447a309daaf43eeea0a928db94ae2dc90ff1e0b21771703cd4a8dfc"
+  },
+  {
+   "name": "sha256 worlds_inputs.yaml",
+   "ok": true,
+   "detail": "1560bdbdb73374b5ecb77197f7705f95e0e9d00fc7b1878a2ac8c7304a8b778f"
+  },
+  {
+   "name": "sha256 worlds_recipe.py",
+   "ok": true,
+   "detail": "3e286c768e7f2ad94faec40930641fc2c54533cf4b20741fe5cfff8590ec7013"
+  },
+  {
+   "name": "sha256 WORLDS-RECIPE.md",
+   "ok": true,
+   "detail": "0b1824c22a681ba503c742e2d5270b76ab6fc0430561ece59c944f5cb12253f1"
+  },
+  {
+   "name": "sha256 build_assumptions.py",
+   "ok": true,
+   "detail": "f9d4dc6d25a8ecbd65ac1e3a7f6cc98e18ad2a9adabdef8dfb938ad53913420b"
+  },
+  {
+   "name": "worlds_source.json начинается с 7296567d",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "worlds_recipe.py --check: код 0 и «воспроизведено: 63 строк»",
+   "ok": true,
+   "detail": "воспроизведено: 63 строк, кривые ['H', 'M', 'N'] — совпадают с worlds_source.json"
+  },
+  {
+   "name": "кандидат рецепта = канон по тексту json (без учёта CRLF/LF)",
+   "ok": true,
+   "detail": "кандидат (forward_bei, поправка ликвидности 0.0 п.п.) записан: cand"
+  },
+  {
+   "name": "кандидат рецепта = канон csv побайтно",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "build_assumptions.py на шаблоне-заглушке: код 0",
+   "ok": true,
+   "detail": "assumptions.yaml written: 6484 chars\nassumptions.json written: 8201 chars; version 1.0"
+  },
+  {
+   "name": "assumptions.json = assumptions.yaml (с точностью до строковых ключей JSON)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "миры N, H, M и только они",
+   "ok": true,
+   "detail": "['H', 'M', 'N']"
+  },
+  {
+   "name": "поля мира N = схема ядра",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "name": "поля мира H = схема ядра",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "name": "поля мира M = схема ядра",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "name": "lt.inflation N/H/M = 0,040 / 0,055 / 0,098",
+   "ok": true,
+   "detail": "{'N': 0.04, 'H': 0.055, 'M': 0.098}"
+  },
+  {
+   "name": "zero_curve.LT N/H/M = 0,090 / 0,127 / 0,167",
+   "ok": true,
+   "detail": "{'N': 0.09, 'H': 0.127, 'M': 0.167}"
+  },
+  {
+   "name": "joint после сборки = фрагмент",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "веса фрагмента = веса записи worlds_source.json",
+   "ok": true,
+   "detail": "{'N': 0.35, 'H': 0.45, 'M': 0.2} против {'N': 0.35, 'H': 0.45, 'M': 0.2}"
+  },
+  {
+   "name": "блок worlds = блок собранной книги-источника",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "четыре ключа joint = книга-источник",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "A-P1m: вменённые веса 10/25/65 дают ≈15,04 % (линейно)",
+   "ok": true,
+   "detail": "0.15044"
+  },
+  {
+   "name": "набор миров односторонний: рыночная 10-летка достигается только при весе M = 100 %",
+   "ok": true,
+   "detail": "нужный вес M 1.0000"
+  }
+ ],
+ "ok": true,
+ "inputs": {
+  "worlds_dir": "worlds",
+  "fragment": "worlds-calendar.yaml",
+  "transfer": "transfer.yaml"
+ },
+ "hashes": {
+  "worlds_source.json": {
+   "sha256": "7296567d5200b5599efd0989de6ed8c8461d56c5c5dda244ab7d622303969fec",
+   "expected": "7296567d5200b5599efd0989de6ed8c8461d56c5c5dda244ab7d622303969fec",
+   "match": true,
+   "crlf_lines": 1056,
+   "bare_lf_lines": 0,
+   "sha256_if_normalized_to_lf": "99cdd4ff6c5b716a216abe03789d80005471aaa1e61c328a765382b7b5bda1d9"
+  },
+  "worlds_source.csv": {
+   "sha256": "2faae142d447a309daaf43eeea0a928db94ae2dc90ff1e0b21771703cd4a8dfc",
+   "expected": "2faae142d447a309daaf43eeea0a928db94ae2dc90ff1e0b21771703cd4a8dfc",
+   "match": true,
+   "crlf_lines": 64,
+   "bare_lf_lines": 0,
+   "sha256_if_normalized_to_lf": "15a742ad61f349c901bb82e4f6409512196b94c061a1b249abfd2aa745bd67ed"
+  },
+  "worlds_inputs.yaml": {
+   "sha256": "1560bdbdb73374b5ecb77197f7705f95e0e9d00fc7b1878a2ac8c7304a8b778f",
+   "expected": "1560bdbdb73374b5ecb77197f7705f95e0e9d00fc7b1878a2ac8c7304a8b778f",
+   "match": true,
+   "crlf_lines": 154,
+   "bare_lf_lines": 0,
+   "sha256_if_normalized_to_lf": "d665be7bc766ee6fc449b2f52e502e1614c1f60bcbddef44175d1a1a12fa6ce6"
+  },
+  "worlds_recipe.py": {
+   "sha256": "3e286c768e7f2ad94faec40930641fc2c54533cf4b20741fe5cfff8590ec7013",
+   "expected": "3e286c768e7f2ad94faec40930641fc2c54533cf4b20741fe5cfff8590ec7013",
+   "match": true,
+   "crlf_lines": 766,
+   "bare_lf_lines": 0,
+   "sha256_if_normalized_to_lf": "6d2c6a41d9739e30cbb6de0f5d441b83dc1520b09a7ebbbf6f20aadd6472c8e2"
+  },
+  "WORLDS-RECIPE.md": {
+   "sha256": "0b1824c22a681ba503c742e2d5270b76ab6fc0430561ece59c944f5cb12253f1",
+   "expected": "0b1824c22a681ba503c742e2d5270b76ab6fc0430561ece59c944f5cb12253f1",
+   "match": true,
+   "crlf_lines": 0,
+   "bare_lf_lines": 129,
+   "sha256_if_normalized_to_lf": "0b1824c22a681ba503c742e2d5270b76ab6fc0430561ece59c944f5cb12253f1"
+  },
+  "build_assumptions.py": {
+   "sha256": "f9d4dc6d25a8ecbd65ac1e3a7f6cc98e18ad2a9adabdef8dfb938ad53913420b",
+   "expected": "f9d4dc6d25a8ecbd65ac1e3a7f6cc98e18ad2a9adabdef8dfb938ad53913420b",
+   "match": true,
+   "crlf_lines": 0,
+   "bare_lf_lines": 62,
+   "sha256_if_normalized_to_lf": "f9d4dc6d25a8ecbd65ac1e3a7f6cc98e18ad2a9adabdef8dfb938ad53913420b"
+  }
+ },
+ "recipe": {
+  "check_output": "воспроизведено: 63 строк, кривые ['H', 'M', 'N'] — совпадают с worlds_source.json",
+  "candidate_output": "кандидат (forward_bei, поправка ликвидности 0.0 п.п.) записан: cand",
+  "python": "3.12.10",
+  "platform": "win32",
+  "candidate_json_bytes_equal": true,
+  "candidate_json_text_equal": true,
+  "candidate_csv_bytes_equal": true,
+  "note": "json кандидата пишется Path.write_text: на Windows CRLF (байты = канон), на Linux LF (смысл = канон, sha256 другой); csv пишется csv-модулем с \\r\\n на любой платформе"
+ },
+ "build": {
+  "output": "assumptions.yaml written: 6484 chars\nassumptions.json written: 8201 chars; version 1.0",
+  "external_compare": {
+   "skipped": false,
+   "worlds_equal": true,
+   "joint_equal": true
+  },
+  "lt_inflation": {
+   "N": 0.04,
+   "H": 0.055,
+   "M": 0.098
+  },
+  "zero_curve_LT": {
+   "N": 0.09,
+   "H": 0.127,
+   "M": 0.167
+  }
+ },
+ "annual_table": {
+  "N": {
+   "key": {
+    "2П2026": 13.9,
+    "2027": 12.25,
+    "2028": 9.75,
+    "2029": 8.5,
+    "2030": 8.0,
+    "2031–33": 8.0,
+    "2034–36": 8.0,
+    "2031–36": 8.0
+   },
+   "cpi_avg": {
+    "2П2026": 6.5,
+    "2027": 5.3,
+    "2028": 4.2,
+    "2029": 4.0,
+    "2030": 4.0,
+    "2031–33": 4.0,
+    "2034–36": 4.0,
+    "2031–36": 4.0
+   },
+   "food_avg": {
+    "2П2026": 5.1,
+    "2027": 5.35,
+    "2028": 4.4,
+    "2029": 4.3,
+    "2030": 4.3,
+    "2031–33": 4.3,
+    "2034–36": 4.3,
+    "2031–36": 4.3
+   },
+   "wage": {
+    "2П2026": 8.5,
+    "2027": 7.5,
+    "2028": 7.0,
+    "2029": 6.5,
+    "2030": 6.3,
+    "2031–33": 6.3,
+    "2034–36": 6.3,
+    "2031–36": 6.3
+   },
+   "ofz_10y": {
+    "2П2026": 16.4,
+    "2027": 13.755,
+    "2028": 11.555,
+    "2029": 10.36,
+    "2030": 9.72,
+    "2031–33": 9.2,
+    "2034–36": 8.957,
+    "2031–36": 9.078
+   },
+   "cpi_eop": {
+    "2П2026": 6.6,
+    "2027": 4.85,
+    "2028": 4.1,
+    "2029": 4.0,
+    "2030": 4.0,
+    "2031–33": 4.0,
+    "2034–36": 4.0,
+    "2031–36": 4.0
+   }
+  },
+  "H": {
+   "key": {
+    "2П2026": 14.0,
+    "2027": 14.0,
+    "2028": 12.75,
+    "2029": 11.75,
+    "2030": 11.125,
+    "2031–33": 10.5,
+    "2034–36": 10.5,
+    "2031–36": 10.5
+   },
+   "cpi_avg": {
+    "2П2026": 6.6,
+    "2027": 6.65,
+    "2028": 6.25,
+    "2029": 5.7,
+    "2030": 5.5,
+    "2031–33": 5.5,
+    "2034–36": 5.5,
+    "2031–36": 5.5
+   },
+   "food_avg": {
+    "2П2026": 5.3,
+    "2027": 7.1,
+    "2028": 6.75,
+    "2029": 6.2,
+    "2030": 6.0,
+    "2031–33": 6.0,
+    "2034–36": 6.0,
+    "2031–36": 6.0
+   },
+   "wage": {
+    "2П2026": 9.5,
+    "2027": 9.5,
+    "2028": 8.8,
+    "2029": 8.0,
+    "2030": 7.5,
+    "2031–33": 7.5,
+    "2034–36": 7.5,
+    "2031–36": 7.5
+   },
+   "ofz_10y": {
+    "2П2026": 16.44,
+    "2027": 15.485,
+    "2028": 14.485,
+    "2029": 13.805,
+    "2030": 13.36,
+    "2031–33": 12.923,
+    "2034–36": 12.65,
+    "2031–36": 12.787
+   },
+   "cpi_eop": {
+    "2П2026": 7.0,
+    "2027": 6.65,
+    "2028": 6.15,
+    "2029": 5.6,
+    "2030": 5.5,
+    "2031–33": 5.5,
+    "2034–36": 5.5,
+    "2031–36": 5.5
+   }
+  },
+  "M": {
+   "key": {
+    "2П2026": 14.0,
+    "2027": 15.15,
+    "2028": 16.9,
+    "2029": 17.45,
+    "2030": 17.5,
+    "2031–33": 17.0,
+    "2034–36": 17.0,
+    "2031–36": 17.0
+   },
+   "cpi_avg": {
+    "2П2026": 6.5,
+    "2027": 5.6,
+    "2028": 7.4,
+    "2029": 9.7,
+    "2030": 10.5,
+    "2031–33": 11.433,
+    "2034–36": 9.933,
+    "2031–36": 10.683
+   },
+   "food_avg": {
+    "2П2026": 5.2,
+    "2027": 5.95,
+    "2028": 7.9,
+    "2029": 10.2,
+    "2030": 11.0,
+    "2031–33": 11.933,
+    "2034–36": 10.433,
+    "2031–36": 11.183
+   },
+   "wage": {
+    "2П2026": 9.0,
+    "2027": 7.55,
+    "2028": 9.25,
+    "2029": 11.45,
+    "2030": 12.1,
+    "2031–33": 12.933,
+    "2034–36": 11.433,
+    "2031–36": 12.183
+   },
+   "ofz_10y": {
+    "2П2026": 16.46,
+    "2027": 16.705,
+    "2028": 16.82,
+    "2029": 16.805,
+    "2030": 16.785,
+    "2031–33": 16.693,
+    "2034–36": 16.687,
+    "2031–36": 16.69
+   },
+   "cpi_eop": {
+    "2П2026": 6.8,
+    "2027": 5.4,
+    "2028": 8.15,
+    "2029": 10.1,
+    "2030": 10.55,
+    "2031–33": 11.5,
+    "2034–36": 9.833,
+    "2031–36": 10.667
+   }
+  }
+ },
+ "market_implied_10y": {
+  "market_10y": 0.1646,
+  "fair_10y_by_world": {
+   "N": 0.09849999999999999,
+   "H": 0.1344,
+   "M": 0.1646
+  },
+  "analytical": {
+   "weights": {
+    "N": 0.35,
+    "H": 0.45,
+    "M": 0.2
+   },
+   "linear": 0.127875,
+   "discount_factor_mix": 0.12502292901998935,
+   "gap_to_market_linear": -0.03672500000000001
+  },
+  "market_implied": {
+   "weights": {
+    "N": 0.1,
+    "H": 0.25,
+    "M": 0.65
+   },
+   "linear": 0.15044,
+   "discount_factor_mix": 0.1479882446648364,
+   "gap_to_market_linear": -0.014160000000000006
+  },
+  "m_weight_needed_linear": 1.0
+ },
+ "terminal_real_r_u_pct": {
+  "0.500": {
+   "premium_pp": 2.785,
+   "N": 7.486,
+   "H": 9.464,
+   "M": 8.821
+  },
+  "0.520": {
+   "premium_pp": 2.896,
+   "N": 7.593,
+   "H": 9.57,
+   "M": 8.922
+  },
+  "0.550": {
+   "premium_pp": 3.064,
+   "N": 7.753,
+   "H": 9.728,
+   "M": 9.074
+  },
+  "0.580": {
+   "premium_pp": 3.231,
+   "N": 7.914,
+   "H": 9.887,
+   "M": 9.226
+  },
+  "0.601": {
+   "premium_pp": 3.348,
+   "N": 8.027,
+   "H": 9.998,
+   "M": 9.333
+  },
+  "0.650": {
+   "premium_pp": 3.621,
+   "N": 8.289,
+   "H": 10.256,
+   "M": 9.582
+  },
+  "0.700": {
+   "premium_pp": 3.899,
+   "N": 8.557,
+   "H": 10.52,
+   "M": 9.835
+  }
+ },
+ "fair_zero_curve_today": {
+  "N": {
+   "1": 13.16,
+   "3": 11.55,
+   "5": 10.61,
+   "10": 9.85
+  },
+  "H": {
+   "1": 13.88,
+   "3": 14.43,
+   "5": 14.05,
+   "10": 13.44
+  },
+  "M": {
+   "1": 13.6,
+   "3": 15.48,
+   "5": 16.14,
+   "10": 16.46
+  }
+ },
+ "m_inflation": {
+  "source": "forward_bei",
+  "curve_date": "2026-09-18",
+  "ofz_in_date": "2026-09-18",
+  "index_lag_months": 3,
+  "liquidity_adj_pp": 0.0,
+  "pi_ss": 9.8,
+  "pi_ss_unrounded": 9.7996,
+  "first_market_period": "2027H1"
+ },
+ "probability_ranges_record": {
+  "N": [
+   0.25,
+   0.4
+  ],
+  "H": [
+   0.4,
+   0.5
+  ],
+  "M": [
+   0.15,
+   0.25
+  ]
+ },
+ "transfer_cost_of_error": {
+  "method": "% EV = эффект оси в ₽ точки книги-источника / цена 1 % EV её точки; ₽ «Ленты» = % EV × цена 1 % EV «Ленты». Допущение переноса: EV обеих сетей одинаково (в %) реагирует на макро-механику миров (перенос инфляции в чек k 0,55 против 0,60, рост сети выше у «Ленты» — эффект у «Ленты», скорее, больше). Неопределённость переноса ±50 %.\n",
+  "rows": [
+   {
+    "name": "A-P1 Веса миров (25/50/25 … 40/45/15)",
+    "paths": [
+     "joint.world_prob"
+    ],
+    "pct_ev_low": -0.659,
+    "pct_ev_high": 0.293,
+    "lenta_rub_low": -18,
+    "lenta_rub_high": 8,
+    "lenta_rub_low_range": [
+     -18,
+     -17
+    ],
+    "lenta_rub_high_range": [
+     8,
+     8
+    ],
+    "lenta_rub_low_x05_x15": [
+     -26,
+     -9
+    ],
+    "lenta_rub_high_x05_x15": [
+     4,
+     12
+    ],
+    "basis": "точка 1 407 / 1 485 против 1 461 (sensitivities[path=joint.world_prob])"
+   },
+   {
+    "name": "A-M6 Инфляция мира M (сдвиг −0,3…+0,5 п.п.)",
+    "paths": [
+     "worlds.M.cpi",
+     "worlds.M.food_cpi",
+     "worlds.M.lt.inflation"
+    ],
+    "pct_ev_low": -1.049,
+    "pct_ev_high": 1.939,
+    "lenta_rub_low": -28,
+    "lenta_rub_high": 52,
+    "lenta_rub_low_range": [
+     -28,
+     -27
+    ],
+    "lenta_rub_high_range": [
+     51,
+     53
+    ],
+    "lenta_rub_low_x05_x15": [
+     -42,
+     -14
+    ],
+    "lenta_rub_high_x05_x15": [
+     26,
+     77
+    ],
+    "basis": "точка 1 375 / 1 620 против 1 461 (sensitivities[path=worlds.M.cpi])"
+   },
+   {
+    "name": "A-P1c Вес своего макро-взгляда λ (0,25 … 0,75)",
+    "paths": [
+     "joint.own_macro_confidence"
+    ],
+    "pct_ev_low": -0.61,
+    "pct_ev_high": 0.61,
+    "lenta_rub_low": -16,
+    "lenta_rub_high": 16,
+    "lenta_rub_low_range": [
+     -17,
+     -16
+    ],
+    "lenta_rub_high_range": [
+     16,
+     17
+    ],
+    "lenta_rub_low_x05_x15": [
+     -24,
+     -8
+    ],
+    "lenta_rub_high_x05_x15": [
+     8,
+     24
+    ],
+    "basis": "по определению линейно: ±0,25 × вклад взгляда на ставки 200 ₽"
+   },
+   {
+    "name": "Ось «взгляд на инфляцию и ставки» целиком (λ 0 … 1)",
+    "paths": [
+     "joint.own_macro_confidence"
+    ],
+    "pct_ev_low": -1.22,
+    "pct_ev_high": 1.22,
+    "lenta_rub_low": -32,
+    "lenta_rub_high": 32,
+    "lenta_rub_low_range": [
+     -33,
+     -32
+    ],
+    "lenta_rub_high_range": [
+     32,
+     33
+    ],
+    "lenta_rub_low_x05_x15": [
+     -49,
+     -16
+    ],
+    "lenta_rub_high_x05_x15": [
+     16,
+     49
+    ],
+    "basis": "низ 1 361 / верх 1 561 против точки 1 461"
+   },
+   {
+    "name": "A-V5 контроль: 3 года по рыночной кривой (в расчёте не используется)",
+    "paths": [
+     "valuation.market_curve_years"
+    ],
+    "pct_ev_low": 0.0,
+    "pct_ev_high": -1.854,
+    "lenta_rub_low": 0,
+    "lenta_rub_high": -49,
+    "lenta_rub_low_range": [
+     0,
+     0
+    ],
+    "lenta_rub_high_range": [
+     -50,
+     -48
+    ],
+    "lenta_rub_low_x05_x15": [
+     0,
+     0
+    ],
+    "lenta_rub_high_x05_x15": [
+     -74,
+     -25
+    ],
+    "basis": "1 461 → 1 309 (sensitivities[path=valuation.market_curve_years])"
+   }
+  ],
+  "lenta_rub_per_1pct_ev": 26.6
+ }
+}

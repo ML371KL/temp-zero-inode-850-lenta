@@ -1,0 +1,445 @@
+{
+ "status": "200",
+ "meta": {
+  "total": 15,
+  "limit": 100
+ },
+ "results": {
+  "vacancies": [
+   {
+    "vacancy": {
+     "id": "bf3b7488-ac4d-11f1-86d3-9d322d9153e2",
+     "creation-date": "2026-09-09",
+     "date_modify": "2026-09-21T16:20:49+0300",
+     "salary_min": 7600,
+     "salary_max": 7600,
+     "currency": "«руб.»",
+     "job-name": "укладчик-упаковщик",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "4700000000000",
+      "name": "Ленинградская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/bf3b7488-ac4d-11f1-86d3-9d322d9153e2"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "bb958018-54ef-11f1-ae4c-b7d71698c4cb",
+     "creation-date": "2026-05-21",
+     "date_modify": "2026-09-21T16:20:44+0300",
+     "salary_min": 31000,
+     "salary_max": 34000,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Ничего не выбрано",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 2,
+     "region": {
+      "region_code": "7800000000000",
+      "name": "Город Санкт-Петербург"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/bb958018-54ef-11f1-ae4c-b7d71698c4cb"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "51cdf488-b045-11f1-b99e-4972ddb33ebb",
+     "creation-date": "2026-09-14",
+     "date_modify": "2026-09-15T07:28:32+0300",
+     "salary_min": 38000,
+     "salary_max": 40500,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 3,
+     "region": {
+      "region_code": "7300000000000",
+      "name": "Ульяновская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/51cdf488-b045-11f1-b99e-4972ddb33ebb"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "927b6eb8-504e-11f1-a502-f17e9abd8b94",
+     "creation-date": "2026-05-15",
+     "date_modify": "2026-09-14T14:43:25+0300",
+     "salary_min": 35000,
+     "salary_max": 37500,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 3,
+     "region": {
+      "region_code": "7600000000000",
+      "name": "Ярославская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/927b6eb8-504e-11f1-a502-f17e9abd8b94"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "dbfc7980-45e1-11f0-bd05-e7d0d2cf29b1",
+     "creation-date": "2025-06-10",
+     "date_modify": "2026-09-14T14:39:09+0300",
+     "salary_min": 38000,
+     "salary_max": 40500,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Полный рабочий день",
+     "work_places": 1,
+     "region": {
+      "region_code": "6300000000000",
+      "name": "Самарская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/dbfc7980-45e1-11f0-bd05-e7d0d2cf29b1"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "8ea82208-7fe0-11ef-a4c4-cb26dff57dd7",
+     "creation-date": "2024-10-01",
+     "date_modify": "2026-09-14T14:39:09+0300",
+     "salary_min": 38000,
+     "salary_max": 40500,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Полный рабочий день",
+     "work_places": 1,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/8ea82208-7fe0-11ef-a4c4-cb26dff57dd7"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "265e9fd8-ad15-11f1-8d37-55b80388246e",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:08+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/265e9fd8-ad15-11f1-8d37-55b80388246e"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "10f81bd8-ad15-11f1-8d89-6d5405682ae8",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:07+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/10f81bd8-ad15-11f1-8d89-6d5405682ae8"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "f970b3a8-ad14-11f1-afa4-fb20fcdf567f",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:06+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/f970b3a8-ad14-11f1-afa4-fb20fcdf567f"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "c42d2488-ad14-11f1-afa4-fb20fcdf567f",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:05+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/c42d2488-ad14-11f1-afa4-fb20fcdf567f"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "df41ab18-ad14-11f1-8d37-55b80388246e",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:05+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/df41ab18-ad14-11f1-8d37-55b80388246e"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "b7d17998-acdb-11f1-b4d4-df7c12e4b47b",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:04+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/b7d17998-acdb-11f1-b4d4-df7c12e4b47b"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "dc3d0d88-acdb-11f1-8842-419bde385fdf",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:03+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/dc3d0d88-acdb-11f1-8842-419bde385fdf"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "f88a3b28-acdb-11f1-b4d4-df7c12e4b47b",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:03+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/f88a3b28-acdb-11f1-b4d4-df7c12e4b47b"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "173025d8-acdc-11f1-b4d4-df7c12e4b47b",
+     "creation-date": "2026-09-10",
+     "date_modify": "2026-09-14T14:39:02+0300",
+     "salary_min": 33000,
+     "salary_max": 34200,
+     "currency": "«руб.»",
+     "job-name": "Укладчик товара",
+     "typicalPosition": "Упаковщик-фасовщик",
+     "code_profession": "105173",
+     "schedule": "Неполный рабочий день/неполная рабочая неделя",
+     "work_places": 1,
+     "region": {
+      "region_code": "5000000000000",
+      "name": "Московская область"
+     },
+     "company": {
+      "inn": "7810495210",
+      "ogrn": "1079847078453",
+      "kpp": "781001001",
+      "name": "ООО \"ДРОГЕРИ РИТЕЙЛ\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1079847078453/173025d8-acdc-11f1-b4d4-df7c12e4b47b"
+    }
+   }
+  ]
+ }
+}

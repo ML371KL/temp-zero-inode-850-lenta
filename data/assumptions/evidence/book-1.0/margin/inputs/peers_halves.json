@@ -1,0 +1,172 @@
+{
+ "what": "ряды EBITDA до МСФО 16 Магнита (полугодия) и X5 (кварталы, годы) — только для сверки σ/ρ и сезонности; ядро Ленты их не читает",
+ "hygiene": "публичные отчётные данные компаний-аналогов (X5, Магнит, «Лента») со ссылкой на отчёты эмитентов; в публичном репозитории допустимы — решение ведущего F33 (разрешение — tests/test_public_hygiene.py); числа оценки книги-источника сюда не входят",
+ "sources": {
+  "magnit": {
+   "file": "magnit-850oa/data/assumptions/evidence/agent-margin/magnit_ias17.json (датабук Магнита 1П2026, P&L, блок IAS 17; 2П = FY − 1П)",
+   "sha256": "0bf328443f91bef60f702c17306c6350a8376f927b0188577fc045e51ec33310"
+  },
+  "x5": {
+   "file": "magnit-850oa/data/assumptions/evidence/book-1.4/beta/inputs/pl_ratios.json → X5 (X5 databook 2026_08_financial_and_operating_results_q2_2026.xlsx, 'Profit and Loss' r8, IAS 17)",
+   "sha256": "937ab055a22227f0172326b0f0869b29f6b403b9357ef214e1a1d19d4762a33b"
+  }
+ },
+ "magnit_halves": {
+  "2017H1": {
+   "revenue_bn": 555.0248,
+   "ebitda_bn": 48.7355
+  },
+  "2017H2": {
+   "revenue_bn": 588.2896,
+   "ebitda_bn": 42.9085
+  },
+  "2018H1": {
+   "revenue_bn": 595.2625,
+   "ebitda_bn": 44.7641
+  },
+  "2018H2": {
+   "revenue_bn": 641.7529,
+   "ebitda_bn": 44.7934
+  },
+  "2019H1": {
+   "revenue_bn": 657.9166,
+   "ebitda_bn": 43.043
+  },
+  "2019H2": {
+   "revenue_bn": 710.7888,
+   "ebitda_bn": 40.069
+  },
+  "2020H1": {
+   "revenue_bn": 763.3612,
+   "ebitda_bn": 53.2203
+  },
+  "2020H2": {
+   "revenue_bn": 790.4161,
+   "ebitda_bn": 56.1902
+  },
+  "2021H1": {
+   "revenue_bn": 822.2304,
+   "ebitda_bn": 57.9285
+  },
+  "2021H2": {
+   "revenue_bn": 1033.8485,
+   "ebitda_bn": 75.2296
+  },
+  "2022H1": {
+   "revenue_bn": 1136.2658,
+   "ebitda_bn": 80.1046
+  },
+  "2022H2": {
+   "revenue_bn": 1215.7306,
+   "ebitda_bn": 80.404
+  },
+  "2023H1": {
+   "revenue_bn": 1229.456,
+   "ebitda_bn": 81.8038
+  },
+  "2023H2": {
+   "revenue_bn": 1315.2328,
+   "ebitda_bn": 84.4526
+  },
+  "2024H1": {
+   "revenue_bn": 1460.0583,
+   "ebitda_bn": 77.3394
+  },
+  "2024H2": {
+   "revenue_bn": 1583.3752,
+   "ebitda_bn": 94.558
+  },
+  "2025H1": {
+   "revenue_bn": 1673.2236,
+   "ebitda_bn": 85.6276
+  },
+  "2025H2": {
+   "revenue_bn": 1836.0019,
+   "ebitda_bn": 83.6484
+  },
+  "2026H1": {
+   "revenue_bn": 1887.1879,
+   "ebitda_bn": 95.9866
+  }
+ },
+ "x5_quarters": {
+  "2023Q1": {
+   "revenue_bn": 696.364,
+   "ebitda_bn": 39.634
+  },
+  "2023Q2": {
+   "revenue_bn": 772.043,
+   "ebitda_bn": 60.991
+  },
+  "2023Q3": {
+   "revenue_bn": 796.236,
+   "ebitda_bn": 61.446
+  },
+  "2023Q4": {
+   "revenue_bn": 881.216,
+   "ebitda_bn": 53.366
+  },
+  "2024Q1": {
+   "revenue_bn": 886.22,
+   "ebitda_bn": 55.436
+  },
+  "2024Q2": {
+   "revenue_bn": 965.491,
+   "ebitda_bn": 72.159
+  },
+  "2024Q3": {
+   "revenue_bn": 978.556,
+   "ebitda_bn": 71.278
+  },
+  "2024Q4": {
+   "revenue_bn": 1077.78,
+   "ebitda_bn": 52.934
+  },
+  "2025Q1": {
+   "revenue_bn": 1069.786,
+   "ebitda_bn": 49.981
+  },
+  "2025Q2": {
+   "revenue_bn": 1174.206,
+   "ebitda_bn": 72.773
+  },
+  "2025Q3": {
+   "revenue_bn": 1160.077,
+   "ebitda_bn": 71.708
+  },
+  "2025Q4": {
+   "revenue_bn": 1237.965,
+   "ebitda_bn": 78.647
+  },
+  "2026Q1": {
+   "revenue_bn": 1190.606,
+   "ebitda_bn": 62.408
+  },
+  "2026Q2": {
+   "revenue_bn": 1289.907,
+   "ebitda_bn": 74.258
+  }
+ },
+ "x5_years": {
+  "2021": {
+   "revenue_bn": 2204.814,
+   "ebitda_bn": 161.286
+  },
+  "2022": {
+   "revenue_bn": 2605.206,
+   "ebitda_bn": 187.827
+  },
+  "2023": {
+   "revenue_bn": 3145.859,
+   "ebitda_bn": 215.437
+  },
+  "2024": {
+   "revenue_bn": 3908.047,
+   "ebitda_bn": 251.807
+  },
+  "2025": {
+   "revenue_bn": 4642.034,
+   "ebitda_bn": 273.109
+  }
+ }
+}

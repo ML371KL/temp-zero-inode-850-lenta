@@ -1,0 +1,660 @@
+{
+ "schema": "lenta-book-1.0-valuation-market-v1",
+ "sources": {
+  "iss_live_2026-09": {
+   "file": "book-draft/evidence/book-1.0/valuation/inputs/iss_LENT_hist_2026-09-01_2026-09-25.json",
+   "sha256": "385632cd001ac7ac14042a60e0e9689ccc6e16295aae72298d0eb44bda10fe5c"
+  },
+  "iss_research_LENT": {
+   "file": "research/_work05/LENT_TQBR.json",
+   "sha256": "06bfbaa52b2f042d79216b000651ec8689703c84bc0ba13cf8da0ec22b5047c4"
+  },
+  "iss_primary_LENT_close": {
+   "file": "reference/primary/moex_iss_lent_corp/iss_history_LENT_2026-06-26_2026-09-25.json",
+   "sha256": "9ba00d7fd3583f669d09e1bdf42c7b725276e24e7442dfdcc13efaded89fa5c2"
+  },
+  "iss_research_MGNT": {
+   "file": "research/_work05/MGNT_TQBR.json",
+   "sha256": "523784a6d4a12fd302f346a097941eaec1c9349b5b7f17c165852b07d1fbdea3"
+  },
+  "sellside_csv": {
+   "file": "research/lent_sellside_targets.csv",
+   "sha256": "2c679c3602aaab29fc14fe05e7afead6402965fd03b9a3f96ced6db5d0500c3e"
+  },
+  "facts_peers": {
+   "file": "book-draft/facts/peers.json",
+   "sha256": "9f32d5a861d398fbf4741bf7c0b1344baacb30c37d0cdcb72b1993854a855ee4"
+  },
+  "beta_out": {
+   "file": "book-draft/evidence/book-1.0/valuation/out/beta_out.json",
+   "sha256": "d2514df766e7ff3c37557211fc511a6c2cc63efc47f556856cc5b2d745c68dc9"
+  },
+  "magnit_template": {
+   "file": "assumptions_template.yaml",
+   "sha256": "52bded15f9817461c1e7bd373a71dc1873372dad01d37d622d61cab024cbdec0"
+  },
+  "databook": {
+   "file": "reference/primary/Lenta_Q22026_DATABOOK.xlsx",
+   "sha256": "0d290ed28fc13a0b44cdf3dd9e0f5dd519b2fa92f9206f4b4d731a01f95b3339"
+  }
+ },
+ "price": {
+  "price": 1619.5,
+  "convention": "legalclose",
+  "date": "2026-09-18",
+  "close": 1625.5,
+  "waprice": 1587.5,
+  "volume": 108762,
+  "window": {
+   "2026-09-15": {
+    "close": 1716,
+    "legalclose": 1714.5,
+    "volume": 31559
+   },
+   "2026-09-16": {
+    "close": 1658,
+    "legalclose": 1678,
+    "volume": 67300
+   },
+   "2026-09-17": {
+    "close": 1598,
+    "legalclose": 1573.5,
+    "volume": 224445
+   },
+   "2026-09-18": {
+    "close": 1625.5,
+    "legalclose": 1619.5,
+    "volume": 108762
+   },
+   "2026-09-21": {
+    "close": 1676,
+    "legalclose": 1677,
+    "volume": 108314
+   },
+   "2026-09-22": {
+    "close": 1688.5,
+    "legalclose": 1688.5,
+    "volume": 49501
+   },
+   "2026-09-23": {
+    "close": 1687,
+    "legalclose": 1676.5,
+    "volume": 108349
+   },
+   "2026-09-24": {
+    "close": 1713.5,
+    "legalclose": 1709.5,
+    "volume": 56971
+   },
+   "2026-09-25": {
+    "close": 1748,
+    "legalclose": 1746,
+    "volume": 58615
+   }
+  },
+  "mgnt_850oa_check": {
+   "2026-09-16": {
+    "close": 1559,
+    "legalclose": 1560
+   },
+   "2026-09-17": {
+    "close": 1561,
+    "legalclose": 1575.5
+   },
+   "2026-09-18": {
+    "close": 1570,
+    "legalclose": 1579
+   }
+  },
+  "mcap_book_bn": 186.3634361625
+ },
+ "sellside": {
+  "latest": [
+   {
+    "house": "Синара",
+    "target": 2800.0,
+    "date": "2026-02-05",
+    "rating": "покупать",
+    "source": "https://smart-lab.ru/blog/news/1262227.php",
+    "price_on_date": "2088.5",
+    "note": "Синара"
+   },
+   {
+    "house": "Атон",
+    "target": 2340.0,
+    "date": "2026-02-09",
+    "rating": "выше рынка",
+    "source": "https://www.aton.ru/ideas/lenta_finansovye_rezultaty_za_chetvertyy_kvartal_2025_goda/",
+    "price_on_date": "2042.5",
+    "note": "Атон (Стратегия 2026 от 12.2025; подтверждено 09.02.2026)"
+   },
+   {
+    "house": "Freedom Global",
+    "target": 2400.0,
+    "date": "2026-06-03",
+    "rating": "покупать",
+    "source": "https://www.finmarket.ru/database/analytics/6635586",
+    "price_on_date": "1817.5",
+    "note": "Freedom Global"
+   },
+   {
+    "house": "Цифра брокер",
+    "target": 2790.0,
+    "date": "2026-08-03",
+    "rating": "покупать",
+    "source": "https://www.finmarket.ru/analytics/6678652",
+    "price_on_date": "1923.5",
+    "note": "Цифра брокер"
+   },
+   {
+    "house": "ПСБ",
+    "target": 2450.0,
+    "date": "2026-08-04",
+    "rating": "позитивный",
+    "source": "https://www.finmarket.ru/analytics/6679168",
+    "price_on_date": "1915",
+    "note": "ПСБ"
+   },
+   {
+    "house": "АКБФ",
+    "target": 1473.86,
+    "date": "2026-08-05",
+    "rating": "продавать",
+    "source": "https://www.finmarket.ru/database/analytics/6680128",
+    "price_on_date": "1955",
+    "note": "АКБФ"
+   },
+   {
+    "house": "Т-Инвестиции",
+    "target": 2000.0,
+    "date": "2026-08-12",
+    "rating": "держать",
+    "source": "https://smart-lab.ru/blog/news/1339176.php",
+    "price_on_date": "2045",
+    "note": "Т-Инвестиции"
+   },
+   {
+    "house": "Эйлер",
+    "target": 2300.0,
+    "date": "2026-09-11",
+    "rating": "покупать",
+    "source": "https://www.finmarket.ru/database/analytics/6704957",
+    "price_on_date": "1701.5",
+    "note": "Эйлер"
+   },
+   {
+    "house": "Сбер",
+    "target": 2600.0,
+    "date": "2026-09-25",
+    "rating": "покупать",
+    "source": "https://elitetrader.ru/786770-lenta-zhdet-klienta.html",
+    "price_on_date": "1746",
+    "note": "Сбер (СберИнвестиции)"
+   }
+  ],
+  "excluded": [
+   [
+    "2025-04-15",
+    "Газпромбанк Инвестиции (торговая идея)",
+    "торговая идея, закрыта по цели"
+   ],
+   [
+    "2026-08-10",
+    "Совкомбанк",
+    "без цели"
+   ]
+  ],
+  "agg": {
+   "all_latest": {
+    "label": "последняя цель каждого дома",
+    "n": 9,
+    "median": 2400.0,
+    "mean": 2350.428888888889,
+    "min": 1473.86,
+    "max": 2800.0,
+    "median_vs_book_price": 0.4819388700216116
+   },
+   "after_okey_2026-06-02": {
+    "label": "после объявления «О'КЕЙ» (02.06.2026)",
+    "n": 7,
+    "median": 2400.0,
+    "mean": 2287.694285714286,
+    "min": 1473.86,
+    "max": 2790.0,
+    "median_vs_book_price": 0.4819388700216116
+   },
+   "after_q2_2026-08-03": {
+    "label": "после отчёта 2 кв. (03.08.2026)",
+    "n": 6,
+    "median": 2375.0,
+    "mean": 2268.976666666667,
+    "min": 1473.86,
+    "max": 2790.0,
+    "median_vs_book_price": 0.46650200679221987
+   }
+  },
+  "as_of": "2026-09-28"
+ },
+ "peers": [
+  {
+   "name": "X5",
+   "ev_ebitda": 2.816,
+   "basis": "IAS 17",
+   "as_of": "2026-09-18",
+   "note": "EV 808.217 / EBITDA LTM 287.021; ЧД/EBITDA 1.082; маржа 5.88 %"
+  },
+  {
+   "name": "Магнит",
+   "ev_ebitda": 3.481,
+   "basis": "IAS 17",
+   "as_of": "2026-09-18",
+   "note": "EV 625.231 / EBITDA LTM 179.635; ЧД/EBITDA 2.884; маржа 4.82 %"
+  },
+  {
+   "name": "Лента (отчётная LTM)",
+   "ev_ebitda": 3.598,
+   "basis": "IAS 17",
+   "as_of": "2026-09-18",
+   "note": "EV 303.775 / 84.433; завышен: долг «О'КЕЙ» в ЧД целиком, EBITDA — месяц"
+  },
+  {
+   "name": "Лента (проформа LTM)",
+   "ev_ebitda": 3.476,
+   "basis": "IAS 17",
+   "as_of": "2026-09-18",
+   "note": "EV 303.775 / EBITDA проформа 87.38 (P10–P90 86.66–88.16 → 3.45–3.51×); расчёт листа valuation до канона margin/facts"
+  }
+ ],
+ "headline": {
+  "method": "intrinsic",
+  "print_step": 50,
+  "diagnostics": "median",
+  "limited_liability": {
+   "v0_to_d_min": 1.3,
+   "max_share": 0.1
+  },
+  "jump_guard": {
+   "median_pct": 0.08,
+   "v0_pct": 0.1
+  },
+  "option_table": [
+   {
+    "x": 1.1,
+    "s0.2": {
+     "opt_share_of_intrinsic": 0.4292010941409881,
+     "opt_rub": 48.85987584363761
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 0.6190426413768341,
+     "opt_rub": 70.47127095546028
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 0.8141012048964195,
+     "opt_rub": 92.67656662200527
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 1.0118192116976656,
+     "opt_rub": 115.184610977519
+    }
+   },
+   {
+    "x": 1.2,
+    "s0.2": {
+     "opt_share_of_intrinsic": 0.1073649405289068,
+     "opt_rub": 24.44466118941772
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 0.185294154294694,
+     "opt_rub": 42.18744778137311
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 0.272028173390716,
+     "opt_rub": 61.93489699481452
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 0.36407029977082456,
+     "opt_rub": 82.89088675675687
+    }
+   },
+   {
+    "x": 1.25,
+    "s0.2": {
+     "opt_share_of_intrinsic": 0.05929647566052143,
+     "opt_rub": 16.875646860458886
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 0.11327950652659169,
+     "opt_rub": 32.23909899155377
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 0.17671950515868806,
+     "opt_rub": 50.293983397711386
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 0.24618363891904282,
+     "opt_rub": 70.06332344278749
+    }
+   },
+   {
+    "x": 1.3,
+    "s0.2": {
+     "opt_share_of_intrinsic": 0.03362905386561994,
+     "opt_rub": 11.48490592668512
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 0.07162132679776019,
+     "opt_rub": 24.459926940067184
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 0.11913317549774166,
+     "opt_rub": 40.68604840344974
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 0.1730593918585373,
+     "opt_rub": 59.10278782052191
+    }
+   },
+   {
+    "x": 1.4,
+    "s0.2": {
+     "opt_share_of_intrinsic": 0.011250811297703335,
+     "opt_rub": 5.123129932799329
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 0.030348070942078927,
+     "opt_rub": 13.81919103716726
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 0.05791024389727063,
+     "opt_rub": 26.369805347848956
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 0.09191038702323852,
+     "opt_rub": 41.851991152855284
+    }
+   },
+   {
+    "x": 1.5,
+    "s0.2": {
+     "opt_share_of_intrinsic": 0.003849506465940955,
+     "opt_rub": 2.191122186694271
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 0.01343725152401598,
+     "opt_rub": 7.6484245975324
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 0.0297178765964059,
+     "opt_rub": 16.915284940536104
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 0.05180975211998984,
+     "opt_rub": 29.489883537445007
+    }
+   },
+   {
+    "x": 1.75,
+    "s0.2": {
+     "opt_share_of_intrinsic": 0.00026907250579958725,
+     "opt_rub": 0.22973233419785408
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 0.0019182322485586194,
+     "opt_rub": 1.6377740664562759
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 0.006341396762068167,
+     "opt_rub": 5.4142428112284255
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 0.014223973006289933,
+     "opt_rub": 12.144334519024152
+    }
+   },
+   {
+    "x": 2.0,
+    "s0.2": {
+     "opt_share_of_intrinsic": 1.8862181761392094e-05,
+     "opt_rub": 0.021472542162229564
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 0.0002929706163243839,
+     "opt_rub": 0.3335151781961956
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 0.0014926346037058558,
+     "opt_rub": 1.6992021318805992
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 0.004375509218680129,
+     "opt_rub": 4.981041290336878
+    }
+   },
+   {
+    "x": 2.5,
+    "s0.2": {
+     "opt_share_of_intrinsic": 9.747945754294089e-08,
+     "opt_rub": 0.00016645463832235793
+    },
+    "s0.25": {
+     "opt_share_of_intrinsic": 7.836275050484195e-06,
+     "opt_rub": 0.013381120106749328
+    },
+    "s0.3": {
+     "opt_share_of_intrinsic": 9.865661481385975e-05,
+     "opt_rub": 0.16846473658016797
+    },
+    "s0.35": {
+     "opt_share_of_intrinsic": 0.0005034380999743663,
+     "opt_rub": 0.8596642714390719
+    }
+   }
+  ],
+  "sigma_V_weekly_3y": 0.190796533582584,
+  "D_bn_assumed": 131.0,
+  "ev_over_e_book": 1.6300118221560536
+ },
+ "copied_from_850oa": {
+  "terminal_real_growth": 0.005,
+  "roll_along_forwards": true,
+  "distress": {
+   "cost_pct_ev": 0.1,
+   "net_leverage_trigger": 4.0,
+   "credit_limit_trigger": true
+  },
+  "market_curve_years": 0.0,
+  "ronic_spread": 0.0,
+  "terminal": {
+   "timing": "semiannual",
+   "growth": "lfl_lt",
+   "rotation_uplift": true,
+   "capex_growth_split": true
+  },
+  "uncertainty": {
+   "draws": 2000,
+   "seed": 20260918,
+   "quantiles": [
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    0.9
+   ],
+   "median_draws": 200,
+   "reverse_bounds": "follow_center",
+   "median_refine": 1
+  },
+  "headline": {
+   "print_step": 50,
+   "diagnostics": "median"
+  }
+ },
+ "roic_ias17": [
+  {
+   "year": 2018,
+   "ebit_pre_impairment": 24.216641,
+   "ic_avg": 170.29692,
+   "roic_after_tax": 0.11376196821410511,
+   "tax_rate_statutory": 0.2
+  },
+  {
+   "year": 2019,
+   "ebit_pre_impairment": 19.251210932909185,
+   "ic_avg": 166.61926036500728,
+   "roic_after_tax": 0.09243210366309969,
+   "tax_rate_statutory": 0.2
+  },
+  {
+   "year": 2020,
+   "ebit_pre_impairment": 24.590652,
+   "ic_avg": 155.8341063650073,
+   "roic_after_tax": 0.12624015409002584,
+   "tax_rate_statutory": 0.2
+  },
+  {
+   "year": 2021,
+   "ebit_pre_impairment": 23.184525,
+   "ic_avg": 160.2512795,
+   "roic_after_tax": 0.1157408543499336,
+   "tax_rate_statutory": 0.2
+  },
+  {
+   "year": 2022,
+   "ebit_pre_impairment": 14.404051,
+   "ic_avg": 176.69559049999998,
+   "roic_after_tax": 0.06521521429817459,
+   "tax_rate_statutory": 0.2
+  },
+  {
+   "year": 2023,
+   "ebit_pre_impairment": 13.889163,
+   "ic_avg": 207.816381,
+   "roic_after_tax": 0.05346705753672036,
+   "tax_rate_statutory": 0.2
+  },
+  {
+   "year": 2024,
+   "ebit_pre_impairment": 44.464107,
+   "ic_avg": 223.12787400000002,
+   "roic_after_tax": 0.15942107528887225,
+   "tax_rate_statutory": 0.2
+  },
+  {
+   "year": 2025,
+   "ebit_pre_impairment": 57.362334693230004,
+   "ic_avg": 229.1618735,
+   "roic_after_tax": 0.18773520377909855,
+   "tax_rate_statutory": 0.25
+  }
+ ],
+ "ev_ebitda_history": [
+  {
+   "year": 2014,
+   "price_date": "2014-12-30",
+   "price": 1820.0,
+   "mcap": 177.60639624,
+   "nd": 59.179585,
+   "ebitda": 21.318157,
+   "ev_ebitda": 11.107244460203573
+  },
+  {
+   "year": 2015,
+   "price_date": "2015-12-30",
+   "price": 2490.0,
+   "mcap": 242.98897068,
+   "nd": 53.485006,
+   "ebitda": 28.018435,
+   "ev_ebitda": 10.581389598669588
+  },
+  {
+   "year": 2016,
+   "price_date": "2016-12-30",
+   "price": 2460.0,
+   "mcap": 240.06139272,
+   "nd": 89.163284,
+   "ebitda": 31.389826,
+   "ev_ebitda": 10.488260645981281
+  },
+  {
+   "year": 2017,
+   "price_date": "2017-12-29",
+   "price": 1680.0,
+   "mcap": 163.94436576,
+   "nd": 92.780476,
+   "ebitda": 35.490158,
+   "ev_ebitda": 7.2336911478387895
+  },
+  {
+   "year": 2018,
+   "price_date": "2018-12-29",
+   "price": 1070.0,
+   "mcap": 104.41694724,
+   "nd": 93.275429,
+   "ebitda": 36.19416,
+   "ev_ebitda": 5.46199652761661
+  },
+  {
+   "year": 2019,
+   "price_date": "2019-12-30",
+   "price": 960.0,
+   "mcap": 93.68249472,
+   "nd": 77.136497,
+   "ebitda": 33.95925064349,
+   "ev_ebitda": 5.030116639300639
+  },
+  {
+   "year": 2020,
+   "price_date": "2020-12-30",
+   "price": 1313.5,
+   "mcap": 128.179121682,
+   "nd": 57.1427,
+   "ebitda": 39.315096,
+   "ev_ebitda": 4.713757323192088
+  },
+  {
+   "year": 2021,
+   "price_date": "2021-12-30",
+   "price": 955.5,
+   "mcap": 93.243358026,
+   "nd": 55.087946,
+   "ebitda": 39.241990831327364,
+   "ev_ebitda": 3.7799128149121652
+  },
+  {
+   "year": 2022,
+   "price_date": "2022-12-30",
+   "price": 690.0,
+   "mcap": 80.02978593,
+   "nd": 52.10299,
+   "ebitda": 32.638325,
+   "ev_ebitda": 4.048393290096842
+  },
+  {
+   "year": 2023,
+   "price_date": "2023-12-29",
+   "price": 669.5,
+   "mcap": 77.6520893915,
+   "nd": 95.406037,
+   "ebitda": 33.571128,
+   "ev_ebitda": 5.154969067214542
+  },
+  {
+   "year": 2024,
+   "price_date": "2024-12-30",
+   "price": 1195.0,
+   "mcap": 138.602310415,
+   "nd": 60.893179,
+   "ebitda": 68.122956,
+   "ev_ebitda": 2.9284620211577432
+  },
+  {
+   "year": 2025,
+   "price_date": "2025-12-30",
+   "price": 1982.5,
+   "mcap": 229.9406530525,
+   "nd": 48.835763,
+   "ebitda": 83.68426069323,
+   "ev_ebitda": 3.3312885092507343
+  }
+ ]
+}

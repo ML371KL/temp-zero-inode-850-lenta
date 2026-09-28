@@ -1,0 +1,1353 @@
+{
+ "schema": "lenta-book-1.0-margin-series-v1",
+ "source": {
+  "databook": "Lenta_Q22026_DATABOOK.xlsx",
+  "sha256": "0d290ed28fc13a0b44cdf3dd9e0f5dd519b2fa92f9206f4b4d731a01f95b3339",
+  "sheets": "PL (IAS 17 / IFRS 16), CF (Profit from purchase), Financials quarterly"
+ },
+ "bargain_gain_2024": 1.114605,
+ "perimeter_events": [
+  {
+   "half": "2016H2",
+   "event": "Kesko: 11 гипермаркетов (ноябрь 2016)",
+   "size": "малый",
+   "source": "lentagroup_news 2016-11-30, 2016-12-07"
+  },
+  {
+   "half": "2017H2",
+   "event": "Holiday: 22 супермаркета Сибири (ноябрь 2017 – 2018)",
+   "size": "малый",
+   "source": "lentagroup_news 2017-11-07"
+  },
+  {
+   "half": "2021H2",
+   "event": "Billa (с авг. 2021; 5 мес.: выручка 9,5, убыток до налога 1,1) и «Семья» (сен. 2021; 4,2)",
+   "size": "скачок",
+   "source": "ifrs_FY2021, прим. 8, с. 47–49"
+  },
+  {
+   "half": "2023H2",
+   "event": "«Монетка» (с окт. 2023; 4 кв.: выручка 58,7, прибыль до налога 3,46)",
+   "size": "скачок",
+   "source": "ifrs_FY2023_v2_20240903, прим. 8, с. 47–49"
+  },
+  {
+   "half": "2024H2",
+   "event": "«Улыбка радуги» (с 01.12.2024; выручка 4,71) + доход от выгодной покупки 1,10 в прочих доходах",
+   "size": "скачок (разовая статья)",
+   "source": "ifrs_FY2024, прим. 8, с. 42–44; CF «Profit from purchase»"
+  },
+  {
+   "half": "2025H1",
+   "event": "«Молния-Spar» (с 24.06.2025; ≈1 неделя в 1П)",
+   "size": "малый",
+   "source": "ifrs_FY2025, прим. 8, с. 45–47"
+  },
+  {
+   "half": "2025H2",
+   "event": "«Реми» 67 % (с 03.12.2025; выручка 5,10, убыток до налога 0,11); «Молния» полное полугодие",
+   "size": "скачок",
+   "source": "ifrs_FY2025, прим. 8, с. 47–49"
+  },
+  {
+   "half": "2026H1",
+   "event": "«Дом Лента» (1 кв. 2026, поэтапно; 7,96 / −2,96), «О'КЕЙ» (с 02.06.2026; 9,36 / −0,91)",
+   "size": "скачок",
+   "source": "ifrs_1H2026, прим. 5, с. 16–19"
+  }
+ ],
+ "jump_halves": [
+  "2021H2",
+  "2023H2",
+  "2024H2",
+  "2025H2",
+  "2026H1"
+ ],
+ "covid_halves": [
+  "2020H1",
+  "2020H2"
+ ],
+ "halves": {
+  "2013H1": {
+   "revenue": 62.1311,
+   "ebitda": 6.578,
+   "margin": 0.105873,
+   "margin_norm": 0.105873,
+   "norm_note": "",
+   "gm": 0.212028,
+   "labor_pct": 0.061641,
+   "rent_pct": 0.003614,
+   "ebitdar_pct": 0.109487,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2013H2": {
+   "revenue": 82.1354,
+   "ebitda": 9.4666,
+   "margin": 0.115256,
+   "margin_norm": 0.115256,
+   "norm_note": "",
+   "gm": 0.222602,
+   "labor_pct": 0.058419,
+   "rent_pct": 0.004498,
+   "ebitdar_pct": 0.119754,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2014H1": {
+   "revenue": 85.8991,
+   "ebitda": 8.2853,
+   "margin": 0.096454,
+   "margin_norm": 0.096454,
+   "norm_note": "",
+   "gm": 0.214021,
+   "labor_pct": 0.066515,
+   "rent_pct": 0.006806,
+   "ebitdar_pct": 0.10326,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2014H2": {
+   "revenue": 108.0892,
+   "ebitda": 13.0329,
+   "margin": 0.120575,
+   "margin_norm": 0.120575,
+   "norm_note": "",
+   "gm": 0.235666,
+   "labor_pct": 0.059167,
+   "rent_pct": 0.007631,
+   "ebitdar_pct": 0.128206,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2015H1": {
+   "revenue": 114.8972,
+   "ebitda": 11.7044,
+   "margin": 0.101869,
+   "margin_norm": 0.101869,
+   "norm_note": "",
+   "gm": 0.217381,
+   "labor_pct": 0.060734,
+   "rent_pct": 0.011174,
+   "ebitdar_pct": 0.113043,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2015H2": {
+   "revenue": 137.8659,
+   "ebitda": 16.314,
+   "margin": 0.118332,
+   "margin_norm": 0.118332,
+   "norm_note": "",
+   "gm": 0.227241,
+   "labor_pct": 0.054985,
+   "rent_pct": 0.010069,
+   "ebitdar_pct": 0.128401,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2016H1": {
+   "revenue": 140.0866,
+   "ebitda": 13.6757,
+   "margin": 0.097624,
+   "margin_norm": 0.097624,
+   "norm_note": "",
+   "gm": 0.218839,
+   "labor_pct": 0.060201,
+   "rent_pct": 0.012112,
+   "ebitdar_pct": 0.109735,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2016H2": {
+   "revenue": 166.2655,
+   "ebitda": 17.7141,
+   "margin": 0.106541,
+   "margin_norm": 0.106541,
+   "norm_note": "",
+   "gm": 0.223207,
+   "labor_pct": 0.054666,
+   "rent_pct": 0.010459,
+   "ebitdar_pct": 0.117,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2017H1": {
+   "revenue": 163.5309,
+   "ebitda": 15.619,
+   "margin": 0.095511,
+   "margin_norm": 0.095511,
+   "norm_note": "",
+   "gm": 0.217295,
+   "labor_pct": 0.058554,
+   "rent_pct": 0.012093,
+   "ebitdar_pct": 0.107604,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2017H2": {
+   "revenue": 201.6467,
+   "ebitda": 19.8712,
+   "margin": 0.098544,
+   "margin_norm": 0.098544,
+   "norm_note": "",
+   "gm": 0.211762,
+   "labor_pct": 0.053854,
+   "rent_pct": 0.011079,
+   "ebitdar_pct": 0.109624,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2018H1": {
+   "revenue": 193.2202,
+   "ebitda": 17.1117,
+   "margin": 0.088561,
+   "margin_norm": 0.088561,
+   "norm_note": "",
+   "gm": 0.219021,
+   "labor_pct": 0.064601,
+   "rent_pct": 0.014873,
+   "ebitdar_pct": 0.103434,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2018H2": {
+   "revenue": 220.342,
+   "ebitda": 19.0825,
+   "margin": 0.086604,
+   "margin_norm": 0.086604,
+   "norm_note": "",
+   "gm": 0.210922,
+   "labor_pct": 0.059334,
+   "rent_pct": 0.014477,
+   "ebitdar_pct": 0.101081,
+   "ebitda16_margin": null,
+   "jump": false,
+   "covid": false
+  },
+  "2019H1": {
+   "revenue": 199.2109,
+   "ebitda": 16.1437,
+   "margin": 0.081038,
+   "margin_norm": 0.081038,
+   "norm_note": "",
+   "gm": 0.225165,
+   "labor_pct": 0.071156,
+   "rent_pct": 0.015515,
+   "ebitdar_pct": 0.096553,
+   "ebitda16_margin": 0.094491,
+   "jump": false,
+   "covid": false
+  },
+  "2019H2": {
+   "revenue": 218.2891,
+   "ebitda": 17.8156,
+   "margin": 0.081615,
+   "margin_norm": 0.081615,
+   "norm_note": "",
+   "gm": 0.21441,
+   "labor_pct": 0.06388,
+   "rent_pct": 0.014895,
+   "ebitdar_pct": 0.09651,
+   "ebitda16_margin": 0.094746,
+   "jump": false,
+   "covid": false
+  },
+  "2020H1": {
+   "revenue": 216.9751,
+   "ebitda": 22.0722,
+   "margin": 0.101727,
+   "margin_norm": 0.101727,
+   "norm_note": "",
+   "gm": 0.232932,
+   "labor_pct": 0.068702,
+   "rent_pct": 0.014038,
+   "ebitdar_pct": 0.115764,
+   "ebitda16_margin": 0.114355,
+   "jump": false,
+   "covid": true
+  },
+  "2020H2": {
+   "revenue": 228.5687,
+   "ebitda": 17.2429,
+   "margin": 0.075439,
+   "margin_norm": 0.075439,
+   "norm_note": "",
+   "gm": 0.222922,
+   "labor_pct": 0.071567,
+   "rent_pct": 0.014112,
+   "ebitdar_pct": 0.089551,
+   "ebitda16_margin": 0.087969,
+   "jump": false,
+   "covid": true
+  },
+  "2021H1": {
+   "revenue": 218.0875,
+   "ebitda": 17.472,
+   "margin": 0.080115,
+   "margin_norm": 0.080115,
+   "norm_note": "",
+   "gm": 0.227993,
+   "labor_pct": 0.074665,
+   "rent_pct": 0.015447,
+   "ebitdar_pct": 0.095562,
+   "ebitda16_margin": 0.094675,
+   "jump": false,
+   "covid": false
+  },
+  "2021H2": {
+   "revenue": 265.5534,
+   "ebitda": 21.77,
+   "margin": 0.08198,
+   "margin_norm": 0.08198,
+   "norm_note": "",
+   "gm": 0.231158,
+   "labor_pct": 0.072122,
+   "rent_pct": 0.01895,
+   "ebitdar_pct": 0.100929,
+   "ebitda16_margin": 0.098804,
+   "jump": true,
+   "covid": false
+  },
+  "2022H1": {
+   "revenue": 262.4588,
+   "ebitda": 15.4093,
+   "margin": 0.058711,
+   "margin_norm": 0.058711,
+   "norm_note": "",
+   "gm": 0.239424,
+   "labor_pct": 0.098821,
+   "rent_pct": 0.022814,
+   "ebitdar_pct": 0.081526,
+   "ebitda16_margin": 0.078816,
+   "jump": false,
+   "covid": false
+  },
+  "2022H2": {
+   "revenue": 274.9419,
+   "ebitda": 17.229,
+   "margin": 0.062664,
+   "margin_norm": 0.062664,
+   "norm_note": "",
+   "gm": 0.21059,
+   "labor_pct": 0.066314,
+   "rent_pct": 0.022023,
+   "ebitdar_pct": 0.084688,
+   "ebitda16_margin": 0.083578,
+   "jump": false,
+   "covid": false
+  },
+  "2023H1": {
+   "revenue": 257.1529,
+   "ebitda": 8.637,
+   "margin": 0.033587,
+   "margin_norm": 0.033587,
+   "norm_note": "",
+   "gm": 0.201352,
+   "labor_pct": 0.082637,
+   "rent_pct": 0.022937,
+   "ebitdar_pct": 0.056524,
+   "ebitda16_margin": 0.055712,
+   "jump": false,
+   "covid": false
+  },
+  "2023H2": {
+   "revenue": 358.7702,
+   "ebitda": 24.9341,
+   "margin": 0.069499,
+   "margin_norm": 0.069499,
+   "norm_note": "",
+   "gm": 0.216068,
+   "labor_pct": 0.075098,
+   "rent_pct": 0.022593,
+   "ebitdar_pct": 0.092092,
+   "ebitda16_margin": 0.092245,
+   "jump": true,
+   "covid": false
+  },
+  "2024H1": {
+   "revenue": 413.602,
+   "ebitda": 29.7344,
+   "margin": 0.071891,
+   "margin_norm": 0.071891,
+   "norm_note": "",
+   "gm": 0.216085,
+   "labor_pct": 0.078959,
+   "rent_pct": 0.025335,
+   "ebitdar_pct": 0.097226,
+   "ebitda16_margin": 0.095542,
+   "jump": false,
+   "covid": false
+  },
+  "2024H2": {
+   "revenue": 474.7048,
+   "ebitda": 38.3886,
+   "margin": 0.080868,
+   "margin_norm": 0.07852,
+   "norm_note": "без дохода от выгодной покупки «Улыбки радуги»",
+   "gm": 0.216683,
+   "labor_pct": 0.078181,
+   "rent_pct": 0.024757,
+   "ebitdar_pct": 0.105625,
+   "ebitda16_margin": 0.102306,
+   "jump": true,
+   "covid": false
+  },
+  "2025H1": {
+   "revenue": 513.9333,
+   "ebitda": 38.5306,
+   "margin": 0.074972,
+   "margin_norm": 0.074972,
+   "norm_note": "",
+   "gm": 0.226307,
+   "labor_pct": 0.087213,
+   "rent_pct": 0.02956,
+   "ebitdar_pct": 0.104532,
+   "ebitda16_margin": 0.101366,
+   "jump": false,
+   "covid": false
+  },
+  "2025H2": {
+   "revenue": 589.7294,
+   "ebitda": 45.1536,
+   "margin": 0.076567,
+   "margin_norm": 0.076567,
+   "norm_note": "",
+   "gm": 0.230208,
+   "labor_pct": 0.084059,
+   "rent_pct": 0.029736,
+   "ebitdar_pct": 0.106303,
+   "ebitda16_margin": 0.103302,
+   "jump": true,
+   "covid": false
+  },
+  "2026H1": {
+   "revenue": 648.4881,
+   "ebitda": 39.2795,
+   "margin": 0.060571,
+   "margin_norm": 0.060571,
+   "norm_note": "",
+   "gm": 0.223869,
+   "labor_pct": 0.091859,
+   "rent_pct": 0.033486,
+   "ebitdar_pct": 0.094056,
+   "ebitda16_margin": 0.089885,
+   "jump": true,
+   "covid": false
+  }
+ },
+ "annual": {
+  "2010": {
+   "margin": 0.086834,
+   "margin_norm": 0.086834
+  },
+  "2011": {
+   "margin": 0.092891,
+   "margin_norm": 0.092891
+  },
+  "2012": {
+   "margin": 0.046727,
+   "margin_norm": 0.046727
+  },
+  "2013": {
+   "margin": 0.111215,
+   "margin_norm": 0.111215
+  },
+  "2014": {
+   "margin": 0.109894,
+   "margin_norm": 0.109894
+  },
+  "2015": {
+   "margin": 0.110849,
+   "margin_norm": 0.110849
+  },
+  "2016": {
+   "margin": 0.102463,
+   "margin_norm": 0.102463
+  },
+  "2017": {
+   "margin": 0.097186,
+   "margin_norm": 0.097186
+  },
+  "2018": {
+   "margin": 0.087518,
+   "margin_norm": 0.087518
+  },
+  "2019": {
+   "margin": 0.08134,
+   "margin_norm": 0.08134
+  },
+  "2020": {
+   "margin": 0.088241,
+   "margin_norm": 0.088241
+  },
+  "2021": {
+   "margin": 0.081139,
+   "margin_norm": 0.081139
+  },
+  "2022": {
+   "margin": 0.060734,
+   "margin_norm": 0.060734
+  },
+  "2023": {
+   "margin": 0.054505,
+   "margin_norm": 0.054505
+  },
+  "2024": {
+   "margin": 0.076689,
+   "margin_norm": 0.075434
+  },
+  "2025": {
+   "margin": 0.075824,
+   "margin_norm": 0.075824
+  }
+ },
+ "quarters": {
+  "2020Q1": {
+   "revenue": 106.004,
+   "ebitda": 9.124,
+   "margin": 0.086072,
+   "margin_norm": 0.086072,
+   "segments": {
+    "hyper": 94.553,
+    "super": 9.8,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 1.652
+   }
+  },
+  "2020Q2": {
+   "revenue": 110.971,
+   "ebitda": 12.948,
+   "margin": 0.116679,
+   "margin_norm": 0.116679,
+   "segments": {
+    "hyper": 99.677,
+    "super": 9.418,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 1.877
+   }
+  },
+  "2020Q3": {
+   "revenue": 104.397,
+   "ebitda": 7.899944,
+   "margin": 0.075672,
+   "margin_norm": 0.075672,
+   "segments": {
+    "hyper": 93.345,
+    "super": 8.915,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 2.137
+   }
+  },
+  "2020Q4": {
+   "revenue": 124.17179999999999,
+   "ebitda": 9.343155999999999,
+   "margin": 0.075244,
+   "margin_norm": 0.075244,
+   "segments": {
+    "hyper": 111.7,
+    "super": 10.086,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 2.386
+   }
+  },
+  "2021Q1": {
+   "revenue": 107.312,
+   "ebitda": 6.666,
+   "margin": 0.062118,
+   "margin_norm": 0.062118,
+   "segments": {
+    "hyper": 96.19,
+    "super": 9.691,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 1.431
+   }
+  },
+  "2021Q2": {
+   "revenue": 110.776,
+   "ebitda": 10.806,
+   "margin": 0.097548,
+   "margin_norm": 0.097548,
+   "segments": {
+    "hyper": 99.473,
+    "super": 9.554,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 1.749
+   }
+  },
+  "2021Q3": {
+   "revenue": 118.23751494739518,
+   "ebitda": 10.356,
+   "margin": 0.087586,
+   "margin_norm": 0.087586,
+   "segments": {
+    "hyper": 99.74504998781,
+    "super": 16.32097186255518,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 2.1714930970300004
+   }
+  },
+  "2021Q4": {
+   "revenue": 147.31585877224333,
+   "ebitda": 11.414,
+   "margin": 0.07748,
+   "margin_norm": 0.07748,
+   "segments": {
+    "hyper": 122.65226373376001,
+    "super": 22.160962121473336,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 2.5026329170099997
+   }
+  },
+  "2022Q1": {
+   "revenue": 132.37,
+   "ebitda": 6.891,
+   "margin": 0.052059,
+   "margin_norm": 0.052059,
+   "segments": {
+    "hyper": 105.59691509011,
+    "super": 22.76496701592182,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 1.8130989372200002
+   }
+  },
+  "2022Q2": {
+   "revenue": 130.08899146671834,
+   "ebitda": 8.518,
+   "margin": 0.065478,
+   "margin_norm": 0.065478,
+   "segments": {
+    "hyper": 102.70025989710999,
+    "super": 23.478283786458327,
+    "conv": null,
+    "droge": null,
+    "remi": null,
+    "diy": null,
+    "other": null,
+    "wholesale": 1.35175273935
+   }
+  },
+  "2022Q3": {
+   "revenue": 126.785,
+   "ebitda": 7.545,
+   "margin": 0.05951,
+   "margin_norm": 0.05951,
+   "segments": {
+    "hyper": 101.86718826899998,
+    "super": 21.243088760317,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 1.69819535898
+   }
+  },
+  "2022Q4": {
+   "revenue": 148.15665425451002,
+   "ebitda": 9.684,
+   "margin": 0.065363,
+   "margin_norm": 0.065363,
+   "segments": {
+    "hyper": 121.70281274445,
+    "super": 22.991508141060002,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 2.3409229345899987
+   }
+  },
+  "2023Q1": {
+   "revenue": 124.63895099675003,
+   "ebitda": 2.625,
+   "margin": 0.021061,
+   "margin_norm": 0.021061,
+   "segments": {
+    "hyper": 100.76189527972002,
+    "super": 21.72037974286,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 2.15667597417
+   }
+  },
+  "2023Q2": {
+   "revenue": 132.514,
+   "ebitda": 6.012,
+   "margin": 0.045369,
+   "margin_norm": 0.045369,
+   "segments": {
+    "hyper": 107.5214837321513,
+    "super": 22.002220481638698,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 2.9902705360999993
+   }
+  },
+  "2023Q3": {
+   "revenue": 135.988,
+   "ebitda": 7.043,
+   "margin": 0.051791,
+   "margin_norm": 0.051791,
+   "segments": {
+    "hyper": 111.8265203483,
+    "super": 20.887593419420003,
+    "conv": 0.0,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 3.2735555508300003
+   }
+  },
+  "2023Q4": {
+   "revenue": 222.782,
+   "ebitda": 17.891,
+   "margin": 0.080307,
+   "margin_norm": 0.080307,
+   "segments": {
+    "hyper": 137.72756383477955,
+    "super": 19.096882493220903,
+    "conv": 63.11053452846952,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 2.779963211839997
+   }
+  },
+  "2024Q1": {
+   "revenue": 201.983881,
+   "ebitda": 13.011,
+   "margin": 0.064416,
+   "margin_norm": 0.064416,
+   "segments": {
+    "hyper": 118.60368996037002,
+    "super": 21.05285164786,
+    "conv": 60.08437096352001,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 2.24296842825
+   }
+  },
+  "2024Q2": {
+   "revenue": 211.618,
+   "ebitda": 16.723,
+   "margin": 0.079024,
+   "margin_norm": 0.079024,
+   "segments": {
+    "hyper": 122.22427217092005,
+    "super": 21.345074226020003,
+    "conv": 66.29007298608,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 1.75865361698
+   }
+  },
+  "2024Q3": {
+   "revenue": 210.944,
+   "ebitda": 16.982,
+   "margin": 0.080505,
+   "margin_norm": 0.080505,
+   "segments": {
+    "hyper": 120.93204274758,
+    "super": 21.092381884690003,
+    "conv": 67.17799770574001,
+    "droge": 0.0,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.0,
+    "wholesale": 1.6668635007400001
+   }
+  },
+  "2024Q4": {
+   "revenue": 263.761,
+   "ebitda": 21.407,
+   "margin": 0.081161,
+   "margin_norm": 0.076935,
+   "segments": {
+    "hyper": 152.67713930955,
+    "super": 25.927706762399996,
+    "conv": 78.12417918707,
+    "droge": 4.54465331460997,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.09556730712000001,
+    "wholesale": 2.38017272717
+   }
+  },
+  "2025Q1": {
+   "revenue": 248.755,
+   "ebitda": 16.305,
+   "margin": 0.065546,
+   "margin_norm": 0.065546,
+   "segments": {
+    "hyper": 130.22053353421,
+    "super": 26.195121,
+    "conv": 78.22516596126,
+    "droge": 11.577086999999999,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.10035148493,
+    "wholesale": 2.43681498086
+   }
+  },
+  "2025Q2": {
+   "revenue": 265.178,
+   "ebitda": 22.226,
+   "margin": 0.083815,
+   "margin_norm": 0.083815,
+   "segments": {
+    "hyper": 137.31826929310867,
+    "super": 27.392354921143166,
+    "conv": 86.04389193361814,
+    "droge": 11.764514068610001,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.20670799999999998,
+    "wholesale": 2.45236757768
+   }
+  },
+  "2025Q3": {
+   "revenue": 267.504,
+   "ebitda": 19.611,
+   "margin": 0.073311,
+   "margin_norm": 0.073311,
+   "segments": {
+    "hyper": 136.42920256040003,
+    "super": 28.428369938770004,
+    "conv": 87.25819137927,
+    "droge": 12.252794999999999,
+    "remi": 0.0,
+    "diy": 0.0,
+    "other": 0.42199006307000003,
+    "wholesale": 2.7133705396100005
+   }
+  },
+  "2025Q4": {
+   "revenue": 322.226,
+   "ebitda": 25.542,
+   "margin": 0.079267,
+   "margin_norm": 0.079267,
+   "segments": {
+    "hyper": 166.72612872641633,
+    "super": 34.46704995928,
+    "conv": 99.28153843603,
+    "droge": 13.362586344410003,
+    "remi": 5.17,
+    "diy": 0.0,
+    "other": 0.797,
+    "wholesale": 2.457
+   }
+  },
+  "2026Q1": {
+   "revenue": 306.895,
+   "ebitda": 16.416,
+   "margin": 0.053491,
+   "margin_norm": 0.053491,
+   "segments": {
+    "hyper": 142.8009764976,
+    "super": 34.04747360008,
+    "conv": 98.64126857741999,
+    "droge": 12.721312344299932,
+    "remi": 13.404155,
+    "diy": 2.0589470045400002,
+    "other": 1.0687863692900001,
+    "wholesale": 2.1520455634199998
+   }
+  },
+  "2026Q2": {
+   "revenue": 341.5933436151299,
+   "ebitda": 22.863,
+   "margin": 0.06693,
+   "margin_norm": 0.06693,
+   "segments": {
+    "hyper": 159.33456024077,
+    "super": 35.71771787311,
+    "conv": 108.48103242258,
+    "droge": 13.825127964399947,
+    "remi": 14.260964000000003,
+    "diy": 5.901068995459999,
+    "other": 1.42853241915,
+    "wholesale": 2.6443396996599997
+   }
+  }
+ },
+ "quarter_checks": [
+  {
+   "half": "2020H1",
+   "d_revenue": -0.0001,
+   "d_ebitda": -0.0002
+  },
+  {
+   "half": "2020H2",
+   "d_revenue": 0.0001,
+   "d_ebitda": 0.0002
+  },
+  {
+   "half": "2021H1",
+   "d_revenue": 0.0005,
+   "d_ebitda": -0.0
+  },
+  {
+   "half": "2021H2",
+   "d_revenue": -0.0,
+   "d_ebitda": 0.0
+  },
+  {
+   "half": "2022H1",
+   "d_revenue": 0.0002,
+   "d_ebitda": -0.0003
+  },
+  {
+   "half": "2022H2",
+   "d_revenue": -0.0002,
+   "d_ebitda": -0.0
+  },
+  {
+   "half": "2023H1",
+   "d_revenue": 0.0,
+   "d_ebitda": -0.0
+  },
+  {
+   "half": "2023H2",
+   "d_revenue": -0.0002,
+   "d_ebitda": -0.0001
+  },
+  {
+   "half": "2024H1",
+   "d_revenue": -0.0001,
+   "d_ebitda": -0.0004
+  },
+  {
+   "half": "2024H2",
+   "d_revenue": 0.0002,
+   "d_ebitda": 0.0004
+  },
+  {
+   "half": "2025H1",
+   "d_revenue": -0.0003,
+   "d_ebitda": 0.0004
+  },
+  {
+   "half": "2025H2",
+   "d_revenue": 0.0006,
+   "d_ebitda": -0.0006
+  },
+  {
+   "half": "2026H1",
+   "d_revenue": 0.0003,
+   "d_ebitda": -0.0005
+  }
+ ],
+ "quarter_checks_ok": true,
+ "seasonality": {
+  "raw_h2_minus_h1_pp": {
+   "2013": 0.9383,
+   "2014": 2.4121,
+   "2015": 1.6463,
+   "2016": 0.8917,
+   "2017": 0.3033,
+   "2018": -0.1957,
+   "2019": 0.0577,
+   "2020": -2.6288,
+   "2021": 0.1865,
+   "2022": 0.3953,
+   "2023": 3.5912,
+   "2024": 0.6629,
+   "2025": 0.1595
+  },
+  "centered": [
+   {
+    "center": "2013H2",
+    "value": 1.4092,
+    "members": [
+     "2013H1",
+     "2013H2",
+     "2014H1"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2014H2",
+    "value": 2.1414,
+    "members": [
+     "2014H1",
+     "2014H2",
+     "2015H1"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2014H1",
+    "value": 2.1462,
+    "members": [
+     "2013H2",
+     "2014H1",
+     "2014H2"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2015H2",
+    "value": 1.8586,
+    "members": [
+     "2015H1",
+     "2015H2",
+     "2016H1"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2015H1",
+    "value": 1.7585,
+    "members": [
+     "2014H2",
+     "2015H1",
+     "2015H2"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2016H2",
+    "value": 0.9974,
+    "members": [
+     "2016H1",
+     "2016H2",
+     "2017H1"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2016H1",
+    "value": 1.4813,
+    "members": [
+     "2015H2",
+     "2016H1",
+     "2016H2"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2017H2",
+    "value": 0.6508,
+    "members": [
+     "2017H1",
+     "2017H2",
+     "2018H1"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2017H1",
+    "value": 0.7031,
+    "members": [
+     "2016H2",
+     "2017H1",
+     "2017H2"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2018H2",
+    "value": 0.1805,
+    "members": [
+     "2018H1",
+     "2018H2",
+     "2019H1"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2018H1",
+    "value": 0.4013,
+    "members": [
+     "2017H2",
+     "2018H1",
+     "2018H2"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2019H2",
+    "value": -0.9767,
+    "members": [
+     "2019H1",
+     "2019H2",
+     "2020H1"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2019H1",
+    "value": 0.3072,
+    "members": [
+     "2018H2",
+     "2019H1",
+     "2019H2"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2020H2",
+    "value": -1.5482,
+    "members": [
+     "2020H1",
+     "2020H2",
+     "2021H1"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2020H1",
+    "value": -2.32,
+    "members": [
+     "2019H2",
+     "2020H1",
+     "2020H2"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2021H2",
+    "value": 1.2567,
+    "members": [
+     "2021H1",
+     "2021H2",
+     "2022H1"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2021H1",
+    "value": -0.1405,
+    "members": [
+     "2020H2",
+     "2021H1",
+     "2021H2"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2022H2",
+    "value": 1.6515,
+    "members": [
+     "2022H1",
+     "2022H2",
+     "2023H1"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2022H1",
+    "value": 1.3611,
+    "members": [
+     "2021H2",
+     "2022H1",
+     "2022H2"
+    ],
+    "clean": true
+   },
+   {
+    "center": "2023H2",
+    "value": 1.676,
+    "members": [
+     "2023H1",
+     "2023H2",
+     "2024H1"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2023H1",
+    "value": 3.2495,
+    "members": [
+     "2022H2",
+     "2023H1",
+     "2023H2"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2024H2",
+    "value": 0.5089,
+    "members": [
+     "2024H1",
+     "2024H2",
+     "2025H1"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2024H1",
+    "value": 0.2119,
+    "members": [
+     "2023H2",
+     "2024H1",
+     "2024H2"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2025H2",
+    "value": 0.8796,
+    "members": [
+     "2025H1",
+     "2025H2",
+     "2026H1"
+    ],
+    "clean": false
+   },
+   {
+    "center": "2025H1",
+    "value": 0.2572,
+    "members": [
+     "2024H2",
+     "2025H1",
+     "2025H2"
+    ],
+    "clean": false
+   }
+  ],
+  "summary": {
+   "гипермаркеты 2013–2019 (центр., чисто)": {
+    "median": 1.2032999999999996,
+    "mean": 1.1696000000000004,
+    "n": 12
+   },
+   "современная 2021–2026 (центр., чисто)": {
+    "median": 1.5063,
+    "mean": 1.5063,
+    "n": 2
+   },
+   "все чистые (центр.)": {
+    "median": 1.3851749999999994,
+    "mean": 1.2177000000000004,
+    "n": 14
+   },
+   "сырые 2П−1П 2014–2025 без 2020 и 2023": {
+    "median": 0.34929999999999994,
+    "mean": 0.6519600000000004,
+    "n": 10
+   },
+   "сырые 2П−1П 2017–2025 без 2020 и 2023": {
+    "median": 0.18650000000000055,
+    "mean": 0.22421428571428592,
+    "n": 7
+   },
+   "сырые 2П−1П 2021–2025 без 2023": {
+    "median": 0.29090000000000016,
+    "mean": 0.3510500000000003,
+    "n": 4
+   }
+  }
+ },
+ "quarter_offsets": {
+  "gap_h1_pp": 1.4608437320909786,
+  "gap_h2_pp": 0.11415280067145073,
+  "share_q1_in_h1": 0.48840521684844496,
+  "share_q3_in_h2": 0.45108913270652773,
+  "offset_pp": {
+   "Q1": -0.7473600323373926,
+   "Q2": 0.713483699753586,
+   "Q3": -0.06265971282054489,
+   "Q4": 0.051493087850905846
+  },
+  "offset_pp_mean": {
+   "Q1": -0.9737405369253213,
+   "Q2": 0.9296028297267581,
+   "Q3": 0.025624360577807554,
+   "Q4": -0.021057827924224098
+  },
+  "offset_pp_book": {
+   "Q1": -0.753795365758945,
+   "Q2": 0.7070483663320336,
+   "Q3": -0.06198497076459774,
+   "Q4": 0.05216782990685299
+  },
+  "book_shares": {
+   "Q1_in_H1": 0.484,
+   "Q3_in_H2": 0.457,
+   "source": "revenue.quarter_share фрагмента «Сеть»: Q1 0.484, Q3 0.457"
+  },
+  "gaps_h1": [
+   3.5430268903178366,
+   1.3419630246014371,
+   1.4608437320909786,
+   1.82689782900637,
+   1.343985357243774
+  ],
+  "gaps_h2": [
+   -1.0106636781614178,
+   0.5853052665929104,
+   -0.3569996652500089,
+   0.5956293228103897
+  ],
+  "n_h1": 5,
+  "n_h2": 4
+ },
+ "quarter_share_2024_2025": {
+  "Q1": 0.22638555244051634,
+  "Q2": 0.23924851902071276,
+  "Q3": 0.23992290931678456,
+  "Q4": 0.2944430192219864
+ }
+}

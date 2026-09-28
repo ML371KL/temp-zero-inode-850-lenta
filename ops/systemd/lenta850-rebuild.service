@@ -1,0 +1,55 @@
+[Unit]
+Description=Лента 850 · пересборка выпуска при новом коде в main (без сбора)
+Documentation=https://github.com/ML371KL/temp-zero-inode-850-lenta/blob/main/ops/README.md
+# Проверка спрашивает GitHub (git fetch), публикация пушит в ветку release.
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# Раз в 15 минут таймер будит `run.sh rebuild`. Почти всегда делать нечего:
+# выход 0 без единой строки. Сначала дожимается сверка прошлого такта (если
+# висит отметка release.pushed — один GET боевой двери). Если с опубликованного
+# выпуска изменился код, который считает число (model, indicators, ops,
+# data/assumptions, data/facts, requirements.txt), — тесты такта, сборка,
+# публикация и сверка на входах последнего такта.
+#
+# Перезапуска нет (Restart=no по умолчанию) — намеренно: упавшая пересборка не
+# повторяется ни через 3 минуты, ни через 15 (run.sh помнит коммит в
+# rebuild.tried), иначе красный набор тестов крутился бы на общем сервере без
+# конца. Повтор — только с новым коммитом в main; на том же коде выпуск соберёт
+# суточный такт.
+Type=exec
+User=dash
+Group=dash
+WorkingDirectory=/srv/dash/repo-850-lenta
+EnvironmentFile=/usr/local/etc/lenta-850/env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /srv/dash/repo-850-lenta/ops/run.sh rebuild
+# Потолок = тесты такта + сборка + публикация + до 600 с сверки + прореживание,
+# с запасом; он же — LOCK_WAIT_SECONDS в run.sh (плановый такт ждёт замок не
+# меньше, чем пересборка может его держать). Расчёт и замер — ops/budgets.json,
+# равенство сверяет tests/test_ops_units.py. ДО ЗАМЕРА НА СЕРВЕРЕ ЭТО ОЦЕНКА:
+# потолок ниже настоящего времени убил бы пересборку на середине, rebuild.tried
+# запомнил бы коммит, и выпуск на новом коде не вышел бы до вечера (урок 850oa).
+RuntimeMaxSec=2640
+SyslogIdentifier=lenta850
+
+StateDirectory=lenta-850
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+# Репозиторий пишется: git reset при обновлении кода, pip в .venv, var/ тестов.
+# /srv/dash/.ssh нужен для чтения: публикация пушит через алиас deploy-ключа.
+ReadWritePaths=/srv/dash/repo-850-lenta
+
+MemoryHigh=384M
+MemoryMax=512M
+Nice=10
+
+# Мост тревог: шлёт СМЕНУ состояния, поэтому тихие проверки с кодом 0 ничего не
+# присылают, упавшая пересборка приходит один раз, а «снова проходит» — когда
+# выпуск на новом коде всё же вышел.
+ExecStopPost=-+/usr/local/sbin/dash-alert %n
+
+# Секции [Install] намеренно НЕТ: юнит запускается таймером.

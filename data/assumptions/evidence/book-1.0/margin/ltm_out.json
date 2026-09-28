@@ -1,0 +1,43 @@
+{
+ "schema": "lenta-book-1.0-margin-ltm-v1",
+ "halves_pro_forma": {
+  "2025H1": {
+   "revenue": 606.4501971567769,
+   "ebitda": 40.898144149581825,
+   "sd": 0.5733415473336356
+  },
+  "2025H2": {
+   "revenue": 689.600435843223,
+   "ebitda": 47.78666235031484,
+   "sd": 0.6180545318984061
+  },
+  "2026H1": {
+   "revenue": 705.248956,
+   "ebitda": 40.447848894190344,
+   "sd": 0.43084358507836185
+  }
+ },
+ "revenue_ltm_reported": 1238.217494,
+ "ebitda_ltm_reported": 84.43307695264,
+ "okey_2025_revenue": 142.0,
+ "okey_2h25_revenue": 75.43104873427451,
+ "okey_2h25_ebitda": 2.38864987658536,
+ "okey_5m_ebitda": 1.168384894190345,
+ "remi_jul_nov_revenue": 24.439952108948482,
+ "remi_jul_nov_ebitda": 0.24439952108948482,
+ "revenue_ltm_pro_forma": 1394.849391843223,
+ "ebitda_ltm_pro_forma": 88.23451124450519,
+ "ebitda_ltm_pro_forma_sd": 0.7534040079554485,
+ "params": {
+  "okey_margin_2h25": [
+   0.015,
+   0.03,
+   0.05
+  ],
+  "remi_margin": [
+   -0.02,
+   0.01,
+   0.04
+  ]
+ }
+}

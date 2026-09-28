@@ -1,0 +1,919 @@
+{
+ "history": [
+  {
+   "period": "2023Q1",
+   "kind": "q",
+   "date": "2023-04-24",
+   "title_has": "1 квартал 2023",
+   "lag": 24,
+   "title": "«Лента» объявляет операционные и ключевые финансовые результаты за 1 квартал 2023 года"
+  },
+  {
+   "period": "2023Q2",
+   "kind": "q",
+   "date": "2023-07-28",
+   "title_has": "2 квартал",
+   "lag": 28,
+   "title": "«Лента» объявляет операционные и ключевые финансовые результаты за 2 квартал и 1 полугодие 2023 года"
+  },
+  {
+   "period": "2023Q3",
+   "kind": "q",
+   "date": "2023-10-23",
+   "title_has": "3 квартале 2023",
+   "lag": 23,
+   "title": "«Лента» сообщает о росте общих продаж на 7,3%, LFL продаж на 8,0% и росте онлайн-продаж на 44,9% в 3 квартале 2023 года"
+  },
+  {
+   "period": "2023Q4",
+   "kind": "q4_ops",
+   "date": "2024-02-05",
+   "title_has": "4 квартале 2023",
+   "lag": 36,
+   "title": "«Лента» сообщает о росте продаж на 50,3%, онлайн продаж – на 58,1%  в 4 квартале 2023 года"
+  },
+  {
+   "period": "2023FY",
+   "kind": "fy",
+   "date": "2024-03-21",
+   "title_has": "4 квартале 2023",
+   "lag": 81,
+   "title": "«Лента» сообщает о росте продаж на 50,4% и марже EBITDA в 8,0% в 4 квартале 2023 года"
+  },
+  {
+   "period": "2024Q1",
+   "kind": "q",
+   "date": "2024-04-26",
+   "title_has": "1 квартале 2024",
+   "lag": 26,
+   "title": "«Лента» объявляет о росте выручки на 62,1% и увеличении рентабельности по EBITDA на 434 б.п. в 1 квартале 2024 года"
+  },
+  {
+   "period": "2024Q2",
+   "kind": "q",
+   "date": "2024-07-29",
+   "title_has": "2 квартале 2024",
+   "lag": 29,
+   "title": "«Лента» объявляет о росте выручки на 59,7% и увеличении рентабельности по EBITDA на 337 б.п. во 2 квартале 2024 года"
+  },
+  {
+   "period": "2024Q3",
+   "kind": "q",
+   "date": "2024-10-28",
+   "title_has": "3 квартале 2024",
+   "lag": 28,
+   "title": "«Лента» объявляет о росте выручки на 55,1% и увеличении рентабельности по EBITDA до 8,1% в 3 квартале 2024 года"
+  },
+  {
+   "period": "2024Q4",
+   "kind": "q4_ops",
+   "date": "2025-02-05",
+   "title_has": "4 квартале 2024",
+   "lag": 36,
+   "title": "«Лента» объявляет о росте розничных продаж на 18,8% и LFL-продаж на 11,3%  в 4 квартале 2024 года"
+  },
+  {
+   "period": "2024FY",
+   "kind": "fy",
+   "date": "2025-03-26",
+   "title_has": "4 квартале 2024",
+   "lag": 85,
+   "title": "«Лента» сообщает о росте выручки на 18,4% и рентабельности по EBITDA 8,1% в 4 квартале 2024 года"
+  },
+  {
+   "period": "2025Q1",
+   "kind": "q",
+   "date": "2025-04-28",
+   "title_has": "1 квартале 2025",
+   "lag": 28,
+   "title": "«Лента» объявляет о росте выручки на 23,2% и LFL-продаж на 12,4% в 1 квартале 2025 года"
+  },
+  {
+   "period": "2025Q2",
+   "kind": "q",
+   "date": "2025-07-31",
+   "title_has": "2 квартале 2025",
+   "lag": 31,
+   "title": "«Группа Лента» объявляет о росте выручки на 25,3% и увеличении рентабельности EBITDA до 8,4% во 2 квартале 2025 года"
+  },
+  {
+   "period": "2025Q3",
+   "kind": "q",
+   "date": "2025-10-31",
+   "title_has": "3 квартале 2025",
+   "lag": 31,
+   "title": "«Группа Лента» объявляет о росте выручки на 26,8% в 3 квартале 2025 года; Рентабельность EBITDA составила 7,3%"
+  },
+  {
+   "period": "2025Q4",
+   "kind": "q4_ops",
+   "date": "2026-02-09",
+   "title_has": "4 квартале 2025",
+   "lag": 40,
+   "title": "«Группа Лента» объявляет о росте розничной выручки на 22,4% и LFL- продаж на 8,0% в 4 квартале 2025 года"
+  },
+  {
+   "period": "2025FY",
+   "kind": "fy",
+   "date": "2026-03-26",
+   "title_has": "4 квартале 2025",
+   "lag": 85,
+   "title": "«Группа Лента» объявляет о росте выручки на 22,2% в 4 квартале 2025 года; Рентабельность EBITDA составила 7,9%"
+  },
+  {
+   "period": "2026Q1",
+   "kind": "q",
+   "date": "2026-04-30",
+   "title_has": "1 квартале 2026",
+   "lag": 30,
+   "title": "«Группа Лента» объявляет о росте выручки на 23,4% в 1 квартале 2026 года"
+  },
+  {
+   "period": "2026Q2",
+   "kind": "q",
+   "date": "2026-08-03",
+   "title_has": "2 квартале 2026",
+   "lag": 34,
+   "title": "«Группа Лента» объявляет о росте выручки на 28,8% росте LFL-продаж на 6,5% во 2 квартале 2026 года"
+  }
+ ],
+ "report_windows": [
+  {
+   "id": "lenta.q3_2026",
+   "period_end": "2026-09-30",
+   "lags_used": {
+    "2024Q3": 28,
+    "2025Q3": 31
+   },
+   "window": [
+    "2026-10-26",
+    "2026-11-03"
+   ],
+   "central_raw": "2026-10-29",
+   "central": "2026-10-29",
+   "weekday": "Thu"
+  },
+  {
+   "id": "lenta.q4_2026_ops",
+   "period_end": "2026-12-31",
+   "lags_used": {
+    "2024Q4": 36,
+    "2025Q4": 40
+   },
+   "window": [
+    "2027-02-03",
+    "2027-02-12"
+   ],
+   "central_raw": "2027-02-07",
+   "central": "2027-02-05",
+   "weekday": "Fri"
+  },
+  {
+   "id": "lenta.fy2026",
+   "period_end": "2026-12-31",
+   "lags_used": {
+    "2024FY": 85,
+    "2025FY": 85
+   },
+   "window": [
+    "2027-03-24",
+    "2027-03-29"
+   ],
+   "central_raw": "2027-03-26",
+   "central": "2027-03-26",
+   "weekday": "Fri"
+  },
+  {
+   "id": "lenta.q1_2027",
+   "period_end": "2027-03-31",
+   "lags_used": {
+    "2025Q1": 28,
+    "2026Q1": 30
+   },
+   "window": [
+    "2027-04-26",
+    "2027-05-03"
+   ],
+   "central_raw": "2027-04-29",
+   "central": "2027-04-29",
+   "weekday": "Thu"
+  },
+  {
+   "id": "lenta.h1_2027",
+   "period_end": "2027-06-30",
+   "lags_used": {
+    "2025Q2": 31,
+    "2026Q2": 34
+   },
+   "window": [
+    "2027-07-29",
+    "2027-08-06"
+   ],
+   "central_raw": "2027-08-01",
+   "central": "2027-07-30",
+   "weekday": "Fri"
+  }
+ ],
+ "checks": [
+  {
+   "name": "sha256 lentagroup_news/_index_news_2016-2026.json = MANIFEST",
+   "ok": true,
+   "detail": "d2f7810564781b20c5f736dacdc0d0408894da5438fe58ed122ef39790fa19d0"
+  },
+  {
+   "name": "релиз 2023Q1 (q) 2023-04-24 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» объявляет операционные и ключевые финансовые результаты за 1 квартал 2023 года"
+  },
+  {
+   "name": "релиз 2023Q2 (q) 2023-07-28 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» объявляет операционные и ключевые финансовые результаты за 2 квартал и 1 полугодие 2023 года"
+  },
+  {
+   "name": "релиз 2023Q3 (q) 2023-10-23 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» сообщает о росте общих продаж на 7,3%, LFL продаж на 8,0% и росте онлайн-продаж на 44,9% в 3 квартале 2023 года"
+  },
+  {
+   "name": "релиз 2023Q4 (q4_ops) 2024-02-05 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» сообщает о росте продаж на 50,3%, онлайн продаж – на 58,1%  в 4 квартале 2023 года"
+  },
+  {
+   "name": "релиз 2023FY (fy) 2024-03-21 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» сообщает о росте продаж на 50,4% и марже EBITDA в 8,0% в 4 квартале 2023 года"
+  },
+  {
+   "name": "релиз 2024Q1 (q) 2024-04-26 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» объявляет о росте выручки на 62,1% и увеличении рентабельности по EBITDA на 434 б.п. в 1 квартале 2024 года"
+  },
+  {
+   "name": "релиз 2024Q2 (q) 2024-07-29 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» объявляет о росте выручки на 59,7% и увеличении рентабельности по EBITDA на 337 б.п. во 2 квартале 2024 года"
+  },
+  {
+   "name": "релиз 2024Q3 (q) 2024-10-28 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» объявляет о росте выручки на 55,1% и увеличении рентабельности по EBITDA до 8,1% в 3 квартале 2024 года"
+  },
+  {
+   "name": "релиз 2024Q4 (q4_ops) 2025-02-05 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» объявляет о росте розничных продаж на 18,8% и LFL-продаж на 11,3%  в 4 квартале 2024 года"
+  },
+  {
+   "name": "релиз 2024FY (fy) 2025-03-26 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» сообщает о росте выручки на 18,4% и рентабельности по EBITDA 8,1% в 4 квартале 2024 года"
+  },
+  {
+   "name": "релиз 2025Q1 (q) 2025-04-28 есть в индексе",
+   "ok": true,
+   "detail": "«Лента» объявляет о росте выручки на 23,2% и LFL-продаж на 12,4% в 1 квартале 2025 года"
+  },
+  {
+   "name": "релиз 2025Q2 (q) 2025-07-31 есть в индексе",
+   "ok": true,
+   "detail": "«Группа Лента» объявляет о росте выручки на 25,3% и увеличении рентабельности EBITDA до 8,4% во 2 квартале 2025 года"
+  },
+  {
+   "name": "релиз 2025Q3 (q) 2025-10-31 есть в индексе",
+   "ok": true,
+   "detail": "«Группа Лента» объявляет о росте выручки на 26,8% в 3 квартале 2025 года; Рентабельность EBITDA составила 7,3%"
+  },
+  {
+   "name": "релиз 2025Q4 (q4_ops) 2026-02-09 есть в индексе",
+   "ok": true,
+   "detail": "«Группа Лента» объявляет о росте розничной выручки на 22,4% и LFL- продаж на 8,0% в 4 квартале 2025 года"
+  },
+  {
+   "name": "релиз 2025FY (fy) 2026-03-26 есть в индексе",
+   "ok": true,
+   "detail": "«Группа Лента» поддержит программу Доместос «Терпеть нельзя учиться»; «Группа Лента» объявляет о росте выручки на 22,2% в 4 квартале 2025 года; Рентабельность EBITDA составила 7,9%"
+  },
+  {
+   "name": "релиз 2026Q1 (q) 2026-04-30 есть в индексе",
+   "ok": true,
+   "detail": "«Группа Лента» объявляет о росте выручки на 23,4% в 1 квартале 2026 года"
+  },
+  {
+   "name": "релиз 2026Q2 (q) 2026-08-03 есть в индексе",
+   "ok": true,
+   "detail": "«Группа Лента» объявляет о росте выручки на 28,8% росте LFL-продаж на 6,5% во 2 квартале 2026 года"
+  },
+  {
+   "name": "sha256 moex_iss_okey_bonds/RU000A10CCN3_bondization.json = MANIFEST",
+   "ok": true,
+   "detail": "f2dde9efe55c5a5dfccb037a3fc6411f9c0cc9015db6fbb5b07d0b60e3331f45"
+  },
+  {
+   "name": "sha256 moex_iss_okey_bonds/RU000A10CCN3_description.json = MANIFEST",
+   "ok": true,
+   "detail": "a46ce1bce86a1de2d68f0f29bf71d7c4a27029322a638f5511f20cee61d3af2d"
+  },
+  {
+   "name": "оферта О'КЕЙ Б1Р8: одна будущая в ISS",
+   "ok": true,
+   "detail": "['2027-02-09']"
+  },
+  {
+   "name": "оферта О'КЕЙ Б1Р8 = BUYBACKDATE карточки",
+   "ok": true,
+   "detail": "2027-02-09 / 2027-02-09"
+  },
+  {
+   "name": "sha256 moex_iss_okey_bonds/RU000A1084E6_bondization.json = MANIFEST",
+   "ok": true,
+   "detail": "65061d51c4ac768d5a12d423602f8431f008363295ed1f06da3d367ee54f21bb"
+  },
+  {
+   "name": "sha256 moex_iss_okey_bonds/RU000A1084E6_description.json = MANIFEST",
+   "ok": true,
+   "detail": "46c4eeb1d40279a92d922c1b8c17ddde178c1b27369f4743e5cc51ee672a3c5f"
+  },
+  {
+   "name": "оферта О'КЕЙ Б1Р6: одна будущая в ISS",
+   "ok": true,
+   "detail": "['2027-03-17']"
+  },
+  {
+   "name": "оферта О'КЕЙ Б1Р6 = BUYBACKDATE карточки",
+   "ok": true,
+   "detail": "2027-03-17 / 2027-03-17"
+  },
+  {
+   "name": "id уникальны",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "name": "события упорядочены по дате",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "tariffs.2026_10: точность из списка",
+   "ok": true,
+   "detail": "day"
+  },
+  {
+   "name": "tariffs.2026_10: when_rule из списка",
+   "ok": true,
+   "detail": "exact"
+  },
+  {
+   "name": "tariffs.2026_10: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "tariffs.2026_10: у day нет окна и rule exact",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2026-10-23: точность из списка",
+   "ok": true,
+   "detail": "day"
+  },
+  {
+   "name": "cbr.key_rate.2026-10-23: when_rule из списка",
+   "ok": true,
+   "detail": "exact"
+  },
+  {
+   "name": "cbr.key_rate.2026-10-23: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2026-10-23: у day нет окна и rule exact",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.q3_2026: точность из списка",
+   "ok": true,
+   "detail": "window"
+  },
+  {
+   "name": "lenta.q3_2026: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "lenta.q3_2026: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.q3_2026: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2026-10-26', 'to': '2026-11-03'}"
+  },
+  {
+   "name": "lenta.q3_2026: факт эмитента (prior_for null, revenue)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "x5.q3_2026: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "x5.q3_2026: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "x5.q3_2026: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "x5.q3_2026: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2026-10-01', 'to': '2026-10-31'}"
+  },
+  {
+   "name": "x5.q3_2026: аналог — справочно, без приора",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.summary.2026-11-05: точность из списка",
+   "ok": true,
+   "detail": "day"
+  },
+  {
+   "name": "cbr.summary.2026-11-05: when_rule из списка",
+   "ok": true,
+   "detail": "exact"
+  },
+  {
+   "name": "cbr.summary.2026-11-05: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.summary.2026-11-05: у day нет окна и rule exact",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "budget.law_2027_2029: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "budget.law_2027_2029: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "budget.law_2027_2029: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "budget.law_2027_2029: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2026-11-01', 'to': '2026-12-31'}"
+  },
+  {
+   "name": "cbr.ondkp_2027_final: точность из списка",
+   "ok": true,
+   "detail": "window"
+  },
+  {
+   "name": "cbr.ondkp_2027_final: when_rule из списка",
+   "ok": true,
+   "detail": "deadline"
+  },
+  {
+   "name": "cbr.ondkp_2027_final: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.ondkp_2027_final: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2026-10-23', 'to': '2026-12-01'}"
+  },
+  {
+   "name": "cbr.ondkp_2027_final: срок = конец окна",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "mrot.2027_law: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "mrot.2027_law: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "mrot.2027_law: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "mrot.2027_law: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2026-11-01', 'to': '2026-12-31'}"
+  },
+  {
+   "name": "cbr.key_rate.2026-12-18: точность из списка",
+   "ok": true,
+   "detail": "day"
+  },
+  {
+   "name": "cbr.key_rate.2026-12-18: when_rule из списка",
+   "ok": true,
+   "detail": "exact"
+  },
+  {
+   "name": "cbr.key_rate.2026-12-18: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2026-12-18: у day нет окна и rule exact",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "moex.index_base_2026-12: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "moex.index_base_2026-12: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "moex.index_base_2026-12: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "moex.index_base_2026-12: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2026-12-01', 'to': '2026-12-31'}"
+  },
+  {
+   "name": "law.price_monitoring_2027: точность из списка",
+   "ok": true,
+   "detail": "day"
+  },
+  {
+   "name": "law.price_monitoring_2027: when_rule из списка",
+   "ok": true,
+   "detail": "exact"
+  },
+  {
+   "name": "law.price_monitoring_2027: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "law.price_monitoring_2027: у day нет окна и rule exact",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "mrot.2027_effective: точность из списка",
+   "ok": true,
+   "detail": "day"
+  },
+  {
+   "name": "mrot.2027_effective: when_rule из списка",
+   "ok": true,
+   "detail": "exact"
+  },
+  {
+   "name": "mrot.2027_effective: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "mrot.2027_effective: у day нет окна и rule exact",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.q4_2026_ops: точность из списка",
+   "ok": true,
+   "detail": "window"
+  },
+  {
+   "name": "lenta.q4_2026_ops: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "lenta.q4_2026_ops: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.q4_2026_ops: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-02-03', 'to': '2027-02-12'}"
+  },
+  {
+   "name": "lenta.q4_2026_ops: факт эмитента (prior_for null, revenue)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "okey.bond_b1p8_put: точность из списка",
+   "ok": true,
+   "detail": "day"
+  },
+  {
+   "name": "okey.bond_b1p8_put: when_rule из списка",
+   "ok": true,
+   "detail": "exact"
+  },
+  {
+   "name": "okey.bond_b1p8_put: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "okey.bond_b1p8_put: у day нет окна и rule exact",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2027-02: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "cbr.key_rate.2027-02: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "cbr.key_rate.2027-02: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2027-02: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-02-01', 'to': '2027-02-28'}"
+  },
+  {
+   "name": "okey.bond_b1p6_put: точность из списка",
+   "ok": true,
+   "detail": "day"
+  },
+  {
+   "name": "okey.bond_b1p6_put: when_rule из списка",
+   "ok": true,
+   "detail": "exact"
+  },
+  {
+   "name": "okey.bond_b1p6_put: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "okey.bond_b1p6_put: у day нет окна и rule exact",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.fy2026: точность из списка",
+   "ok": true,
+   "detail": "window"
+  },
+  {
+   "name": "lenta.fy2026: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "lenta.fy2026: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.fy2026: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-03-24', 'to': '2027-03-29'}"
+  },
+  {
+   "name": "lenta.fy2026: факт эмитента (prior_for null, revenue)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "x5.fy2026: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "x5.fy2026: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "x5.fy2026: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "x5.fy2026: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-03-01', 'to': '2027-03-31'}"
+  },
+  {
+   "name": "x5.fy2026: аналог — справочно, без приора",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2027-04: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "cbr.key_rate.2027-04: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "cbr.key_rate.2027-04: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2027-04: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-04-01', 'to': '2027-04-30'}"
+  },
+  {
+   "name": "lenta.q1_2027: точность из списка",
+   "ok": true,
+   "detail": "window"
+  },
+  {
+   "name": "lenta.q1_2027: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "lenta.q1_2027: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.q1_2027: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-04-26', 'to': '2027-05-03'}"
+  },
+  {
+   "name": "lenta.q1_2027: факт эмитента (prior_for null, revenue)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.remi_put_window: точность из списка",
+   "ok": true,
+   "detail": "window"
+  },
+  {
+   "name": "lenta.remi_put_window: when_rule из списка",
+   "ok": true,
+   "detail": "deadline"
+  },
+  {
+   "name": "lenta.remi_put_window: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.remi_put_window: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-01-01', 'to': '2027-06-30'}"
+  },
+  {
+   "name": "lenta.remi_put_window: срок = конец окна",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2027-07: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "cbr.key_rate.2027-07: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "cbr.key_rate.2027-07: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2027-07: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-07-01', 'to': '2027-07-31'}"
+  },
+  {
+   "name": "lenta.h1_2027: точность из списка",
+   "ok": true,
+   "detail": "window"
+  },
+  {
+   "name": "lenta.h1_2027: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "lenta.h1_2027: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.h1_2027: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-07-29', 'to': '2027-08-06'}"
+  },
+  {
+   "name": "lenta.h1_2027: факт эмитента (prior_for null, revenue)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2027-10: точность из списка",
+   "ok": true,
+   "detail": "month"
+  },
+  {
+   "name": "cbr.key_rate.2027-10: when_rule из списка",
+   "ok": true,
+   "detail": "central"
+  },
+  {
+   "name": "cbr.key_rate.2027-10: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "cbr.key_rate.2027-10: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2027-10-01', 'to': '2027-10-31'}"
+  },
+  {
+   "name": "lenta.dividends_first: точность из списка",
+   "ok": true,
+   "detail": "year"
+  },
+  {
+   "name": "lenta.dividends_first: when_rule из списка",
+   "ok": true,
+   "detail": "earliest"
+  },
+  {
+   "name": "lenta.dividends_first: есть note и source",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "lenta.dividends_first: окно содержит when",
+   "ok": true,
+   "detail": "{'from': '2028-01-01', 'to': '2028-12-31'}"
+  },
+  {
+   "name": "lenta.dividends_first: «не раньше» = начало окна",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "3 кв. 2026: окно 26.10–03.11.2026, центр 29.10.2026 (D2)",
+   "ok": true,
+   "detail": "{'from': '2026-10-26', 'to': '2026-11-03'}2026-10-29"
+  },
+  {
+   "name": "ближайший факт эмитента на as_of — 3 кв. 2026",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

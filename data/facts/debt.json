@@ -1,0 +1,642 @@
+{
+ "schema": "lenta-facts-debt-v1",
+ "as_of": "2026-06-30",
+ "unit": "млрд ₽",
+ "basis": "до МСФО 16: только кредиты, займы и облигации; аренда — отдельно, в долг книги не входит (D1)",
+ "reported": {
+  "lt": 100.030371,
+  "st": 42.553313,
+  "gross": 142.583684,
+  "principal": 141.923216,
+  "accrued_interest": 0.660468,
+  "fixed_principal": 98.140039,
+  "float_principal": 37.0,
+  "bonds_carrying": 6.783177,
+  "src": "IFRS_1H2026 с. 6, прим. 20 с. 31"
+ },
+ "cash": {
+  "v": 25.172516,
+  "src": "IFRS_1H2026 с. 6",
+  "components": {
+   "deposits": 19.457779,
+   "bank": 3.290393,
+   "in_transit": 1.310953,
+   "in_hand": 1.113391,
+   "src": "IFRS_1H2026 прим. 16 с. 28"
+  }
+ },
+ "net_debt_pre16": {
+  "v": 117.411168,
+  "identity": "lt + st − cash",
+  "databook": {
+   "v": 117.41,
+   "src": "Debt!R17",
+   "unit_note": "млн ₽ в листе"
+  },
+  "nd_ebitda_databook": {
+   "v": 1.390587,
+   "src": "Debt!R18",
+   "unit_note": "×"
+  }
+ },
+ "shares_of_principal": {
+  "fixed_incl_bonds": 0.7393,
+  "floating": 0.2607,
+  "kind": "calc"
+ },
+ "tranches": [
+  {
+   "id": "LENTA-FIXED",
+   "what": "кредиты и займы группы «Лента» по фиксированной ставке (без периметра «О’КЕЙ»)",
+   "rate": "fixed",
+   "principal": 98.140039,
+   "st": 30.655777,
+   "lt": 67.484262,
+   "accrued_interest": 0.462276,
+   "includes": "займ материнской компании (Севергрупп) 30,5 млрд до 28.05.2029 — «Кредитор 3»",
+   "src": "IFRS_1H2026 прим. 20 с. 31",
+   "kind": "fact"
+  },
+  {
+   "id": "LENTA-SEVERGROUP-2029",
+   "what": "долгосрочный заём от материнской компании (внутри LENTA-FIXED; не суммировать повторно)",
+   "rate": "fixed, не раскрыта",
+   "principal": 30.5,
+   "accrued_interest": 0.262932,
+   "from": "2026-05-25",
+   "to": "2029-05-28",
+   "src": "IFRS_1H2026 прим. 3 с. 14 (заём и проценты 262 932); даты — отчёт эмитента 6М2026 п. 1.7.1 (Кредитор 3: 30 762 932 000 ₽)",
+   "kind": "fact",
+   "rate_note": "ставка не раскрыта; ниже рыночной — суждение листа financing (D12: ≈8,7–10,8 %)"
+  },
+  {
+   "id": "FLOAT-ST-5000",
+   "what": "краткосрочный кредит по плавающей ставке (заёмщик не раскрыт)",
+   "rate": "floating",
+   "principal": 5.0,
+   "src": "IFRS_1H2026 прим. 20 с. 31",
+   "kind": "fact"
+  },
+  {
+   "id": "OKEY-ALFA-2031",
+   "what": "кредит АО «АЛЬФА-БАНК» ООО «О’КЕЙ», обеспеченный",
+   "rate": "floating (ключевая + спред, спред не раскрыт)",
+   "principal": 32.0,
+   "to": "2031-12-31",
+   "collateral": "имущество 23 275 427 тыс. ₽, 99 % доли ООО «О’КЕЙ», 100 % акций АО «Доринда» (прим. 20 с. 32); поручительство «Доринды» — отчёт эмитента п. 1.7.2",
+   "src": "IFRS_1H2026 прим. 20 с. 31–32; ISSUER_REPORT_6M2026_EXTRACT (Альфа-Банк 40 783 420 000 ₽ всего)",
+   "kind": "fact"
+  },
+  {
+   "id": "OKEY-BONDS-ST",
+   "what": "облигации «О’КЕЙ» Б1Р6 + Б1Р8 под пут-оферты 17.03.2027 и 09.02.2027",
+   "rate": "fixed 15,5 % / 16,9 %",
+   "principal": 6.5,
+   "src": "IFRS_1H2026 прим. 20 с. 31; ISS",
+   "kind": "fact"
+  },
+  {
+   "id": "OKEY-BONDS-LT",
+   "what": "облигации «О’КЕЙ» Б1Р2 + Б1Р4 у третьих лиц (балансовая)",
+   "rate": "fixed 10,0 % / 9,9 %",
+   "principal": 0.283177,
+   "to": "2029-04-06 / 2030-10-25",
+   "src": "IFRS_1H2026 прим. 20 с. 31",
+   "kind": "fact",
+   "note": "ISS ISSUESIZE 5 000 000 шт. по каждому — объём выпуска, не остаток (урок 850oa Д4)"
+  }
+ ],
+ "bonds_okey": [
+  {
+   "isin": "RU000A1084E6",
+   "name": "О'КЕЙ БО 001Р-06",
+   "issuer": "ООО «О’КЕЙ»",
+   "iss_issuesize_units": 3500000,
+   "iss_matdate": "2034-03-07",
+   "iss_issuedate": "2024-03-29",
+   "coupon_rate": 0.155,
+   "next_put": "2027-03-17",
+   "maturity": "2034-03-07",
+   "placement": "2024-03-29",
+   "src": "OKEY_B1P6 (moex_iss_okey_bonds/RU000A1084E6_description.json); купон и оферты — research/04 §4.1 (ISS bondization)"
+  },
+  {
+   "isin": "RU000A10CCN3",
+   "name": "О'КЕЙ БО 001Р-08",
+   "issuer": "ООО «О’КЕЙ»",
+   "iss_issuesize_units": 3000000,
+   "iss_matdate": "2028-07-28",
+   "iss_issuedate": "2025-08-13",
+   "coupon_rate": 0.169,
+   "next_put": "2027-02-09",
+   "maturity": "2028-07-28",
+   "placement": "2025-08-13",
+   "src": "OKEY_B1P8 (moex_iss_okey_bonds/RU000A10CCN3_description.json); купон и оферты — research/04 §4.1 (ISS bondization)"
+  },
+  {
+   "isin": "RU000A1009Z8",
+   "name": "О'КЕЙ БО 001Р-02",
+   "issuer": "ООО «О’КЕЙ»",
+   "iss_issuesize_units": 5000000,
+   "iss_matdate": "2029-04-06",
+   "iss_issuedate": "2019-04-19",
+   "coupon_rate": 0.1,
+   "next_put": null,
+   "maturity": "2029-04-06",
+   "placement": "2019-04-19",
+   "src": "OKEY_B1P2 (moex_iss_okey_bonds/RU000A1009Z8_description.json); купон и оферты — research/04 §4.1 (ISS bondization)"
+  },
+  {
+   "isin": "RU000A102BK7",
+   "name": "О'КЕЙ БО 001Р-04",
+   "issuer": "ООО «О’КЕЙ»",
+   "iss_issuesize_units": 5000000,
+   "iss_matdate": "2030-10-25",
+   "iss_issuedate": "2020-11-06",
+   "coupon_rate": 0.099,
+   "next_put": null,
+   "maturity": "2030-10-25",
+   "placement": "2020-11-06",
+   "src": "OKEY_B1P4 (moex_iss_okey_bonds/RU000A102BK7_description.json); купон и оферты — research/04 §4.1 (ISS bondization)"
+  }
+ ],
+ "undrawn_credit_lines": {
+  "v": 283.863,
+  "as_of": "2026-06-30",
+  "src": "IFRS_1H2026 с. 31 (прим. 20; также прим. 2.1 с. 12)",
+  "prior": {
+   "2025-12-31": 226.363
+  },
+  "limit_same_date": 426.446684
+ },
+ "fair_value_note32": {
+  "fixed": {
+   "book": 105.442063,
+   "fair": 108.141111,
+   "fair_minus_book": 2.699048
+  },
+  "floating": {
+   "book": 37.141621,
+   "fair": 37.151656,
+   "fair_minus_book": 0.010035
+  },
+  "total": {
+   "book": 142.583684,
+   "fair": 145.292767
+  },
+  "levels": {
+   "fixed_loans_l2": 101.349812,
+   "bonds_l1": 6.791299
+  },
+  "prior_2025_12_31": {
+   "fixed_book": 95.885041,
+   "fixed_fair": 97.290168,
+   "float_book": 4.014255,
+   "float_fair": 4.242075
+  },
+  "src": "IFRS_1H2026 прим. 32 с. 38"
+ },
+ "interest_1H2026": {
+  "loans": 7.297475,
+  "lease": 11.501457,
+  "put_unwind_other": 0.448072,
+  "total": 19.247004,
+  "income": {
+   "deposits": 1.70375,
+   "loans_issued": 0.57922,
+   "other": 0.385065
+  },
+  "pre16_databook": {
+   "interest_expense": -7.745547,
+   "interest_income": 2.654201,
+   "src": "PL!AE36, PL!AE37"
+  },
+  "net_interest_pre16_clean": 4.643274,
+  "net_interest_pre16_clean_formula": "7,745547 (IAS 17) − 0,448072 (размотка пута) − 2,654201 (доходы IAS 17) = 4,643274",
+  "note": "очищенные чистые проценты 1П2026 до МСФО 16: «прочие» 0,448 — размотка пута «Реми», не проценты (урок 850oa Д3); доход IAS 17 меньше МСФО 16 на 0,013834 — дисконт обеспечительных депозитов аренды (прим. 7 с. 21)",
+  "src": "IFRS_1H2026 прим. 29–30 с. 36–37"
+ },
+ "rate_sensitivity": {
+  "up200_bp_pnl_th": 51945,
+  "src": "IFRS_1H2026 с. 32",
+  "note": "посчитано за июнь по кредиту «О’КЕЙ» (≈32 000 × 2 % × 30/365); знак в отчёте, вероятно, перевёрнут; годовой эффект на 37,0 плавающих ≈0,37 млрд до налога на 1 п.п. (расчёт)"
+ },
+ "creditors_issuer_report": {
+  "creditor1": 54.170424,
+  "alfa_bank": 40.78342,
+  "creditor3_severgroup": 30.762932,
+  "guarantees_issued": 56.850769,
+  "verified_in_text": {
+   "creditor1": true,
+   "alfa": true,
+   "creditor3": true,
+   "guarantees": true
+  },
+  "src": "ISSUER_REPORT_6M2026_EXTRACT п. 1.7.1–1.7.2",
+  "maturity_profile_presentation": {
+   "2026": 0.35,
+   "2027": 0.36,
+   "2029": 0.3,
+   "src": "Q2-2026-Lenta-Investor-Presentation_eng_vFF.pdf с. 25 (research/04 §5.6)",
+   "reconstruction": "сходится на базе собственных кредитов без «О’КЕЙ» ≈102,8: 35,66 (≤12 мес.) / ≈36,98 (2027) / 30,5 (05.2029) — гипотеза, компания базу не называет",
+   "kind": "calc"
+  }
+ },
+ "okey_assumed_debt": {
+  "lt": 32.283177,
+  "st": 18.613045,
+  "total": 50.896222,
+  "seller_loan_offset": 8.459326,
+  "after_offset": 42.436896,
+  "src": "IFRS_1H2026 прим. 5 с. 17–18"
+ },
+ "history_ias17": {
+  "2016-12-31": {
+   "lt_debt": {
+    "v": 66.955931,
+    "src": "Debt!H9",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "st_debt": {
+    "v": 35.24512,
+    "src": "Debt!H11",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "total_debt": {
+    "v": 102.201051,
+    "src": "Debt!H15",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "cash": {
+    "v": 13.037767,
+    "src": "Debt!H16",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "net_debt": {
+    "v": 89.163284,
+    "src": "Debt!H17",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 2.8,
+    "src": "Debt!H18",
+    "unit_note": "×"
+   }
+  },
+  "2017-12-31": {
+   "lt_debt": {
+    "v": 62.194204,
+    "src": "Debt!I9",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "st_debt": {
+    "v": 44.888131,
+    "src": "Debt!I11",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "total_debt": {
+    "v": 107.082335,
+    "src": "Debt!I15",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "cash": {
+    "v": 14.301859,
+    "src": "Debt!I16",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "net_debt": {
+    "v": 92.780476,
+    "src": "Debt!I17",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 2.6,
+    "src": "Debt!I18",
+    "unit_note": "×"
+   }
+  },
+  "2018-12-31": {
+   "lt_debt": {
+    "v": 106.341291,
+    "src": "Debt!J9",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "st_debt": {
+    "v": 20.738998,
+    "src": "Debt!J11",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "total_debt": {
+    "v": 127.080289,
+    "src": "Debt!J15",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "cash": {
+    "v": 33.80486,
+    "src": "Debt!J16",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "net_debt": {
+    "v": 93.275429,
+    "src": "Debt!J17",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 2.6,
+    "src": "Debt!J18",
+    "unit_note": "×"
+   }
+  },
+  "2019-12-31": {
+   "lt_debt": {
+    "v": 82.110441,
+    "src": "Debt!K9",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "st_debt": {
+    "v": 68.430816,
+    "src": "Debt!K11",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "total_debt": {
+    "v": 150.541257,
+    "src": "Debt!K15",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "cash": {
+    "v": 73.40476,
+    "src": "Debt!K16",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "net_debt": {
+    "v": 77.136497,
+    "src": "Debt!K17",
+    "unit_note": "тыс. ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 2.3,
+    "src": "Debt!K18",
+    "unit_note": "×"
+   }
+  },
+  "2020-12-31": {
+   "lt_debt": {
+    "v": 45.941038,
+    "src": "Debt!L9",
+    "unit_note": "млн ₽ в листе"
+   },
+   "st_debt": {
+    "v": 33.010536,
+    "src": "Debt!L11",
+    "unit_note": "млн ₽ в листе"
+   },
+   "lease_liabilities": {
+    "v": 0.0,
+    "src": "Debt!L13",
+    "unit_note": "млн ₽ в листе"
+   },
+   "total_debt": {
+    "v": 78.951574,
+    "src": "Debt!L15",
+    "unit_note": "млн ₽ в листе"
+   },
+   "cash": {
+    "v": 21.808874,
+    "src": "Debt!L16",
+    "unit_note": "млн ₽ в листе"
+   },
+   "net_debt": {
+    "v": 57.1427,
+    "src": "Debt!L17",
+    "unit_note": "млн ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 1.453454,
+    "src": "Debt!L18",
+    "unit_note": "×"
+   }
+  },
+  "2021-12-31": {
+   "lt_debt": {
+    "v": 66.912432,
+    "src": "Debt!M9",
+    "unit_note": "млн ₽ в листе"
+   },
+   "st_debt": {
+    "v": 21.502003,
+    "src": "Debt!M11",
+    "unit_note": "млн ₽ в листе"
+   },
+   "lease_liabilities": {
+    "v": 0.0,
+    "src": "Debt!M13",
+    "unit_note": "млн ₽ в листе"
+   },
+   "total_debt": {
+    "v": 88.414435,
+    "src": "Debt!M15",
+    "unit_note": "млн ₽ в листе"
+   },
+   "cash": {
+    "v": 33.326489,
+    "src": "Debt!M16",
+    "unit_note": "млн ₽ в листе"
+   },
+   "net_debt": {
+    "v": 55.087946,
+    "src": "Debt!M17",
+    "unit_note": "млн ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 1.403801,
+    "src": "Debt!M18",
+    "unit_note": "×"
+   }
+  },
+  "2022-12-31": {
+   "lt_debt": {
+    "v": 26.967534,
+    "src": "Debt!N9",
+    "unit_note": "млн ₽ в листе"
+   },
+   "st_debt": {
+    "v": 54.155037,
+    "src": "Debt!N11",
+    "unit_note": "млн ₽ в листе"
+   },
+   "lease_liabilities": {
+    "v": 0.0,
+    "src": "Debt!N13",
+    "unit_note": "млн ₽ в листе"
+   },
+   "total_debt": {
+    "v": 81.122571,
+    "src": "Debt!N15",
+    "unit_note": "млн ₽ в листе"
+   },
+   "cash": {
+    "v": 29.019581,
+    "src": "Debt!N16",
+    "unit_note": "млн ₽ в листе"
+   },
+   "net_debt": {
+    "v": 52.10299,
+    "src": "Debt!N17",
+    "unit_note": "млн ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 1.596375,
+    "src": "Debt!N18",
+    "unit_note": "×"
+   }
+  },
+  "2023-12-31": {
+   "lt_debt": {
+    "v": 97.502958,
+    "src": "Debt!O9",
+    "unit_note": "млн ₽ в листе"
+   },
+   "st_debt": {
+    "v": 42.419327,
+    "src": "Debt!O11",
+    "unit_note": "млн ₽ в листе"
+   },
+   "lease_liabilities": {
+    "v": 0.0,
+    "src": "Debt!O13",
+    "unit_note": "млн ₽ в листе"
+   },
+   "total_debt": {
+    "v": 139.922285,
+    "src": "Debt!O15",
+    "unit_note": "млн ₽ в листе"
+   },
+   "cash": {
+    "v": 44.516248,
+    "src": "Debt!O16",
+    "unit_note": "млн ₽ в листе"
+   },
+   "net_debt": {
+    "v": 95.406037,
+    "src": "Debt!O17",
+    "unit_note": "млн ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 2.841907,
+    "src": "Debt!O18",
+    "unit_note": "×"
+   }
+  },
+  "2024-12-31": {
+   "lt_debt": {
+    "v": 49.596808,
+    "src": "Debt!P9",
+    "unit_note": "млн ₽ в листе"
+   },
+   "st_debt": {
+    "v": 58.328694,
+    "src": "Debt!P11",
+    "unit_note": "млн ₽ в листе"
+   },
+   "lease_liabilities": {
+    "v": 0.0,
+    "src": "Debt!P13",
+    "unit_note": "млн ₽ в листе"
+   },
+   "total_debt": {
+    "v": 107.925502,
+    "src": "Debt!P15",
+    "unit_note": "млн ₽ в листе"
+   },
+   "cash": {
+    "v": 47.032323,
+    "src": "Debt!P16",
+    "unit_note": "млн ₽ в листе"
+   },
+   "net_debt": {
+    "v": 60.893179,
+    "src": "Debt!P17",
+    "unit_note": "млн ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 0.893883,
+    "src": "Debt!P18",
+    "unit_note": "×"
+   }
+  },
+  "2025-12-31": {
+   "lt_debt": {
+    "v": 44.45863,
+    "src": "Debt!Q9",
+    "unit_note": "млн ₽ в листе"
+   },
+   "st_debt": {
+    "v": 55.440666,
+    "src": "Debt!Q11",
+    "unit_note": "млн ₽ в листе"
+   },
+   "lease_liabilities": {
+    "v": 0.0,
+    "src": "Debt!Q13",
+    "unit_note": "млн ₽ в листе"
+   },
+   "total_debt": {
+    "v": 99.899296,
+    "src": "Debt!Q15",
+    "unit_note": "млн ₽ в листе"
+   },
+   "cash": {
+    "v": 51.063533,
+    "src": "Debt!Q16",
+    "unit_note": "млн ₽ в листе"
+   },
+   "net_debt": {
+    "v": 48.835763,
+    "src": "Debt!Q17",
+    "unit_note": "млн ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 0.583572,
+    "src": "Debt!Q18",
+    "unit_note": "×"
+   }
+  },
+  "2026-06-30": {
+   "lt_debt": {
+    "v": 100.03,
+    "src": "Debt!R9",
+    "unit_note": "млн ₽ в листе"
+   },
+   "st_debt": {
+    "v": 42.553,
+    "src": "Debt!R11",
+    "unit_note": "млн ₽ в листе"
+   },
+   "lease_liabilities": {
+    "v": 0.0,
+    "src": "Debt!R13",
+    "unit_note": "млн ₽ в листе"
+   },
+   "total_debt": {
+    "v": 142.583,
+    "src": "Debt!R15",
+    "unit_note": "млн ₽ в листе"
+   },
+   "cash": {
+    "v": 25.173,
+    "src": "Debt!R16",
+    "unit_note": "млн ₽ в листе"
+   },
+   "net_debt": {
+    "v": 117.41,
+    "src": "Debt!R17",
+    "unit_note": "млн ₽ в листе"
+   },
+   "nd_ebitda": {
+    "v": 1.390587,
+    "src": "Debt!R18",
+    "unit_note": "×"
+   }
+  }
+ }
+}

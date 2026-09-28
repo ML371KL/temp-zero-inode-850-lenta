@@ -1,0 +1,65 @@
+[Unit]
+Description=Лента 850 · утренний сбор источников, здоровье состояния, прогон «в будущем»
+Documentation=https://github.com/ML371KL/temp-zero-inode-850-lenta/blob/main/ops/README.md
+# Именно network-online: первый шаг идёт на MOEX ISS и ЦБ, и запуск до поднятия
+# маршрутов дал бы прогон, где «все источники недоступны».
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+# Type=exec, а не oneshot: systemd отказывается загружать oneshot с Restart!=no.
+Type=exec
+User=dash
+Group=dash
+WorkingDirectory=/srv/dash/repo-850-lenta
+EnvironmentFile=/usr/local/etc/lenta-850/env
+# Без этого журнал наполняется только в конце: питон буферизует stdout, когда он
+# не терминал, и в аварии видно результат вместо того, на чём всё встало.
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /srv/dash/repo-850-lenta/ops/run.sh collect
+# Повтор через 3 минуты — и при провале шага (1), и при тревоге (8): утренняя
+# тревога — чаще всего невосполнимый источник, моргнувший 503, и повтор
+# добирает его срез в тот же утренний час (так у 850oa). Прогон «в будущем»
+# повтор заново не гоняет: run.sh помнит его итог за день (future.checked).
+# Не повторяются только ошибки настройки: 64 — режим или проба с чужим
+# источником, 78 — env-файл.
+Restart=on-failure
+RestartSec=180
+RestartPreventExitStatus=64 78
+# Для Type=exec потолок задаётся RuntimeMaxSec (TimeoutStartSec не ограничивает
+# ничего). Потолок = прогон с запасом + ожидание замка (LOCK_WAIT_SECONDS =
+# потолок пересборки); расчёт и замер — ops/budgets.json, равенство сверяет
+# tests/test_ops_units.py. ДО ЗАМЕРА НА СЕРВЕРЕ ЭТО ОЦЕНКА.
+RuntimeMaxSec=3660
+SyslogIdentifier=lenta850
+
+StateDirectory=lenta-850
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+# Репозиторий пишется: git reset при обновлении кода, pip в .venv, var/ тестов.
+ReadWritePaths=/srv/dash/repo-850-lenta
+# Утренний такт ничего не публикует, но разбирает чужой HTML: ключу записи в
+# ветку release здесь делать нечего. Суточному такту и пересборке каталог
+# нужен — они пушат выпуск через алиас deploy-ключа.
+InaccessiblePaths=/srv/dash/.ssh
+
+# Машина общая с соседними панелями и сессиями Claude Code. Лимиты не про
+# экономию, а про то, чтобы отказ конвейера остался отказом конвейера и не
+# забрал с собой sshd через глобальный OOM.
+MemoryHigh=384M
+MemoryMax=512M
+Nice=10
+
+# Мост тревог: ExecStopPost, а НЕ OnFailure — выполняется всегда, поэтому из
+# одного хука приходят обе новости: и что прогон упал, и что он снова проходит.
+# Префикс «-» — отказ моста не красит прогон; «+» — иначе под
+# ProtectSystem=strict мост не запишет маркер дедупа.
+ExecStopPost=-+/usr/local/sbin/dash-alert %n
+
+# Секции [Install] намеренно НЕТ: юнит запускается таймером. С ней `enable`
+# дал бы прогон при каждой загрузке, и с Persistent=true у таймера это
+# наложилось бы на догоняющий запуск.

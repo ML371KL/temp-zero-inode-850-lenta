@@ -1,0 +1,21 @@
+# Конфигурация Cloudflare Pages как код.
+#
+# Биндингов у проекта нет: данные модели функция `functions/api/model.js` читает
+# из ветки `release` этого репозитория (GitHub Pages, запасной путь — raw), а не
+# из хранилища Cloudflare. Поэтому проект не зависит от ключей и настроек
+# аккаунта, кроме самого проекта Pages.
+#
+# Выкладка витрины — с ноутбука (ops/README.md, «Витрина»):
+#     npx wrangler@4.135.0 pages deploy web --project-name tzi-850-lenta --branch main
+# Метка --branch обязана совпадать с production_branch проекта (main), иначе
+# деплой молча уйдёт в preview.
+
+name = "tzi-850-lenta"
+
+# Каталог статики. Функции wrangler ищет НЕ внутри него, а в `functions/` рядом
+# с этим файлом.
+pages_build_output_dir = "web"
+
+# Дата фиксирует поведение рантайма: без неё край однажды утром начинает вести
+# себя иначе сам по себе.
+compatibility_date = "2026-08-01"

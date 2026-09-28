@@ -1,0 +1,726 @@
+{
+ "status": "200",
+ "meta": {
+  "total": 25,
+  "limit": 100
+ },
+ "results": {
+  "vacancies": [
+   {
+    "vacancy": {
+     "id": "b2ea6545-b6ac-11ee-83f7-cb26dff57dd7",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:02:16+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 4,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/b2ea6545-b6ac-11ee-83f7-cb26dff57dd7"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "768f4b88-404c-11f0-b9d8-d549be31d974",
+     "creation-date": "2025-06-03",
+     "date_modify": "2026-09-25T10:02:14+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/768f4b88-404c-11f0-b9d8-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "1b0fecc0-0fae-11f0-9de7-e7d0d2cf29b1",
+     "creation-date": "2025-04-02",
+     "date_modify": "2026-09-25T10:02:11+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/1b0fecc0-0fae-11f0-9de7-e7d0d2cf29b1"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "609359a0-5cb9-11f0-bf73-d549be31d974",
+     "creation-date": "2025-07-09",
+     "date_modify": "2026-09-25T10:02:08+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "заместитель директора магазина",
+     "typicalPosition": "Директор магазина",
+     "code_profession": "200037",
+     "schedule": "Полный рабочий день",
+     "work_places": 2,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/609359a0-5cb9-11f0-bf73-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "746e1100-0fab-11f0-a05c-cb26dff57dd7",
+     "creation-date": "2025-04-02",
+     "date_modify": "2026-09-25T10:02:04+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/746e1100-0fab-11f0-a05c-cb26dff57dd7"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "ee70dc95-b6af-11ee-9c7c-e7d0d2cf29b1",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:02:01+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 10,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/ee70dc95-b6af-11ee-9c7c-e7d0d2cf29b1"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "37cc4c60-0fad-11f0-a05c-cb26dff57dd7",
+     "creation-date": "2025-04-02",
+     "date_modify": "2026-09-25T10:01:59+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/37cc4c60-0fad-11f0-a05c-cb26dff57dd7"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "7f020815-b6a6-11ee-bcff-d549be31d974",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:01:57+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 10,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/7f020815-b6a6-11ee-bcff-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "f683b8e5-b6a9-11ee-bcff-d549be31d974",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:01:54+0300",
+     "salary_min": 33000,
+     "salary_max": 33000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 10,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/f683b8e5-b6a9-11ee-bcff-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "e93ba8f5-b6ae-11ee-bcff-d549be31d974",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:01:51+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 4,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/e93ba8f5-b6ae-11ee-bcff-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "0e487505-b6a6-11ee-bcff-d549be31d974",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:01:47+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 10,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/0e487505-b6a6-11ee-bcff-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "eb167d15-b6a6-11ee-bcff-d549be31d974",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:01:45+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 10,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/eb167d15-b6a6-11ee-bcff-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "9e3a4d15-b6b9-11ee-9c7c-e7d0d2cf29b1",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:01:42+0300",
+     "salary_min": 60000,
+     "salary_max": 90000,
+     "currency": "«руб.»",
+     "job-name": "директор магазина",
+     "code_profession": "200037",
+     "schedule": "Полный рабочий день",
+     "work_places": 5,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/9e3a4d15-b6b9-11ee-9c7c-e7d0d2cf29b1"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "5eba5775-b6aa-11ee-9c7c-e7d0d2cf29b1",
+     "creation-date": "2024-01-19",
+     "date_modify": "2026-09-25T10:01:40+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Полный рабочий день",
+     "work_places": 10,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/5eba5775-b6aa-11ee-9c7c-e7d0d2cf29b1"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "c7cb33e8-0fac-11f0-98d5-d549be31d974",
+     "creation-date": "2025-04-02",
+     "date_modify": "2026-09-25T10:01:38+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/c7cb33e8-0fac-11f0-98d5-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "236b11d8-5cb9-11f0-bf73-d549be31d974",
+     "creation-date": "2025-07-09",
+     "date_modify": "2026-09-25T10:01:36+0300",
+     "salary_min": 35000,
+     "salary_max": 38000,
+     "currency": "«руб.»",
+     "job-name": "продавец-универсал",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 3,
+     "region": {
+      "region_code": "7400000000000",
+      "name": "Челябинская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/236b11d8-5cb9-11f0-bf73-d549be31d974"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "4fd15258-a80f-11f1-8d85-6f9b8d7d49f7",
+     "creation-date": "2026-09-04",
+     "date_modify": "2026-09-25T10:01:34+0300",
+     "salary_min": 40000,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/4fd15258-a80f-11f1-8d85-6f9b8d7d49f7"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "26af1eb8-a810-11f1-b4b9-312b1e80675a",
+     "creation-date": "2026-09-04",
+     "date_modify": "2026-09-25T10:01:32+0300",
+     "salary_min": 40000,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/26af1eb8-a810-11f1-b4b9-312b1e80675a"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "9cd93628-a810-11f1-b4b9-312b1e80675a",
+     "creation-date": "2026-09-04",
+     "date_modify": "2026-09-25T10:01:30+0300",
+     "salary_min": 40000,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/9cd93628-a810-11f1-b4b9-312b1e80675a"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "204773a8-a811-11f1-8d85-6f9b8d7d49f7",
+     "creation-date": "2026-09-04",
+     "date_modify": "2026-09-25T10:01:27+0300",
+     "salary_min": 40000,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/204773a8-a811-11f1-8d85-6f9b8d7d49f7"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "411b6c78-a812-11f1-8a32-2b6903e6a9c2",
+     "creation-date": "2026-09-04",
+     "date_modify": "2026-09-25T10:01:24+0300",
+     "salary_min": 40000,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/411b6c78-a812-11f1-8a32-2b6903e6a9c2"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "c78de948-a812-11f1-8a32-2b6903e6a9c2",
+     "creation-date": "2026-09-04",
+     "date_modify": "2026-09-25T10:01:22+0300",
+     "salary_min": 40000,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/c78de948-a812-11f1-8a32-2b6903e6a9c2"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "7ba39888-a813-11f1-8a32-2b6903e6a9c2",
+     "creation-date": "2026-09-04",
+     "date_modify": "2026-09-25T10:01:21+0300",
+     "salary_min": 40000,
+     "salary_max": 45000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-кассир",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104094",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "5400000000000",
+      "name": "Новосибирская область"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/7ba39888-a813-11f1-8a32-2b6903e6a9c2"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "2c45b799-9bad-11f1-800d-3160d0db64b8",
+     "creation-date": "2026-08-19",
+     "date_modify": "2026-09-25T10:01:18+0300",
+     "salary_min": 35000,
+     "salary_max": 40000,
+     "currency": "«руб.»",
+     "job-name": "Продавец продовольственных товаров",
+     "typicalPosition": "Продавец-кассир",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "2200000000000",
+      "name": "Алтайский край"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/2c45b799-9bad-11f1-800d-3160d0db64b8"
+    }
+   },
+   {
+    "vacancy": {
+     "id": "e11b1f10-6736-11ee-99fd-cb26dff57dd7",
+     "creation-date": "2023-10-10",
+     "date_modify": "2026-09-25T10:01:15+0300",
+     "salary_min": 57500,
+     "salary_max": 92000,
+     "currency": "«руб.»",
+     "job-name": "Продавец-универсал",
+     "code_profession": "104095",
+     "schedule": "Сменная работа",
+     "work_places": 1,
+     "region": {
+      "region_code": "8900000000000",
+      "name": "Ямало-Ненецкий автономный округ"
+     },
+     "company": {
+      "inn": "6674121179",
+      "ogrn": "1036605217252",
+      "kpp": "667901001",
+      "name": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\""
+     },
+     "category": {
+      "specialisation": "Продажи, закупки, снабжение, торговля"
+     },
+     "vac_url": "https://trudvsem.ru/vacancy/card/1036605217252/e11b1f10-6736-11ee-99fd-cb26dff57dd7"
+    }
+   }
+  ]
+ }
+}

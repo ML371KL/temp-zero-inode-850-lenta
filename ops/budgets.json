@@ -1,0 +1,27 @@
+{
+ "about": "Время шагов тактов на сервере, из которого считаются потолки юнитов (RuntimeMaxSec) и ожидание замка (LOCK_WAIT_SECONDS в ops/run.sh). Потолок юнита = ceil(сумма шагов × safety / round_to) × round_to, у collect и daily плюс ожидание замка = потолок rebuild. Равенство с ops/systemd/*.service и run.sh сверяет tests/test_ops_units.py. Порядок: замерить шаги на сервере (журнал такта печатает время каждого шага), вписать сюда, поставить status=measured и measured_on, пересчитать потолки в юнитах и LOCK_WAIT_SECONDS, поставить юниты заново (ops/README.md, «Потолки времени»).",
+ "status": "estimate",
+ "measured_on": null,
+ "safety": 1.5,
+ "round_to": 60,
+ "seconds": {
+  "pip": 120,
+  "collect_morning": 300,
+  "future_tests": 180,
+  "archive_status_health": 60,
+  "collect_evening": 300,
+  "nowcast_health": 60,
+  "tact_tests": 180,
+  "build": 600,
+  "publish": 120,
+  "verify_timeout": 600,
+  "prune": 120
+ },
+ "units": {
+  "rebuild": ["pip", "tact_tests", "build", "publish", "verify_timeout", "prune"],
+  "daily": ["pip", "collect_evening", "nowcast_health", "tact_tests", "build", "publish", "verify_timeout", "prune"],
+  "collect": ["pip", "collect_morning", "future_tests", "archive_status_health"]
+ },
+ "lock_wait_unit": "rebuild",
+ "tact_tests_target": 180
+}

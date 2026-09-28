@@ -1,0 +1,25 @@
+# Перенос цены ошибки осей миров с книги-источника (миры те же) на «Ленту» через долю EV.
+# ТОЛЬКО ДЛЯ H: числа книги-источника в публичный репозиторий не переносятся; после первого прогона ядра на книге
+# «Ленты» этот файл и раздел 8 вывода заменяются строками results.json → sensitivities / uncertainty.contributions.
+method: >
+  % EV = эффект оси в ₽ точки книги-источника / цена 1 % EV её точки; ₽ «Ленты» = % EV × цена 1 % EV «Ленты».
+  Допущение переноса: EV обеих сетей одинаково (в %) реагирует на макро-механику миров (перенос инфляции в чек k 0,55
+  против 0,60, рост сети выше у «Ленты» — эффект у «Ленты», скорее, больше). Неопределённость переноса ±50 %.
+source_book:
+  ref: "книга 1.6 850oa (28.09.2026): раздел 0 (точка), раздел 2 (A-P1, A-P1c, A-M6), раздел 1 (A-V5); study/02 §4.4 (1 % EV)"
+  point_rub: 1461
+  rub_per_1pct_ev_point: 82          # study/02 §4.4: 1 % EV = 82 ₽ точки (74 ₽ медианы), книга 1.6
+lenta:
+  rub_per_1pct_ev: 26.6              # study/02 §11.4: 0,01·V0·(1 − g)/акции при g = 0,10 (26,1–27,1 при g 0,15–0,05)
+  rub_per_1pct_ev_range: [26.1, 27.1]
+rows:
+  - {name: "A-P1 Веса миров (25/50/25 … 40/45/15)", paths: ["joint.world_prob"], source_rub_low: -54, source_rub_high: 24,
+     basis: "точка 1 407 / 1 485 против 1 461 (sensitivities[path=joint.world_prob])"}
+  - {name: "A-M6 Инфляция мира M (сдвиг −0,3…+0,5 п.п.)", paths: ["worlds.M.cpi", "worlds.M.food_cpi", "worlds.M.lt.inflation"],
+     source_rub_low: -86, source_rub_high: 159, basis: "точка 1 375 / 1 620 против 1 461 (sensitivities[path=worlds.M.cpi])"}
+  - {name: "A-P1c Вес своего макро-взгляда λ (0,25 … 0,75)", paths: ["joint.own_macro_confidence"], source_rub_low: -50, source_rub_high: 50,
+     basis: "по определению линейно: ±0,25 × вклад взгляда на ставки 200 ₽"}
+  - {name: "Ось «взгляд на инфляцию и ставки» целиком (λ 0 … 1)", paths: ["joint.own_macro_confidence"], source_rub_low: -100, source_rub_high: 100,
+     basis: "низ 1 361 / верх 1 561 против точки 1 461"}
+  - {name: "A-V5 контроль: 3 года по рыночной кривой (в расчёте не используется)", paths: ["valuation.market_curve_years"], source_rub_low: 0, source_rub_high: -152,
+     basis: "1 461 → 1 309 (sensitivities[path=valuation.market_curve_years])"}
