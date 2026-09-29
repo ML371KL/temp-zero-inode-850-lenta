@@ -179,10 +179,11 @@ BOOK: dict[str, frozenset[str]] = {
     "sensitivities[].low": _WORLDS | _REGIMES,
     **{f"sensitivities[].{end}.{w}": _JOINT_CHOICE for end in ("high", "low") for w in _WORLDS},
     # `capex_tax_premium_share` — ускоренная налоговая амортизация (D25);
-    # `acquired_nol.discount_rule` — {method, haircut, locked_addback} (D26).
+    # `acquired_nol.discount_rule` — {method, haircut, locked_addback} (D26);
+    # `nondeductible_da_anchor` — невычитаемая часть D&A якоря (control-model-02).
     "tax": frozenset({"acquired_nol", "alpha", "alpha_terminal_shield", "capex_tax_premium_share",
-                      "nol_full_from_year", "nol_limit", "nol_start", "permanent_addback_pct",
-                      "rate"}),
+                      "nol_full_from_year", "nol_limit", "nol_start", "nondeductible_da_anchor",
+                      "permanent_addback_pct", "rate"}),
     "tax.acquired_nol": frozenset({"amount", "discount_rule", "usable_from"}),
     "tax.acquired_nol.discount_rule": frozenset({"haircut", "locked_addback", "method"}),
     # Пустой путь прибавок (убытков запертых юрлиц в прогнозе нет) — пустой блок.

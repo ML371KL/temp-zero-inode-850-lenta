@@ -47,6 +47,7 @@ from model.book import (
     half_rate,
     interp_curve,
     lfl_offset_spec,
+    nondeductible_da_anchor,
     path_value,
     period_index,
     periods,
@@ -607,6 +608,21 @@ def lt_homogeneity(A: dict, cell: Cell, year: int) -> float:
     return (1 - k) * (A["worlds"][cell.world]["lt"]["inflation"] - reference) * weight
 
 
+def nondeductible_da(amount: float | None, legacy_halves: int, i: int, half_life: float) -> float:
+    """Невычитаемая в налоге часть учётной D&A в полугодии i прогноза, млрд ₽.
+
+    `tax.nondeductible_da_anchor` (`amount`; амортизация торговых марок ППА в базе
+    D&A якоря, аудит 30.09.2026, control-model-02) убывает вместе с базой якоря:
+    amount × max(0, 1 − (legacy_halves + i + 1)/half_life), legacy_halves —
+    полугодий, которые база уже списывается (`facts.da_straight_line`, иначе 0),
+    half_life = 2·срок службы. Одна функция для ядра и инструмента
+    перезаякоривания. Нет ключа — 0.
+    """
+    if not amount:
+        return 0.0
+    return amount * max(0.0, 1 - (legacy_halves + i + 1) / half_life)
+
+
 def annuity_ratio(rate: float, life: float) -> float:
     """D&A к capex при постоянном темпе роста `rate` и сроке службы `life`.
 
@@ -914,6 +930,8 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     # когортам; учётная — линейная; разница уменьшает налоговую базу. Нет ключа
     # — премии нет (правило 850oa).
     tax_premium = capex_tax_premium(A)
+    # Невычитаемая часть D&A якоря (`tax.nondeductible_da_anchor`; нет ключа — None).
+    nondeductible_anchor = nondeductible_da_anchor(A)
     area_share = rules.maintenance_area_share
     area_intensity_0 = rules.maintenance_area_base
     integration = C.get("integration_capex")
@@ -1140,6 +1158,11 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         base = ebit + path_value(TX["permanent_addback_pct"], p) * revenue
         if tax_premium:
             base -= tax_premium * (capex - da)
+        # Невычитаемая часть учётной D&A (`tax.nondeductible_da_anchor`,
+        # `nondeductible_da`): налоговая D&A = премия·capex + (1 − премия)·
+        # (учётная − невычитаемая).
+        base += (1.0 - (tax_premium or 0.0)) * nondeductible_da(
+            nondeductible_anchor, legacy_halves, i, half_life)
         tax_unlevered = max(0.0, tau * base)
 
         # Валовой долг для процентов и для пути против лимита линий не считает

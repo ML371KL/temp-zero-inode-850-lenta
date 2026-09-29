@@ -240,11 +240,11 @@ if str(ROOT) not in sys.path:
 from model.book import (BOOK_DIR, BOOK_YAML, FACT_SUM_TOL, REVENUE_BASES, BookError,  # noqa: E402
                         Cell, Segment, acquired_nol, all_cells, bridge_items, capex_network_rules,
                         capex_tax_premium, dividend_timing,
-                        half_rate, load_book, path_value, period_index, previous_period,
-                        segments, validate_book)
+                        half_rate, load_book, nondeductible_da_anchor, path_value, period_index,
+                        previous_period, segments, validate_book)
 from model.core import (accreted, anchor_effective_end, effective_history,  # noqa: E402
-                        margin_observations, margin_season, observation_weight, period_bounds,
-                        run_cell)
+                        margin_observations, margin_season, nondeductible_da, observation_weight,
+                        period_bounds, run_cell)
 from model.financing import credit_limit  # noqa: E402
 from model.grid import (build_grid, fair_value, layer_variants, layers,  # noqa: E402
                         regime_unconditional)
@@ -616,7 +616,8 @@ def tax_loss_pools_by_rule(A: dict, period: str, revenue: float, ebitda: float, 
 
     Правило ядра (`model.core.run_cell`) на фактах: база = EBIT + постоянная
     прибавка × выручка − премия × (capex − D&A) (ускоренная налоговая
-    амортизация, `tax.capex_tax_premium_share`); корзина с долгом — α × база −
+    амортизация, `tax.capex_tax_premium_share`) + (1 − премия) × невычитаемая
+    часть D&A якоря (`tax.nondeductible_da_anchor`); корзина с долгом — α × база −
     проценты; запертые убытки (`tax.acquired_nol`) до `usable_from` прибавляют к
     ней убыток запертых юрлиц и копятся в их пуле, в `usable_from` пул
     переходит в пул группы с долей (1 − haircut); убыток корзины пополняет пул
@@ -632,6 +633,11 @@ def tax_loss_pools_by_rule(A: dict, period: str, revenue: float, ebitda: float, 
     premium = capex_tax_premium(A)
     if premium:
         base -= premium * (capex - da)
+    # невычитаемая часть D&A якоря (`tax.nondeductible_da_anchor`) — правилом ядра
+    # в первом прогнозном полугодии книги (i = 0)
+    state = capex_network_rules(A).da_state
+    base += (1.0 - (premium or 0.0)) * nondeductible_da(
+        nondeductible_da_anchor(A), state[1] if state else 0, 0, 2 * A["capex"]["asset_life_years"])
     corner = TX["alpha"] * base - net_interest
     if locked:
         if period_index(period) < period_index(locked["usable_from"]):

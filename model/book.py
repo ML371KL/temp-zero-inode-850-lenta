@@ -321,8 +321,8 @@ def validate_book(A: dict) -> None:
     кривых, метод и пороги заголовка (скачок, ограниченная ответственность);
     ключи диагностик медианы; факты якоря, периоды правил, терминал, корзины ставок, лестница
     дивидендов, сегменты сети, строки моста, необязательные траектории,
-    запертые убытки, дата удельных цен capex, разложение дисконта за управление,
-    квартальный слой.
+    запертые убытки, невычитаемая D&A якоря, дата удельных цен capex, разложение
+    дисконта за управление, квартальный слой.
     """
     refuse_off_schema(A)
     refuse_incomplete(A)
@@ -353,6 +353,7 @@ def validate_book(A: dict) -> None:
     nwc_rules(A)
     acquired_nol(A)
     capex_tax_premium(A)
+    nondeductible_da_anchor(A)
     unit_price_basis(A)
     governance_components(A)
     market_rules(A)
@@ -1364,6 +1365,22 @@ def capex_tax_premium(A: dict) -> float | None:
     if raw is None:
         return None
     return _book_number(A["tax"], "capex_tax_premium_share", None, "tax", 0.0, 1.0)
+
+
+def nondeductible_da_anchor(A: dict) -> float | None:
+    """`tax.nondeductible_da_anchor` — невычитаемая в налоге часть D&A якоря, млрд ₽
+    за полугодие (амортизация торговых марок из ППА; аудит 30.09.2026,
+    control-model-02).
+
+    Часть базы D&A якоря и убывает вместе с ней: в полугодии i прогноза —
+    значение × max(0, 1 − (полугодий базы + i + 1)/(2·срок службы)), как сама
+    база (`model.core.nondeductible_da`). Налоговая D&A = премия·capex +
+    (1 − премия)·(учётная D&A − невычитаемая): к налоговой базе прибавляется
+    (1 − премия)·невычитаемая. Нет ключа — None (вычитается вся D&A).
+    """
+    if "nondeductible_da_anchor" not in A["tax"]:
+        return None
+    return _book_number(A["tax"], "nondeductible_da_anchor", None, "tax", 0.0, float("inf"))
 
 
 # Дата удельных цен capex открытия и инфраструктуры (`capex.unit_price_basis`).
