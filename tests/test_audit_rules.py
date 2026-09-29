@@ -16,7 +16,8 @@
   доамортизация когорт capex явного периода в налоге терминала
   (`valuation.terminal.da_convention: cohort_runoff`, capex-06);
 * capex: физическая часть поддерживающего capex по форматам и когортам
-  (`capex.physical`, capex-04).
+  (`capex.physical`, capex-04);
+* печать: LFL = (1 + чек)(1 + трафик) − 1, как в выручке (control-model-06).
 
 Перезаякоривание на ожидаемом пути с этими ключами = перекат бит в бит —
 `tests/test_reanchor.py::test_the_audit_rules_make_reanchoring_equal_rolling`.
@@ -403,3 +404,21 @@ def test_growth_costs_less_physical_capex_by_cohort_and_the_default_is_the_old_r
     a, b = run_cell(A, cell).rows, run_cell(B, cell).rows
     assert b[-1].capex_maintenance < a[-1].capex_maintenance
     assert [r.revenue for r in b] == [r.revenue for r in a]
+
+
+# ================================================== печать: LFL, который входит в выручку
+
+
+def test_the_printed_lfl_is_the_lfl_of_the_revenue():
+    """control-model-06: печатается LFL = (1 + чек)(1 + трафик) − 1 — тот, по
+    которому считается выручка (строки клетки выпуска книги и годовая таблица)."""
+    from model.book_results import _row
+
+    result = _run(toy_book(), ("N", "full", "high"))
+    for row in result.rows:
+        want = (1 + row.lfl_ticket) * (1 + row.lfl_traffic) - 1
+        assert row.lfl == pytest.approx(want, abs=1e-15)
+        assert _row(row)["lfl"] == row.lfl
+    for year in result.annual():
+        halves = [r for r in result.rows if r.year == year["year"]]
+        assert year["lfl"] == pytest.approx(sum(r.lfl for r in halves) / len(halves), abs=1e-15)

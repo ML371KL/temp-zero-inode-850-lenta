@@ -166,6 +166,12 @@ class StepRow:
     def capex_pct(self) -> float:
         return self.capex / self.revenue if self.revenue else 0.0
 
+    @property
+    def lfl(self) -> float:
+        """LFL группы полугодия в форме, которой считается выручка:
+        (1 + чек)(1 + трафик) − 1 (печать и выручка — одно число)."""
+        return (1 + self.lfl_ticket) * (1 + self.lfl_traffic) - 1.0
+
 
 @dataclass(frozen=True)
 class CellResult:
@@ -247,7 +253,9 @@ class CellResult:
             a["tax_actual"] += r.tax_actual
             a["net_interest"] += r.net_interest
             a["dividends"] += r.dividends
-            a["lfl"].append(r.lfl_ticket + r.lfl_traffic)
+            # LFL печати — тот, что входит в выручку: (1 + чек)(1 + трафик) − 1
+            # (аудит 30.09.2026, control-model-06).
+            a["lfl"].append(r.lfl)
             a["rate"].append(r.debt_rate)
             a["halves"] = a.get("halves", 0) + 1
             a["net_debt"] = r.net_debt

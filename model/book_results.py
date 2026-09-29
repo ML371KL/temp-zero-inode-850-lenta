@@ -113,7 +113,7 @@ REGIMES = ("stress", "floor", "partial", "full")
 
 
 def _row(r) -> dict:
-    return dict(period=r.period, revenue=r.revenue, lfl=r.lfl_ticket + r.lfl_traffic,
+    return dict(period=r.period, revenue=r.revenue, lfl=r.lfl,
                 area_end=r.area_end, margin=r.margin, ebitda=r.ebitda, capex=r.capex,
                 capex_pct=r.capex_pct, da=r.da, d_nwc=r.nwc_change, tax_u=r.tax_unlevered,
                 tax_l=r.tax_actual, ts=r.tax_shield, fcff=r.fcff, fcff_margin=r.fcff / r.revenue,
