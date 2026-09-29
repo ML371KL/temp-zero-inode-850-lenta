@@ -54,7 +54,7 @@ origin/release` (+ `clean`): откат с ноутбука или чужой pu
     LENTA_STATE_DIR        каталог состояния (по умолчанию var/ репозитория)
     LENTA_RELEASE_REMOTE   адрес репозитория для клона ветки release
                            (на сервере — ssh-алиас deploy-ключа, например
-                           gh-850-lenta:ML371KL/temp-zero-inode-850-lenta.git)
+                           gh-850-lenta:ML371KL/temp-zero-inode-850-lenta-data.git)
     LENTA_GIT_NAME         имя автора коммитов ветки release
     LENTA_GIT_EMAIL        адрес автора (только noreply GitHub)
     LENTA_PUBLIC_URL       боевая дверь (https://tzi-850-lenta.pages.dev/api/model)

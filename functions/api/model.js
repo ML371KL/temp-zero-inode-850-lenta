@@ -41,8 +41,8 @@
  */
 
 const SCHEMA = "lenta-v1";
-const PRIMARY = "https://ml371kl.github.io/temp-zero-inode-850-lenta/latest.json";
-const FALLBACK = "https://raw.githubusercontent.com/ML371KL/temp-zero-inode-850-lenta/release/latest.json";
+const PRIMARY = "https://ml371kl.github.io/temp-zero-inode-850-lenta-data/latest.json";
+const FALLBACK = "https://raw.githubusercontent.com/ML371KL/temp-zero-inode-850-lenta-data/release/latest.json";
 const CACHE_SECONDS = 60;
 // Сколько край держит последнюю годную копию. Cache API соблюдает
 // Cache-Control сохранённого ответа: с max-age=60 копия умирала бы через минуту

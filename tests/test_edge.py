@@ -111,8 +111,8 @@ def test_the_edge_carries_no_r2_and_no_foreign_keys():
 
 def test_the_door_reads_the_release_branch_of_this_repository():
     src = (FUNCTIONS / "api" / "model.js").read_text(encoding="utf-8")
-    assert 'PRIMARY = "https://ml371kl.github.io/temp-zero-inode-850-lenta/latest.json"' in src
-    assert ('FALLBACK = "https://raw.githubusercontent.com/ML371KL/temp-zero-inode-850-lenta/'
+    assert 'PRIMARY = "https://ml371kl.github.io/temp-zero-inode-850-lenta-data/latest.json"' in src
+    assert ('FALLBACK = "https://raw.githubusercontent.com/ML371KL/temp-zero-inode-850-lenta-data/'
             'release/latest.json"') in src
     assert 'SCHEMA = "lenta-v1"' in src
     from model.payload import SCHEMA

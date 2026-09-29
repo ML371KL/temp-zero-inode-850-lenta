@@ -19,8 +19,8 @@
 | Настройки | `/usr/local/etc/lenta-850/env` (`root:dash 640`), образец — `ops/env.example`; секретов в нём нет |
 | Состояние | `/var/lib/lenta-850` (`StateDirectory=lenta-850`, владелец `dash`) |
 | Юниты | `lenta850-{collect,daily,rebuild}.{service,timer}` из `ops/systemd/`, журнал `SyslogIdentifier=lenta850` |
-| Ветка данных | `release` — осиротевшая, только `.nojekyll`, `latest.json`, `releases/<sha256>.json`; `.github/` в ней не бывает |
-| Раздача данных | GitHub Pages ветки `release`: `https://ml371kl.github.io/temp-zero-inode-850-lenta/latest.json` |
+| Репозиторий данных | `ML371KL/temp-zero-inode-850-lenta-data` (публичный, отдельный от кода): ветка `release` по умолчанию — только `README.md`, `.nojekyll`, `latest.json`, `releases/<sha256>.json`; `.github/` в ней не бывает. Deploy-ключ сервера пишет только сюда: к репозиторию кода у него доступа нет (в личном репозитории правила веток deploy-ключ с правом записи обходит — проверено 29.09.2026, поэтому граница — репозиторий, а не правило) |
+| Раздача данных | GitHub Pages репозитория данных: `https://ml371kl.github.io/temp-zero-inode-850-lenta-data/latest.json` |
 | Дверь браузера | Pages Function `functions/api/model.js` на `tzi-850-lenta.pages.dev`; запасной источник — `raw.githubusercontent.com/…/release/latest.json` |
 | Витрина | статика `web/`, выкладка с ноутбука (раздел 8) |
 | Тревоги | общий мост `/usr/local/sbin/dash-alert` (`ExecStopPost`) и сторож `dash-watch` — оба из служебного репозитория панелей, не отсюда |
@@ -43,8 +43,8 @@
 
 ```
 сборка (ops/build_release.py) → $LENTA_STATE_DIR/release/latest.json
-  → ops/publish.py: клон ветки release, releases/<sha256>.json + latest.json одним коммитом, push
-  → GitHub Pages ветки release (сборка pages-build-deployment, обычно 1–3 минуты)
+  → ops/publish.py: клон ветки release репозитория данных, releases/<sha256>.json + latest.json одним коммитом, push
+  → GitHub Pages репозитория данных (сборка pages-build-deployment, обычно 1–3 минуты)
   → functions/api/model.js: Pages (минутная метка, cacheTtl 60) → raw (запасной) → копия края
   → браузер и сверка ops/publish.py --verify
 ```
@@ -159,10 +159,12 @@ echo $?    # 8, последняя строка — «ТРЕВОГА (код 8):
    `LENTA_RELEASE_REMOTE` (только ssh-алиас `gh-850-lenta:…`), `LENTA_GIT_NAME` и
    `LENTA_GIT_EMAIL` (noreply-адрес из `ops/commit-emails.allow`), `LENTA_PUBLIC_URL`
    (боевая дверь, её читает сверка).
-3. **Ключ записи в ветку `release`.** Отдельный deploy-ключ ed25519 в
+3. **Ключ записи в репозиторий данных.** Отдельный deploy-ключ ed25519 в
    `/srv/dash/.ssh/` (имя файла — в справочнике владельца), открытая часть — в
-   репозиторий: Settings → Deploy keys → Allow write access. В
-   `/srv/dash/.ssh/config` — алиас:
+   **репозиторий данных** `temp-zero-inode-850-lenta-data`: Settings → Deploy keys →
+   Allow write access. В репозиторий кода ключ не добавляется никогда: код сервер
+   берёт анонимно, а ключ с правом записи в личном репозитории обходит правила
+   веток. В `/srv/dash/.ssh/config` — алиас:
    ```
    Host gh-850-lenta
        HostName github.com
@@ -174,33 +176,30 @@ echo $?    # 8, последняя строка — «ТРЕВОГА (код 8):
    `ProtectSystem=strict` каталог только для чтения, и ssh в юните не сможет
    его дописать (`BatchMode=yes` — вопроса не будет, будет отказ). Проверка:
    `sudo -u dash ssh -T gh-850-lenta` — «successfully authenticated».
-4. **Правила репозитория (rulesets, владелец в веб-интерфейсе).**
-   - `main`: запрет force-push и удаления; обновления — только с обходом для
-     роли Repository admin (deploy-ключи в списке обхода НЕ стоят: ключ записи
-     не должен менять код, который сервер исполняет); обязательная проверка
-     `tests` из `ci.yml`; «Require branches to be up to date» не включать.
-   - `release`: запрет force-push и удаления; обновления — с обходом для
-     Deploy keys.
-   Deploy-ключ GitHub сам по себе пишет во весь репозиторий — ограничивают его
-   именно правила.
-5. **Ветка `release`** — один раз (осиротевшая, один коммит с `.nojekyll`):
+4. **Правила (rulesets).** Репозиторий кода: `main` — запрет force-push, удаления и
+   обновлений с обходом только для владельца (защита от случайной перезаписи;
+   deploy-ключей у репозитория кода нет). Репозиторий данных: `release` — запрет
+   удаления и force-push (публикация только дописывает коммиты).
+5. **Репозиторий данных** — один раз: публичный `temp-zero-inode-850-lenta-data`,
+   ветка `release` по умолчанию (осиротевшая: `README.md` и `.nojekyll`). Если его
+   нет — создать и выложить заготовку:
    ```bash
    sudo -u dash bash -c 'set -a; . /usr/local/etc/lenta-850/env; set +a;
         cd /srv/dash/repo-850-lenta && .venv/bin/python ops/publish.py init'
    ```
    Состояние (`/var/lib/lenta-850`) создаёт systemd при первом запуске юнита;
    для ручных команд до него — `sudo install -d -o dash -g dash -m 750 /var/lib/lenta-850`.
-6. **Юниты.**
+6. **Юниты** (маску раскрывает root: у `claude` нет доступа в `/srv/dash`).
    ```bash
-   sudo install -o root -g root -m 644 /srv/dash/repo-850-lenta/ops/systemd/* /etc/systemd/system/
+   sudo sh -c 'install -o root -g root -m 644 /srv/dash/repo-850-lenta/ops/systemd/* /etc/systemd/system/'
    sudo systemctl daemon-reload
    ```
 7. **Первый выпуск руками** (видно все шаги): `sudo systemctl start lenta850-daily.service`
    и `journalctl -u lenta850-daily -f`. Такт кончится кодом 8 «боевая дверь не
    подтвердила»: Pages ещё не включён, а витрина не выложена — это ожидаемо.
-8. **GitHub Pages**: Settings → Pages → Deploy from a branch → `release`,
-   `/ (root)`. Через 1–3 минуты `https://ml371kl.github.io/temp-zero-inode-850-lenta/latest.json`
-   отдаёт выпуск. Actions в репозитории не выключать: на них держится сборка Pages.
+8. **GitHub Pages репозитория данных**: Settings → Pages → Deploy from a branch →
+   `release`, `/ (root)`. Через 1–3 минуты `https://ml371kl.github.io/temp-zero-inode-850-lenta-data/latest.json`
+   отдаёт выпуск. Actions в репозитории данных не выключать: на них держится сборка Pages.
 9. **Витрина** — с ноутбука (раздел 8). Затем сверка дожимается сама
    (`lenta850-rebuild`) или руками: `.venv/bin/python ops/publish.py --verify`.
 10. **Таймеры**: `sudo systemctl enable --now lenta850-collect.timer lenta850-daily.timer lenta850-rebuild.timer`.

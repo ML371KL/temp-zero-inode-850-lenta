@@ -26,8 +26,8 @@ async function load(path) {
 const { onRequest } = await load("functions/api/model.js");
 const middleware = await load("functions/_middleware.js");
 
-const PAGES = "https://ml371kl.github.io/temp-zero-inode-850-lenta/latest.json";
-const RAW = "https://raw.githubusercontent.com/ML371KL/temp-zero-inode-850-lenta/release/latest.json";
+const PAGES = "https://ml371kl.github.io/temp-zero-inode-850-lenta-data/latest.json";
+const RAW = "https://raw.githubusercontent.com/ML371KL/temp-zero-inode-850-lenta-data/release/latest.json";
 const SITE = "https://tzi-850-lenta.pages.dev";
 const SHA_A = "0123456789ab".padEnd(64, "c");
 const SHA_B = "fedcba987654".padEnd(64, "d");
