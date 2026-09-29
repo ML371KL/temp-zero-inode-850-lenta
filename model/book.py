@@ -321,7 +321,8 @@ def validate_book(A: dict) -> None:
     кривых, метод и пороги заголовка (скачок, ограниченная ответственность);
     ключи диагностик медианы; факты якоря, периоды правил, терминал, корзины ставок, лестница
     дивидендов, сегменты сети, строки моста, необязательные траектории,
-    запертые убытки, разложение дисконта за управление, квартальный слой.
+    запертые убытки, дата удельных цен capex, разложение дисконта за управление,
+    квартальный слой.
     """
     refuse_off_schema(A)
     refuse_incomplete(A)
@@ -352,6 +353,7 @@ def validate_book(A: dict) -> None:
     nwc_rules(A)
     acquired_nol(A)
     capex_tax_premium(A)
+    unit_price_basis(A)
     governance_components(A)
     market_rules(A)
     guidance_rule(A)
@@ -1362,6 +1364,33 @@ def capex_tax_premium(A: dict) -> float | None:
     if raw is None:
         return None
     return _book_number(A["tax"], "capex_tax_premium_share", None, "tax", 0.0, 1.0)
+
+
+# Дата удельных цен capex открытия и инфраструктуры (`capex.unit_price_basis`).
+UNIT_PRICE_BASES = ("anchor_average", "anchor_end")
+
+
+def unit_price_basis(A: dict) -> str:
+    """`capex.unit_price_basis` — на какую дату названы удельные цены capex открытия
+    (`capex.segments.<seg>.growth_capex_per_m2`) и инфраструктуры
+    (`capex.infra_capex_per_net_m2`); те же цены — у замещающих открытий терминала.
+
+    `anchor_average` (по умолчанию; правило 850oa) — средние цены полугодия якоря:
+    индекс цен полугодия p — индекс ИПЦ ядра Π_{q≤p}(1 + h_q), h — полугодовая
+    ставка ИПЦ мира.
+    `anchor_end` — цены конца полугодия якоря (у книги 1.0 — середина 2026 г.;
+    аудит 30.09.2026, control-model-03): индекс полугодия p =
+    Π_{q<p}(1 + h_q)·(1 + h_p)^0,5 — индекс ядра, делённый на (1 + h_p)^0,5; в
+    терминальном полугодии — индекс терминала, делённый на (1 + h_LT)^0,5.
+    Перезаякоривание переводит цены множителем (1 + h) закрытого полугодия при
+    обеих конвенциях (`ops/tools/reanchor.py`), и ряд цен продолжается без
+    скачка. Плотность сегментов `level` — всегда в средних ценах полугодия якоря.
+    """
+    raw = A["capex"].get("unit_price_basis", UNIT_PRICE_BASES[0])
+    if raw not in UNIT_PRICE_BASES:
+        raise BookError(f"книга: capex.unit_price_basis = {raw!r} (известны: "
+                        f"{', '.join(UNIT_PRICE_BASES)})")
+    return raw
 
 
 GOVERNANCE_COMPONENT_KEYS = frozenset({"name", "value", "sign", "basis", "in_850oa_scope"})

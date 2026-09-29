@@ -56,6 +56,7 @@ from model.book import (
     refuse_incomplete,
     segments,
     terminal_rule,
+    unit_price_basis,
 )
 
 
@@ -924,6 +925,10 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
 
     pv_fcff = pv_shield = 0.0
     inflation_index = 1.0
+    # Дата удельных цен открытий и инфраструктуры (`capex.unit_price_basis`,
+    # докстрока `model.book.unit_price_basis`): при ценах конца полугодия якоря
+    # индекс цен полугодия — индекс ядра, делённый на (1 + h_p)^0,5.
+    prices_at_anchor_end = unit_price_basis(A) == "anchor_end"
     # Р11б: проценты сверх СПРАВЕДЛИВОГО спреда — потеря акционеров, а не
     # только прирост налогового щита. Считается в главном цикле, на кассе
     # своего полугодия.
@@ -970,6 +975,8 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         W = A["worlds"][cell.world]
         cpi, food_cpi, key = (path_value(W[k], p) for k in ("cpi", "food_cpi", "key_rate"))
         inflation_index *= 1 + half_rate(cpi)
+        unit_price_index = (inflation_index / (1 + half_rate(cpi)) ** 0.5 if prices_at_anchor_end
+                            else inflation_index)
 
         # --- чек и трафик группы: общие для сегментов (поправки — у сегментов)
         prev = previous_same_half(p)
@@ -1081,7 +1088,7 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         # потребность в РЦ растущего «у дома» (правило 850oa по группе при
         # смешении форматов ошибочно; у одного сегмента — то же число).
         net_new = sum(max(0.0, step.opened - step.closed) for step in segment_steps.values())
-        infra = (net_new * C["infra_capex_per_net_m2"] * inflation_index
+        infra = (net_new * C["infra_capex_per_net_m2"] * unit_price_index
                  if year >= C["infra_from_year"] else 0.0)
         maintenance = revenue * path_value(C["maintenance_pct"][cell.capex], p)
         if area_share:
@@ -1095,9 +1102,10 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
             if i == 0 and rules.maintenance_area_base is None:
                 area_intensity_0 = area_intensity
             maintenance *= 1.0 - area_share + area_share * area_intensity / area_intensity_0
-        # A-K3 по сегментам: открытия × capex на м² своего формата × индекс цен.
+        # A-K3 по сегментам: открытия × capex на м² своего формата × индекс цен
+        # удельных цен (`capex.unit_price_basis`).
         growth_capex = sum(segment_steps[s.seg.id].opened * s.seg.growth_capex_per_m2
-                           * inflation_index for s in network)
+                           * unit_price_index for s in network)
         capex = maintenance + growth_capex + infra
         # Интеграционный capex приобретённого периметра (`capex.integration_capex`,
         # млрд ₽ по полугодиям): отдельная строка, только явный период.
@@ -1354,13 +1362,15 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     halves = []
     for half_row, half_no in ((prev_half, 1), (last, 2)):
         index_terminal *= 1 + half_rate(inflation_lt)
+        unit_price_terminal = (index_terminal / (1 + half_rate(inflation_lt)) ** 0.5
+                               if prices_at_anchor_end else index_terminal)
         rev = half_row.revenue * (1 + g)
         revenue_annual_half, revenue_back = rev + revenue_back, rev
         season = margin_season(A, f"{int(P[-1][:4]) + 1}H{half_no}")
         # Замещающие открытия: сеть не растёт, но изношенную площадь обновляют
         # (по сегментам сети — своей долей закрытий и своим capex на м²).
         replacement = sum(s.area_end * path_value(s.space["close"], P[-1]) / 2.0
-                          * s.seg.growth_capex_per_m2 * index_terminal for s in network)
+                          * s.seg.growth_capex_per_m2 * unit_price_terminal for s in network)
         if area_share:
             # Физическая доля поддерживающего capex — тем же x, что в явном
             # периоде: площадь (в терминале постоянна) × индекс цен.
