@@ -147,9 +147,7 @@ def main():
         P(f"{k}: {v:.4f}")
 
     # сезонность книги (из series.py: медиана сырых 2П − 1П, 2021–2025 без 2023)
-    gap = S["seasonality"]["summary"]["сырые 2П−1П 2021–2025 без 2023"]["median"]
-    s_h1 = -gap / 2
-    P(f"\nсезонность для очистки: 2П − 1П = {gap:+.3f} п.п. → поправка 1П {s_h1:+.3f} п.п., 2П {-s_h1:+.3f} п.п.")
+    # сезонность — после пар на общем периметре (ниже): 2П − 1П тех же лет без скачка периметра
 
     def m(k):
         return H[k]["margin_norm"] * 100
@@ -190,12 +188,9 @@ def main():
       f"EBITDA {mon_9m:.2f} ({mon_9m / mon_rev_9m * 100:.1f} %); «Улыбка» дек. 2024 {uly_dec:.3f}, 2024 проформа {uly_fy:.3f} "
       f"({uly_fy / af['uly_rev_pf24'] * 100:.1f} %)")
 
-    # --- пары на общем периметре: (метка, x_prev, x_curr, тип перехода, se)
+    # --- пары на общем периметре: (метка, x_prev, x_curr, тип перехода, se); d — после сезонности
     def pair(label, m_prev, m_curr, prev_half, se=0.0):
-        # x = маржа без сезонности: 1П — m − s_h1; 2П — m + s_h1
-        x_prev = m_prev - s_h1 if prev_half == "H1" else m_prev + s_h1
-        x_curr = m_curr + s_h1 if prev_half == "H1" else m_curr - s_h1
-        return {"pair": label, "m_prev": m_prev, "m_curr": m_curr, "d": x_curr - x_prev, "se": se}
+        return {"pair": label, "m_prev": m_prev, "m_curr": m_curr, "prev_half": prev_half, "se": se}
 
     leg21h2 = (e("2021H2") - billa - semya) / (rev("2021H2") - af["billa_rev"] - af["semya_rev"]) * 100
     leg23h2 = (e("2023H2") - mon_q4) / (rev("2023H2") - af["mon_rev_q4"]) * 100
@@ -218,6 +213,26 @@ def main():
         pair("2025H1→2025H2 (без «Реми»)", m("2025H1"), leg25h2, "H1", 0.05),
         pair("2025H2 проформа («Реми» полное 2П)→2026H1 (без «О'КЕЙ» и «Дом Ленты»)", pf25h2, leg26h1_with_remi, "H2", 0.15),
     ]
+    # --- сезонность A-C5 (аудит 30.09.2026, margin-01): медиана 2П − 1П на ОБЩЕМ периметре —
+    #     переходы 1П → 2П тех же пар (2021, 2022, 2024, 2025; 2023 — год скачка «Монетки»), а не
+    #     сырые полугодия, разбавленные покупками только во 2П (Billa и «Семья» 2021, «Реми» 2025).
+    #     Ключ книги seasonal_h1_pp = −медиана/2, округление до 0,01 п.п. (как в regimes.py).
+    h1h2 = [p for p in modern if p["prev_half"] == "H1" and not p["pair"].startswith("2023H1")]
+    gaps = [p["m_curr"] - p["m_prev"] for p in h1h2]
+    gap = st.median(gaps)
+    s_key = round(-gap / 2 / 100, 4)
+    s_h1 = s_key * 100
+    season_common = {"pairs": {p["pair"]: p["m_curr"] - p["m_prev"] for p in h1h2}, "median_gap_pp": gap,
+                     "mean_gap_pp": st.fmean(gaps), "seasonal_h1_pp": s_key,
+                     "raw_2021_2025_ex2023_pp": S["seasonality"]["summary"]["сырые 2П−1П 2021–2025 без 2023"]["median"]}
+    P("\nсезонность на общем периметре (2П − 1П, п.п.): " + "; ".join(f"{k.split(' ')[0]} {v:+.2f}" for k, v in season_common["pairs"].items())
+      + f" → медиана {gap:+.3f} (среднее {st.fmean(gaps):+.3f}; сырые полугодия 2021–2025 без 2023 — "
+      f"{season_common['raw_2021_2025_ex2023_pp']:+.3f}) → seasonal_h1_pp {s_key:+.4f}: поправка 1П {s_h1:+.2f} п.п., 2П {-s_h1:+.2f} п.п.")
+    for p in modern:
+        # x = маржа без сезонности: 1П — m − s_h1; 2П — m + s_h1
+        x_prev = p["m_prev"] - s_h1 if p["prev_half"] == "H1" else p["m_prev"] + s_h1
+        x_curr = p["m_curr"] + s_h1 if p["prev_half"] == "H1" else p["m_curr"] - s_h1
+        p["d"] = x_curr - x_prev
     P("\n## Лента, современная эпоха: пары на общем периметре (п.п.): m_prev → m_curr; d (без сезонности); se")
     for p in modern:
         P(f"{p['pair']}: {p['m_prev']:.2f} → {p['m_curr']:.2f}; d {p['d']:+.2f}; se {p['se']:.2f}")
@@ -315,6 +330,7 @@ def main():
     P(f"инновация книги {choice['innovation_pp']:.2f} п.п.")
 
     res = {"schema": "lenta-book-1.0-margin-ar1-v1", "acquired_facts": af, "season_h1_pp": s_h1,
+           "season_common": season_common,
            "bridges": {"billa_5m": billa, "semya_4m": semya, "monetka_q4_2023": mon_q4, "monetka_9m_2023": mon_9m,
                        "monetka_9m_rev": mon_rev_9m, "ulybka_dec_2024": uly_dec, "ulybka_2024_pf": uly_fy,
                        "remi_dec_2025": remi_dec},

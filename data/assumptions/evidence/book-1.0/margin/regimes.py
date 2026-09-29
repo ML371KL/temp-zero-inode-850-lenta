@@ -6,9 +6,14 @@
 
 Цель режима r (годовой уровень, без сезонности):
   m_r(t) = (1 − w_A(t))·m_L,r(t) + w_A(t)·[m_A0 + f_r(t)·(m_L,r(t) − m_A0)],
-  m_L,r(t) = m_L0 + g(t)·(m_L,r,LT − m_L0)       — унаследованный периметр;
+  m_L,r(t) = m_L0 + g_L(t)·(m_L,r,LT − m_L0)     — унаследованный периметр: свой путь AR(1) от якоря,
+                                                  g_L — средняя по полугодиям года доля пути 1 − ρ^n
+                                                  (n — полугодий от якоря, ρ — ar1_out, A-C4);
   f_r(t) = f_r,LT·g(t)                            — доля сходимости приобретённого периметра;
-  g(t) — общая форма перехода (0 на якоре → 1 к 2030).
+  g(t) — J-кривая перехода одной покупки (Billa: 0 на якоре → 1 к 2030) — только у приобретённого
+  периметра (решение ведущего по аудиту 30.09.2026, п. 20, margin-07).
+Ключи целей — 2026H2, годы 2027…2035 и LT (2036): каждый год — со своими весами периметра (аудит
+30.09.2026, п. 8, margin-04: ключ LT с весами 2036 г. ядро применяло бы с 2031 г.).
 m_L0, m_A0 — маржи периметров 1П2026 (anchor_out.json) без сезонности (s из series_out.json).
 w_A(t) — доля приобретённого периметра в выручке (временный путь до листа «Выручка»).
 Вывод: regimes_out.json, regimes_out.txt, regimes_out.yaml (фрагмент целей).
@@ -23,9 +28,12 @@ OUT_JSON = HERE / "regimes_out.json"
 OUT_TXT = HERE / "regimes_out.txt"
 OUT_YAML = HERE / "regimes_out.yaml"
 
-KEYS = ["2026H2", "2027", "2028", "2029", "2030", "LT"]
-G = {"2026H2": 0.10, "2027": 0.35, "2028": 0.65, "2029": 0.90, "2030": 1.00, "LT": 1.00}   # форма перехода (суждение)
-W_A = {"2026H1": None, "2026H2": 0.145, "2027": 0.142, "2028": 0.136, "2029": 0.130, "2030": 0.124, "LT": 0.120}
+YEARS_LT = [str(y) for y in range(2031, 2036)]
+KEYS = ["2026H2", "2027", "2028", "2029", "2030"] + YEARS_LT + ["LT"]
+G = {"2026H2": 0.10, "2027": 0.35, "2028": 0.65, "2029": 0.90, "2030": 1.00, **{y: 1.00 for y in YEARS_LT},
+     "LT": 1.00}   # J-кривая перехода приобретённого периметра (суждение: Billa → «Супер Лента»)
+W_A = {"2026H1": None, "2026H2": 0.145, "2027": 0.142, "2028": 0.136, "2029": 0.130, "2030": 0.124,
+       **{y: 0.120 for y in YEARS_LT}, "LT": 0.120}
 # ↑ временный путь доли приобретённого периметра («О'КЕЙ» + «Дом Лента» + «Реми»): 1П2026 — факт проформы
 #   (anchor_out.json → acquired.share); 2027 — разгон «Дом Ленты» после ребрендинга и сходимость плотности
 #   «О'КЕЙ» уравновешивают органику унаследованного периметра (≈+11 %); 2028–2030 — приобретённый +6 %/год
@@ -37,12 +45,25 @@ LEGACY_SHARE = {"stress": None, "floor": 0.0, "partial": 0.5, "full": 1.0}   # �
 RUB_PER_0P1PP_PERM = 60.0   # ₽/акцию на 0,1 п.п. постоянной маржи: 1 % EV ≈ 26,5 ₽; 0,1 п.п. ≈ 1,7 % EBITDA ≈ 1,7–2,9 % EV (эластичность 1,0–1,7) → 45–80 ₽, центр 60 (README)
 
 
+def legacy_path(rho: float) -> dict:
+    """Доля пути унаследованного периметра к его цели LT по ключам: AR(1) от якоря — после n полугодий
+    пройдено 1 − ρ^n; ключ года — среднее двух полугодий; LT — 1."""
+    out = {"2026H2": 1 - rho}
+    for y in range(2027, 2036):
+        n = 2 * (y - 2026)
+        out[str(y)] = ((1 - rho ** n) + (1 - rho ** (n + 1))) / 2
+    out["LT"] = 1.0
+    return out
+
+
 def main():
     S = json.loads((HERE / "series_out.json").read_text(encoding="utf-8"))
     A = json.loads((HERE / "anchor_out.json").read_text(encoding="utf-8"))
     R = json.loads((HERE / "refclass_out.json").read_text(encoding="utf-8"))
-    gap = S["seasonality"]["summary"]["сырые 2П−1П 2021–2025 без 2023"]["median"] / 100
-    s_h1 = round(-gap / 2, 4)                     # ключ seasonal_h1_pp (округление до 0,01 п.п.)
+    AR = json.loads((HERE / "ar1_out.json").read_text(encoding="utf-8"))
+    s_h1 = AR["season_common"]["seasonal_h1_pp"]  # ключ seasonal_h1_pp: общий периметр (ar1.py, margin-01)
+    gap = -2 * s_h1
+    G_L = legacy_path(AR["choice"]["rho"])
     mL0 = A["legacy"]["margin"] - s_h1
     mA0 = A["acquired"]["margin"] - s_h1
     wA0 = A["acquired"]["share"]
@@ -52,7 +73,10 @@ def main():
     L = []
     P = L.append
     P("# regimes.py — цели режимов (смесь периметров)")
-    P(f"сезонность: 2П − 1П = {gap * 100:+.3f} п.п. → seasonal_h1_pp = {s_h1:+.4f}")
+    P(f"сезонность (общий периметр, ar1.py): 2П − 1П = {gap * 100:+.3f} п.п. → seasonal_h1_pp = {s_h1:+.4f}")
+    P("доля пути унаследованного периметра (AR(1) от якоря, ρ " + f"{AR['choice']['rho']}): "
+      + ", ".join(f"{k} {v:.3f}" for k, v in G_L.items()) + "; J-кривая приобретённого: "
+      + ", ".join(f"{k} {G[k]:.2f}" for k in ("2026H2", "2027", "2028", "2029", "2030")))
     P(f"якорь (годовой уровень): проформа {m_pf * 100:.3f} % → {anchor_level * 100:.3f} %; унаследованный m_L0 {mL0 * 100:.3f} %; "
       f"приобретённый m_A0 {mA0 * 100:.3f} % (доля {wA0:.4f}); проверка смеси {((1 - wA0) * mL0 + wA0 * mA0) * 100:.3f} %")
 
@@ -67,12 +91,12 @@ def main():
         pr = {}
         for k in KEYS:
             g = G[k]
-            mL = mL0 + g * (legacy_lt(r) - mL0)
+            mL = mL0 + G_L[k] * (legacy_lt(r) - mL0)
             f = F_LT[r] * g
             mA = mA0 + f * (mL - mA0)
             w = W_A[k]
             tr[k] = round((1 - w) * mL + w * mA, 6)
-            pr[k] = {"m_legacy": mL, "f": f, "m_acquired": mA, "w_acquired": w}
+            pr[k] = {"m_legacy": mL, "f": f, "g": g, "g_legacy": G_L[k], "m_acquired": mA, "w_acquired": w}
         targets[r], parts[r] = tr, pr
     P("\nцели (годовой уровень, % выручки): режим; 2026H1 (якорь); " + "; ".join(KEYS))
     for r, tr in targets.items():
@@ -119,7 +143,7 @@ def main():
         y.append("      target: {" + ", ".join(f'"{k}": {tr[k]:.4f}' if k != "LT" else f"LT: {tr[k]:.4f}" for k in ["2026H1"] + KEYS) + "}")
     OUT_YAML.write_text("\n".join(y) + "\n", encoding="utf-8")
     res = {"schema": "lenta-book-1.0-margin-regimes-v1", "seasonal_h1_pp": s_h1, "anchor_level": anchor_level,
-           "m_legacy0": mL0, "m_acquired0": mA0, "w_acquired0": wA0, "G": G, "W_A": W_A,
+           "m_legacy0": mL0, "m_acquired0": mA0, "w_acquired0": wA0, "G": G, "G_legacy": G_L, "W_A": W_A,
            "legacy_full": LEGACY_FULL, "legacy_stress_drop": LEGACY_STRESS_DROP, "f_lt": F_LT,
            "targets": targets, "parts": parts, "probs": probs, "expected_target": exp,
            "margin_2026H2_by_regime": m2h, "expected_margin_2026H2": e2h,

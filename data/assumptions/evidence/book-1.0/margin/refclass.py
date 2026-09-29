@@ -25,7 +25,9 @@ RULE = (
     "P(режим) = w_I·P_I + w_E·P_E, где P_I и P_E — частоты классов со сглаживанием Лапласа ½ "
     "((k + ½)/(n + 2) по каждому из четырёх режимов); w_I — доля падения маржи группы от 2025 к проформе "
     "1П2026 (в годовом уровне), объяснённая составом периметра (приобретённые сети), w_E = 1 − w_I — доля, "
-    "объяснённая унаследованным периметром (органика). В классе I эпизоды класса надёжности C имеют вес ½. "
+    "объяснённая унаследованным периметром (органика); переходный убыток «Дом Ленты», выведенный из уровня "
+    "режимов решением C17, в падение не входит (решение ведущего по аудиту 30.09.2026, п. 19). "
+    "В классе I эпизоды класса надёжности C имеют вес ½. "
     "Книга берёт результат, округлённый до 0,5 п.п.; отклонение книги от правила — только записью суждения "
     "с ценой в ₽."
 )
@@ -56,6 +58,7 @@ def main():
     I = json.loads((HERE / "inputs" / "integrations.json").read_text(encoding="utf-8"))
     A = json.loads((HERE / "anchor_out.json").read_text(encoding="utf-8"))
     S = json.loads((HERE / "series_out.json").read_text(encoding="utf-8"))
+    AR = json.loads((HERE / "ar1_out.json").read_text(encoding="utf-8"))
     L = []
     P = L.append
     P("# refclass.py — вероятности режимов из двух классов")
@@ -106,19 +109,27 @@ def main():
         return {r: (k[r] + 0.5) / (n + 2) for r in REGIMES}
     pE, pI = lap(kE, nE), lap(kI, nI)
 
-    # --- вес классов из разложения падения маржи (anchor_out + series_out)
-    s_h1 = -S["seasonality"]["summary"]["сырые 2П−1П 2021–2025 без 2023"]["median"] / 2 / 100
+    # --- вес классов из разложения падения маржи (anchor_out + series_out; сезонность — ar1_out,
+    #     общий периметр, аудит 30.09.2026, margin-01)
+    s_h1 = AR["season_common"]["seasonal_h1_pp"]
     m25 = S["annual"]["2025"]["margin_norm"]
     m_pf_a = A["margin_pro_forma"] - s_h1                       # проформа 1П2026 в годовом уровне
     m_leg_a = A["legacy"]["margin"] - s_h1                      # унаследованный периметр в годовом уровне
     w_acq = A["acquired"]["share"]
-    drop_total = m25 - m_pf_a
+    # переходный убыток «Дом Ленты» 1П2026 (w_D0·|m_D0|, без сезонности) — вне уровня режимов (C17): в
+    # падение, которое делится на органику и состав, он не входит (аудит 30.09.2026, margin-06)
+    fx, parts = A["facts"], A["acquired"]["parts"]
+    diy_transitional = -(parts["diy"] / fx["diy_rev"] - s_h1) * fx["diy_rev"] / A["revenue_pro_forma_1h26"]
+    drop_raw = m25 - m_pf_a
+    drop_total = drop_raw - diy_transitional
     drop_legacy = (m25 - m_leg_a) * (1 - w_acq)                 # органика: падение маржи унаследованного периметра × его вес
     drop_mix = drop_total - drop_legacy                         # состав: разбавление приобретёнными сетями
     wI = max(0.0, min(1.0, drop_mix / drop_total))
     wE = 1 - wI
     P(f"\n## вес классов: маржа 2025 {m25 * 100:.2f} %; проформа 1П2026 (год. уровень) {m_pf_a * 100:.2f} %; "
-      f"падение {drop_total * 100:.2f} п.п.: органика {drop_legacy * 100:.2f}, состав {drop_mix * 100:.2f} → w_I {wI:.3f}, w_E {wE:.3f}")
+      f"падение {drop_raw * 100:.2f} п.п., из них переходный убыток «Дом Ленты» {diy_transitional * 100:.2f} (вне уровня "
+      f"режимов, C17) → в правило {drop_total * 100:.2f}: органика {drop_legacy * 100:.2f}, состав {drop_mix * 100:.2f} "
+      f"→ w_I {wI:.3f}, w_E {wE:.3f}")
 
     comb = {r: wI * pI[r] + wE * pE[r] for r in REGIMES}
     book = {r: round(comb[r] * 200) / 200 for r in REGIMES}
@@ -149,6 +160,7 @@ def main():
            "class_E": {"n": nE, "counts": kE, "rows": e_rows, "p_laplace": pE},
            "class_I": {"n_weighted": nI, "counts_weighted": kI, "rows": i_rows, "p_laplace": pI},
            "weights": {"w_I": wI, "w_E": wE, "drop_total": drop_total, "drop_legacy": drop_legacy, "drop_mix": drop_mix,
+                       "drop_raw": drop_raw, "diy_transitional": diy_transitional, "seasonal_h1_pp": s_h1,
                        "m_2025": m25, "m_pf_annual": m_pf_a, "m_legacy_annual": m_leg_a},
            "combined": comb, "book": book, "sensitivity": sens}
     dump(res, OUT_JSON)
