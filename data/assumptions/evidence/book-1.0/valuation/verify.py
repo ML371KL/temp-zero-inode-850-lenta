@@ -48,9 +48,9 @@ check(va["beta_u"] == b["choice"]["beta_u"] and b["choice"]["range"] == [0.45, 0
 cl = b["choice"]["anchor_cluster"]
 check(min(cl) > 0.50 and max(cl) < 0.56, f"кластер якоря на проформе {min(cl):.3f}–{max(cl):.3f} внутри (0,50; 0,56)")
 check(0.45 <= min(b["choice"]["own_monthly_u_1_2_3"][1:]) and max(b["choice"]["own_monthly_u_1_2_3"][1:]) <= 0.71, "месячные собственные β_u 2/3 г. внутри диапазона оси")
-check(va["erp"] == 0.0557 and b["erp"]["high"] == 0.067 and b["erp"]["low"] == 0.049, "ERP 5,57 % [4,9–6,7 %]")
-lam = 0.55 * 4.23 + 3.895 - 2.557
-check(abs(lam / 0.55 - b["erp"]["high_unrounded_pct"]) < 1e-3, "верх ERP = λ-конвенция при β_u центра (6,663 %)")
+check(va["erp"] == 0.0557 and b["erp"]["high"] == 0.068 and b["erp"]["low"] == 0.049, "ERP 5,57 % [4,9–6,8 %]")
+lam = 0.52 * 4.23 + 3.895 - 2.557
+check(abs(lam / 0.52 - b["erp"]["high_unrounded_pct"]) < 1e-3, "верх ERP = λ-конвенция при β_u книги 0,52 (6,803 %)")
 check(abs(b["anchor_candidates"]["ВП/EBITDA, LTM, отчётный периметр"]["k"] - 3.3274 / 4.0851) < 2e-4, "k отчётного периметра = листу 850oa (3,327 / 4,085)")
 # 5. дисконт за управление
 comp = va["governance_components"]
@@ -58,9 +58,9 @@ ssum = sum(c["sign"] * c["value"] for c in comp)
 check(abs(ssum - va["governance_discount"]) < 1e-9, f"Σ sign·value компонентов = governance_discount ({ssum:.4f})")
 check(abs(va["governance_discount"] - g["result"]["governance_discount"]) < 1e-9, "governance_discount = выводу governance.py")
 ch = {c["id"]: c for c in g["channels"]}
-ids = ["а", "б", "в", "г", "д", "е"]
+ids = ["а", "б", "в", "г", "д", "е", "ж"]
 check(all(abs(comp[i]["value"] - ch[k]["value"]) < 1e-9 and comp[i]["sign"] == ch[k]["sign"] for i, k in enumerate(ids)), "компоненты = каналам governance.py (значение и знак)")
-check(sum(1 for c in comp if c["sign"] < 0) >= 1, "есть встречная асимметрия со знаком минус (D5 д)")
+check(any(c["sign"] < 0 and c["value"] == 0.0 for c in comp), "(д) оферта/вытеснение = 0 (решение ведущего по аудиту 30.09.2026, п. 4)")
 check(all(x > 0 for x in g["pdf_checks"]["ifrs_mkpao/ifrs_FY2023_v2_20240903.pdf"]["567 578"]), "беспроцентный заём 2022 (0,568) найден в МСФО 2023")
 check(abs(g["leakage"]["equity_charges_total"] - 1.418702) < 1e-6, "утечка через капитал 2022–2024 = 1,4187 млрд")
 check(g["leakage"]["implied_rate_2H2025_min"] > 0.16, "ставка займов 2П2025 ≥ 16 % (не «≈10 %»)")

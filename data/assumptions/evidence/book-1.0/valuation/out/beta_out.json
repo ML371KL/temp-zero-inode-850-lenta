@@ -8,7 +8,7 @@
    "sha256": "0d290ed28fc13a0b44cdf3dd9e0f5dd519b2fa92f9206f4b4d731a01f95b3339"
   },
   "x5_ias17": {
-   "file": "book-draft/evidence/book-1.0/valuation/inputs/x5_ias17.json",
+   "file": "x5_ias17.json",
    "sha256": "2dc31959ce776150dd14e32706e7621ebf19a4f443095393bc2176c380089ad4"
   },
   "magnit_beta_summary": {
@@ -606,8 +606,8 @@
  "erp": {
   "center": 0.0557,
   "low": 0.049,
-  "high": 0.067,
-  "high_unrounded_pct": 6.663,
+  "high": 0.068,
+  "high_unrounded_pct": 6.803,
   "damodaran": {
    "mature": 4.23,
    "crp": 3.895,
@@ -689,7 +689,7 @@
   "beta_low": 125.46425000000004,
   "beta_high": -188.1963749999999,
   "erp_low": 83.004625,
-  "erp_high": -139.99287499999997,
-  "erp_top_6.7_vs_6.2": -61.94375000000001
+  "erp_high": -152.38162500000007,
+  "erp_top_6.7_vs_6.2": -74.33250000000007
  }
 }

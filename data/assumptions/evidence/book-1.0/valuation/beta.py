@@ -400,8 +400,9 @@ for b in (0.45, 0.49, 0.50, 0.55, 0.60, 0.70):
     lp = lam_prem(b)
     erp_rows.append({"beta": b, "lambda1_premium_pp": lp, "lambda1_erp_equiv": lp / b,
                      "beta_approach_premium_pp": b * DAM["total"] - DAM["ds"], "book_premium_pp": b * DAM["erp_book"]})
-ERP_TOP = round(lam_prem(CENTER) / CENTER, 3)
-R["erp"] = {"center": 0.0557, "low": 0.049, "high": round(math.ceil(ERP_TOP * 10) / 10 / 100, 3), "high_unrounded_pct": ERP_TOP,
+BOOK_BETA = 0.52                                  # β_u книги (решение ведущего E30); верх ERP — при ней (аудит 30.09.2026, п. 10)
+ERP_TOP = round(lam_prem(BOOK_BETA) / BOOK_BETA, 3)
+R["erp"] = {"center": 0.0557, "low": 0.049, "high": round(round(ERP_TOP, 1) / 100, 3), "high_unrounded_pct": ERP_TOP,
             "damodaran": DAM, "table": erp_rows}
 L()
 L("## ERP (A-V2): центр 5,57 % — общий с 850oa; верх — решение листа")
@@ -409,7 +410,7 @@ L("Damodaran 05.01.2026 (Россия): зрелый ERP 4,23; CRP 3,895; спр
 L("β | премия λ=1: β·4,23 + 3,895 − 2,557, п.п. | в единицах ERP | β-подход β·8,125 − 2,557 | книга β·5,57")
 for r in erp_rows:
     L(f"{r['beta']:.2f} | {r['lambda1_premium_pp']:.3f} | {r['lambda1_erp_equiv']:.3f} % | {r['beta_approach_premium_pp']:.3f} | {r['book_premium_pp']:.3f}")
-L(f"верх ERP = λ-конвенция при β_u центра {CENTER}: {ERP_TOP:.3f} % → {R['erp']['high']*100:.1f} %; низ — реализованная премия с 2003 г. 4,9 % (как 850oa)")
+L(f"верх ERP = λ-конвенция при β_u книги {BOOK_BETA}: {ERP_TOP:.3f} % → {R['erp']['high']*100:.1f} %; низ — реализованная премия с 2003 г. 4,9 % (как 850oa)")
 L(f"премия β_u × ERP центра: {CENTER*5.57:.3f} п.п.; по осям: {LOW*4.9:.2f}–{HIGH*R['erp']['high']*100:.2f} п.п.")
 
 # =============================================================== 8. согласованность ρ ≤ 1 (справочно; σ_EV в методе intrinsic нет)
