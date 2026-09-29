@@ -1138,6 +1138,42 @@ def test_the_annual_rule_reads_the_dividends_of_the_half(tool, A):
 
 
 @pytest.mark.needs_book
+def test_the_audit_rules_make_reanchoring_equal_rolling(tool, A):
+    """Правила аудита 30.09.2026 (`tests/test_audit_rules.py`) переносятся через
+    якорь: цены capex на конец якоря переиндексируются множителем закрытого
+    полугодия, невычитаемая D&A якоря убывает с перенесённого возраста базы,
+    выручка терминала от площади на выходе и доамортизация когорт берут
+    перенесённые когорты, физическая часть capex по форматам и когортам —
+    перенесённые эталонную сеть и запас новой площади. Перезаякоривание на
+    ожидаемом пути = перекат бит в бит на всех 36 клетках."""
+    from tests.test_audit_rules import PHYSICAL
+
+    B = _dividend_book(A, dividend_net_debt_basis="reported")
+    B["capex"].update(unit_price_basis="anchor_end", physical=copy.deepcopy(PHYSICAL))
+    B["tax"]["nondeductible_da_anchor"] = 3.0
+    B["valuation"]["terminal"].update(revenue_base="exit_area", da_convention="cohort_runoff")
+    worst, text = _exact(tool, B, DATES[1])
+    assert worst <= EXACT, text
+    first = tool.reanchor(B, tool.expected_report(B), valuation_date=DATES[1]).book
+    written = first["capex"]["physical"]
+    assert set(written["reference_area"]) == set(PHYSICAL["steady_per_m2"])
+    assert all(B["meta"]["first_period"] in path for path in written["young_stock"].values())
+    # два якоря подряд: когорты новой площади первого закрытого полугодия стареют
+    # дальше (запас на конец каждого закрытого полугодия переносится), а не
+    # рождаются заново на втором якоре
+    date = "2027-08-31"
+    for key in POWER_CELLS:
+        cell = _cell(B, key)
+        one = tool.reanchor(B, tool.expected_report(B, cell=cell), valuation_date=DATES[1]).book
+        two = tool.reanchor(one, tool.expected_report(one, cell=_cell(one, key)),
+                            valuation_date=date).book
+        was = run_cell(tool.rolled(B, date), cell)
+        now = run_cell(two, _cell(two, key))
+        allowed = CELL_EV_TOLERANCE * abs(was.ev) + CELL_EV_FLOOR
+        assert abs(now.ev - was.ev) <= EXACT * allowed, (key, was.ev, now.ev)
+        assert abs(now.claims - was.claims) <= EXACT * CELL_CLAIMS_TOLERANCE, key
+
+
 def test_reanchoring_book_one_on_the_expected_path_equals_rolling(tool):
     """Книга «Ленты» 1.0 (пороги лестницы по отчётному ЧД, годовое правило):
     каждая из 36 клеток, перезаякоренная на отчёт 2П2026 своего пути, — бит в

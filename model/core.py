@@ -51,6 +51,7 @@ from model.book import (
     path_value,
     period_index,
     periods,
+    physical_rule,
     previous_period,
     previous_same_half,
     rate_baskets,
@@ -767,6 +768,80 @@ def effective_history(seg, maturity: list[float], effective_end: float, A: dict)
             base[0]: effective_end - step_anchor - step_before / 2.0}
 
 
+class PhysicalArea:
+    """Взвешенная физическая площадь для физической части поддерживающего capex
+    по форматам и когортам (`capex.physical`, `model.book.physical_rule`; аудит
+    30.09.2026, capex-04).
+
+    Площадь сегмента f на конец полугодия делится на эталонную часть min(A_f,
+    ref_f) (сеть, на которой посчитан A-K1: её путь реконструкций — сам ключ
+    A-K1) и запас новой площади Y_f = max(0, A_f − ref_f), который хранится
+    когортами по полугодию прироста (убыль снимается с младших когорт).
+    Эталонная часть весит w_f (удельные физические статьи зрелого м² формата к
+    среднему эталонной сети), когорта новой площади — y_f (обслуживание и РЦ без
+    реконструкций), пока её возраст меньше цикла реконструкций формата на уровне
+    capex клетки, затем w_f. Середина полугодия — полусумма концов, как у площади
+    ядра. `existing`/`new` — взвешенные площади эталонной части и новой.
+    """
+
+    __slots__ = ("rule", "cycle", "cohorts", "stock", "last_end")
+
+    def __init__(self, rule, level: str, areas: dict, first_period: str):
+        self.rule = rule
+        self.cycle = rule.cycle_halves[level]
+        self.cohorts = {sid: [] for sid in rule.reference_area}
+        self.stock = {sid: 0.0 for sid in rule.reference_area}
+        first = period_index(first_period)
+        for sid, path in rule.young_stock.items():
+            for p in sorted(path, key=period_index):
+                if period_index(p) < first:
+                    self._update(sid, path[p], period_index(p))
+        for sid, area in areas.items():
+            self._update(sid, max(0.0, area - rule.reference_area[sid]), first - 1)
+        self.last_end = self._weighted(areas, first - 1)
+
+    def _update(self, sid: str, stock: float, at: int) -> None:
+        old = self.stock[sid]
+        if stock > old:
+            self.cohorts[sid].append([at, stock - old])
+        elif stock < old:
+            drop = old - stock
+            while drop > 1e-15 and self.cohorts[sid]:
+                born, amount = self.cohorts[sid][-1]
+                if amount > drop:
+                    self.cohorts[sid][-1][1] = amount - drop
+                    drop = 0.0
+                else:
+                    self.cohorts[sid].pop()
+                    drop -= amount
+        self.stock[sid] = stock
+
+    def _weighted(self, areas: dict, at: int) -> tuple[float, float]:
+        rule = self.rule
+        existing = sum(rule.steady[sid] * min(area, rule.reference_area[sid])
+                       for sid, area in areas.items())
+        new = sum(amount * (rule.steady[sid] if at - born >= self.cycle[sid] else rule.young[sid])
+                  for sid, cohorts in self.cohorts.items() for born, amount in cohorts)
+        return existing, new
+
+    def step(self, areas: dict, at: int) -> tuple[float, float]:
+        """Середина полугодия с индексом `at` по площадям сегментов на его конец:
+        (взвешенная эталонная часть, взвешенная новая площадь)."""
+        for sid, area in areas.items():
+            self._update(sid, max(0.0, area - self.rule.reference_area[sid]), at)
+        end = self._weighted(areas, at)
+        start, self.last_end = self.last_end, end
+        return (start[0] + end[0]) / 2.0, (start[1] + end[1]) / 2.0
+
+    def steady_area(self, areas: dict) -> float:
+        """Стационарная взвешенная площадь терминала: вся площадь — по весам зрелого м²."""
+        return sum(self.rule.steady[sid] * area for sid, area in areas.items())
+
+    def reference_weighted(self) -> float:
+        """Взвешенная площадь эталонной сети — Σ ref (веса нормированы на неё)."""
+        return sum(self.rule.steady[sid] * area for sid, area in self.rule.reference_area.items())
+
+
 def terminal_revenue_factors(network: list, maturity: list[float], P: list[str],
                              first_half, second_half) -> tuple[float, float]:
     """Множители выручки двух полугодий терминала при базе «площадь на выходе»
@@ -1029,6 +1104,13 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     nondeductible_anchor = nondeductible_da_anchor(A)
     area_share = rules.maintenance_area_share
     area_intensity_0 = rules.maintenance_area_base
+    # Физическая часть поддерживающего capex по форматам и когортам
+    # (`capex.physical`, `PhysicalArea`); нет блока — невзвешенная площадь (850oa).
+    maintenance_lt = path_value(C["maintenance_pct"][cell.capex], P[-1])
+    physical_block = physical_rule(A, tuple(s.seg for s in states)) if area_share else None
+    physical_area = (PhysicalArea(physical_block, cell.capex,
+                                  {s.seg.id: s.area_end for s in network}, P[0])
+                     if physical_block is not None else None)
     integration = C.get("integration_capex")
     # Линейная D&A: база якоря, сколько полугодий она уже списывается и
     # когорты capex до якоря — из фактов перезаякоривания, иначе с нуля.
@@ -1203,8 +1285,23 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         net_new = sum(max(0.0, step.opened - step.closed) for step in segment_steps.values())
         infra = (net_new * C["infra_capex_per_net_m2"] * unit_price_index
                  if year >= C["infra_from_year"] else 0.0)
-        maintenance = revenue * path_value(C["maintenance_pct"][cell.capex], p)
-        if area_share:
+        maintenance_key = path_value(C["maintenance_pct"][cell.capex], p)
+        maintenance = revenue * maintenance_key
+        if physical_area is not None:
+            # A-K1f (`capex.physical`): эталонная сеть идёт путём ключа A-K1
+            # (когорты её реконструкций), новая площадь — стационарной ценой своего
+            # формата (ключ A-K1 последнего полугодия × вес: обслуживание и РЦ
+            # сразу, реконструкции — с цикла формата); x₀ — эталонная сеть в ценах
+            # и выручке первого прогнозного полугодия.
+            existing, new = physical_area.step({s.seg.id: s.area_end for s in network},
+                                               period_index(p))
+            if i == 0 and rules.maintenance_area_base is None:
+                area_intensity_0 = (physical_area.reference_weighted() * inflation_index
+                                    / revenue_annual)
+            maintenance = (revenue * maintenance_key * (1.0 - area_share)
+                           + revenue * area_share * inflation_index / revenue_annual
+                           / area_intensity_0 * (maintenance_key * existing + maintenance_lt * new))
+        elif area_share:
             # A-K1 (`capex.maintenance_area_share`): физические
             # статьи поддерживающего capex (редизайн, оборудование, здания)
             # посчитаны на метры в ценах якоря, поэтому их доля s идёт за
@@ -1444,7 +1541,6 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     # роста (раздельный Гордон).
     growth_pi = min(inflation_lt, r_long - 1e-4)
     ratio_pi = annuity_ratio(growth_pi, life)
-    maintenance_lt = path_value(C["maintenance_pct"][cell.capex], P[-1])
     margin_lt = path_value(regime["target"], P[-1])
     addback_lt = path_value(TX["permanent_addback_pct"], P[-1])
     nwc_lt = path_value(N["nwc_pct"][cell.nwc], P[-1])
@@ -1504,8 +1600,12 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         if area_share:
             # Физическая доля поддерживающего capex — тем же x, что в явном
             # периоде: площадь (в терминале постоянна) × индекс цен.
+            # С `capex.physical` — стационар по взвешенной площади: вся площадь
+            # на выходе — по весам зрелого м² своего формата.
+            physical_end = (physical_area.steady_area({s.seg.id: s.area_end for s in network})
+                            if physical_area is not None else area_end)
             physical = (rev * maintenance_lt * area_share
-                        * (area_end * index_terminal / revenue_annual_half) / area_intensity_0)
+                        * (physical_end * index_terminal / revenue_annual_half) / area_intensity_0)
             maintenance_h = rev * maintenance_lt * (1 - area_share) + physical
         else:
             physical = 0.0

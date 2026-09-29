@@ -241,7 +241,7 @@ from model.book import (BOOK_DIR, BOOK_YAML, FACT_SUM_TOL, REVENUE_BASES, BookEr
                         Cell, Segment, acquired_nol, all_cells, bridge_items, capex_network_rules,
                         capex_tax_premium, dividend_timing,
                         half_rate, load_book, nondeductible_da_anchor, path_value, period_index,
-                        previous_period, segments, validate_book)
+                        physical_rule, previous_period, segments, validate_book)
 from model.core import (accreted, anchor_effective_end, effective_history,  # noqa: E402
                         margin_observations, margin_season, nondeductible_da, observation_weight,
                         period_bounds, run_cell)
@@ -1178,12 +1178,30 @@ def carry_capex_rules(A: dict, X: dict, factor_k: float, ltm_new: float) -> None
     """
     rules = capex_network_rules(A)
     F_old, F = A["facts"], X["facts"]
+    physical = physical_rule(A)
     if rules.maintenance_area_share:
         network = [s.id for s in segments(A) if s.network]
         area0 = sum(F_old["segments"][sid]["area_end"] for sid in network)
         area1 = sum(F["segments"][sid]["area_end"] for sid in network)
-        base = (rules.maintenance_area_base if rules.maintenance_area_base is not None
-                else (area0 + area1) / 2.0 * factor_k / ltm_new)
+        if physical is not None:
+            # `capex.physical` (A-K1f): база x₀ — эталонная сеть A-K1 в ценах и
+            # выручке закрываемого полугодия; эталонная сеть и запас новой
+            # площади сверх неё на конец закрытого полугодия переносятся, чтобы
+            # когорты новой площади старели дальше, а не становились эталонными.
+            reference = sum(physical.steady[sid] * area
+                            for sid, area in physical.reference_area.items())
+            base = (rules.maintenance_area_base if rules.maintenance_area_base is not None
+                    else reference * factor_k / ltm_new)
+            closed = A["meta"]["first_period"]
+            stock = {sid: dict(path) for sid, path in physical.young_stock.items()}
+            for sid in network:
+                stock.setdefault(sid, {})[closed] = max(
+                    0.0, F["segments"][sid]["area_end"] - physical.reference_area[sid])
+            X["capex"]["physical"]["reference_area"] = dict(physical.reference_area)
+            X["capex"]["physical"]["young_stock"] = stock
+        else:
+            base = (rules.maintenance_area_base if rules.maintenance_area_base is not None
+                    else (area0 + area1) / 2.0 * factor_k / ltm_new)
         X["capex"]["maintenance_area_base"] = base / factor_k
     half_life = 2 * A["capex"]["asset_life_years"]
     legacy, halves, vintages = rules.da_state or (F_old["anchor"]["da_pre16"], 0, ())

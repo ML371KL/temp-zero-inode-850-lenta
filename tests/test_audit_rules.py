@@ -14,7 +14,12 @@
 * терминал: выручка от эффективной площади на выходе явного периода
   (`valuation.terminal.revenue_base: exit_area`, discount-terminal-01),
   доамортизация когорт capex явного периода в налоге терминала
-  (`valuation.terminal.da_convention: cohort_runoff`, capex-06).
+  (`valuation.terminal.da_convention: cohort_runoff`, capex-06);
+* capex: физическая часть поддерживающего capex по форматам и когортам
+  (`capex.physical`, capex-04).
+
+Перезаякоривание на ожидаемом пути с этими ключами = перекат бит в бит —
+`tests/test_reanchor.py::test_the_audit_rules_make_reanchoring_equal_rolling`.
 """
 from __future__ import annotations
 
@@ -281,3 +286,120 @@ def test_the_runoff_changes_only_the_terminal_and_defaults_to_the_annuity():
     bad["valuation"]["terminal"]["da_convention"] = "runoff"
     with pytest.raises(BookError, match="da_convention"):
         validate_book(bad)
+
+
+# ================================================== capex: физическая часть по форматам и когортам
+
+
+PHYSICAL = {"steady_per_m2": {"hyper": 3.8, "conv": 6.8, "acq": 3.8, "diy": 1.9},
+            "young_per_m2": {"hyper": 1.9, "conv": 2.7, "acq": 1.9, "diy": 1.1},
+            "reconstruction_cycle_years": {
+                "low": {"hyper": 16, "conv": 12.5, "acq": 16, "diy": 20},
+                "base": {"hyper": 13, "conv": 3.0, "acq": 13, "diy": 15},
+                "high": {"hyper": 10, "conv": 8, "acq": 10, "diy": 12}}}
+
+
+def physical_book(**overrides) -> dict:
+    A = toy_book()
+    A["capex"]["physical"] = copy.deepcopy(PHYSICAL)
+    A["capex"]["physical"].update(overrides)
+    return A
+
+
+def test_the_physical_weights_are_normalised_on_the_reference_network():
+    """Веса — статьи м² формата к их среднему по эталонной сети (площади якоря):
+    у эталонной сети Σ вес·площадь = площадь; эталонная сеть по умолчанию —
+    площади сегментов на якоре."""
+    from model.book import physical_rule
+
+    A = physical_book()
+    rule = physical_rule(A)
+    ref = {sid: A["facts"]["segments"][sid]["area_end"] for sid in PHYSICAL["steady_per_m2"]}
+    assert rule.reference_area == ref
+    assert sum(rule.steady[s] * a for s, a in ref.items()) == pytest.approx(sum(ref.values()))
+    assert rule.young["conv"] / rule.steady["conv"] == pytest.approx(2.7 / 6.8)
+    assert rule.cycle_halves["base"]["conv"] == 6.0
+
+
+@pytest.mark.parametrize("bad,match", [
+    ({"young_per_m2": {"hyper": 9.0, "conv": 2.7, "acq": 1.9, "diy": 1.1}}, "young_per_m2.hyper"),
+    ({"steady_per_m2": {"hyper": 3.8, "conv": 6.8, "acq": 3.8}}, "steady_per_m2"),
+    ({"reconstruction_cycle_years": {"base": PHYSICAL["reconstruction_cycle_years"]["base"]}},
+     "reconstruction_cycle_years"),
+    ({"extra": 1}, "extra"),
+])
+def test_bad_physical_blocks_are_refused(bad, match):
+    with pytest.raises(BookError, match=match):
+        validate_book(physical_book(**bad))
+
+
+def test_new_area_is_young_until_its_reconstruction_cycle_and_closures_shrink_the_reference():
+    """Запас новой площади сверх эталонной — когортами: молодая площадь весит
+    y_f, с возраста цикла — w_f; убыль снимается с младших когорт; сегмент,
+    ушедший ниже эталона, теряет эталонную часть по весу w_f; середина
+    полугодия — полусумма концов."""
+    from model.book import physical_rule
+    from model.core import PhysicalArea
+
+    A = physical_book()
+    rule = physical_rule(A)
+    ref = dict(rule.reference_area)
+    w, y = rule.steady, rule.young
+    area = PhysicalArea(rule, "base", ref, "2026H2")          # цикл conv — 6 полугодий
+    base_index = 2 * 2026 + 1                                 # индекс 2026H2
+    path = []
+    conv = ref["conv"]
+    for k in range(10):
+        conv += 10.0 if k < 8 else -15.0                      # рост 8 полугодий, затем убыль
+        areas = dict(ref, conv=conv, hyper=ref["hyper"] - 5.0 * (k + 1))
+        path.append((areas, area.step(areas, base_index + k)))
+    # конец полугодия k: эталонная часть hyper уменьшается, conv — на эталоне
+    ends = [(sum(w[s] * min(a, ref[s]) for s, a in areas.items())) for areas, _ in path]
+    assert path[0][1][0] == pytest.approx((sum(w[s] * ref[s] for s in ref) + ends[0]) / 2)
+    # когорта conv полугодия 0 молода до возраста 6 полугодий, дальше зрелая
+    new_end_5 = 10.0 * 6 * y["conv"]                          # на конец k = 5 все 6 когорт молоды
+    new_end_6 = 10.0 * w["conv"] + 10.0 * 6 * y["conv"]       # на конец k = 6 первая когорта созрела
+    assert path[6][1][1] == pytest.approx((new_end_5 + new_end_6) / 2)
+    # убыль по 15 в полугодия 8 и 9 снимается с младших когорт: запас 80 → 65 → 50,
+    # остаются пять старших когорт по 10
+    assert [amount for _, amount in area.cohorts["conv"]] == pytest.approx([10.0] * 5)
+    assert area.steady_area(path[-1][0]) == pytest.approx(
+        sum(w[s] * a for s, a in path[-1][0].items()))
+
+
+def test_with_uniform_weights_and_a_flat_key_the_physical_part_keeps_the_old_shape():
+    """Равные веса (y = w = 1), ровный ключ A-K1: эталонная часть + новая = вся
+    площадь, и физическая часть идёт за невзвешенной площадью, как в правиле
+    850oa; отличается только база x₀ (эталонная сеть якоря против площади
+    середины первого полугодия) — постоянным множителем во всех полугодиях."""
+    A = toy_book()
+    for level in A["capex"]["maintenance_pct"]:
+        A["capex"]["maintenance_pct"][level] = 0.02
+    B = copy.deepcopy(A)
+    ids = ["hyper", "conv", "acq", "diy"]
+    B["capex"]["physical"] = {"steady_per_m2": {s: 1.0 for s in ids},
+                              "young_per_m2": {s: 1.0 for s in ids},
+                              "reconstruction_cycle_years": {lv: {s: 10 for s in ids}
+                                                             for lv in ("low", "base", "high")}}
+    s = A["capex"]["maintenance_area_share"]
+    cell = Cell.build(A, "N", "full", "high")
+    a, b = run_cell(A, cell).rows, run_cell(B, cell).rows
+    ratios = [(rb.capex_maintenance - rb.revenue * 0.02 * (1 - s))
+              / (ra.capex_maintenance - ra.revenue * 0.02 * (1 - s)) for ra, rb in zip(a, b)]
+    ref = sum(A["facts"]["segments"][sid]["area_end"] for sid in ids)
+    first_mid = sum(seg.area_end - (seg.opened - seg.closed) / 2 for seg in a[0].segments.values()
+                    if seg.area_end is not None)
+    assert ratios == pytest.approx([first_mid / ref] * len(ratios), rel=1e-12)
+
+
+def test_growth_costs_less_physical_capex_by_cohort_and_the_default_is_the_old_rule():
+    """Растущий «у дома»: новая площадь без реконструкций до цикла — физический
+    capex явного периода ниже, чем у правила 850oa; без блока — правило 850oa бит
+    в бит (прочие тесты capex на синтетической книге)."""
+    A = toy_book()
+    B = physical_book()
+    B["capex"]["physical"]["reconstruction_cycle_years"]["high"]["conv"] = 30
+    cell = Cell.build(A, "N", "full", "high")
+    a, b = run_cell(A, cell).rows, run_cell(B, cell).rows
+    assert b[-1].capex_maintenance < a[-1].capex_maintenance
+    assert [r.revenue for r in b] == [r.revenue for r in a]

@@ -25,7 +25,12 @@ TRAJECTORY_WORDS = frozenset({"LT", "LT_from"})
 TRAJECTORY = "*P"
 ANY = "*"
 # Блоки, ключи которых — имена сегментов сети (`model.book.segments`).
-NAMED = frozenset({"revenue.segments", "facts.segments", "capex.segments"})
+NAMED = frozenset({"revenue.segments", "facts.segments", "capex.segments",
+                   "capex.physical.steady_per_m2", "capex.physical.young_per_m2",
+                   "capex.physical.reconstruction_cycle_years.base",
+                   "capex.physical.reconstruction_cycle_years.high",
+                   "capex.physical.reconstruction_cycle_years.low",
+                   "capex.physical.reference_area", "capex.physical.young_stock"})
 
 # Блоки со свободными ключами (проверяет читатель, а не схема); пока таких нет.
 FREE: frozenset[str] = frozenset()
@@ -73,10 +78,13 @@ BOOK: dict[str, frozenset[str]] = {
                    "scenarios", "sensitivities", "tax", "valuation", "weights", "worlds"}),
     "bridge": frozenset({"items"}),
     "bridge.items[]": _BRIDGE_ITEM,
-    # `unit_price_basis` — дата удельных цен открытий и инфраструктуры (control-model-03).
+    # `unit_price_basis` — дата удельных цен открытий и инфраструктуры (control-model-03);
+    # `physical` — физическая часть поддерживающего capex по форматам и когортам (capex-04).
     "capex": frozenset({"asset_life_years", "disposal_proceeds_pct", "infra_capex_per_net_m2",
                         "infra_from_year", "integration_capex", "maintenance_area_share",
-                        "maintenance_pct", "segments", "unit_price_basis"}),
+                        "maintenance_pct", "physical", "segments", "unit_price_basis"}),
+    "capex.physical": frozenset({"reconstruction_cycle_years", "steady_per_m2", "young_per_m2"}),
+    "capex.physical.reconstruction_cycle_years": _LEVELS,
     "capex.maintenance_pct": _LEVELS,
     "capex.segments": frozenset({ANY}),
     "capex.segments.*": frozenset({"growth_capex_per_m2"}),
@@ -220,6 +228,8 @@ BOOK: dict[str, frozenset[str]] = {
 WRITTEN: dict[str, frozenset[str]] = {
     "meta": frozenset({"curve_as_of"}),
     "capex": frozenset({"maintenance_area_base"}),
+    # эталонная сеть A-K1 и запас новой площади сверх неё на конец закрытых полугодий
+    "capex.physical": frozenset({"reference_area", "young_stock"}),
     "facts": frozenset({"da_straight_line"}),
     "facts.segments.*": frozenset({"eff_area_end"}),
     "facts.da_straight_line": frozenset({"legacy", "legacy_halves", "vintages"}),

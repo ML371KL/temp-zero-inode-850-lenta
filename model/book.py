@@ -321,8 +321,9 @@ def validate_book(A: dict) -> None:
     кривых, метод и пороги заголовка (скачок, ограниченная ответственность);
     ключи диагностик медианы; факты якоря, периоды правил, терминал, корзины ставок, лестница
     дивидендов, сегменты сети, строки моста, необязательные траектории,
-    запертые убытки, невычитаемая D&A якоря, дата удельных цен capex, разложение
-    дисконта за управление, квартальный слой.
+    запертые убытки, невычитаемая D&A якоря, дата удельных цен capex, физическая
+    часть capex по форматам и когортам, разложение дисконта за управление,
+    квартальный слой.
     """
     refuse_off_schema(A)
     refuse_incomplete(A)
@@ -355,6 +356,7 @@ def validate_book(A: dict) -> None:
     capex_tax_premium(A)
     nondeductible_da_anchor(A)
     unit_price_basis(A)
+    physical_rule(A)
     governance_components(A)
     market_rules(A)
     guidance_rule(A)
@@ -1440,6 +1442,106 @@ def unit_price_basis(A: dict) -> str:
         raise BookError(f"книга: capex.unit_price_basis = {raw!r} (известны: "
                         f"{', '.join(UNIT_PRICE_BASES)})")
     return raw
+
+
+PHYSICAL_KEYS = frozenset({"steady_per_m2", "young_per_m2", "reconstruction_cycle_years"})
+PHYSICAL_WRITTEN = frozenset({"reference_area", "young_stock"})
+
+
+@dataclass(frozen=True)
+class PhysicalRule:
+    """Физическая часть поддерживающего capex по форматам и когортам (`capex.physical`).
+
+    Веса — удельные физические статьи формата (тыс. ₽/м² в год), делённые на их
+    среднее по площади эталонной сети (сеть, на которой посчитан A-K1): у
+    эталонной сети Σ вес·площадь = площадь.
+    """
+
+    steady: dict                 # {сегмент: вес зрелой площади}
+    young: dict                  # {сегмент: вес молодой площади (без реконструкций)}
+    cycle_halves: dict           # {уровень: {сегмент: цикл реконструкций, полугодий}}
+    reference_area: dict         # {сегмент: площадь эталонной сети, тыс. м²}
+    young_stock: dict            # {сегмент: {полугодие: запас новой площади на конец}}
+
+
+def physical_rule(A: dict, segs: tuple | None = None) -> PhysicalRule | None:
+    """`capex.physical` — физическая часть поддерживающего capex по форматам и когортам
+    (аудит 30.09.2026, capex-04). Нет блока — None (правило 850oa: физическая
+    доля идёт за невзвешенной площадью).
+
+    Ключи книги: `steady_per_m2` и `young_per_m2` — физические статьи на м² в
+    год по сегментам сети (зрелая площадь: реконструкции / цикл + обслуживание
+    и эксплуатация + РЦ; молодая: без реконструкций), `reconstruction_cycle_years`
+    {low, base, high: {сегмент: лет}} — когда новая площадь выходит на
+    реконструкции. Эталонная сеть — сеть, на которой посчитан A-K1: без ключа
+    `reference_area` — площади сегментов на якоре (`facts.segments.<seg>.area_end`);
+    после перезаякоривания инструмент пишет `reference_area` и `young_stock`
+    (запас новой площади сверх эталонной на конец каждого закрытого полугодия).
+    Правило ядра — `model.core.PhysicalArea`; `segs` — уже проверенные сегменты
+    книги (`segments`), чтобы клетка не разбирала их второй раз.
+    """
+    raw = A["capex"].get("physical")
+    if raw is None:
+        return None
+    where = "capex.physical"
+    if not isinstance(raw, dict):
+        raise BookError(f"книга: {where} — ожидается блок, а не {raw!r}")
+    _refuse_unknown(raw, PHYSICAL_KEYS | PHYSICAL_WRITTEN, where)
+    _require(raw, sorted(PHYSICAL_KEYS), where)
+    network = [s for s in (segs if segs is not None else segments(A)) if s.network]
+    ids = [s.id for s in network]
+    ref_raw = raw.get("reference_area")
+    if ref_raw is None:
+        reference = {s.id: float(s.facts["area_end"]) for s in network}
+    else:
+        if not isinstance(ref_raw, dict) or set(ref_raw) != set(ids):
+            raise BookError(f"книга: {where}.reference_area — площади всех сегментов сети "
+                            f"({', '.join(ids)})")
+        reference = {sid: _book_number(ref_raw, sid, None, f"{where}.reference_area", 0.0,
+                                       float("inf"), low_open=True) for sid in ids}
+    per_m2 = {}
+    for key in ("steady_per_m2", "young_per_m2"):
+        block = raw[key]
+        if not isinstance(block, dict) or set(block) != set(ids):
+            raise BookError(f"книга: {where}.{key} — числа по всем сегментам сети "
+                            f"({', '.join(ids)})")
+        per_m2[key] = {sid: _book_number(block, sid, None, f"{where}.{key}", 0.0, float("inf"))
+                       for sid in ids}
+    for sid in ids:
+        if per_m2["young_per_m2"][sid] > per_m2["steady_per_m2"][sid]:
+            raise BookError(f"книга: {where}.young_per_m2.{sid} выше steady_per_m2 — у молодой "
+                            "площади нет реконструкций, её статьи не дороже зрелой")
+    total_area = sum(reference.values())
+    average = sum(per_m2["steady_per_m2"][sid] * reference[sid] for sid in ids) / total_area
+    if not average > 0.0:
+        raise BookError(f"книга: {where}.steady_per_m2 — среднее по эталонной сети не положительно")
+    cycles_raw = raw["reconstruction_cycle_years"]
+    levels = list(A["capex"]["maintenance_pct"])
+    if not isinstance(cycles_raw, dict) or set(cycles_raw) != set(levels):
+        raise BookError(f"книга: {where}.reconstruction_cycle_years — блок по уровням capex "
+                        f"({', '.join(levels)})")
+    cycles = {}
+    for level in levels:
+        block = cycles_raw[level]
+        if not isinstance(block, dict) or set(block) != set(ids):
+            raise BookError(f"книга: {where}.reconstruction_cycle_years.{level} — циклы всех "
+                            f"сегментов сети ({', '.join(ids)})")
+        cycles[level] = {sid: 2.0 * _book_number(block, sid, None,
+                                                 f"{where}.reconstruction_cycle_years.{level}",
+                                                 0.0, float("inf"), low_open=True) for sid in ids}
+    stock_raw = raw.get("young_stock") or {}
+    if not isinstance(stock_raw, dict) or not set(stock_raw) <= set(ids):
+        raise BookError(f"книга: {where}.young_stock — запасы новой площади по сегментам сети")
+    stock = {}
+    for sid, path in stock_raw.items():
+        if (not isinstance(path, dict) or not all(_is_period(k) for k in path)
+                or not all(_is_number(v) and v >= 0.0 for v in path.values())):
+            raise BookError(f"книга: {where}.young_stock.{sid} — {{полугодие: тыс. м² ≥ 0}}")
+        stock[sid] = {str(k): float(v) for k, v in path.items()}
+    return PhysicalRule(
+        steady={sid: per_m2["steady_per_m2"][sid] / average for sid in ids},
+        young={sid: per_m2["young_per_m2"][sid] / average for sid in ids},
+        cycle_halves=cycles, reference_area=reference, young_stock=stock)
 
 
 GOVERNANCE_COMPONENT_KEYS = frozenset({"name", "value", "sign", "basis", "in_850oa_scope"})
