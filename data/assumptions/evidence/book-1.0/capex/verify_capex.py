@@ -52,7 +52,15 @@ for key in mp["base"]:
     check(mp["low"][key] < mp["base"][key] < mp["high"][key], f"low < base < high для ключа {key}")
 # 4. стационар и доля
 st = OUT["stationary"]
-check(abs(st["base"]["pct"] - mp["base"]["LT"]) < 5e-5, "LT base = стационар расчёта снизу вверх")
+check(abs(st["base"]["pct"] - OUT["path"]["base"]["2036"]["bottom_up_total_bn"] / OUT["bottom_up_inputs"]["rev_2026e_pf"]) < 5e-5,
+      "стационар снизу вверх = 2036 пути снизу вверх (base)")
+sc = OUT["steady_centre"]
+check(abs(mp["base"]["LT"] - sc["steady_target_bn"] / OUT["bottom_up_inputs"]["rev_2026e_pf"]) < 5e-5,
+      "LT base = середина коридора замещения − замещающие открытия (решение ведущего по аудиту 30.09.2026, п. 13)")
+check(abs(mp["high"]["LT"] - mp["base"]["LT"] - (st["high"]["pct"] - st["base"]["pct"])) < 1e-4,
+      "high сдвинут на тот же сдвиг, что base (ширина уровней сохранена)")
+check(all(abs(mp[lv][k] - round(OUT["path"][lv]["2027"]["bottom_up_total_bn"] / OUT["bottom_up_inputs"]["rev_2026e_pf"], 4)) < 1e-9
+          for lv in ("base", "high") for k in ("2027",)), "путь 2026–2027 не сдвинут (base, high)")
 check(abs(FR["capex"]["maintenance_area_share"] - round(st["base"]["phys_share"], 2)) < 1e-9, "maintenance_area_share = физическая доля base")
 # 5. открытия
 g = FR["capex"]["segments"]

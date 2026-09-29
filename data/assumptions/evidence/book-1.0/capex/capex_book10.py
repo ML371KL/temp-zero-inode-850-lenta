@@ -471,6 +471,16 @@ def main() -> int:
     DC_EQ_COST, DC_BLD_COST = 15.0, 55.0                              # тыс. ₽/м² РЦ (оборудование; здание), цены 2026
     p(f"  РЦ: {len(dc_rows)} шт., {dc_all:.1f} тыс. м², из них собственные {dc_own:.1f} тыс. м² (датабук, лист DC Space)")
 
+    def closure_factor(c, cyc):
+        """Доля объёма реконструкций, которую не заменяют закрытия (решение ведущего по аудиту 30.09.2026, п. 15,
+        capex-03): середина отрезка [закрывается ровно магазин, которому подошёл срок реконструкции: 1 − c·T;
+        закрытия не зависят от возраста: T·(n₀ − c), n₀ = c / (1 − (1 − c)^T) — обновлений в год на м² при
+        дискретном обновлении]. Данных о возрасте закрываемых магазинов нет; прежний центр книги стоял на
+        крайнем случае 1 − c·T."""
+        edge = max(0.0, 1 - c * cyc)
+        n0 = c / (1 - (1 - c) ** cyc)
+        return 0.5 * (edge + cyc * (n0 - c))
+
     def stationary(lv):
         L = LEVELS[lv]
         red = {}
@@ -478,7 +488,7 @@ def main() -> int:
             cyc = L["cycle"][f]
             c = C_RED[f] * L["cost"]
             gross = AREA[f] / cyc * c / 1000
-            red[f] = gross * max(0.0, 1 - CLOSE[f] * cyc)                  # закрытый и заменённый магазин не проходит реконструкцию
+            red[f] = gross * closure_factor(CLOSE[f], cyc)                 # закрытый и заменённый магазин не проходит реконструкцию
         mo = mo_unit * w_area26 * L["mo"]
         fleet = TRUCKS * L["fleet_cost"] / L["fleet_cycle"] / 1000
         dc_eq = dc_all * DC_EQ_COST / L["dc_eq_cycle"] / 1000
@@ -562,7 +572,7 @@ def main() -> int:
             for i in range(nb):
                 due[2026 + i] += back_net / nb
             c = C_RED[f] * L["cost"] / 1000
-            fac = max(0.0, 1 - CLOSE[f] * cyc)
+            fac = closure_factor(CLOSE[f], cyc)
             for t in YEARS:
                 out[f][t] = due[t] * c * fac
             diag[f] = dict(old_area=round(old_area, 1), backlog=round(backlog, 1), known=known, backlog_net=round(back_net, 1))
@@ -667,6 +677,17 @@ def main() -> int:
     OUT["ak5"] = AK5
 
     # ------------------------------------------------------------------------- 7. физическая доля
+    # физические статьи на м² по форматам (решение ведущего по аудиту 30.09.2026, п. 11, capex-04): зрелый м² —
+    # реконструкции стационара base своего формата + обслуживание/эксплуатация (удельная цена × вес формата WEQ) + РЦ;
+    # молодой м² — без реконструкций (первая — через цикл формата); ядро (capex.physical) делит их на среднее по
+    # эталонной сети: эталонная сеть идёт путём A-K1, новая площадь — когортами по весу своего формата.
+    dc_m2 = (ST["base"]["items"]["dc_equipment"] + ST["base"]["items"]["dc_buildings"]) / sum(AREA.values())
+    PHYS = {f: dict(steady=round((ST["base"]["by_format"][f] / AREA[f] + mo_unit * WEQ[f] + dc_m2) * 1000, 2),
+                    young=round((mo_unit * WEQ[f] + dc_m2) * 1000, 2)) for f in AREA}
+    OUT["physical"] = dict(per_m2=PHYS, reconstruction_cycle_years={lv: dict(LEVELS[lv]["cycle"]) for lv in LEVELS},
+                           dc_per_m2_k=round(dc_m2 * 1000, 4), mo_unit_k=round(mo_unit * 1000, 4))
+    p("  физические статьи на м² в год (base, тыс. ₽): зрелый м² — " + ", ".join(f"{f} {v['steady']:.2f}" for f, v in PHYS.items())
+      + "; молодой (без реконструкций) — " + ", ".join(f"{f} {v['young']:.2f}" for f, v in PHYS.items()))
     s_phys = round(ST["base"]["phys_share"], 2)
     p(f"\n7. ФИЗИЧЕСКАЯ ДОЛЯ: base {ST['base']['phys_share']:.3f} (low {ST['low']['phys_share']:.3f}, high {ST['high']['phys_share']:.3f}) → "
       f"maintenance_area_share = {s_phys}")
@@ -721,6 +742,37 @@ def main() -> int:
     OUT["crosscheck_replacement"] = dict(at_2026h1=dict(classes=det26, total_bn=round(rep26, 2), pct=[round(rep26 / 1.3 / REV26, 5), round(rep26 / REV26, 5)]),
                                          at_2025=dict(classes=det25, total_bn=round(rep25, 2), pct=[round(rep25 / 1.3 / R25, 5), round(rep25 / R25, 5)]),
                                          model_ak1_plus_repl_open=dict(bn=round(model_cov, 2), pct=round(model_cov / REV26, 5), repl_open_bn=round(ro, 3)))
+    # 8а′. Стационар base — у ЦЕНТРА собственных стационарных свидетельств книги (решение ведущего по аудиту 30.09.2026,
+    # п. 13, capex-01): середина коридора стоимости замещения 30.06.2026 (сроки +30 % … учётные) за вычетом замещающих
+    # открытий (они в A-K3); high — тем же сдвигом в рублях; путь 2026–2027 не трогается (его подтверждает история
+    # без открытий), подъём к стационару — линейно 2028–2036. Расчёт снизу вверх остаётся путём и формой уровней;
+    # low — снизу вверх (решение п. 26: ограничение «низкий уровень без догоняющих реконструкций» — в разделе 16 книги).
+    corr_mid = (rep26 / 1.3 + rep26) / 2
+    steady_target = corr_mid - ro
+    steady_shift = steady_target - PATH["base"]["rows"][2036]["total"]
+    for lv in ("base", "high"):
+        for t in range(2028, 2037):
+            row = PATH[lv]["rows"][t]
+            row["bottom_up_total"] = row["total"]
+            row["total"] += steady_shift * (t - 2027) / 9
+            row["pct"] = row["total"] / REV26
+    for lv in ("base", "high"):
+        rows = PATH[lv]["rows"]
+        KEYS[lv].update({str(t): r4(rows[t]["pct"]) for t in range(2028, 2037)})
+        KEYS[lv]["LT"] = r4(rows[2036]["pct"])
+    OUT["path"] = {lv: {str(t): dict(pct=round(r["pct"], 5), total_bn=round(r["total"], 3), recon_bn=round(r["recon"], 3),
+                                      logistics_bn=round(r["logistics"], 3),
+                                      bottom_up_total_bn=round(r.get("bottom_up_total", r["total"]), 3))
+                        for t, r in PATH[lv]["rows"].items()} for lv in LEVELS}
+    OUT["maintenance_pct"] = KEYS
+    OUT["steady_centre"] = dict(corridor_bn=[round(rep26 / 1.3, 3), round(rep26, 3)], corridor_mid_bn=round(corr_mid, 3),
+                                repl_open_bn=round(ro, 3), steady_target_bn=round(steady_target, 3),
+                                shift_bn=round(steady_shift, 3), shift_pct=round(steady_shift / REV26, 5),
+                                bottom_up_2036_base_bn=round(PATH["base"]["rows"][2036]["bottom_up_total"], 3))
+    p(f"  8а′. стационар base — середина коридора замещения {corr_mid:.2f} млрд ({pct(corr_mid / REV26)}) − замещающие открытия "
+      f"{ro:.2f} = {steady_target:.2f} млрд ({pct(steady_target / REV26)}) против снизу вверх "
+      f"{PATH['base']['rows'][2036]['bottom_up_total']:.2f}: сдвиг {steady_shift:+.2f} млрд ({100 * steady_shift / REV26:+.3f} п.п.) "
+      f"для base и high, линейно 2028–2036; ключи: base LT {KEYS['base']['LT']}, high LT {KEYS['high']['LT']}")
     # 8б. тождество capex/D&A
     p("  8б. Тождество стационарной сети: capex/D&A = 1 / ratio(g, L), ratio = (1 − (1+g)^−L)/(L·g):")
     def ratio(g, L): return (1 - (1 + g) ** (-L)) / (L * g)
