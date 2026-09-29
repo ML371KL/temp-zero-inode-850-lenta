@@ -767,6 +767,52 @@ def effective_history(seg, maturity: list[float], effective_end: float, A: dict)
             base[0]: effective_end - step_anchor - step_before / 2.0}
 
 
+def terminal_revenue_factors(network: list, maturity: list[float], P: list[str],
+                             first_half, second_half) -> tuple[float, float]:
+    """Множители выручки двух полугодий терминала при базе «площадь на выходе»
+    (`valuation.terminal.revenue_base: exit_area`; аудит 30.09.2026,
+    discount-terminal-01).
+
+    Выручка сегмента сети ∝ эффективной площади. Правило «годовая выручка
+    последнего года × (1 + g)» берёт среднюю эффективную площадь полугодий
+    последнего года, а capex терминала (замещающие открытия, физическая доля) —
+    физическую площадь на конец горизонта: открытия последнего года оплачены,
+    но их дозревание в выручку терминала не входит никогда. Здесь база
+    сегмента — эффективная площадь на выходе:
+      A_ss = A_eff(конец) + Σ_{две младшие когорты} n·(m_∞ − m_возраст)·d
+             − площадь × закрытия/2 × d × Σ_{a<k}(m_∞ − m_a)
+    (дозревание младших когорт минус стационарная незрелость замещающих
+    открытий, которые при нулевом чистом росте идут каждое полугодие), и
+    множитель полугодия k терминала — A_ss / A_eff,ср(то же полугодие
+    последнего года) × (1 + τ_k·rot) / (1 + rot), rot = (d·m_∞ − cp)·закрытия —
+    подъём ротации, который g уже содержит за целый год (τ = 0,25 / 0,75: от
+    конца горизонта до середин полугодий). Сегменты без площади — множитель 1;
+    множитель группы — средний по выручке сегментов своего полугодия.
+    """
+    k_last = len(maturity) - 1
+    factors = {}
+    for s in network:
+        d = s.seg.new_space_density
+        n_c = len(s.cohorts)
+        remaining = sum(s.cohorts[-1 - a] * (maturity[-1] - maturity[a])
+                        * (d if n_c - 1 - a >= s.history_cohorts else 1.0)
+                        for a in range(min(k_last, n_c)))
+        close = path_value(s.space["close"], P[-1])
+        steady = (s.area_end * close / 2.0 * d
+                  * sum(maturity[-1] - maturity[a] for a in range(k_last)))
+        exit_area = s.effective_end + remaining - steady
+        rotation = (d * maturity[-1] - s.seg.closed_productivity) * close
+        factors[s.seg.id] = (
+            exit_area / s.effective_hist[P[-2]] * (1 + 0.25 * rotation) / (1 + rotation),
+            exit_area / s.effective_hist[P[-1]] * (1 + 0.75 * rotation) / (1 + rotation))
+    out = []
+    for k, row in enumerate((first_half, second_half)):
+        weighted = sum(step.revenue * (factors[sid][k] if sid in factors else 1.0)
+                       for sid, step in row.segments.items())
+        out.append(weighted / row.revenue)
+    return out[0], out[1]
+
+
 def dividend_rule(A: dict, year: int, net_debt_prev: float, net_debt_pre: float,
                   ebitda_ltm: float, ladder) -> tuple[float, int | None]:
     """Дивиденды полугодия и номер ступени лестницы (None — без лестницы или ниже года).
@@ -1382,12 +1428,24 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     assert P[-1].endswith("H2") and len(rows) >= 2, (
         "полугодовой терминал требует, чтобы явный период кончался вторым полугодием")
 
+    terminal = terminal_rule(A)
+    # База выручки терминала (`valuation.terminal.revenue_base`): при `exit_area` —
+    # эффективная площадь на выходе явного периода (`terminal_revenue_factors`);
+    # уровни ОК и операционной кассы на границе — тем же множителем, чтобы
+    # разовый сдвиг базы не капитализировался Гордоном как поток.
+    revenue_factors = (1.0, 1.0)
+    if terminal["revenue_base"] == "exit_area":
+        revenue_factors = terminal_revenue_factors(network, maturity, P, prev_half, last)
+        revenue_back = last.revenue * revenue_factors[1]
+        nwc_level_prev = nwc_prev * revenue_factors[1]
+        opc_level_prev = operating_cash_prev * revenue_factors[1]
+
     halves = []
     for half_row, half_no in ((prev_half, 1), (last, 2)):
         index_terminal *= 1 + half_rate(inflation_lt)
         unit_price_terminal = (index_terminal / (1 + half_rate(inflation_lt)) ** 0.5
                                if prices_at_anchor_end else index_terminal)
-        rev = half_row.revenue * (1 + g)
+        rev = half_row.revenue * (1 + g) * revenue_factors[half_no - 1]
         revenue_annual_half, revenue_back = rev + revenue_back, rev
         season = margin_season(A, f"{int(P[-1][:4]) + 1}H{half_no}")
         # Замещающие открытия: сеть не растёт, но изношенную площадь обновляют
@@ -1469,7 +1527,7 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     # Полугодовая доля годовой ставки терминала (`valuation.terminal.
     # half_rate_convention`): `simple` — r/2 (850oa), `compound` — (1 + r)^0,5 − 1,
     # как проценты явного периода.
-    compound = terminal_rule(A)["half_rate_convention"] == "compound"
+    compound = terminal["half_rate_convention"] == "compound"
     if compound:
         shield_half = tau * TX["alpha_terminal_shield"] * debt_terminal * half_rate(shield_rate)
         excess_half = debt_terminal * max(0.0, half_rate(shield_rate) - half_rate(rate_fair_lt))

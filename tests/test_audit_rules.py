@@ -10,7 +10,9 @@
 * capex: дата удельных цен открытий и инфраструктуры (`capex.unit_price_basis`,
   control-model-03);
 * налог: невычитаемая часть D&A якоря (`tax.nondeductible_da_anchor`,
-  control-model-02).
+  control-model-02);
+* терминал: выручка от эффективной площади на выходе явного периода
+  (`valuation.terminal.revenue_base: exit_area`, discount-terminal-01).
 """
 from __future__ import annotations
 
@@ -131,3 +133,94 @@ def test_the_nondeductible_share_follows_the_carried_anchor_base():
     A["tax"]["nondeductible_da_anchor"] = -0.1
     with pytest.raises(BookError, match="nondeductible_da_anchor"):
         validate_book(A)
+
+
+# ================================================== терминал: выручка от площади на выходе
+
+
+def _still_network(A: dict, years=("2035", "2036")) -> dict:
+    """Книга, у которой в последние годы горизонта сеть стоит: ни открытий, ни
+    закрытий — младших когорт и ротации на выходе нет."""
+    B = copy.deepcopy(A)
+    for seg in B["revenue"]["segments"].values():
+        for level in (seg.get("space") or {}).values():
+            for key in ("gross_open", "close"):
+                spec = level[key]
+                spec = dict(spec) if isinstance(spec, dict) else {"LT": spec}
+                for y in years:
+                    spec[y] = 0.0
+                spec["LT"] = 0.0
+                spec.pop("LT_from", None)
+                level[key] = spec
+    return B
+
+
+@pytest.mark.parametrize("spec", SPECS, ids="|".join)
+def test_the_exit_area_base_equals_the_last_year_when_the_network_stands_still(spec):
+    """discount-terminal-01: без открытий и закрытий на выходе младших когорт нет,
+    эффективная площадь на выходе = средней последнего полугодия, ротации нет —
+    множители 1, терминал тот же, что у правила «последний год × (1 + g)»."""
+    A = _still_network(toy_book())
+    B = copy.deepcopy(A)
+    B["valuation"]["terminal"]["revenue_base"] = "exit_area"
+    a, b = _run(A, spec), _run(B, spec)
+    assert b.ev == pytest.approx(a.ev, rel=1e-12)
+
+
+def test_the_exit_area_base_pays_the_last_openings_back_and_defaults_to_the_last_year():
+    """Растущая сеть: открытия последнего года оплачены в явном периоде, их
+    дозревание входит в выручку терминала — EV выше; без ключа — правило 850oa
+    бит в бит; явный период не меняется."""
+    A = toy_book()
+    explicit = copy.deepcopy(A)
+    explicit["valuation"]["terminal"]["revenue_base"] = "last_year"
+    B = copy.deepcopy(A)
+    B["valuation"]["terminal"]["revenue_base"] = "exit_area"
+    spec = ("N", "full", "high")
+    a, b = _run(A, spec), _run(B, spec)
+    assert _run(explicit, spec).ev == a.ev
+    assert [r.fcff for r in b.rows] == [r.fcff for r in a.rows]
+    assert b.terminal_flow_value > a.terminal_flow_value
+    assert b.ev > a.ev
+    bad = copy.deepcopy(A)
+    bad["valuation"]["terminal"]["revenue_base"] = "exit"
+    with pytest.raises(BookError, match="revenue_base"):
+        validate_book(bad)
+
+
+def test_the_exit_area_factors_follow_the_formula():
+    """Множитель полугодия k терминала = Σ_s R_s·A_ss,s/A_eff,ср,s(k)·(1 + τ_k·rot_s)/(1 + rot_s) / R,
+    A_ss = A_eff(конец) + дозревание двух младших когорт − стационарная незрелость
+    замещения; состояние сети на выходе восстановлено по строкам клетки (конец
+    полугодия = 2·среднее − начало)."""
+    from model.book import segments
+    from model.core import _SegmentState, anchor_effective_end, terminal_revenue_factors
+
+    A = toy_book()
+    cell = Cell.build(A, "N", "full", "high")
+    rows = run_cell(A, cell).rows
+    m = A["revenue"]["maturity_curve"]
+    states = [_SegmentState(seg, A, cell, m) for seg in segments(A)]
+    network = [s for s in states if s.seg.network]
+    expected = {}
+    for s in network:
+        end = anchor_effective_end(s.seg, m)
+        for row in rows:
+            step = row.segments[s.seg.id]
+            end = 2 * step.effective_area_avg - end
+            s.cohorts.append(step.opened)
+            s.effective_hist[row.period] = step.effective_area_avg
+        s.effective_end, s.area_end = end, rows[-1].segments[s.seg.id].area_end
+        d, cp = s.seg.new_space_density, s.seg.closed_productivity
+        close = path_value(s.space["close"], rows[-1].period)
+        young = s.cohorts[-1] * (m[2] - m[0]) * d + s.cohorts[-2] * (m[2] - m[1]) * d
+        steady = s.area_end * close / 2 * d * ((m[2] - m[0]) + (m[2] - m[1]))
+        exit_area = end + young - steady
+        rot = (d * m[2] - cp) * close
+        expected[s.seg.id] = (exit_area / s.effective_hist[rows[-2].period] * (1 + rot / 4) / (1 + rot),
+                              exit_area / s.effective_hist[rows[-1].period] * (1 + 3 * rot / 4) / (1 + rot))
+    want = [sum(st.revenue * expected.get(sid, (1.0, 1.0))[k] for sid, st in row.segments.items())
+            / row.revenue for k, row in enumerate(rows[-2:])]
+    got = terminal_revenue_factors(network, m, [r.period for r in rows], rows[-2], rows[-1])
+    assert got == pytest.approx(tuple(want), rel=1e-12)
+    assert got[0] > 1.0 and got[1] > 1.0

@@ -593,7 +593,12 @@ def meta_rules(A: dict) -> None:
 
 # Соглашения полугодовой ставки в терминале (`valuation.terminal.half_rate_convention`).
 HALF_RATE_CONVENTIONS = ("simple", "compound")
-TERMINAL_KEYS = frozenset({"half_rate_convention"})
+# База выручки терминала (`valuation.terminal.revenue_base`): `last_year` — выручка
+# полугодий последнего года × (1 + g) (правило 850oa); `exit_area` — от эффективной
+# площади на выходе явного периода (аудит 30.09.2026, discount-terminal-01).
+TERMINAL_REVENUE_BASES = ("last_year", "exit_area")
+TERMINAL_KEYS = frozenset({"half_rate_convention", "revenue_base"})
+TERMINAL_REQUIRED = ("half_rate_convention",)
 
 
 def terminal_rule(A: dict) -> dict:
@@ -602,17 +607,29 @@ def terminal_rule(A: dict) -> dict:
     `half_rate_convention`: как годовая ставка щита и избыточного купона Р11
     делится на полугодие в ТЕРМИНАЛЕ — `simple` (r/2; так считал 850oa) или
     `compound` ((1 + r)^0,5 − 1 — как проценты явного периода, `half_rate`).
+
+    `revenue_base` (необязательный, по умолчанию `last_year` — выручка полугодий
+    последнего года × (1 + g)): `exit_area` — выручка терминала сегмента сети
+    идёт от эффективной площади НА ВЫХОДЕ явного периода (конец последнего
+    полугодия плюс остаток дозревания младших когорт минус стационарная
+    незрелость замещающих открытий) с поправкой на ротацию, которую g уже
+    содержит, — та же база, что у capex терминала
+    (`model.core.terminal_revenue_factors`).
     """
     raw = _book_value(A, "valuation.terminal", ("valuation", "terminal"))
     if not isinstance(raw, dict):
         raise BookError(f"книга: valuation.terminal — ожидается блок, а не {raw!r}")
     _refuse_unknown(raw, TERMINAL_KEYS, "valuation.terminal")
-    _require(raw, sorted(TERMINAL_KEYS), "valuation.terminal")
+    _require(raw, TERMINAL_REQUIRED, "valuation.terminal")
     convention = raw["half_rate_convention"]
     if convention not in HALF_RATE_CONVENTIONS:
         raise BookError(f"книга: valuation.terminal.half_rate_convention = {convention!r} "
                         f"(известны: {', '.join(HALF_RATE_CONVENTIONS)})")
-    return dict(half_rate_convention=convention)
+    base = raw.get("revenue_base", TERMINAL_REVENUE_BASES[0])
+    if base not in TERMINAL_REVENUE_BASES:
+        raise BookError(f"книга: valuation.terminal.revenue_base = {base!r} "
+                        f"(известны: {', '.join(TERMINAL_REVENUE_BASES)})")
+    return dict(half_rate_convention=convention, revenue_base=base)
 
 
 # ------------------------------------------------ корзины ставок и дивиденды
