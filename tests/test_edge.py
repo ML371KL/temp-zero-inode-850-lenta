@@ -30,12 +30,17 @@ def test_the_model_function_behaves_in_node():
     node = shutil.which("node")
     assert node, ("нет node в PATH: поведенческий тест двери данных без него не запустить "
                   "(Node 22+; в CI — actions/setup-node)")
-    done = subprocess.run([node, "--test", str(Path("tests") / "functions" / "model.test.mjs")],
+    # Формат отчёта задан явно: без терминала Node 22 печатает TAP, а Node 26 —
+    # spec, и разбор «ℹ fail 0» молча зависел от версии (CI 29.09.2026 упал при
+    # 18 зелёных из 18).
+    done = subprocess.run([node, "--test", "--test-reporter=tap",
+                           str(Path("tests") / "functions" / "model.test.mjs")],
                           cwd=str(ROOT), capture_output=True, text=True, encoding="utf-8",
                           errors="replace", timeout=300)
     out = done.stdout + done.stderr
     assert done.returncode == 0, out[-4000:]
-    assert re.search(r"^ℹ fail 0$", out, re.M) and not re.search(r"^ℹ tests 0$", out, re.M), out[-2000:]
+    passed = re.search(r"^# pass (\d+)$", out, re.M)
+    assert re.search(r"^# fail 0$", out, re.M) and passed and int(passed.group(1)) > 0, out[-2000:]
 
 
 def test_api_allowlist_matches_functions():
