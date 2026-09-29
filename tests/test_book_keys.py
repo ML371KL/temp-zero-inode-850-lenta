@@ -182,9 +182,11 @@ def test_the_version_machine_is_gone():
 
     for name in ("SWITCHES_15", "REQUIRED_15", "refuse_pre_15", "PRE_15"):
         assert not hasattr(B, name), name
-    # `valuation.terminal` вернулся с ОДНИМ ключом — соглашением полугодовой
-    # ставки терминала (решение ведущего, P2): у Ленты оно другое, чем у 850oa.
-    assert SCHEMA["valuation.terminal"] == {"half_rate_convention"}
+    # `valuation.terminal` вернулся с ключом соглашения полугодовой ставки
+    # терминала (решение ведущего, P2) и двумя правилами аудита 30.09.2026 —
+    # база выручки терминала и амортизация терминала в налоге: у каждого ключа
+    # два метода, оба в коде действующие.
+    assert SCHEMA["valuation.terminal"] == {"half_rate_convention", "revenue_base", "da_convention"}
     for block, key in (("valuation", "roll_along_forwards"),
                        ("capex", "da_method"), ("financing", "cash_carry"),
                        ("financing", "gross_debt_net_of_opc_growth"),
