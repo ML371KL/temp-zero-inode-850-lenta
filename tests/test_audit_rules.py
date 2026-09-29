@@ -12,7 +12,9 @@
 * налог: невычитаемая часть D&A якоря (`tax.nondeductible_da_anchor`,
   control-model-02);
 * терминал: выручка от эффективной площади на выходе явного периода
-  (`valuation.terminal.revenue_base: exit_area`, discount-terminal-01).
+  (`valuation.terminal.revenue_base: exit_area`, discount-terminal-01),
+  доамортизация когорт capex явного периода в налоге терминала
+  (`valuation.terminal.da_convention: cohort_runoff`, capex-06).
 """
 from __future__ import annotations
 
@@ -224,3 +226,58 @@ def test_the_exit_area_factors_follow_the_formula():
     got = terminal_revenue_factors(network, m, [r.period for r in rows], rows[-2], rows[-1])
     assert got == pytest.approx(tuple(want), rel=1e-12)
     assert got[0] > 1.0 and got[1] > 1.0
+
+
+# ================================================== терминал: доамортизация когорт явного периода
+
+
+def test_the_runoff_vanishes_when_the_cohorts_are_the_annuity_history():
+    """capex-06: если фактические когорты — ровно та история, которую предполагает
+    аннуитет (capex растёт темпом терминала), поправки нет ни в одном полугодии;
+    ряд конечен (не длиннее 2L полугодий)."""
+    from model.core import terminal_da_runoff
+
+    L2, g, pi, cg, cp = 24.0, 0.06, 0.05, 80.0, 20.0
+    cohorts = [cg / 2 * (1 + g) ** (-(j + 1) / 2) + cp / 2 * (1 + pi) ** (-(j + 1) / 2)
+               for j in reversed(range(30))]
+    out = terminal_da_runoff(cohorts, 0.0, 0, 21, L2, cg, cp, g, pi, None)
+    assert len(out) <= L2
+    assert max(abs(x) for x in out) < 1e-9
+
+
+def test_heavier_cohorts_and_the_anchor_base_are_amortised_after_the_horizon():
+    """Когорты тяжелее аннуитетной истории — поправка положительна и гаснет к 2L;
+    база якоря даёт вклад, пока не списана, её невычитаемая часть — нет."""
+    from model.core import terminal_da_runoff
+
+    L2, g, pi, cg, cp = 24.0, 0.06, 0.05, 80.0, 20.0
+    hist = [cg / 2 * (1 + g) ** (-(j + 1) / 2) + cp / 2 * (1 + pi) ** (-(j + 1) / 2)
+            for j in reversed(range(30))]
+    heavy = [1.2 * v for v in hist]
+    out = terminal_da_runoff(heavy, 0.0, 0, 21, L2, cg, cp, g, pi, None)
+    assert all(x > 0 for x in out) and out[0] > out[-1] and len(out) <= L2
+    with_base = terminal_da_runoff(hist, 12.0, 0, 21, L2, cg, cp, g, pi, None)
+    assert with_base[0] == pytest.approx(12.0 * (1 - 22 / 24), abs=1e-9)
+    assert with_base[1] == pytest.approx(12.0 * (1 - 23 / 24), abs=1e-9)
+    nd = terminal_da_runoff(hist, 12.0, 0, 21, L2, cg, cp, g, pi, 0.8)
+    assert nd[0] == pytest.approx(11.2 * (1 - 22 / 24), abs=1e-9)
+
+
+def test_the_runoff_changes_only_the_terminal_and_defaults_to_the_annuity():
+    """Без ключа — аннуитет (850oa) бит в бит; с `cohort_runoff` явный период тот же,
+    меняется только стоимость потока терминала."""
+    A = toy_book()
+    explicit = copy.deepcopy(A)
+    explicit["valuation"]["terminal"]["da_convention"] = "annuity"
+    B = copy.deepcopy(A)
+    B["valuation"]["terminal"]["da_convention"] = "cohort_runoff"
+    for spec in SPECS:
+        a, b = _run(A, spec), _run(B, spec)
+        assert _run(explicit, spec).ev == a.ev
+        assert [r.fcff for r in b.rows] == [r.fcff for r in a.rows]
+        assert b.terminal_shield_value == a.terminal_shield_value
+        assert b.terminal_flow_value != a.terminal_flow_value
+    bad = copy.deepcopy(A)
+    bad["valuation"]["terminal"]["da_convention"] = "runoff"
+    with pytest.raises(BookError, match="da_convention"):
+        validate_book(bad)

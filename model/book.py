@@ -597,7 +597,11 @@ HALF_RATE_CONVENTIONS = ("simple", "compound")
 # полугодий последнего года × (1 + g) (правило 850oa); `exit_area` — от эффективной
 # площади на выходе явного периода (аудит 30.09.2026, discount-terminal-01).
 TERMINAL_REVENUE_BASES = ("last_year", "exit_area")
-TERMINAL_KEYS = frozenset({"half_rate_convention", "revenue_base"})
+# Амортизация терминала в налоге (`valuation.terminal.da_convention`): `annuity` —
+# аннуитет терминального capex (850oa); `cohort_runoff` — плюс доамортизация когорт
+# capex явного периода и базы D&A якоря (аудит 30.09.2026, capex-06).
+TERMINAL_DA_CONVENTIONS = ("annuity", "cohort_runoff")
+TERMINAL_KEYS = frozenset({"half_rate_convention", "revenue_base", "da_convention"})
 TERMINAL_REQUIRED = ("half_rate_convention",)
 
 
@@ -615,6 +619,13 @@ def terminal_rule(A: dict) -> dict:
     незрелость замещающих открытий) с поправкой на ротацию, которую g уже
     содержит, — та же база, что у capex терминала
     (`model.core.terminal_revenue_factors`).
+
+    `da_convention` (необязательный, по умолчанию `annuity` — налоговая D&A
+    терминала = аннуитет терминального capex, как если бы capex всегда рос
+    темпом g): `cohort_runoff` — плюс разница между фактическими когортами
+    capex явного периода с базой D&A якоря, которые доамортизируются после
+    горизонта, и той историей capex, которую предполагает аннуитет
+    (`model.core.terminal_da_runoff`).
     """
     raw = _book_value(A, "valuation.terminal", ("valuation", "terminal"))
     if not isinstance(raw, dict):
@@ -629,7 +640,11 @@ def terminal_rule(A: dict) -> dict:
     if base not in TERMINAL_REVENUE_BASES:
         raise BookError(f"книга: valuation.terminal.revenue_base = {base!r} "
                         f"(известны: {', '.join(TERMINAL_REVENUE_BASES)})")
-    return dict(half_rate_convention=convention, revenue_base=base)
+    da = raw.get("da_convention", TERMINAL_DA_CONVENTIONS[0])
+    if da not in TERMINAL_DA_CONVENTIONS:
+        raise BookError(f"книга: valuation.terminal.da_convention = {da!r} "
+                        f"(известны: {', '.join(TERMINAL_DA_CONVENTIONS)})")
+    return dict(half_rate_convention=convention, revenue_base=base, da_convention=da)
 
 
 # ------------------------------------------------ корзины ставок и дивиденды

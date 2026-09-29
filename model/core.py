@@ -813,6 +813,55 @@ def terminal_revenue_factors(network: list, maturity: list[float], P: list[str],
     return out[0], out[1]
 
 
+def terminal_da_runoff(cohorts: list[float], legacy: float, legacy_halves: int, explicit: int,
+                       half_life: float, capex_growth_year: float, capex_price_year: float,
+                       growth: float, growth_price: float, nondeductible: float | None) -> list[float]:
+    """Поправка налоговой D&A терминала по полугодиям k = 0, 1, … после горизонта
+    (`valuation.terminal.da_convention: cohort_runoff`; аудит 30.09.2026, capex-06).
+
+    Аннуитет терминала считает D&A так, будто capex всегда рос темпом терминала:
+    D&A года = аннуитет от capex года. На деле после горизонта доамортизируются
+    фактические когорты явного периода (линейно, 1/(2L) полугодия со следующего
+    за затратами) и база D&A якоря (убывает до нуля за 2L полугодий от якоря).
+    Поправка полугодия k = [база якоря(k) − её невычитаемая часть + Σ фактических
+    когорт(k)] − Σ когорт той истории, которую предполагает аннуитет(k):
+    полугодовые когорты capex_g/2·(1 + g)^(−(j+1)/2) и capex_π/2·(1 + π)^(−(j+1)/2),
+    j = 0 — последнее полугодие горизонта. Когорты терминала у обоих одинаковы и
+    сокращаются; через 2L полугодий обе суммы — ноль, ряд конечен.
+
+    `cohorts` — capex полугодий, из которых идёт линейная D&A на конце горизонта
+    (capex якоря и полугодий явного периода, последний — последнее полугодие),
+    `legacy`/`legacy_halves` — база D&A якоря и сколько полугодий она списывается
+    на якоре, `explicit` — полугодий явного периода.
+    """
+    out = []
+    k = 0
+    while True:
+        age0 = k                                     # возраст последней фактической когорты
+        actual = sum(v * min(1.0, max(0.0, half_life - (age0 + j)))
+                     for j, v in enumerate(reversed(cohorts))) / half_life
+        base_share = max(0.0, 1 - (legacy_halves + explicit + k + 1) / half_life)
+        actual += legacy * base_share
+        if nondeductible:
+            actual -= nondeductible * base_share
+        hypothetical = 0.0
+        j = 0
+        while j + k < half_life:
+            weight = min(1.0, half_life - (j + k)) / half_life
+            hypothetical += weight * (capex_growth_year / 2.0 * (1 + growth) ** (-(j + 1) / 2.0)
+                                      + capex_price_year / 2.0 * (1 + growth_price) ** (-(j + 1) / 2.0))
+            j += 1
+        if k >= half_life and not actual and not hypothetical:
+            break
+        out.append(actual - hypothetical)
+        k += 1
+        if k > 4 * half_life:                        # страховка от бесконечного цикла
+            break
+    while out and out[-1] == 0.0:
+        out.pop()
+    return out
+
+
 def dividend_rule(A: dict, year: int, net_debt_prev: float, net_debt_pre: float,
                   ebitda_ltm: float, ladder) -> tuple[float, int | None]:
     """Дивиденды полугодия и номер ступени лестницы (None — без лестницы или ниже года).
@@ -1516,6 +1565,16 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     tv = (gordon(flows[0] - pi_flows[0], flows[1] - pi_flows[1])
           + (pi_flows[0] * (1 + r_long) ** 0.75 + pi_flows[1] * (1 + r_long) ** 0.25)
           / (r_long - growth_pi)) * growth_mult
+    if terminal["da_convention"] == "cohort_runoff":
+        # Доамортизация когорт явного периода и базы якоря после горизонта
+        # (`terminal_da_runoff`): поправка налоговой D&A × τ·(1 − премия) в
+        # серединах полугодий 2037+, пока налог терминала положителен.
+        runoff = terminal_da_runoff(
+            vintages + [capex_prev], da_anchor, legacy_halves, len(P), 2 * C["asset_life_years"],
+            capex_terminal - capex_pi, capex_pi, g, growth_pi, nondeductible_anchor)
+        if all(h["ebitda"] - tax_da(h) + addback_lt * h["rev"] > 0 for h in halves):
+            tv += sum(tau * (1.0 - (tax_premium or 0.0)) * delta * (1 + r_long) ** (-(0.25 + 0.5 * k))
+                      for k, delta in enumerate(runoff))
     fcff_terminal = flows[0] + flows[1]
 
     # Долг терминала — от EBITDA с сезонностью, посчитанной по полугодиям, а не

@@ -194,8 +194,9 @@ BOOK: dict[str, frozenset[str]] = {
     # `in_850oa_scope` — канал входит в охват 850oa (строка витрины, E31).
     "valuation.governance_components[]": frozenset({"basis", "in_850oa_scope", "name", "sign",
                                                     "value"}),
-    # `revenue_base` — база выручки терминала (discount-terminal-01).
-    "valuation.terminal": frozenset({"half_rate_convention", "revenue_base"}),
+    # `revenue_base` — база выручки терминала (discount-terminal-01); `da_convention` —
+    # амортизация терминала в налоге (capex-06).
+    "valuation.terminal": frozenset({"da_convention", "half_rate_convention", "revenue_base"}),
     "valuation.distress": frozenset({"cost_pct_ev", "credit_limit_trigger",
                                      "net_leverage_trigger"}),
     # Заголовок: метод (только `intrinsic`), шаг печати, диагностики, пороги
