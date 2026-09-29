@@ -366,7 +366,6 @@ def main() -> int:
     items = [
         {"id": "remi_put", "kind": "claim", "amount": put, "accrete_rate_half": rate_half, "settle_period": "2027H1", "haircut": 0.0},
         {"id": "obi_remaining", "kind": "claim", "amount": obi_rest, "accrete_rate_half": 0.0, "settle_period": "2026H2", "haircut": 0.0},
-        {"id": "ltip_long_term", "kind": "claim", "amount": ltip, "accrete_rate_half": 0.0, "settle_period": "2028H1", "haircut": 0.0},
         {"id": "nci_ex_remi", "kind": "claim", "amount": nci_ex_remi, "accrete_rate_half": 0.0, "settle_period": None, "haircut": 0.0},
         {"id": "loans_issued", "kind": "asset", "amount": loans, "accrete_rate_half": 0.0, "settle_period": "2026H2", "haircut": 0.0},
         {"id": "fixed_debt_fv_premium", "kind": "claim", "amount": fv_prem, "accrete_rate_half": 0.0, "settle_period": None, "haircut": 0.0},
@@ -390,7 +389,10 @@ def main() -> int:
     R["bridge_totals_bn"] = {"net_claims_asof": round(tot_asof / 1000, 4), "net_claims_valuation": round(tot_val / 1000, 4),
                              "halves_asof_to_valuation": round(halves_val, 6), "remi_put_at_valuation": round(put_val / 1000, 4),
                              "remi_put_payment_2027H1": round(put_pay / 1000, 4)}
-    R["not_in_bridge"] = {"supplier_finance_payables_bn": round(factoring / 1000, 4),
+    # долгосрочная часть LTIP — возобновляемый «поплавок» в ОК (как текущая часть), не строка моста (решение ведущего
+    # по аудиту 30.09.2026, п. 22): лист nwc-tax включает её в ОК якоря и в декабрьский базис
+    R["not_in_bridge"] = {"ltip_long_term_in_nwc_bn": round(ltip / 1000, 6),
+                          "supplier_finance_payables_bn": round(factoring / 1000, 4),
                           "other_noncurrent_fin_assets_bn": round(other_nca / 1000, 4),
                           "restricted_cash_30_06_2026_bn": 0.0}
 

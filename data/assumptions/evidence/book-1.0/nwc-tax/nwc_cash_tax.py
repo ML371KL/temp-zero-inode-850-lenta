@@ -398,15 +398,25 @@ R_LTM_BOOK = R_LTM_FACTS
 EXCESS_PCT_BOOK = 0.020      # [с] среднее четырёх лет 2,02 % (2021, 2023–2025); 2024–2025 — 1,56 %; с 2,0 % старт сходится с декабрями 2023–2025
 seasonal_june_excess_book = round(EXCESS_PCT_BOOK * R_LTM_BOOK, 1)
 nwc_pct_start_book = round((nwc_start - seasonal_june_excess_book) / R_LTM_BOOK, 6)
-HOLD_BOOK = -0.029           # [с] декабрьский базис: среднее декабрей 2023–2025 −2,97 %, hold из старта −2,94 %, поток 2П → −2,8 %
+HOLD_BOOK_EX_LTIP = -0.029   # [с] декабрьский базис в определении ОК без LTIP: среднее декабрей 2023–2025 −2,97 %, hold из старта −2,94 %, поток 2П → −2,8 %
+# Долгосрочная часть денежного LTIP — возобновляемый «поплавок» в ОК, как текущая часть той же программы (кредиторка перед
+# персоналом), а не разовое требование моста (решение ведущего по аудиту 30.09.2026, п. 22, governance-bridge-09): программа
+# назначается ежегодно, выплаты 50/25/25 % в апрели трёх лет (годовой отчёт 2025, с. 85), расход — в EBITDA при начислении.
+# ОК якоря книги = ОК в определении листа − LTIP (прочие долгосрочные обязательства 2 000 523 тыс. ₽, баланс 30.06.2026,
+# прим. 22); декабрьский базис — тем же сдвигом доли выручки LTM (поплавок держится долей выручки, как текущая часть).
+LTIP_LT_1H26 = 2.000523
+HOLD_BOOK = round(HOLD_BOOK_EX_LTIP - LTIP_LT_1H26 / R_LTM_BOOK, 4)
+NWC_ANCHOR_BOOK = round(nwc_start - LTIP_LT_1H26, 4)
 acq_path_start = round(okey_gap / R_LTM_BOOK, 5)
 acquired_path_book = {"2026H2": acq_path_start, "2027": round(acq_path_start / 2, 5), "2028": 0.0, "LT": 0.0}
-one_off_book = (nwc_pct_start_book - (HOLD_BOOK + acq_path_start)) * R_LTM_BOOK
+one_off_book = (nwc_pct_start_book - (HOLD_BOOK_EX_LTIP + acq_path_start)) * R_LTM_BOOK   # оба — в определении ОК без LTIP
 log(f"  знаменатель книги = facts.anchor.revenue_ltm {R_LTM_BOOK:.3f}; своя проформа {R_LTM_PF_2026:.3f} − «Дом Лента» до консолидации"
     f" {domlenta_2025h2 + domlenta_2026_pre:.3f} = {R_LTM_PF_2026 - domlenta_2025h2 - domlenta_2026_pre:.3f}")
 capex_payables_ex_obi_1h26 = NWC["1H 2026"]["payables_capex_business"] - 4.0702   # [р] 17,303 − 4,499 − 8,734 (прим. 5, с. 19)
 log(f"  КНИГА: seasonal_june_excess {seasonal_june_excess_book} млрд ({EXCESS_PCT_BOOK:.1%}), nwc_pct_start {nwc_pct_start_book},"
     f" hold {HOLD_BOOK}, acquired_path {acquired_path_book}; разовый поток 2П2026 от округления {one_off_book:+.2f} млрд")
+log(f"  КНИГА с LTIP-поплавком в ОК: anchor_level {nwc_start:.4f} − LTIP {LTIP_LT_1H26} = {NWC_ANCHOR_BOOK}; hold {HOLD_BOOK_EX_LTIP} − "
+    f"{LTIP_LT_1H26}/{R_LTM_BOOK:.1f} = {HOLD_BOOK}")
 log(f"  вариант «кредиторка за ОС в ОК» (A-W0 850oa дословно, без ОБИ): задолженность за ОС 1П2026 {capex_payables_ex_obi_1h26:.2f} млрд"
     f" → старт {nwc_start - capex_payables_ex_obi_1h26:.2f}, nwc_pct_start {(nwc_start - capex_payables_ex_obi_1h26 - seasonal_june_excess_book) / R_LTM_PF_2026:.5f}")
 
@@ -428,7 +438,8 @@ RES["nwc"] = {
     "h2_flow_ratio": {y: r4(v) for y, v in h2_ratio.items()}, "h2_flow_expected_2026_bn": round(h2_flow_expected, 1),
     "revenue_annual_2026h2_est": round(R_ANNUAL_2026H2, 1), "dec2026_implied_pct": r4(dec26_implied_pct),
     "book": {"seasonal_june_excess": seasonal_june_excess_book, "excess_pct": EXCESS_PCT_BOOK,
-             "nwc_pct_start": nwc_pct_start_book, "hold": HOLD_BOOK, "acquired_path": acquired_path_book,
+             "nwc_pct_start": nwc_pct_start_book, "hold": HOLD_BOOK, "hold_ex_ltip": HOLD_BOOK_EX_LTIP,
+             "ltip_long_term_in_nwc": LTIP_LT_1H26, "anchor_level": NWC_ANCHOR_BOOK, "acquired_path": acquired_path_book,
              "one_off_2026h2_bn": round(one_off_book, 2), "revenue_ltm_denominator": R_LTM_BOOK},
     "capex_payables_ex_obi_1h2026": round(capex_payables_ex_obi_1h26, 3),
     "okey": {"nwc_at_acquisition": round(okey_nwc, 3), "nwc_with_income_tax": round(okey_nwc_with_income_tax, 3),
@@ -755,7 +766,24 @@ tax_formula_2025 = TAX * (TAXREC["FY 2025"]["pbt_ias17"] - TAXREC["FY 2025"]["no
 loss_use_2025 = DT[2025]["loss_dta_open"] + TAXREC["FY 2025"].get("loss_recovery", 0.0) - DT[2025]["loss_dta_close"]
 log(f"   2025: налог по формуле ядра 25 % × (ДДН IAS 17 + невычитаемые) = {tax_formula_2025:.2f}; текущий {-TAXREC['FY 2025']['current_tax']:.2f};"
     f" разница {tax_formula_2025 + TAXREC['FY 2025']['current_tax']:.2f} = зачёт убытков {loss_use_2025:.2f} + ОС {-ppe_op[2025]:.2f} + прочее")
+# Центр премии (решение ведущего по аудиту 30.09.2026, п. 2, magnit-peers-01): правило ядра даёт разницу налоговой и
+# учётной D&A ровно p·(capex − D&A), поэтому p года = разница / (capex − D&A) — ПОТОК; по тому же правилу временная
+# разница по ОС = p × остаточная стоимость — ЗАПАС. Книга — медиана годовых оценок потока, ось ±0,10 (вся ось внутри
+# свидетельств: запас 0,36–0,45, поток без 2025 г. 0,38); подгонка b 0,75 неустойчива (СКО 2,0 на 4 точках) и не используется.
+flow_p = {y: obs[y] / (capex17[y] - da17[y]) for y in obs}
+PPE_NET = {2023: 177.894356, 2024: 177.689497, 2025: 200.505014}   # баланс КФО 2024 и 2025, строка «Основные средства»
+DTL_RATE = {2023: 0.20, 2024: 0.25, 2025: 0.25}                    # ставка ОНО на конец года (с 01.01.2025 — 25 %)
+stock_p = {y: -DT[y]["ppe_dtl_close"] / DTL_RATE[y] / PPE_NET[y] for y in PPE_NET}
+flow_sorted = sorted(flow_p.values())
+PREMIUM_BOOK = round((flow_sorted[1] + flow_sorted[2]) / 2, 2)
+PREMIUM_AXIS = (round(PREMIUM_BOOK - 0.10, 2), round(PREMIUM_BOOK + 0.10, 2))
+log("   премия по потоку p = (налоговая − учётная D&A) / (capex − D&A): " + ", ".join(f"{y}: {v:.2f}" for y, v in flow_p.items())
+    + f" → медиана {PREMIUM_BOOK}; по запасу p = ОНО по ОС / ставка / остаточная стоимость ОС: "
+    + ", ".join(f"{y}: {v:.2f}" for y, v in stock_p.items()) + f" → КНИГА: premium {PREMIUM_BOOK}, ось {PREMIUM_AXIS[0]}–{PREMIUM_AXIS[1]}")
 RES["tax"]["tax_depreciation"] = {"observed_tax_minus_book_da": {y: r4(v) for y, v in obs.items()},
+                                  "premium_by_flow": {y: r4(v) for y, v in flow_p.items()},
+                                  "premium_by_stock": {y: r4(v) for y, v in stock_p.items()},
+                                  "ppe_net_book": PPE_NET, "premium_book": PREMIUM_BOOK, "premium_axis": list(PREMIUM_AXIS),
                                   "fit_b": b0, "fit_L": L0, "fit_pred": {y: r4(v) for y, v in pred0.items()},
                                   "near_fits": near[:12], "pv_fit_bn": round(pv_best, 1),
                                   "pv_fit_rub_per_share": round(pv_best * RUB_PER_BN), "pv_premium10_bn": round(pv_b10, 1),
@@ -863,7 +891,7 @@ chk("состав кассы = кассе баланса на 11 датах", al
 chk("проформа 1П2026 = 648,49 + 66,12 − 9,36 = 705,25", abs(H1_2026_PF - 705.248956) < 1e-5, f"({H1_2026_PF:.4f})")
 chk("ОК «О'КЕЙ» при покупке = 3,467", abs(okey_nwc - 3.4669) < 5e-4, f"({okey_nwc:.4f})")
 chk("излишек: среднее 4 лет 1,5–2,5 %", 0.015 <= exc_mean <= 0.025, f"({exc_mean:.4%})")
-chk("hold книги в пределах 0,1 п.п. от hold из старта", abs(HOLD_BOOK - hold_from_start) <= 0.001,
+chk("hold книги (без LTIP) в пределах 0,1 п.п. от hold из старта", abs(HOLD_BOOK_EX_LTIP - hold_from_start) <= 0.001,
     f"({HOLD_BOOK} против {hold_from_start:.5f})")
 chk("разовый поток 2П2026 от выбора hold по модулю < 1 млрд", abs(one_off_book) < 1.0, f"({one_off_book:+.2f})")
 chk("ЭСН 1П2026 = 29,24 %", abs(TAXREC["1H 2026"]["etr"] - 0.2924) < 5e-4, f"({TAXREC['1H 2026']['etr']:.4%})")
@@ -875,6 +903,11 @@ chk("движение ОНО по ОС 2025 в П/У = −3,900", abs(ppe_op[202
 chk("налог по формуле ядра 2025 − текущий = зачёт убытков + ОС ± 1 млрд",
     abs((tax_formula_2025 + TAXREC["FY 2025"]["current_tax"]) - (loss_use_2025 - ppe_op[2025])) < 1.0)
 chk("пул приобретённых = сумма слагаемых", abs(acq_nol - sum(acq_nol_components.values())) < 1e-9, f"({acq_nol:.2f})")
+chk("премия книги = медиана годовых оценок потока; ось внутри свидетельств потока и запаса",
+    PREMIUM_BOOK == round(sorted(flow_p.values())[1] / 2 + sorted(flow_p.values())[2] / 2, 2)
+    and min(stock_p.values()) - 0.1 <= PREMIUM_AXIS[0] and PREMIUM_AXIS[1] <= max(flow_p.values()), f"({PREMIUM_BOOK})")
+chk("ОК якоря книги = ОК листа − долгосрочный LTIP (поплавок в ОК)", abs(NWC_ANCHOR_BOOK - (nwc_start - LTIP_LT_1H26)) < 1e-4,
+    f"({NWC_ANCHOR_BOOK})")
 chk("операционная касса 0,4–1,0 % выручки", 0.004 <= OPC_NORM <= 0.010, f"({OPC_NORM:.3%})")
 chk("знаменатель книги = своя проформа без «Дом Ленты» до консолидации ± 0,1",
     abs(R_LTM_BOOK - (R_LTM_PF_2026 - domlenta_2025h2 - domlenta_2026_pre)) < 0.1)

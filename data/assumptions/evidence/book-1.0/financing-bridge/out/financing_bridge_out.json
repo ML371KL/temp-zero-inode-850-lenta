@@ -105,14 +105,6 @@
       "haircut": 0.0
     },
     {
-      "id": "ltip_long_term",
-      "kind": "claim",
-      "amount": 2.000523,
-      "accrete_rate_half": 0.0,
-      "settle_period": "2028H1",
-      "haircut": 0.0
-    },
-    {
       "id": "nci_ex_remi",
       "kind": "claim",
       "amount": 0.0,
@@ -146,13 +138,14 @@
     }
   ],
   "bridge_totals_bn": {
-    "net_claims_asof": 10.6441,
-    "net_claims_valuation": 10.8491,
+    "net_claims_asof": 8.6435,
+    "net_claims_valuation": 8.8486,
     "halves_asof_to_valuation": 0.429348,
     "remi_put_at_valuation": 5.4193,
     "remi_put_payment_2027H1": 5.7044
   },
   "not_in_bridge": {
+    "ltip_long_term_in_nwc_bn": 2.000523,
     "supplier_finance_payables_bn": 3.0194,
     "other_noncurrent_fin_assets_bn": 0.6243,
     "restricted_cash_30_06_2026_bn": 0.0
