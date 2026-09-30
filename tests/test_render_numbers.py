@@ -20,6 +20,15 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 FIX = "python ops/tools/render_numbers.py"
 PLACEHOLDER = "⟨ядро⟩"
+# Документы, которые печатают числа результатов книги метками: книга и её
+# журнал, обзор, методика, витрина, решения, история и справочник. Документ,
+# потерявший все метки (число вписали руками), выпадает из обхода
+# `documents()` молча — этот список ловит именно это.
+MARKED_DOCUMENTS = (
+    "data/assumptions/ASSUMPTIONS-BOOK.md", "data/assumptions/V1.0-CHANGES.md", "README.md",
+    "docs/MODEL.md", "docs/DASHBOARD.md", "docs/DECISIONS.md", "docs/CHANGELOG.md",
+    "docs/MANUAL.md",
+)
 
 
 @pytest.fixture(scope="module")
@@ -49,7 +58,7 @@ def test_documents_show_the_numbers_of_the_book_results(tool):
     assert not problems, (f"документы разошлись с results.json — `{FIX}`:\n"
                           + "\n".join(problems[:40]))
     # Сторож от тихой потери разметки: эти документы печатают числа результатов книги.
-    assert {"data/assumptions/ASSUMPTIONS-BOOK.md"} <= marked, sorted(marked)
+    assert set(MARKED_DOCUMENTS) <= marked, sorted(set(MARKED_DOCUMENTS) - marked)
 
 
 @pytest.mark.needs_book
