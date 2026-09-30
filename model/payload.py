@@ -1142,7 +1142,7 @@ def _assumptions_block(A: dict, judgements: list[dict]) -> list[dict]:
 
     def value_of_row(item: dict):
         """Значение строки. У оси по нескольким путям (книга 1.4: A-C0 — цели
-        LT всех режимов, σ заголовка и клетки, инфляция мира M) — значение
+        2031–2035 и LT всех режимов, σ заголовка и клетки, инфляция мира M) — значение
         КАЖДОГО пути под его отличающимся именем, а не одного первого: иначе
         «общий уровень маржи» печатался бы целью одного «стресса»."""
         paths = item.get("paths") or [item["key"]]
@@ -2012,7 +2012,7 @@ def _ev_comparison(release: Release) -> dict:
 # и рост сети (темп открытий «у дома» A-R7 и сближение плотности «О'КЕЙ» A-R10).
 HEADLINE_JUDGEMENT_AXES = (
     ("capex", "поддерживающий capex (все уровни)", ("capex.maintenance_pct.low",)),
-    ("margin", "долгосрочный уровень маржи (цели 2031+ всех режимов)",
+    ("margin", "долгосрочный уровень маржи (цели 2031–2035 и LT всех режимов)",
      ("margin.regimes.stress.target.2031",)),
     ("lfl", "долгий реальный LFL (сдвиг s LT)", ("revenue.ticket_shift.bear.LT",)),
     ("rate", "ставка (β_u, ERP)", ("valuation.beta_u", "valuation.erp")),
