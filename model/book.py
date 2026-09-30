@@ -603,7 +603,13 @@ TERMINAL_REVENUE_BASES = ("last_year", "exit_area")
 # аннуитет терминального capex (850oa); `cohort_runoff` — плюс доамортизация когорт
 # capex явного периода и базы D&A якоря (аудит 30.09.2026, capex-06).
 TERMINAL_DA_CONVENTIONS = ("annuity", "cohort_runoff")
-TERMINAL_KEYS = frozenset({"half_rate_convention", "revenue_base", "da_convention"})
+# Рычаг долга терминального щита (`valuation.terminal.shield_leverage`): `key` —
+# ключ цели лестницы `financing.leverage_target` (850oa); `cycle_average` —
+# измеренный средний отчётный ЧД/EBITDA LTM клетки на 30.06 и 31.12 цикла правила
+# выплат (решение ведущего по проверке пакета аудита, 30.09.2026).
+TERMINAL_SHIELD_LEVERAGES = ("key", "cycle_average")
+TERMINAL_KEYS = frozenset({"half_rate_convention", "revenue_base", "da_convention",
+                           "shield_leverage"})
 TERMINAL_REQUIRED = ("half_rate_convention",)
 
 
@@ -628,6 +634,15 @@ def terminal_rule(A: dict) -> dict:
     capex явного периода с базой D&A якоря, которые доамортизируются после
     горизонта, и той историей capex, которую предполагает аннуитет
     (`model.core.terminal_da_runoff`).
+
+    `shield_leverage` (необязательный, по умолчанию `key` — долг терминала =
+    `financing.leverage_target` × EBITDA терминала, как у 850oa): `cycle_average` —
+    рычаг долга терминала (щит и избыточный купон Р11) = средний ОТЧЁТНЫЙ ЧД/EBITDA
+    LTM клетки на всех отчётных датах (30.06 и 31.12) явного периода с года первых
+    дивидендов (`financing.dividends_from_year`) — цикла правила выплат
+    (`model.core.cycle_average_leverage`). Щит набегает на средний долг: годовая
+    лестница выплачивает запас до L в 1П, а за год FCF снова гасит долг, так что L —
+    пик после выплаты, а не средний рычаг.
     """
     raw = _book_value(A, "valuation.terminal", ("valuation", "terminal"))
     if not isinstance(raw, dict):
@@ -646,7 +661,12 @@ def terminal_rule(A: dict) -> dict:
     if da not in TERMINAL_DA_CONVENTIONS:
         raise BookError(f"книга: valuation.terminal.da_convention = {da!r} "
                         f"(известны: {', '.join(TERMINAL_DA_CONVENTIONS)})")
-    return dict(half_rate_convention=convention, revenue_base=base, da_convention=da)
+    shield = raw.get("shield_leverage", TERMINAL_SHIELD_LEVERAGES[0])
+    if shield not in TERMINAL_SHIELD_LEVERAGES:
+        raise BookError(f"книга: valuation.terminal.shield_leverage = {shield!r} "
+                        f"(известны: {', '.join(TERMINAL_SHIELD_LEVERAGES)})")
+    return dict(half_rate_convention=convention, revenue_base=base, da_convention=da,
+                shield_leverage=shield)
 
 
 # ------------------------------------------------ корзины ставок и дивиденды

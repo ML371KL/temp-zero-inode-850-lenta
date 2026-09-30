@@ -1144,14 +1144,17 @@ def test_the_audit_rules_make_reanchoring_equal_rolling(tool, A):
     полугодия, невычитаемая D&A якоря убывает с перенесённого возраста базы,
     выручка терминала от площади на выходе и доамортизация когорт берут
     перенесённые когорты, физическая часть capex по форматам и когортам —
-    перенесённые эталонную сеть и запас новой площади. Перезаякоривание на
-    ожидаемом пути = перекат бит в бит на всех 36 клетках."""
+    перенесённые эталонную сеть и запас новой площади, рычаг долга терминального
+    щита — средний отчётный ЧД/EBITDA цикла выплат (отчётный ЧД от якоря не
+    зависит). Перезаякоривание на ожидаемом пути = перекат бит в бит на всех 36
+    клетках."""
     from tests.test_audit_rules import PHYSICAL
 
     B = _dividend_book(A, dividend_net_debt_basis="reported")
     B["capex"].update(unit_price_basis="anchor_end", physical=copy.deepcopy(PHYSICAL))
     B["tax"]["nondeductible_da_anchor"] = 3.0
-    B["valuation"]["terminal"].update(revenue_base="exit_area", da_convention="cohort_runoff")
+    B["valuation"]["terminal"].update(revenue_base="exit_area", da_convention="cohort_runoff",
+                                      shield_leverage="cycle_average")
     worst, text = _exact(tool, B, DATES[1])
     assert worst <= EXACT, text
     first = tool.reanchor(B, tool.expected_report(B), valuation_date=DATES[1]).book

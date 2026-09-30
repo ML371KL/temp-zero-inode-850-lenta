@@ -239,6 +239,11 @@ class CellResult:
     """EBITDA первого терминального года с сезонностью полугодий, млрд ₽ — знаменатель
     мультипликатора выхода таблиц книги (`exit_multiple` выпуска делит на годовую
     выручку × целевую маржу)."""
+    terminal_debt_leverage: float = 0.0
+    """Рычаг долга терминала (щит и избыточный купон Р11): долг терминала = это поле ×
+    `terminal_ebitda` (`valuation.terminal.shield_leverage`: цель L или средний
+    отчётный ЧД/EBITDA LTM цикла выплат клетки, `cycle_average_leverage`). Поле —
+    чтобы правило проверялось аналитически по строкам клетки."""
 
     def annual(self) -> list[dict]:
         out: dict[int, dict] = {}
@@ -901,6 +906,32 @@ def terminal_revenue_factors(network: list, maturity: list[float], P: list[str],
                        for sid, step in row.segments.items())
         out.append(weighted / row.revenue)
     return out[0], out[1]
+
+
+def cycle_average_leverage(rows: list, ebitda_ltm: list[float], from_year: int) -> float:
+    """Средний ОТЧЁТНЫЙ ЧД/EBITDA LTM клетки на отчётных датах цикла правила выплат
+    (`valuation.terminal.shield_leverage: cycle_average`; решение ведущего по
+    проверке пакета аудита, 30.09.2026).
+
+    λ_p = (ЧД_p − прирост операционной кассы_p) / EBITDA LTM_p на конец каждого
+    полугодия p явного периода с года первых дивидендов `from_year`
+    (`financing.dividends_from_year`) до горизонта — 30.06 и 31.12 всех лет, в
+    которых работает лестница; результат — простое среднее λ_p. Отчётный ЧД — тот,
+    на котором стоит цель L (`dividend_net_debt_basis: reported`), и тот, что несёт
+    проценты: прирост операционной кассы процентов не несёт
+    (`StepRow.operating_cash_growth`).
+
+    Зачем среднее, а не L: годовая лестница выплачивает запас до L·EBITDA в 1П, а
+    за год FCF снова гасит долг — L есть пик рычага после выплаты, щит же набегает
+    на средний долг цикла. Окно — весь цикл выплат, а не два последних года: при
+    высоком L «пила» ступени длиннее двух лет. Горизонт раньше года первых
+    дивидендов — окно из последнего года явного периода.
+    """
+    last_year = rows[-1].year
+    start = min(from_year, last_year)
+    window = [(r.net_debt - r.operating_cash_growth) / e
+              for r, e in zip(rows, ebitda_ltm) if r.year >= start]
+    return sum(window) / len(window)
 
 
 def terminal_da_runoff(cohorts: list[float], legacy: float, legacy_halves: int, explicit: int,
@@ -1695,7 +1726,16 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     # Долг терминала — от EBITDA с сезонностью, посчитанной по полугодиям, а не
     # от «годовая выручка × целевая маржа»: полугодия различаются и выручкой, и
     # маржой, и произведение сумм не равно сумме произведений.
-    debt_terminal = FN["leverage_target"] * ebitda_terminal
+    # Рычаг долга терминала (`valuation.terminal.shield_leverage`): `key` — цель
+    # лестницы L (850oa); `cycle_average` — измеренный средний отчётный ЧД/EBITDA LTM
+    # клетки на 30.06 и 31.12 цикла выплат (`cycle_average_leverage`): щит и
+    # избыточный купон набегают на средний долг, а L — пик после выплаты 1П.
+    if terminal["shield_leverage"] == "cycle_average":
+        terminal_leverage = cycle_average_leverage(rows, ltm_ebitda_by_period,
+                                                   FN["dividends_from_year"])
+    else:
+        terminal_leverage = FN["leverage_target"]
+    debt_terminal = terminal_leverage * ebitda_terminal
     shield_rate = W["zero_curve"]["LT"] + FN["spread_fixed"][cell.credit]
     rate_fair_lt = W["zero_curve"]["LT"] + fair_spread["fixed"][cell.credit]
     # Полугодовая доля годовой ставки терминала (`valuation.terminal.
@@ -1833,6 +1873,7 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         cell=cell, rows=rows, ev=ev, pv_fcff=pv_fcff, pv_tax_shield=pv_shield,
         terminal_value=tv + tv_shield,
         terminal_flow_value=tv, terminal_shield_value=tv_shield,
+        terminal_debt_leverage=terminal_leverage,
         terminal_debt_cost_addon=addon_terminal,
         terminal_share=(tv + tv_shield) * df_end / ev_dcf if ev_dcf else 0.0,
         claims=claims, equity=equity, equity_before_governance=equity_raw,

@@ -14,7 +14,10 @@
 * терминал: выручка от эффективной площади на выходе явного периода
   (`valuation.terminal.revenue_base: exit_area`, discount-terminal-01),
   доамортизация когорт capex явного периода в налоге терминала
-  (`valuation.terminal.da_convention: cohort_runoff`, capex-06);
+  (`valuation.terminal.da_convention: cohort_runoff`, capex-06), долг
+  терминального щита на среднем отчётном рычаге цикла выплат
+  (`valuation.terminal.shield_leverage: cycle_average`, решение ведущего по
+  проверке пакета аудита, п. 1.2);
 * capex: физическая часть поддерживающего capex по форматам и когортам
   (`capex.physical`, capex-04);
 * печать: LFL = (1 + чек)(1 + трафик) − 1, как в выручке (control-model-06).
@@ -286,6 +289,106 @@ def test_the_runoff_changes_only_the_terminal_and_defaults_to_the_annuity():
     bad = copy.deepcopy(A)
     bad["valuation"]["terminal"]["da_convention"] = "runoff"
     with pytest.raises(BookError, match="da_convention"):
+        validate_book(bad)
+
+
+# ================================================== терминал: рычаг долга щита — средний цикла выплат
+
+
+def _flat_cycle(A: dict) -> dict:
+    """Правило 850oa без лестницы по отчётному ЧД: с года первых дивидендов каждое
+    полугодие выплата доводит отчётный ЧД ровно до L·EBITDA LTM — «пилы» нет,
+    отчётный рычаг на всех датах цикла = L (L выше стартового рычага синтетики,
+    чтобы выплата была с первого же полугодия)."""
+    B = copy.deepcopy(A)
+    B["financing"].pop("dividend_ladder")
+    B["financing"]["dividend_net_debt_basis"] = "reported"
+    B["financing"]["leverage_target"] = 2.0
+    return B
+
+
+def _saw_cycle(A: dict) -> dict:
+    """Годовая лестница по отчётному ЧД (правило «Ленты», F1): запас до L платится
+    в 1П, за год FCF гасит долг — на 30.06 рычаг у L, на 31.12 ниже."""
+    B = copy.deepcopy(A)
+    B["financing"]["dividend_timing"] = "annual_next_h1"
+    B["financing"]["dividend_net_debt_basis"] = "reported"
+    return B
+
+
+def _reported_cycle(A: dict, result) -> list[float]:
+    """Отчётный ЧД/EBITDA LTM на 30.06 и 31.12 лет с года первых дивидендов —
+    своей арифметикой из строк клетки (EBITDA LTM = полугодие + предыдущее)."""
+    rows = result.rows
+    start = min(A["financing"]["dividends_from_year"], rows[-1].year)
+    return [(r.net_debt - r.operating_cash_growth) / (r.ebitda + rows[i - 1].ebitda)
+            for i, r in enumerate(rows) if i > 0 and r.year >= start]
+
+
+FLAT_SPECS = [("H", "partial", "base"), ("N", "full", "high"), ("M", "full", "low")]
+
+
+@pytest.mark.parametrize("spec", FLAT_SPECS, ids="|".join)
+def test_with_a_flat_cycle_the_cycle_average_is_the_key(spec):
+    """Решение ведущего по проверке пакета аудита (п. 1.2): щит терминала набегает
+    на средний долг цикла. Если цикла нет (выплата каждое полугодие доводит
+    отчётный ЧД до L·EBITDA LTM), средний рычаг = L, и оба правила дают один EV."""
+    A = _flat_cycle(toy_book())
+    B = copy.deepcopy(A)
+    B["valuation"]["terminal"]["shield_leverage"] = "cycle_average"
+    a, b = _run(A, spec), _run(B, spec)
+    L = A["financing"]["leverage_target"]
+    assert _reported_cycle(A, a) == pytest.approx([L] * len(_reported_cycle(A, a)), rel=1e-12)
+    assert a.terminal_debt_leverage == L
+    assert b.terminal_debt_leverage == pytest.approx(L, rel=1e-12)
+    assert b.terminal_shield_value == pytest.approx(a.terminal_shield_value, rel=1e-12)
+    assert b.ev == pytest.approx(a.ev, rel=1e-12)
+
+
+@pytest.mark.parametrize("spec", SPECS, ids="|".join)
+def test_the_terminal_debt_is_the_measured_cycle_average_not_the_key(spec):
+    """Годовая лестница: на 30.06 отчётный рычаг у L (пик после выплаты), на 31.12
+    ниже. Долг терминала = средний отчётный ЧД/EBITDA LTM всех дат цикла выплат ×
+    EBITDA терминала; щит линеен по долгу — отношение щитов = λ̄ / L; явный период
+    и поток терминала не меняются. Мутация «долг терминала по ключу L» (прежнее
+    правило) даёт λ = L и ловится; «модельный ЧД вместо отчётного» и «окно — один
+    последний год» — тоже (λ̄ посчитана здесь по отчётному ЧД на всём окне)."""
+    A = _saw_cycle(toy_book())
+    B = copy.deepcopy(A)
+    B["valuation"]["terminal"]["shield_leverage"] = "cycle_average"
+    a, b = _run(A, spec), _run(B, spec)
+    cycle = _reported_cycle(A, b)
+    want = sum(cycle) / len(cycle)
+    L = A["financing"]["leverage_target"]
+    assert b.terminal_debt_leverage == pytest.approx(want, rel=1e-12)
+    assert abs(want - L) > 0.02
+    assert a.terminal_debt_leverage == L
+    assert [r.fcff for r in b.rows] == [r.fcff for r in a.rows]
+    assert b.terminal_flow_value == a.terminal_flow_value
+    assert b.terminal_shield_value == pytest.approx(a.terminal_shield_value * want / L, rel=1e-12)
+    assert (b.ev < a.ev) == (want < L)
+
+
+def test_the_shield_leverage_defaults_to_the_key_and_falls_back_to_the_last_year():
+    """Без ключа — прежнее правило (цель L, 850oa) бит в бит; первые дивиденды за
+    горизонтом — окно из последнего года явного периода; незнакомое значение —
+    отказ."""
+    A = _saw_cycle(toy_book())
+    explicit = copy.deepcopy(A)
+    explicit["valuation"]["terminal"]["shield_leverage"] = "key"
+    spec = ("H", "partial", "base")
+    assert _run(explicit, spec).ev == _run(A, spec).ev
+    late = copy.deepcopy(A)
+    late["financing"]["dividends_from_year"] = 2040
+    late["valuation"]["terminal"]["shield_leverage"] = "cycle_average"
+    result = _run(late, spec)
+    last = [(r.net_debt - r.operating_cash_growth) / (r.ebitda + result.rows[i - 1].ebitda)
+            for i, r in enumerate(result.rows) if r.year == result.rows[-1].year]
+    assert len(last) == 2
+    assert result.terminal_debt_leverage == pytest.approx(sum(last) / 2, rel=1e-12)
+    bad = copy.deepcopy(A)
+    bad["valuation"]["terminal"]["shield_leverage"] = "peak"
+    with pytest.raises(BookError, match="shield_leverage"):
         validate_book(bad)
 
 
