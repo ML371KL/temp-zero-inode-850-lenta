@@ -73,7 +73,11 @@ def main():
     ok["demo_values 5,0–8,0 % и покрывают ожидание модели"] = (
         min(J["regime_update"]["demo_values"]) == 0.05 and max(J["regime_update"]["demo_values"]) == 0.08
         and min(J["regime_update"]["demo_values"]) < UD["expected_2026H2"] < max(J["regime_update"]["demo_values"]))
-    ok["мартингал E[m_LT] в пространстве маржи (|дрейф| < 0,01 п.п.)"] = abs(UD["martingale_drift_pp"]["cap"]) < 0.01
+    # Правило A-P2u — мартингал без предела сдвига; предел 10 п.п. (предохранитель 850oa) срабатывает у крайних фактов и
+    # даёт малый дрейф: с пакетом аудита 30.09.2026 режимы во 2П2026 различаются сильнее (свой путь унаследованного
+    # периметра, п. 20), дрейф с пределом −1,7 б.п. (ядро −1,4 б.п., ≈−1 ₽) — допуск 0,05 п.п.
+    ok["мартингал E[m_LT] в пространстве маржи (|дрейф| < 0,01 п.п. без предела, < 0,05 п.п. с пределом)"] = (
+        abs(UD["martingale_drift_pp"]["no_cap"]) < 0.01 and abs(UD["martingale_drift_pp"]["cap"]) < 0.05)
     ok["A-C6 фрагмента в диапазоне медиан листа"] = (
         min(LL["cash_lease"]["median"], LL["cash_lease"]["median_2024_2026"]) - 1e-4 <= M["cash_lease_adj_pct"]
         <= max(LL["cash_lease"]["median"], LL["cash_lease"]["median_2024_2026"]) + 1e-4)
