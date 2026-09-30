@@ -563,9 +563,9 @@ def test_the_explanations_match_the_facts_of_the_book(release):
 
     Урок 850oa: тексты дважды оказывались неверны по существу (режимы, которых
     нет в проверке; «доля стремится к единице» при отрицательной доле). Здесь
-    проверяются САМИ ФАКТЫ каждого текста первого прогона (29.09.2026), а не
-    наличие слов: разойдётся картина — упадёт тест, и текст перепишут вместе с
-    ней.
+    проверяются САМИ ФАКТЫ каждого текста первого прогона (29.09.2026; с пакетом
+    аудита 30.09.2026 — его картина), а не наличие слов: разойдётся картина —
+    упадёт тест, и текст перепишут вместе с ней.
     """
     from model.financing import credit_limit
 
@@ -573,34 +573,36 @@ def test_the_explanations_match_the_facts_of_the_book(release):
         return {f.label for f in release.findings if f.key == key}
 
     by_key = {c.cell.key: c for c in release.cells}
-    # ev_ebitda: «дно» и «частичная» всех миров — 18 клеток из 18 (с F1 — и «дно»
-    # с высоким capex миров N и H: издержки неустойчивости лимита сняты).
+    # ev_ebitda: «дно» и «частичная» всех миров — 17 клеток из 18 на дату книги: с
+    # пакетом аудита N × дно × высокий capex стоит у края коридора 6,0× (5,99×).
     ev = cells("ev_ebitda")
     both = {f"{w}|{r}|{c}" for w in "NHM" for r in ("floor", "partial") for c in ("low", "base", "high")}
-    assert ev == both, sorted(both - ev)
+    assert ev == both - {"N|floor|high"}, sorted(both - ev)
     observed = {f.label: f.observed for f in release.findings if f.key == "ev_ebitda"}
     assert min(observed[label] for label in ev if label.startswith("N|")) > 6.0
     assert min(observed[label] for label in ev if not label.startswith("N|")) > 4.5
 
-    # terminal_share: только мир N — полная сходимость при любом capex, «дно» при
-    # базовом и высоком, «частичная» при высоком; ниже пола 10 % никого.
+    # terminal_share: только мир N — полная сходимость при любом capex (с пакетом
+    # аудита «дно» и «частичная» мира N — 51–53 %, под потолком); ниже пола 10 % никого.
     shares = {f.label: f.observed for f in release.findings if f.key == "terminal_share"}
-    assert set(shares) == ({f"N|full|{c}" for c in ("low", "base", "high")}
-                           | {"N|floor|base", "N|floor|high", "N|partial|high"}), sorted(shares)
+    assert set(shares) == {f"N|full|{c}" for c in ("low", "base", "high")}, sorted(shares)
     assert all(share > 0.55 for share in shares.values()), shares
     assert min(c.result.terminal_share for c in release.cells) > 0.10
 
     # credit_lines: номинальный лимит — не триггер (F1): гейта нет, издержек
     # неустойчивости нет ни в одной клетке (рычаг пути далеко от 4,0×); за
-    # номинальным лимитом — справкой — одна клетка, в 2036 г.
+    # номинальным лимитом — справкой — 15 клеток в 2035–2036 гг.: при L 1,47
+    # (аудит 30.09.2026, п. 14) долг растёт вместе с EBITDA, а лимит — сумма одной даты.
     limit = credit_limit(release.book)
     trigger = release.book["valuation"]["distress"]["net_leverage_trigger"]
     assert not cells("credit_lines")
     assert all(c.result.distress_cost == 0 for c in release.cells)
     assert max(c.result.max_leverage for c in release.cells) < trigger / 2
     over = {k for k, c in by_key.items() if c.result.max_gross_debt > limit}
-    assert over == {"M|full|high"}, sorted(over)
-    assert by_key["M|full|high"].result.max_gross_debt_period.startswith("2036")
+    assert over == ({f"{w}|full|{c}" for w in "NHM" for c in ("low", "base", "high")}
+                    | {f"M|partial|{c}" for c in ("low", "base", "high")}
+                    | {"M|floor|low", "M|floor|base", "H|partial|high"}), sorted(over)
+    assert all(by_key[k].result.max_gross_debt_period[:4] in ("2035", "2036") for k in over)
 
     # Молчат на книге (в заголовке файла: записи сняты, коридоры оставлены).
     silent = {"equity_sign", "interest_cover", "zero_openings", "real_rate", "ev_grows_with_rates",
@@ -610,7 +612,7 @@ def test_the_explanations_match_the_facts_of_the_book(release):
 
     raw = yaml.safe_load(EXPLANATIONS.read_text(encoding="utf-8"))
     assert not (silent - {"margin_range", "capex_range"}) & set(raw), "запись молчащего гейта без коридора"
-    assert "18 клетках" in raw["ev_ebitda"]["explanation"]
+    assert "17 из 18 клеток" in raw["ev_ebitda"]["explanation"]
     assert "мира N" in raw["terminal_share"]["explanation"]
     for key in ("ev_ebitda", "terminal_share", "guidance_gap"):
         assert "⟨ядро⟩" not in raw[key]["explanation"], key

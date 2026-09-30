@@ -420,3 +420,82 @@ def test_the_annual_ladder_neither_pays_the_seasonal_inflow_nor_ratchets(A):
     assert base_halves[last] - base_annual[last] >= 0.5, (base_halves[last], base_annual[last])
     assert base_halves[last] > base_halves[last - 7] + 0.3
     assert base_halves[last] > A["financing"]["leverage_target"]
+
+
+# ============================================ пакет аудита 30.09.2026 (решения ведущего)
+
+
+def _reported_leverage(A: dict, leverage_target: float) -> tuple[float, float]:
+    """Средний ОТЧЁТНЫЙ ЧД/EBITDA LTM базовой клетки за 2028–2036 гг.: на 31.12 и на 30.06
+    (отчётный ЧД = модельный − прирост операционной кассы с якоря, A-F6r)."""
+    from model.book import named_cells
+    from model.core import run_cell
+    from model.engine import with_overrides
+
+    B = with_overrides(A, {"financing.leverage_target": leverage_target})
+    rows = run_cell(B, named_cells(B)["base"]).rows
+    anchor = A["facts"]["ebitda_pre16"][A["facts"]["anchor"]["period"]]
+    dec, jun = [], []
+    for i, r in enumerate(rows):
+        ltm = r.ebitda + (rows[i - 1].ebitda if i else anchor)
+        if 2028 <= r.year <= 2036:
+            (dec if r.half == 2 else jun).append((r.net_debt - r.operating_cash_growth) / ltm)
+    return sum(dec) / len(dec), sum(jun) / len(jun)
+
+
+def test_the_leverage_target_puts_the_year_end_reported_leverage_at_one(A):
+    """Решение ведущего по аудиту, п. 14 (governance-bridge-10): цель компании меряется
+    на отчётную дату конца года, поэтому L правила лестницы калибрована так, что
+    отчётный ЧД/EBITDA на 31.12 в базовой клетке в среднем ≈1,0×; ось — от «среднее
+    двух отчётных дат 1,0×» до «31.12 = 1,25×» (середина диапазона компании 1,0–1,5×)."""
+    L = A["financing"]["leverage_target"]
+    dec, jun = _reported_leverage(A, L)
+    assert dec == pytest.approx(1.0, abs=0.02) and jun > dec
+    axis = next(a for a in A["valuation"]["uncertainty"]["axes"] if a.get("path") == "financing.leverage_target")
+    lo_dec, lo_jun = _reported_leverage(A, axis["low"])
+    assert (lo_dec + lo_jun) / 2 == pytest.approx(1.0, abs=0.02)
+    hi_dec, _ = _reported_leverage(A, axis["high"])
+    assert hi_dec == pytest.approx(1.25, abs=0.02)
+
+
+def test_the_governance_centre_is_the_mc_median_of_model_equity_channels(A):
+    """Решения ведущего по аудиту, пп. 3, 4, 16, 18, 23: каналы g — доли капитала модели
+    (лист «Оценка»), (д) оферта = 0 и вне охвата 850oa, (в) не ниже 4 %, центр —
+    медиана Монте-Карло суммы (скошенность — отдельной строкой (ж)); книга = лист;
+    строка «на охвате 850oa» — (а) + (в) + (г)."""
+    from model.book import governance_on_850oa_scope
+
+    sheet = _evidence("valuation/out/governance_out.json")
+    parts = {p["name"][1]: p for p in A["valuation"]["governance_components"]}
+    for ch in sheet["channels"]:
+        assert parts[ch["id"]]["value"] == pytest.approx(ch["value"], abs=1e-12), ch["id"]
+        assert parts[ch["id"]]["sign"] == ch["sign"], ch["id"]
+    g = A["valuation"]["governance_discount"]
+    assert sum(p["sign"] * p["value"] for p in parts.values()) == pytest.approx(g, abs=1e-12)
+    assert g == pytest.approx(sheet["result"]["mc_quantiles"]["0.5"], abs=5e-6)
+    assert parts["д"]["value"] == 0.0 and parts["д"]["in_850oa_scope"] is False
+    assert parts["в"]["value"] >= 0.04
+    scope = parts["а"]["value"] + parts["в"]["value"] + parts["г"]["value"]
+    assert governance_on_850oa_scope(A) == pytest.approx(scope, abs=1e-12)
+    assert sheet["result"]["model_frame"]["on_850oa_scope"] == pytest.approx(scope, abs=1e-5)
+
+
+def test_the_centres_moved_by_the_audit_are_the_centres_of_the_sheets(A):
+    """Решения ведущего по аудиту, пп. 2, 17, 22: премия A-T5 — медиана потока временных
+    разниц по ОС (ось ±0,10 внутри свидетельств потока и запаса); плотности новой площади
+    супер и дрогери — точки калибровки листа «Сеть»; LTIP — поплавок в ОК (hold и старт ОК
+    сдвинуты на одну и ту же сумму, в мосте строки нет)."""
+    tax = _evidence("nwc-tax/nwc_cash_tax_out.json")["tax"]["tax_depreciation"]
+    flows = sorted(tax["premium_by_flow"].values())
+    median = (flows[1] + flows[2]) / 2
+    assert A["tax"]["capex_tax_premium_share"] == pytest.approx(round(median, 2), abs=1e-12) == tax["premium_book"]
+    lo, hi = tax["premium_axis"]
+    stock = tax["premium_by_stock"].values()
+    assert min(flows) <= lo and hi <= max(flows) and lo <= min(stock) and max(stock) <= hi
+    nsd = _evidence("network/space_paths_out.json")["nsd_calibrated"]
+    for seg in ("conv", "super", "droge"):
+        assert A["revenue"]["segments"][seg]["new_space_density"] == nsd[seg], seg
+    ltip = 2.000523
+    assert A["nwc"]["anchor_level"] == pytest.approx(-10.9559 - ltip, abs=5e-5)
+    assert A["nwc"]["nwc_pct"]["hold"] == pytest.approx(round(-0.029 - ltip / 1393.313037, 4), abs=1e-12)
+    assert all(i["id"] != "ltip_long_term" for i in A["bridge"]["items"])
