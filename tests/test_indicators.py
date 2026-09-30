@@ -1062,6 +1062,35 @@ def test_every_line_of_a_tact_prints_the_archive_in_the_same_units(tmp_path, cap
         assert "421.5" not in line, line
 
 
+@pytest.mark.tact
+def test_status_reads_report_periods_of_the_databook(tmp_path, capsys):
+    """Первый боевой такт 30.09.2026 упал на шаге «объём состояния»: ряды
+    датабука несут метки кварталов ('2026Q2'), а сводка читала их как даты.
+    Возраст отчётной точки считается от последнего дня периода, и в устаревшие
+    она не попадает — это ряд раз в квартал, а не заглохший сборщик."""
+    from indicators import collect
+    from indicators.store import Point, Store
+
+    store = Store(tmp_path)
+    store.upsert("lenta.databook.q.revenue_pre16",
+                 [Point(period="2026Q2", value=341.6, fetched_at="2026-09-30T08:00:00+00:00")],
+                 unit="млрд ₽", cadence="квартал", label="выручка квартала", channel=7)
+    from datetime import date
+
+    store.upsert("cbr.key_rate",
+                 [Point(period=date.today().isoformat(), value=14.0,
+                        fetched_at="2026-09-30T08:00:00+00:00")],
+                 unit="%", cadence="день", label="ключевая", channel=1)
+
+    assert collect.cmd_status(store) == 0
+    out = capsys.readouterr().out
+    assert "2026Q2" in out
+    assert "устаревших (>10 дн) 0" in out, out
+    assert collect._last_day("2026Q2").isoformat() == "2026-06-30"
+    assert collect._last_day("2026H1").isoformat() == "2026-06-30"
+    assert collect._last_day("2026-09-30").isoformat() == "2026-09-30"
+
+
 def test_health_prints_the_age_of_the_irreplaceable_series(tmp_path, capsys, monkeypatch):
     """Аудит 850oa 26.09.2026, п. 5.6: возраст последней точки невосполнимых
     рядов — в `health`; старше предела — «не в порядке», ряда ещё нет —

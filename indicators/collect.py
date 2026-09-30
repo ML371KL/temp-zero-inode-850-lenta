@@ -817,6 +817,16 @@ def _is_event_series(series_id: str) -> bool:
     return (series_id.startswith(issuer.series("disclosure.")) and not series_id.endswith(".latest"))
 
 
+def _last_day(period: str) -> date:
+    """День, к которому относится точка: у дневного ряда — сама дата, у
+    отчётного (квартал, полугодие, год датабука) — последний день периода.
+    Первый такт 30.09.2026 упал здесь на '2026Q2' — `fromisoformat` отчётных
+    меток не знает."""
+    if periods.is_period(period):
+        return periods.bounds(period)[1]
+    return date.fromisoformat(period[:10])
+
+
 def cmd_status(store: Store) -> int:
     today = date.today()
     series = store.all_series()
@@ -827,11 +837,13 @@ def cmd_status(store: Store) -> int:
         if not last:
             print(f"{s.id:<42}{s.channel:>6}{len(s.points):>7}{'—':>12}{'—':>9}")
             continue
-        age = (today - date.fromisoformat(last.period[:10])).days
+        age = (today - _last_day(last.period)).days
         # Событийные ряды разрежены ПО ПРИРОДЕ: оферт не было с февраля, и это
         # факт о компании, а не о сборщике. Считать их устаревшими значит
-        # держать тревогу включённой постоянно — то есть выключенной.
-        if age > 10 and not _is_event_series(s.id):
+        # держать тревогу включённой постоянно — то есть выключенной. То же с
+        # отчётными рядами (квартал, полугодие): новая точка приходит раз в
+        # квартал, за их свежесть отвечает `health` (`IRREPLACEABLE_SERIES`).
+        if age > 10 and not _is_event_series(s.id) and not periods.is_period(last.period):
             stale += 1
         print(f"{s.id:<42}{s.channel:>6}{len(s.points):>7}{last.period:>12}{age:>7} дн")
     print(f"\nрядов {len(series)}, устаревших (>10 дн) {stale}, "
