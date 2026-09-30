@@ -285,11 +285,12 @@ def test_every_contribution_names_its_paths_and_its_judgement(full_payload):
         assert c["paths"], c["axis"]
         assert c["judgement_key"] is None or c["judgement_key"] in keys, c
     linked = {c["paths"][0]: c["judgement_key"] for c in contributions}
-    assert linked["capex.maintenance_pct.low"] == "capex.maintenance_pct.base"
+    # Ось capex (все уровни) — строка A-K1 «сдвиг всех уровней» с теми же путями (аудит 30.09.2026).
+    assert linked["capex.maintenance_pct.low"] == "capex.maintenance_pct.low"
     assert linked["valuation.erp"] == "valuation.erp"
     # Ось A-C0 пересекается и со строками целей одного режима (A-C1): связь —
     # со строкой того же набора путей, как бы ни легла сортировка таблицы.
-    margin_axis = next(c for c in contributions if c["paths"][0] == "margin.regimes.stress.target.LT")
+    margin_axis = next(c for c in contributions if c["paths"][0] == "margin.regimes.stress.target.2031")
     row = next(j for j in payload["judgements"] if j["key"] == margin_axis["judgement_key"])
     assert set(row["paths"]) == set(margin_axis["paths"])
 

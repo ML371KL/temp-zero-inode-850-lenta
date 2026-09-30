@@ -2981,7 +2981,7 @@ function dividendsCard(d) {
     { title: "Доля клеток с выплатой", num: true, value: (r) => fmt.pct(r.share_paying, 0) },
   ], by));
   return card({ title: "Дивидендная лестница", tools: fig.button,
-    sub: `${dv.basis || ""}; выплаты — с ${dv.dividends_from_year} года, целевой рычаг ${fmt.x(dv.leverage_target, 1)}.` },
+    sub: `${dv.basis || ""}; выплаты — с ${dv.dividends_from_year} года, целевой рычаг ${fmt.bookValue(dv.leverage_target, "times")}.` },
   el("div", { class: "split" },
     el("div", {},
       el("ol", { class: "ladder" }, dv.ladder.map((r) => el("li", { class: cls(r.rung === cur.rung && "is-current") },
