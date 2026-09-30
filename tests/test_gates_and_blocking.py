@@ -574,7 +574,8 @@ def test_the_explanations_match_the_facts_of_the_book(release):
 
     by_key = {c.cell.key: c for c in release.cells}
     # ev_ebitda: «дно» и «частичная» всех миров — 17 клеток из 18 на дату книги: с
-    # пакетом аудита N × дно × высокий capex стоит у края коридора 6,0× (5,99×).
+    # пакетом аудита и правками его проверки N × дно × высокий capex стоит у края
+    # коридора 6,0× (5,95×).
     ev = cells("ev_ebitda")
     both = {f"{w}|{r}|{c}" for w in "NHM" for r in ("floor", "partial") for c in ("low", "base", "high")}
     assert ev == both - {"N|floor|high"}, sorted(both - ev)
