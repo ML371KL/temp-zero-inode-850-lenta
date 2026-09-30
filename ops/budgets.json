@@ -1,7 +1,7 @@
 {
- "about": "Время шагов тактов на сервере, из которого считаются потолки юнитов (RuntimeMaxSec) и ожидание замка (LOCK_WAIT_SECONDS в ops/run.sh). Потолок юнита = ceil(сумма шагов × safety / round_to) × round_to, у collect и daily плюс ожидание замка = потолок rebuild. Равенство с ops/systemd/*.service и run.sh сверяет tests/test_ops_units.py. Порядок: замерить шаги на сервере (журнал такта печатает время каждого шага), вписать сюда, поставить status=measured и measured_on, пересчитать потолки в юнитах и LOCK_WAIT_SECONDS, поставить юниты заново (ops/README.md, «Потолки времени»).",
- "status": "estimate",
- "measured_on": null,
+ "about": "Время шагов тактов на сервере, из которого считаются потолки юнитов (RuntimeMaxSec) и ожидание замка (LOCK_WAIT_SECONDS в ops/run.sh). Потолок юнита = ceil(сумма шагов × safety / round_to) × round_to, у collect и daily плюс ожидание замка = потолок rebuild. Равенство с ops/systemd/*.service и run.sh сверяет tests/test_ops_units.py. Порядок: замерить шаги на сервере (журнал такта печатает время каждого шага), вписать сюда, поставить status=measured и measured_on, пересчитать потолки в юнитах и LOCK_WAIT_SECONDS, поставить юниты заново (ops/README.md, «Потолки времени»). Замер 30.09.2026 — три суточных такта на сервере (журнал /var/lib/lenta-850/logs): сбор 19–383 с (383 — первый такт с подкачкой всей истории), тесты такта 24–26 с, сборка 660–684 с, публикация 4–6 с, сверка 31–60 с, прореживание 2 с, зависимости 1–3 с; в бюджете — максимумы с небольшим запасом (зависимости и публикация — с запасом на сеть). Шаги утреннего такта (collect_morning, future_tests, archive_status_health) — ещё оценки: первый утренний такт 01.10.2026.",
+ "status": "measured",
+ "measured_on": "2026-09-30",
  "safety": 1.5,
  "round_to": 60,
  "seconds": {
@@ -9,18 +9,39 @@
   "collect_morning": 300,
   "future_tests": 180,
   "archive_status_health": 60,
-  "collect_evening": 300,
+  "collect_evening": 420,
   "nowcast_health": 60,
-  "tact_tests": 180,
-  "build": 600,
+  "tact_tests": 60,
+  "build": 720,
   "publish": 120,
   "verify_timeout": 600,
-  "prune": 120
+  "prune": 60
  },
  "units": {
-  "rebuild": ["pip", "tact_tests", "build", "publish", "verify_timeout", "prune"],
-  "daily": ["pip", "collect_evening", "nowcast_health", "tact_tests", "build", "publish", "verify_timeout", "prune"],
-  "collect": ["pip", "collect_morning", "future_tests", "archive_status_health"]
+  "rebuild": [
+   "pip",
+   "tact_tests",
+   "build",
+   "publish",
+   "verify_timeout",
+   "prune"
+  ],
+  "daily": [
+   "pip",
+   "collect_evening",
+   "nowcast_health",
+   "tact_tests",
+   "build",
+   "publish",
+   "verify_timeout",
+   "prune"
+  ],
+  "collect": [
+   "pip",
+   "collect_morning",
+   "future_tests",
+   "archive_status_health"
+  ]
  },
  "lock_wait_unit": "rebuild",
  "tact_tests_target": 180

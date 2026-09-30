@@ -100,7 +100,7 @@ export LENTA_STATE_DIR="$STATE_DIR"
 # такт ждёт столько же, сколько пересборка может держать замок: её потолок
 # RuntimeMaxSec (ops/systemd/lenta850-rebuild.service, расчёт — ops/budgets.json;
 # равенство сверяет тест).
-LOCK_WAIT_SECONDS=${LOCK_WAIT_SECONDS:-2640}
+LOCK_WAIT_SECONDS=${LOCK_WAIT_SECONDS:-2520}
 
 # Каталоги кода, который считает число: их правка с опубликованного выпуска
 # будит пересборку. Ровно `CODE_DIRS` выпуска (model/payload.py) в том же

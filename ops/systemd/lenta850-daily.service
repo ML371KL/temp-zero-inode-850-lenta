@@ -30,7 +30,7 @@ RestartPreventExitStatus=8 64 78
 # до 600 с сверки, прореживание) + ожидание замка (LOCK_WAIT_SECONDS = потолок
 # пересборки). Расчёт и замер — ops/budgets.json, равенство сверяет
 # tests/test_ops_units.py. ДО ЗАМЕРА НА СЕРВЕРЕ ЭТО ОЦЕНКА.
-RuntimeMaxSec=5820
+RuntimeMaxSec=5760
 SyslogIdentifier=lenta850
 
 StateDirectory=lenta-850
