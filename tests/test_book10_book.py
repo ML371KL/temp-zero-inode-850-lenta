@@ -146,7 +146,10 @@ def test_the_anchor_facts_are_the_fact_base(A):
 def test_the_bridge_counts_each_claim_once_and_pairs_the_indemnification_asset(A):
     """Решения ведущего A1, A2, A6: ограниченных средств нет — компенсирующий актив
     в ОК с парой (в мосте haircut 1); НДУ без «Реми» + доля «Реми» = строке НДУ
-    баланса; каждое требование — одна строка, выплата выводится из неё."""
+    баланса; каждое требование — одна строка, выплата выводится из неё.
+    Долгосрочная часть денежного LTIP 2,000523 — не строка моста, а возобновляемый
+    «поплавок» в ОК (решение ведущего по аудиту 30.09.2026, п. 22): ОК якоря =
+    ОК баланса без неё минус она, выплаты 2028H1 в мосте нет."""
     from model.book import bridge_items
     from model.core import settlement_payments
 
@@ -163,7 +166,8 @@ def test_the_bridge_counts_each_claim_once_and_pairs_the_indemnification_asset(A
     payments = settlement_payments(A)
     assert payments["2027H1"] == pytest.approx(5.704364, abs=1e-12)            # пут «Реми»
     assert payments["2026H2"] == pytest.approx(4.070211 - 3.33989, abs=1e-12)  # «ОБИ» − займы выданные
-    assert payments["2028H1"] == pytest.approx(2.000523, abs=1e-12)            # LTIP
+    assert "2028H1" not in payments and "ltip_long_term" not in items           # LTIP — в ОК
+    assert A["nwc"]["anchor_level"] == pytest.approx(-10.9559 - 2.000523, abs=5e-5)
 
 
 def test_the_rate_baskets_cover_the_anchor_debt(A):
@@ -180,8 +184,8 @@ def test_the_rate_baskets_cover_the_anchor_debt(A):
 
 def test_the_central_cell_revenue_is_the_network_sheet(A):
     """E1: центральная клетка книги (H × частичная × base × mid) даёт выручку
-    центральной клетки листа «Сеть» (`revsim.py`): 2П2026 777,0; 2027 1 674,9; 2028
-    1 880,1 — те же правила сегментов (LFL + поправка, опт — LFL + прибавка, DIY — ИПЦ
+    центральной клетки листа «Сеть» (`revsim.py`): 2П2026 777,2; 2027 1 675,8; 2028
+    1 881,6 (плотности супер 0,95 и дрогери 0,67 — аудит 30.09.2026, п. 17) — те же правила сегментов (LFL + поправка, опт — LFL + прибавка, DIY — ИПЦ
     мира, эффективная площадь с закрытиями истории)."""
     from model.book import named_cells
     from model.core import run_cell
@@ -193,9 +197,9 @@ def test_the_central_cell_revenue_is_the_network_sheet(A):
         # Лист печатает выручку с тремя знаками, книга пишет историю площади и
         # когорты с двумя: расхождение ≤ 0,013 млрд на 2036H2 (7·10⁻⁶).
         assert row.revenue == pytest.approx(sheet[row.period], rel=2e-5), row.period
-    assert rows[0].revenue == pytest.approx(777.0, abs=0.05)
-    assert rows[1].revenue + rows[2].revenue == pytest.approx(1674.9, abs=0.1)
-    assert rows[3].revenue + rows[4].revenue == pytest.approx(1880.1, abs=0.1)
+    assert rows[0].revenue == pytest.approx(777.2, abs=0.05)
+    assert rows[1].revenue + rows[2].revenue == pytest.approx(1675.8, abs=0.1)
+    assert rows[3].revenue + rows[4].revenue == pytest.approx(1881.6, abs=0.1)
 
 
 def test_the_regime_targets_and_capex_keys_are_the_assembly_tools(A):
@@ -384,10 +388,15 @@ def test_the_anchor_fcfe_is_the_cash_flow_of_the_half(A):
 def test_the_annual_ladder_neither_pays_the_seasonal_inflow_nor_ratchets(A):
     """Книга 1.0 платит лестницу по году (`dividend_timing: annual_next_h1`):
     во 2П выплат нет (сезонный приток ОК 2П не уходит акционерам полугодием),
-    рычаг конца года не ползёт — за 2029–2036 гг. в пределах 0,15× в каждой
-    клетке сетки. Контроль — правило полугодия на той же книге: рычаг конца
-    года базового сценария растёт и к 2036 г. выше годового на 0,5× и больше
-    (первый прогон: 0,66 → 1,42×)."""
+    рычаг конца года не ползёт: за 2029–2036 гг. в каждой клетке сетки он не
+    выше цели L, и средние первых и последних четырёх лет расходятся не больше
+    чем на 0,15×. «Пила» внутри этих границ — правило ступеней, а не храповик:
+    при L 1,47 (аудит 30.09.2026, п. 14) конец года стоит у границы ступени
+    1,0×; ниже неё выплата без потолка поднимает долг к L, выше — потолок
+    100 % FCF, и рычаг снижается ростом EBITDA (амплитуда до ≈0,4×, тренд
+    −0,13…+0,11×). Контроль — правило полугодия на той же книге: рычаг конца
+    года базового сценария растёт, уходит выше L и к 2036 г. выше годового на
+    0,5× и больше (прогон при L 1,47: 1,49 → 1,85× против 1,04×)."""
     from model.book import all_cells
     from model.core import run_cell
     from model.engine import run_release
@@ -399,7 +408,8 @@ def test_the_annual_ladder_neither_pays_the_seasonal_inflow_nor_ratchets(A):
         assert all(r.dividends == 0.0 for r in result.rows if r.half == 2), cell.key
         ends = {a["year"]: a["leverage"] for a in result.annual()}
         span = [ends[y] for y in range(last - 7, last + 1)]
-        assert max(span) - min(span) <= 0.15, (cell.key, span)
+        assert max(span) <= A["financing"]["leverage_target"], (cell.key, span)
+        assert abs(sum(span[4:]) - sum(span[:4])) / 4 <= 0.15, (cell.key, span)
     halves = copy.deepcopy(A)
     del halves["financing"]["dividend_timing"]
     del halves["facts"]["anchor"]["fcfe_ytd"]           # правило полугодия его не читает
@@ -409,3 +419,4 @@ def test_the_annual_ladder_neither_pays_the_seasonal_inflow_nor_ratchets(A):
                    .named["base"].annual()}
     assert base_halves[last] - base_annual[last] >= 0.5, (base_halves[last], base_annual[last])
     assert base_halves[last] > base_halves[last - 7] + 0.3
+    assert base_halves[last] > A["financing"]["leverage_target"]

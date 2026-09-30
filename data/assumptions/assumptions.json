@@ -248,8 +248,8 @@
     ],
     "new_area_dense_cohorts": 2,
     "eff_area_avg_hist": {
-     "2025H2": 271.98,
-     "2026H1": 282.09
+     "2025H2": 272.2,
+     "2026H1": 282.94
     },
     "closed_area_hist": {
      "2025H2": 3.48,
@@ -316,8 +316,8 @@
     ],
     "new_area_dense_cohorts": 2,
     "eff_area_avg_hist": {
-     "2025H2": 234.07,
-     "2026H1": 245.44
+     "2025H2": 233.97,
+     "2026H1": 244.63
     },
     "closed_area_hist": {
      "2025H2": 5.19,
@@ -1058,7 +1058,7 @@
    "super": {
     "name": "Супермаркеты «Супер Лента»",
     "mode": "yoy",
-    "new_space_density": 0.9,
+    "new_space_density": 0.95,
     "closed_productivity": 0.6,
     "lfl_offset": {
      "2026H2": 0.05,
@@ -1230,7 +1230,7 @@
    "droge": {
     "name": "Дрогери «Улыбка радуги»",
     "mode": "yoy",
-    "new_space_density": 0.7,
+    "new_space_density": 0.67,
     "closed_productivity": 0.6,
     "lfl_offset": {
      "2026H2": -0.03,
@@ -1430,7 +1430,7 @@
  "margin": {
   "deviation_persistence": 0.5,
   "nowcast_margin_shocks_pp": {},
-  "seasonal_h1_pp": -0.0015,
+  "seasonal_h1_pp": -0.0024,
   "season_free_halves": 0,
   "season_from_period": "2026H1",
   "quarter_offset_pp": {
@@ -1443,45 +1443,65 @@
   "regimes": {
    "stress": {
     "target": {
-     "2026H1": 0.0621,
-     "2026H2": 0.0608,
-     "2027": 0.0588,
-     "2028": 0.0562,
-     "2029": 0.054,
-     "2030": 0.0534,
-     "LT": 0.0542
+     "2026H1": 0.063,
+     "2026H2": 0.0583,
+     "2027": 0.0557,
+     "2028": 0.0545,
+     "2029": 0.0542,
+     "2030": 0.0543,
+     "2031": 0.0545,
+     "2032": 0.0547,
+     "2033": 0.0548,
+     "2034": 0.0549,
+     "2035": 0.055,
+     "LT": 0.0551
     }
    },
    "floor": {
     "target": {
-     "2026H1": 0.0621,
-     "2026H2": 0.0616,
-     "2027": 0.0618,
-     "2028": 0.0619,
-     "2029": 0.0619,
-     "2030": 0.0622,
-     "LT": 0.0631
+     "2026H1": 0.063,
+     "2026H2": 0.0625,
+     "2027": 0.0627,
+     "2028": 0.0628,
+     "2029": 0.0628,
+     "2030": 0.0631,
+     "2031": 0.0633,
+     "2032": 0.0635,
+     "2033": 0.0637,
+     "2034": 0.0638,
+     "2035": 0.0639,
+     "LT": 0.064
     }
    },
    "partial": {
     "target": {
-     "2026H1": 0.0621,
-     "2026H2": 0.0624,
-     "2027": 0.0643,
-     "2028": 0.0666,
-     "2029": 0.0684,
-     "2030": 0.0693,
-     "LT": 0.0698
+     "2026H1": 0.063,
+     "2026H2": 0.0643,
+     "2027": 0.0664,
+     "2028": 0.068,
+     "2029": 0.0692,
+     "2030": 0.0698,
+     "2031": 0.07,
+     "2032": 0.0701,
+     "2033": 0.0701,
+     "2034": 0.0702,
+     "2035": 0.0703,
+     "LT": 0.0703
     }
    },
    "full": {
     "target": {
-     "2026H1": 0.0621,
-     "2026H2": 0.0631,
-     "2027": 0.0669,
-     "2028": 0.0715,
-     "2029": 0.0754,
+     "2026H1": 0.063,
+     "2026H2": 0.066,
+     "2027": 0.0701,
+     "2028": 0.0736,
+     "2029": 0.076,
      "2030": 0.077,
+     "2031": 0.077,
+     "2032": 0.077,
+     "2033": 0.077,
+     "2034": 0.077,
+     "2035": 0.077,
      "LT": 0.077
     }
    }
@@ -1490,55 +1510,105 @@
  "capex": {
   "maintenance_pct": {
    "low": {
-    "2026H2": 0.0134,
-    "2027H1": 0.0109,
-    "2027H2": 0.0141,
-    "2027": 0.0126,
-    "2028": 0.013,
-    "2029": 0.0136,
-    "2030": 0.0143,
-    "2031": 0.0144,
-    "2032": 0.0148,
-    "2033": 0.0148,
-    "2034": 0.0158,
-    "2035": 0.0156,
-    "2036": 0.0149,
-    "LT": 0.0149
+    "2026H2": 0.0137,
+    "2027H1": 0.0111,
+    "2027H2": 0.0143,
+    "2027": 0.0128,
+    "2028": 0.0132,
+    "2029": 0.0139,
+    "2030": 0.0146,
+    "2031": 0.0148,
+    "2032": 0.0152,
+    "2033": 0.0152,
+    "2034": 0.0162,
+    "2035": 0.016,
+    "2036": 0.0153,
+    "LT": 0.0153
    },
    "base": {
-    "2026H2": 0.0196,
-    "2027H1": 0.0159,
-    "2027H2": 0.0206,
-    "2027": 0.0184,
-    "2028": 0.0191,
-    "2029": 0.0192,
-    "2030": 0.0197,
-    "2031": 0.0193,
-    "2032": 0.0206,
-    "2033": 0.0202,
-    "2034": 0.022,
-    "2035": 0.0214,
-    "2036": 0.0207,
-    "LT": 0.0207
+    "2026H2": 0.0199,
+    "2027H1": 0.0162,
+    "2027H2": 0.0209,
+    "2027": 0.0187,
+    "2028": 0.0198,
+    "2029": 0.0203,
+    "2030": 0.0211,
+    "2031": 0.0211,
+    "2032": 0.0228,
+    "2033": 0.0228,
+    "2034": 0.025,
+    "2035": 0.0248,
+    "2036": 0.0244,
+    "LT": 0.0244
    },
    "high": {
-    "2026H2": 0.027,
-    "2027H1": 0.0216,
-    "2027H2": 0.0279,
-    "2027": 0.0249,
-    "2028": 0.0252,
-    "2029": 0.0259,
-    "2030": 0.0253,
-    "2031": 0.027,
-    "2032": 0.0278,
-    "2033": 0.028,
-    "2034": 0.0283,
-    "2035": 0.0274,
-    "2036": 0.0268,
-    "LT": 0.0268
+    "2026H2": 0.0274,
+    "2027H1": 0.0219,
+    "2027H2": 0.0283,
+    "2027": 0.0252,
+    "2028": 0.0259,
+    "2029": 0.027,
+    "2030": 0.0267,
+    "2031": 0.0288,
+    "2032": 0.03,
+    "2033": 0.0306,
+    "2034": 0.0313,
+    "2035": 0.0308,
+    "2036": 0.0304,
+    "LT": 0.0304
    }
   },
-  "maintenance_area_share": 0.64,
+  "maintenance_area_share": 0.65,
+  "physical": {
+   "steady_per_m2": {
+    "hyper": 3.89,
+    "okey": 3.89,
+    "super": 7.79,
+    "conv": 7.02,
+    "droge": 5.31,
+    "remi": 7.03,
+    "diy": 1.95
+   },
+   "young_per_m2": {
+    "hyper": 1.92,
+    "okey": 1.92,
+    "super": 2.73,
+    "conv": 2.73,
+    "droge": 1.92,
+    "remi": 2.24,
+    "diy": 1.12
+   },
+   "reconstruction_cycle_years": {
+    "low": {
+     "hyper": 16,
+     "okey": 16,
+     "super": 12,
+     "conv": 12.5,
+     "droge": 10,
+     "remi": 12.5,
+     "diy": 20
+    },
+    "base": {
+     "hyper": 13,
+     "okey": 13,
+     "super": 10,
+     "conv": 10.5,
+     "droge": 9,
+     "remi": 10.5,
+     "diy": 15
+    },
+    "high": {
+     "hyper": 10,
+     "okey": 10,
+     "super": 8,
+     "conv": 8,
+     "droge": 7,
+     "remi": 8,
+     "diy": 12
+    }
+   }
+  },
+  "unit_price_basis": "anchor_end",
   "segments": {
    "hyper": {
     "growth_capex_per_m2": 0.09
@@ -1574,10 +1644,10 @@
   }
  },
  "nwc": {
-  "anchor_level": -10.9559,
+  "anchor_level": -12.9564,
   "seasonal_june_excess": 27.9,
   "nwc_pct": {
-   "hold": -0.029
+   "hold": -0.0304
   },
   "acquired_path": {
    "2026H2": 0.00153,
@@ -1618,7 +1688,8 @@
     }
    }
   },
-  "capex_tax_premium_share": 0.2
+  "capex_tax_premium_share": 0.41,
+  "nondeductible_da_anchor": 0.810496
  },
  "financing": {
   "operating_cash_pct": 0.007,
@@ -1707,7 +1778,7 @@
     "stress": 0.0275
    }
   },
-  "leverage_target": 1.0,
+  "leverage_target": 1.47,
   "dividend_ladder": [
    {
     "max_leverage": 1.0,
@@ -1738,46 +1809,56 @@
   "market_curve_years": 0.0,
   "ronic_spread": 0.0,
   "terminal": {
-   "half_rate_convention": "simple"
+   "half_rate_convention": "compound",
+   "revenue_base": "exit_area",
+   "da_convention": "cohort_runoff"
   },
-  "governance_discount": 0.0525,
+  "governance_discount": 0.06414,
   "governance_components": [
    {
     "name": "(а) Измеренная утечка к контролирующему акционеру: займы компаниям под общим контролем, трансфертные цены закупок",
-    "value": 0.01,
+    "value": 0.00467,
     "sign": 1,
-    "basis": "PV потока 0,20 [0–0,55] млрд/год при r_E 16 %, росте 5 % = 1,8 млрд = 1,0 % капитала (0–3 %); история: беспроцентные займы 2022–2024 стоили 1,419 млрд через капитал (0,568 + 0,530 + 0,321 — МСФО 2023 прим. 19, 2024 прим. 20); займы 2025 — под ≥16,5 % при ключевой 17,5 % во 2П (не «≈10 %»); 1П2026 уступлены с процентами (11,875)"
+    "basis": "PV потока 0,20 [0–0,55] млрд/год при r_E 16 %, росте 5 % = 1,818 [0–5,0] млрд — доля капитала модели V0 − D печатаемой медианы (≈389 млрд), а не капитализации: 0,47 % [0–1,3 %]; история: беспроцентные займы 2022–2024 стоили 1,419 млрд через капитал (0,568 + 0,530 + 0,321 — МСФО 2023 прим. 19, 2024 прим. 20); займы 2025 — под ≥16,5 % при ключевой 17,5 % во 2П (не «≈10 %»); 1П2026 уступлены с процентами (11,875)"
    },
    {
     "name": "(б) Сделки с NPV < 0 вместо дивидендов (покупки у связанных и несвязанных продавцов)",
-    "value": 0.01,
+    "value": 0.00452,
     "sign": 1,
     "in_850oa_scope": false,
-    "basis": "PV будущих сделок ≈110 [60–160] млрд × потеря 1,6 % [0–6 %] ≈ 0,9 % (0–4,5 %); обесценение гудвила 2021–2026 5,10 млрд на сделки 229 млрд (2,2 %; «Билла» 3,99, «Утконос» 1,04); реакция рынка на 9 объявлений +2,6 % в среднем (6 из 9 положительны; «О'КЕЙ» +6,7 %); дивиденды отдельно не считаются (NPV = 0)"
+    "basis": "PV будущих сделок ≈110 [60–160] млрд × потеря 1,6 % [0–6 %] = 1,76 [0–9,6] млрд — доля капитала модели V0 − D: 0,45 % [0–2,5 %]; обесценение гудвила 2021–2026 5,10 млрд на сделки 229 млрд (2,2 %; «Билла» 3,99, «Утконос» 1,04); реакция рынка на 9 объявлений +2,6 % в среднем (6 из 9 положительны; «О'КЕЙ» +6,7 %); дивиденды отдельно не считаются (NPV = 0)"
    },
    {
     "name": "(в) Ликвидность и листинг: free float 17,7 %, оборот ≈0,06 % капитализации в день, 3-й уровень с 12.08.2026, вне IMOEX с 18.09.2026",
-    "value": 0.035,
+    "value": 0.04,
     "sign": 1,
-    "basis": "события: 3-й уровень — AR ≈0…+2 % (объявление 03.08 совпало с отчётом, вступление 12.08 +2,2 %); IMOEX 04.09→17.09 −11,2 %, к 25.09 −2,1 % (t −0,3) — поток временный; уровень — шкала 850oa (у «Ленты» оборот 0,057 % капитализации в день; Амихуд «Ленты» в 6,5 раза выше Магнита — публичные данные торгов); 1,5–6 %"
+    "basis": "не ниже центра шкалы 850oa (корзина 3–5 %, центр 4 %) при том же статусе (3-й уровень, вне IMOEX) и худших измерениях ликвидности: free float 17,7 % против ≈37 %, Амихуд в 6,5 раза выше, оборот к капитализации в 13 раз ниже (публичные данные торгов); события: 3-й уровень — AR ≈0…+2 % (вступление 12.08 +2,2 %); IMOEX 04.09→17.09 −11,2 %, к 25.09 −2,1 % (t −0,3) — поток временный; 1,5–6 %"
    },
    {
     "name": "(г) Права миноритария сверх (а)–(б): допэмиссия из 84,0 млн объявленных акций, передача контроля без обязательной оферты (ст. 84.2 исключена уставом п. 33.2)",
-    "value": 0.0075,
+    "value": 0.01369,
     "sign": 1,
-    "basis": "P(размещение контролёру ниже внутренней стоимости за 10 лет) ≈20 % × ≈3 % + P(продажа контроля без оферты) ≈10 % × ≈2 %; прецедент 2022 («Утконос») — размещение на 12,7 % выше рынка; 0–2 %"
+    "basis": "потеря неучаствующих = доля новых акций × (1 − цена размещения / стоимость акции модели): размер — число акций прецедента 2022 («Утконос», 18,40 млн: 18,40/133,47 = 13,8 %), цена — премия прецедента к рынку 12,7 % (1,127 × 1 619,5); P(размещение за 10 лет) ≈20 % → 20 % × 13,8 % × (1 − 1 825 / стоимость медианы) + P(продажа контроля без оферты) ≈10 % × ≈2 %; неподвижная точка с медианой; 0–2 %"
    },
    {
-    "name": "(д) Встречная асимметрия: добровольная оферта / вытеснение (ст. 84.1, 84.7, 84.8 действуют, устав п. 33.3)",
-    "value": 0.01,
+    "name": "(д) Оферта или вытеснение",
+    "value": 0.0,
     "sign": -1,
-    "basis": "P(оферта за 5 лет) ≈15 % × премия 9 % (2019: +8,11 % к закрытию, +9,76 % к VWAP 6 мес. — пресс-релиз 01.04.2019; рынок 27.03→02.04.2019 +5,7 % AR) × дисконт ≈0,7; до 95 % не хватает ≈15,7 млн акций; 0–2,5 %"
+    "in_850oa_scope": false,
+    "basis": "не канал g (решение ведущего по аудиту 30.09.2026, п. 4): прецедента добровольной оферты нет — оферта 2019 г. была обязательной по Regulation 5.8 прежнего устава, которого больше нет; выкуп по цене от рынка ниже стоимости модели выгодой миноритария не бывает; у 850oa канала нет; объявленная оферта или вытеснение — событие с шаблоном исхода (docs/DECISIONS.md)"
    },
    {
     "name": "(е) Санкции (Севергрупп — SDN; ООО «Лента» — ЕС 03.2025, Швейцария 04.2025)",
     "value": 0.0,
     "sign": 1,
     "basis": "только через измеримые каналы: закрытый доступ иностранных держателей — внутри (в); операционные эффекты — в V0; займ «Севергрупп» 30,5 млрд — долг и строка моста A-B6, не g"
+   },
+   {
+    "name": "(ж) Скошенность каналов: медиана суммы независимых каналов минус сумма их центров",
+    "value": 0.00126,
+    "sign": 1,
+    "in_850oa_scope": false,
+    "basis": "центр g — медиана Монте-Карло суммы (100 000 прогонов, независимо, треугольно по половинам — правило полосы A-V9), а не сумма центров скошенных вправо каналов (решение ведущего по аудиту 30.09.2026, п. 23: единое понятие центра с полосой); лист «Оценка», governance.py"
    }
   ],
   "headline": {
@@ -1810,9 +1891,29 @@
     {
      "name": "Долгосрочный уровень маржи (цели LT всех режимов)",
      "paths": [
+      "margin.regimes.stress.target.2031",
+      "margin.regimes.stress.target.2032",
+      "margin.regimes.stress.target.2033",
+      "margin.regimes.stress.target.2034",
+      "margin.regimes.stress.target.2035",
       "margin.regimes.stress.target.LT",
+      "margin.regimes.floor.target.2031",
+      "margin.regimes.floor.target.2032",
+      "margin.regimes.floor.target.2033",
+      "margin.regimes.floor.target.2034",
+      "margin.regimes.floor.target.2035",
       "margin.regimes.floor.target.LT",
+      "margin.regimes.partial.target.2031",
+      "margin.regimes.partial.target.2032",
+      "margin.regimes.partial.target.2033",
+      "margin.regimes.partial.target.2034",
+      "margin.regimes.partial.target.2035",
       "margin.regimes.partial.target.LT",
+      "margin.regimes.full.target.2031",
+      "margin.regimes.full.target.2032",
+      "margin.regimes.full.target.2033",
+      "margin.regimes.full.target.2034",
+      "margin.regimes.full.target.2035",
       "margin.regimes.full.target.LT"
      ],
      "shift_low": -0.006,
@@ -1823,9 +1924,19 @@
      "paths": [
       "margin.regimes.partial.target.2029",
       "margin.regimes.partial.target.2030",
+      "margin.regimes.partial.target.2031",
+      "margin.regimes.partial.target.2032",
+      "margin.regimes.partial.target.2033",
+      "margin.regimes.partial.target.2034",
+      "margin.regimes.partial.target.2035",
       "margin.regimes.partial.target.LT",
       "margin.regimes.full.target.2029",
       "margin.regimes.full.target.2030",
+      "margin.regimes.full.target.2031",
+      "margin.regimes.full.target.2032",
+      "margin.regimes.full.target.2033",
+      "margin.regimes.full.target.2034",
+      "margin.regimes.full.target.2035",
       "margin.regimes.full.target.LT"
      ],
      "shift_low": -0.0025,
@@ -1876,8 +1987,8 @@
       "capex.maintenance_pct.base",
       "capex.maintenance_pct.high"
      ],
-     "shift_low": -0.003,
-     "shift_high": 0.005
+     "shift_low": -0.004,
+     "shift_high": 0.004
     },
     {
      "name": "Capex открытия (множитель по сегментам)",
@@ -1949,8 +2060,8 @@
     {
      "name": "ОК: декабрьский базис",
      "path": "nwc.nwc_pct.hold",
-     "low": -0.034,
-     "high": -0.024
+     "low": -0.0354,
+     "high": -0.0254
     },
     {
      "name": "Операционная касса",
@@ -1961,8 +2072,8 @@
     {
      "name": "Ускоренная налоговая амортизация (доля capex в налоге сразу)",
      "path": "tax.capex_tax_premium_share",
-     "low": 0.1,
-     "high": 0.3
+     "low": 0.31,
+     "high": 0.51
     },
     {
      "name": "Убытки приобретённых сетей: риск отказа или неприсоединения",
@@ -1973,8 +2084,8 @@
     {
      "name": "Целевой рычаг и долг терминального щита",
      "path": "financing.leverage_target",
-     "low": 1.0,
-     "high": 1.5
+     "low": 1.17,
+     "high": 2.02
     },
     {
      "name": "β_u",
@@ -1986,7 +2097,7 @@
      "name": "ERP",
      "path": "valuation.erp",
      "low": 0.049,
-     "high": 0.067
+     "high": 0.068
     },
     {
      "name": "Дисконт за управление",
@@ -2019,16 +2130,6 @@
     "accrete_rate_half": 0.0,
     "settle_period": "2026H2",
     "basis": "B: прим. 5 МСФО 1П2026: возмещение 17 303 283 − деньгами 4 498 910 − зачёт займа третьей стороне 8 734 162 = 4 070 211; «оставшаяся задолженность будет погашена в 2026 году»; внутри кредиторки за ОС, НМА и приобретение бизнеса 9 119 601 (прим. 22) — лист ОК её исключает"
-   },
-   {
-    "id": "ltip_long_term",
-    "name": "LTIP, долгосрочная часть (денежная)",
-    "kind": "claim",
-    "amount": 2.000523,
-    "as_of": "2026-06-30",
-    "accrete_rate_half": 0.0,
-    "settle_period": "2028H1",
-    "basis": "A: прочие долгосрочные обязательства 2 000 523 = долгосрочная часть обязательств по программе премирования (баланс с. 6, прим. 22); программа денежная, выплаты 50 % в апреле следующего года и по 25 % в два последующих (годовой отчёт 2025, с. 85) → долгосрочная часть — апрели 2028–2029; текущая часть — в кредиторке перед персоналом (ОК), второй раз не считается"
    },
    {
     "id": "nci_ex_remi",
@@ -2210,7 +2311,7 @@
   "bull": 0.2026
  },
  "scenario_names": {
-  "bear": "Дно: ставки высокие надолго, маржа закрепляется у проформы 1П2026, «Дом Лента» у безубыточности (≈6,3 % в долгую; в группу входят стресс-клетки)",
+  "bear": "Дно: ставки высокие надолго, маржа закрепляется у проформы 1П2026, «Дом Лента» у безубыточности (≈6,4 % в долгую; в группу входят стресс-клетки)",
   "base": "Частичная сходимость: ставки высокие надолго, приобретённые сети закрывают половину разрыва, маржа ≈7,0 %",
   "bull": "Нормализация: ставки по прогнозу ЦБ/консенсуса, частичная сходимость, рост сети по верхнему пути"
  },
@@ -2360,9 +2461,29 @@
   {
    "name": "A-C0 Долгосрочный уровень маржи (цели LT всех режимов)",
    "paths": [
+    "margin.regimes.stress.target.2031",
+    "margin.regimes.stress.target.2032",
+    "margin.regimes.stress.target.2033",
+    "margin.regimes.stress.target.2034",
+    "margin.regimes.stress.target.2035",
     "margin.regimes.stress.target.LT",
+    "margin.regimes.floor.target.2031",
+    "margin.regimes.floor.target.2032",
+    "margin.regimes.floor.target.2033",
+    "margin.regimes.floor.target.2034",
+    "margin.regimes.floor.target.2035",
     "margin.regimes.floor.target.LT",
+    "margin.regimes.partial.target.2031",
+    "margin.regimes.partial.target.2032",
+    "margin.regimes.partial.target.2033",
+    "margin.regimes.partial.target.2034",
+    "margin.regimes.partial.target.2035",
     "margin.regimes.partial.target.LT",
+    "margin.regimes.full.target.2031",
+    "margin.regimes.full.target.2032",
+    "margin.regimes.full.target.2033",
+    "margin.regimes.full.target.2034",
+    "margin.regimes.full.target.2035",
     "margin.regimes.full.target.LT"
    ],
    "shift_low": -0.006,
@@ -2370,24 +2491,48 @@
   },
   {
    "name": "A-C1 Цель «удержание дна» 2031+",
-   "path": "margin.regimes.floor.target.LT",
-   "low": 0.0606,
-   "high": 0.0656
+   "paths": [
+    "margin.regimes.floor.target.2031",
+    "margin.regimes.floor.target.2032",
+    "margin.regimes.floor.target.2033",
+    "margin.regimes.floor.target.2034",
+    "margin.regimes.floor.target.2035",
+    "margin.regimes.floor.target.LT"
+   ],
+   "shift_low": -0.0025,
+   "shift_high": 0.0025
   },
   {
    "name": "A-C1 Цель «частичная сходимость» 2031+",
-   "path": "margin.regimes.partial.target.LT",
-   "low": 0.0673,
-   "high": 0.0723
+   "paths": [
+    "margin.regimes.partial.target.2031",
+    "margin.regimes.partial.target.2032",
+    "margin.regimes.partial.target.2033",
+    "margin.regimes.partial.target.2034",
+    "margin.regimes.partial.target.2035",
+    "margin.regimes.partial.target.LT"
+   ],
+   "shift_low": -0.0025,
+   "shift_high": 0.0025
   },
   {
    "name": "A-C1s Сходимость приобретённого периметра",
    "paths": [
     "margin.regimes.partial.target.2029",
     "margin.regimes.partial.target.2030",
+    "margin.regimes.partial.target.2031",
+    "margin.regimes.partial.target.2032",
+    "margin.regimes.partial.target.2033",
+    "margin.regimes.partial.target.2034",
+    "margin.regimes.partial.target.2035",
     "margin.regimes.partial.target.LT",
     "margin.regimes.full.target.2029",
     "margin.regimes.full.target.2030",
+    "margin.regimes.full.target.2031",
+    "margin.regimes.full.target.2032",
+    "margin.regimes.full.target.2033",
+    "margin.regimes.full.target.2034",
+    "margin.regimes.full.target.2035",
     "margin.regimes.full.target.LT"
    ],
    "shift_low": -0.0025,
@@ -2447,7 +2592,17 @@
    "name": "A-K1 Поддерживающий capex, сдвиг базовой траектории",
    "path": "capex.maintenance_pct.base",
    "shift_low": -0.004,
-   "shift_high": 0.006
+   "shift_high": 0.004
+  },
+  {
+   "name": "A-K1 Поддерживающий capex, сдвиг всех уровней",
+   "paths": [
+    "capex.maintenance_pct.low",
+    "capex.maintenance_pct.base",
+    "capex.maintenance_pct.high"
+   ],
+   "shift_low": -0.004,
+   "shift_high": 0.004
   },
   {
    "name": "A-K3 Capex открытия (множитель по сегментам)",
@@ -2498,8 +2653,8 @@
   {
    "name": "A-W1 ОК: декабрьский базис",
    "path": "nwc.nwc_pct.hold",
-   "low": -0.034,
-   "high": -0.024
+   "low": -0.0354,
+   "high": -0.0254
   },
   {
    "name": "A-W2 Июньский излишек ОК (ОК якоря = балансу)",
@@ -2547,8 +2702,8 @@
   {
    "name": "A-F6 Целевой рычаг ЧД/EBITDA",
    "path": "financing.leverage_target",
-   "low": 1.0,
-   "high": 1.5
+   "low": 1.17,
+   "high": 2.02
   },
   {
    "name": "A-F6d Первый год дивидендов",
@@ -2565,8 +2720,8 @@
   {
    "name": "A-T5 Ускоренная налоговая амортизация",
    "path": "tax.capex_tax_premium_share",
-   "low": 0.1,
-   "high": 0.3
+   "low": 0.31,
+   "high": 0.51
   },
   {
    "name": "A-T2 Постоянная налоговая прибавка",
@@ -2615,12 +2770,6 @@
    "high": 0.5
   },
   {
-   "name": "A-B3 LTIP, долгосрочная часть",
-   "path": "bridge.items[ltip_long_term].amount",
-   "low": 0.0,
-   "high": 2.000523
-  },
-  {
    "name": "A-B6 Премия справедливой стоимости фиксированного долга",
    "path": "bridge.items[fixed_debt_fv_premium].amount",
    "low": 2.1,
@@ -2642,7 +2791,7 @@
    "name": "A-V2 ERP",
    "path": "valuation.erp",
    "low": 0.049,
-   "high": 0.067
+   "high": 0.068
   },
   {
    "name": "A-V7 Дисконт за корпоративное управление",
@@ -2667,9 +2816,29 @@
   {
    "name": "Долгосрочный уровень маржи (сдвиг целей LT всех режимов)",
    "paths": [
+    "margin.regimes.stress.target.2031",
+    "margin.regimes.stress.target.2032",
+    "margin.regimes.stress.target.2033",
+    "margin.regimes.stress.target.2034",
+    "margin.regimes.stress.target.2035",
     "margin.regimes.stress.target.LT",
+    "margin.regimes.floor.target.2031",
+    "margin.regimes.floor.target.2032",
+    "margin.regimes.floor.target.2033",
+    "margin.regimes.floor.target.2034",
+    "margin.regimes.floor.target.2035",
     "margin.regimes.floor.target.LT",
+    "margin.regimes.partial.target.2031",
+    "margin.regimes.partial.target.2032",
+    "margin.regimes.partial.target.2033",
+    "margin.regimes.partial.target.2034",
+    "margin.regimes.partial.target.2035",
     "margin.regimes.partial.target.LT",
+    "margin.regimes.full.target.2031",
+    "margin.regimes.full.target.2032",
+    "margin.regimes.full.target.2033",
+    "margin.regimes.full.target.2034",
+    "margin.regimes.full.target.2035",
     "margin.regimes.full.target.LT"
    ],
    "kind": "shift",
@@ -2687,9 +2856,19 @@
    "paths": [
     "margin.regimes.partial.target.2029",
     "margin.regimes.partial.target.2030",
+    "margin.regimes.partial.target.2031",
+    "margin.regimes.partial.target.2032",
+    "margin.regimes.partial.target.2033",
+    "margin.regimes.partial.target.2034",
+    "margin.regimes.partial.target.2035",
     "margin.regimes.partial.target.LT",
     "margin.regimes.full.target.2029",
     "margin.regimes.full.target.2030",
+    "margin.regimes.full.target.2031",
+    "margin.regimes.full.target.2032",
+    "margin.regimes.full.target.2033",
+    "margin.regimes.full.target.2034",
+    "margin.regimes.full.target.2035",
     "margin.regimes.full.target.LT"
    ],
    "kind": "shift",
@@ -2715,8 +2894,8 @@
     0.03
    ],
    "range": [
-    -0.003,
-    0.005
+    -0.004,
+    0.004
    ]
   },
   {
@@ -2811,8 +2990,8 @@
     0.05
    ],
    "range": [
-    -0.034,
-    -0.024
+    -0.0354,
+    -0.0254
    ]
   },
   {
@@ -2826,8 +3005,8 @@
     4.0
    ],
    "range": [
-    1.0,
-    1.5
+    1.17,
+    2.02
    ]
   },
   {
@@ -2857,7 +3036,7 @@
    ],
    "range": [
     0.049,
-    0.067
+    0.068
    ]
   },
   {
@@ -2896,12 +3075,12 @@
  "reference_class_margin": {
   "n": 12.5,
   "share": {
-   "stress": 0.371,
-   "floor": 0.321,
+   "stress": 0.375,
+   "floor": 0.319,
    "partial": 0.218,
-   "full": 0.09
+   "full": 0.088
   },
-  "e_m_lt": 0.0625,
-  "note": "правило, заданное до подсчёта: P = w_I·P_I + w_E·P_E; Лаплас ½ в каждом классе; w_I 0,699 — доля падения маржи 2025 → проформа 1П2026, объяснённая составом периметра (1,19 из 1,70 п.п.); случаи класса C в классе I — с весом ½. Класс E: n 10, исходы 50/30/20/0 %, с Лапласом 45,8/29,2/20,8/4,2 %. Класс I: X5 — «Копейка» 2010 (дно), Магнит — «Дикси» 2021 (стресс), Лента — Billa 2021 (частичная, C); с Лапласом 33,3/33,3/22,2/11,1 %. Класс I мал; «Копейка» на грани «дно/частичная» сдвигает P_I на 20 п.п.; цензурированы «Улыбка», «Молния», «Реми», «Азбука вкуса»; «Монетка» — без разбавления; «Карусель» — двойной счёт с эпизодом X5 2008; публичные отчётные данные аналогов со ссылкой на первоисточник (решение ведущего F33)"
+  "e_m_lt": 0.0633,
+  "note": "правило, заданное до подсчёта: P = w_I·P_I + w_E·P_E; Лаплас ½ в каждом классе; w_I 0,664 — доля падения маржи 2025 → проформа 1П2026 без переходного убытка «Дом Ленты» (0,32 п.п. вне уровня режимов, C17), объяснённая составом периметра (0,85 из 1,28 п.п.); случаи класса C в классе I — с весом ½. Класс E: n 10, исходы 50/30/20/0 %, с Лапласом 45,8/29,2/20,8/4,2 %. Класс I: X5 — «Копейка» 2010 (дно), Магнит — «Дикси» 2021 (стресс), Лента — Billa 2021 (частичная, C); с Лапласом 33,3/33,3/22,2/11,1 %. Класс I мал; «Копейка» по полному окну T0+3…T0+4 (7,17 и 7,23 % → 7,20 %) — f +0,20, «дно» (порог «частичного» 0,25); цензурированы «Улыбка», «Молния», «Реми», «Азбука вкуса»; «Монетка» — без разбавления; «Карусель» — двойной счёт с эпизодом X5 2008; публичные отчётные данные аналогов со ссылкой на первоисточник (решение ведущего F33)"
  }
 }
