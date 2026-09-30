@@ -1690,7 +1690,9 @@ function spreadCard(d) {
   }
   const center = d.fair_value.central;
   const all = spread.axes.flatMap((a) => [a.low.price, a.high.price]).concat(center);
-  const dom = [0, Math.ceil(Math.max(...all) / 500) * 500];
+  // Запас 6 % до края шкалы: метка конца (14 px, по центру значения) у самого края
+  // выходила бы за дорожку на узком экране (375 px — дорожка ≈127 px: 7 / 127 ≈ 5,5 %).
+  const dom = [0, Math.ceil((Math.max(...all) * 1.06) / 500) * 500];
   const rowsBox = el("div", { class: "tornado" }, spread.axes.map((a) => el("div", { class: "tn-row" },
     el("div", { class: "tn-name" }, a.title),
     el("div", { class: "tn-bar" },
