@@ -12,6 +12,8 @@
 * в данных (`data/`, `tests/fixtures/`): факты Магнита (дочерние общества,
   контрольные числа его книги — по sha256), ФИО и контакты из ответов
   источников (`contact_person`, телефоны);
+* во всех текстах: суммы книги Магнита рядом с упоминанием 850oa — по sha256
+  (сравнения с 850oa только методические, без чисел книги-источника);
 * первичка (PDF/XLSX/DOCX) вне фикстур, состояние и выходы (`var/`,
   `.wrangler/`, `*.sqlite`, `payload.json`, `release/`, `port-check/`);
 * адреса авторов и коммиттеров всей видимой истории — только из
@@ -58,6 +60,18 @@ MAGNIT_NUMBERS = {
     "2ec2ddb876acea6a5f87bf64", "fa47739e92028e973069b52d", "c693d0791590123c73cb6664",
     "e797cf9a40d28d32bfbc6862", "ae63de46100e119bb234fd7c", "ab1611b096f18e44795408d0",
 }
+
+# Суммы книги Магнита (строки моста 850oa), которых не должно быть рядом с
+# упоминанием 850oa ни в одном тексте (решение ведущего по проверке пакета
+# аудита, п. 1.5; книга §16: сравнения с 850oa — только методические, без чисел
+# книги-источника). Ключ — sha256 записи «<число> млрд» (запятая — десятичный
+# знак, один пробел): сам запрещённый текст в репозиторий не кладётся и здесь.
+MAGNIT_AMOUNTS_NEAR_850OA = {
+    "10ce52b9e0668e7b2474a112": "строка LTIP моста книги 850oa",
+}
+NEAR_850OA = 200                        # «рядом» — в пределах 200 знаков от упоминания
+AMOUNT = re.compile(r"(?<![\d,.])(\d+(?:[,.]\d+)?)[\s\u00a0\u202f]*млрд")
+MENTION_850OA = re.compile(r"850oa", re.I)
 
 OCTET = r"(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)"
 RULES_ALL = {
@@ -149,6 +163,20 @@ def _is_allowed(name: str, rule: str, match: str) -> bool:
                for mask, r, ok, _ in ALLOW)
 
 
+def _magnit_amounts_near_850oa(name: str, text: str) -> list[str]:
+    """Суммы из `MAGNIT_AMOUNTS_NEAR_850OA` не дальше `NEAR_850OA` знаков от «850oa»:
+    «файл:строка: что это» — без самого текста."""
+    mentions = [m.start() for m in MENTION_850OA.finditer(text)]
+    if not mentions:
+        return []
+    bad = []
+    for hit in AMOUNT.finditer(text):
+        what = MAGNIT_AMOUNTS_NEAR_850OA.get(_h(hit.group(1).replace(".", ",") + " млрд"))
+        if what and any(abs(hit.start() - at) <= NEAR_850OA for at in mentions):
+            bad.append(f"{name}:{text.count(chr(10), 0, hit.start()) + 1}: {what} рядом с 850oa")
+    return bad
+
+
 def _findings() -> list[str]:
     bad = []
     for name in _tree():
@@ -156,6 +184,7 @@ def _findings() -> list[str]:
         if text is None:
             continue
         rules = dict(RULES_ALL)
+        bad += _magnit_amounts_near_850oa(name, text)
         in_data = any(fnmatch.fnmatch(name, g) for g in DATA_GLOBS)
         if in_data:
             rules.update(RULES_DATA)
@@ -246,6 +275,18 @@ def test_the_rules_leave_ordinary_numbers_alone():
     assert not _is_allowed("tests/x.py", "email", "someone@" + "mail.ru")
 
 
+def test_a_magnit_amount_near_850oa_is_caught_and_only_there():
+    """Сумма книги Магнита рядом с «850oa» ловится (и с точкой, и с неразрывным
+    пробелом); та же сумма далеко от упоминания и другое число с теми же
+    последними знаками («+2…») — нет. Литерал собирается здесь по частям."""
+    amount = "3," + "6"
+    assert _magnit_amounts_near_850oa("x.md", f"та же конвенция у 850oa ({amount} млрд)")
+    assert _magnit_amounts_near_850oa("x.md", f"850oa: {amount.replace(',', '.')}\u00a0млрд")
+    assert not _magnit_amounts_near_850oa("x.md", f"{amount} млрд" + " " * (NEAR_850OA + 1) + "850oa")
+    assert not _magnit_amounts_near_850oa("x.md", f"поток +2{amount} млрд ₽, как у 850oa")
+    assert not _magnit_amounts_near_850oa("x.md", f"{amount} млрд без упоминания книги-источника")
+
+
 def test_the_hashed_lists_are_well_formed():
-    for table in (FORBIDDEN_TOKENS, FORBIDDEN_HEX_PREFIX, MAGNIT_NUMBERS):
+    for table in (FORBIDDEN_TOKENS, FORBIDDEN_HEX_PREFIX, MAGNIT_NUMBERS, MAGNIT_AMOUNTS_NEAR_850OA):
         assert all(re.fullmatch(r"[0-9a-f]{24}", h) for h in table)
