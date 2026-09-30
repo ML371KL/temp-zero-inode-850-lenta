@@ -280,11 +280,11 @@ def test_a_magnit_amount_near_850oa_is_caught_and_only_there():
     пробелом); та же сумма далеко от упоминания и другое число с теми же
     последними знаками («+2…») — нет. Литерал собирается здесь по частям."""
     amount = "3," + "6"
-    assert _magnit_amounts_near_850oa("x.md", f"та же конвенция у 850oa ({amount} млрд)")
-    assert _magnit_amounts_near_850oa("x.md", f"850oa: {amount.replace(',', '.')}\u00a0млрд")
-    assert not _magnit_amounts_near_850oa("x.md", f"{amount} млрд" + " " * (NEAR_850OA + 1) + "850oa")
-    assert not _magnit_amounts_near_850oa("x.md", f"поток +2{amount} млрд ₽, как у 850oa")
-    assert not _magnit_amounts_near_850oa("x.md", f"{amount} млрд без упоминания книги-источника")
+    assert _magnit_amounts_near_850oa("x.txt", f"та же конвенция у 850oa ({amount} млрд)")
+    assert _magnit_amounts_near_850oa("x.txt", f"850oa: {amount.replace(',', '.')}\u00a0млрд")
+    assert not _magnit_amounts_near_850oa("x.txt", f"{amount} млрд" + " " * (NEAR_850OA + 1) + "850oa")
+    assert not _magnit_amounts_near_850oa("x.txt", f"поток +2{amount} млрд ₽, как у 850oa")
+    assert not _magnit_amounts_near_850oa("x.txt", f"{amount} млрд без упоминания книги-источника")
 
 
 def test_the_hashed_lists_are_well_formed():
