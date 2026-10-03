@@ -80,6 +80,57 @@ def test_quotes_of_the_issuer_and_the_peers(tmp_path, monkeypatch):
     assert "securities=LENT,X5,MGNT" in web.calls[0]
 
 
+def test_a_morning_before_the_first_trade_is_a_quiet_day_not_a_failure(tmp_path, monkeypatch,
+                                                                         capsys):
+    """Тревога 03.10.2026 (суббота): ISS в 07:00 МСК обнуляет таблицу, и до первой
+    сделки дня `LAST` пуст при `NUMTRADES` = 0 у всех бумаг. Утренний такт в
+    выходной приходил на такую таблицу, критический сборщик давал «разобрано 0
+    рядов», юнит трижды повторялся и слал «упало». Это тихий день, а не сбой:
+    статус «ок» с причиной, точек нет, такт идёт дальше (код 0)."""
+    from indicators import collect
+
+    web = FakeWeb([(r"boards/TQBR/securities\.json",
+                    fixture("moex_quote", "quotes_no_trades.json"))])
+    monkeypatch.setattr(sources, "fetch", web)
+    store = Store(tmp_path)
+
+    result = sources.collect_moex_quote(store=store)
+    assert result.series == {} and "торгов сегодня ещё не было" in result.idle
+    assert "marketdata.columns=SECID,LAST,NUMTRADES,TRADINGSTATUS,UPDATETIME" in web.calls[0]
+
+    report = sources.run_collectors(["moex_quote"], store)
+    assert report["moex_quote"].startswith("ок: торгов сегодня ещё не было"), report
+    assert store.load(issuer.PRICE_SERIES) is None, "новой точки цены нет"
+    assert _raw_files(store, "moex"), "ответ биржи лежит в сыром архиве"
+    assert collect.cmd_collect(["moex_quote"], store, retry=False, pause=0.0) == 0
+    assert "ОТКАЗ КРИТИЧЕСКОГО" not in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("label, columns, rows", [
+    ("сделки были, а последней сделки нет",
+     ["SECID", "LAST", "NUMTRADES", "TRADINGSTATUS", "UPDATETIME"],
+     [["LENT", None, 12, "T", "10:00:09"], ["MGNT", None, 0, "N", "07:00:09"]]),
+    ("строки эмитента нет",
+     ["SECID", "LAST", "NUMTRADES", "TRADINGSTATUS", "UPDATETIME"],
+     [["MGNT", None, 0, "N", "07:00:09"], ["X5", None, 0, "N", "07:00:09"]]),
+    ("в ответе нет числа сделок",
+     ["SECID", "LAST", "UPDATETIME"],
+     [["LENT", None, "07:00:09"], ["MGNT", None, "07:00:09"], ["X5", None, "07:00:09"]]),
+    ("пустая таблица", ["SECID", "LAST", "NUMTRADES", "TRADINGSTATUS", "UPDATETIME"], []),
+])
+def test_an_empty_quote_that_is_not_a_quiet_day_stays_a_failure(tmp_path, monkeypatch,
+                                                                label, columns, rows):
+    """Тихим днём называется только «пусто у всех при нуле сделок и строке
+    эмитента на месте». Всё прочее — мусор в ответе критического источника."""
+    body = json.dumps({"marketdata": {"columns": columns, "data": rows}}).encode()
+    monkeypatch.setattr(sources, "fetch",
+                        FakeWeb([(r"boards/TQBR/securities\.json", body)]))
+    store = Store(tmp_path)
+    assert sources.collect_moex_quote(store=store).idle == "", label
+    report = sources.run_collectors(["moex_quote"], store)
+    assert report["moex_quote"] == "ОШИБКА: ответ получен, но разобрано 0 рядов", (label, report)
+
+
 def test_the_security_card_gives_listing_level_and_issue_size(tmp_path, monkeypatch):
     """Карточка LENT: третий уровень листинга (с 12.08.2026), 115 985 197 акций."""
     body = fixture("moex_security", "security_LENT.json")

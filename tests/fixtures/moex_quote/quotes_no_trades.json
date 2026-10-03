@@ -1,0 +1,9 @@
+{
+"marketdata": {
+	"columns": ["SECID", "LAST", "NUMTRADES", "TRADINGSTATUS", "UPDATETIME"], 
+	"data": [
+		["LENT", null, 0, "N", "07:00:09"],
+		["MGNT", null, 0, "N", "07:00:09"],
+		["X5", null, 0, "N", "07:00:09"]
+	]
+}}

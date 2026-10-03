@@ -75,6 +75,14 @@ class Collected:
     статус источника всё равно становится «ОШИБКА» — тревога уходит кодом
     возврата юнита, как и прежде.
     """
+    idle: str = ""
+    """Источник САМ сказал, что наблюдений сегодня нет, — и это не сбой.
+
+    Пустой ответ от мусора в ответе отличает только сборщик (биржа до начала
+    торгов: последняя сделка пуста, сделок 0). Причина называется здесь, и
+    `run_collectors` пишет её в статус «ок» без точек; без неё «разобрано 0
+    рядов» остаётся отказом, как прежде.
+    """
 
 
 # ------------------------------------------------- канал 1: ставки и долг
@@ -226,12 +234,20 @@ def collect_moex_quote(*, store=None) -> Collected:
 
     Страница ложится на диск СРАЗУ по получении (S1.4): HTML вместо JSON не
     должен стоить дня наблюдений по КРИТИЧЕСКОМУ источнику.
+
+    Биржа ещё не торгует — не сбой (тревога 03.10.2026, суббота): в 07:00 МСК
+    ISS обнуляет таблицу, и до первой сделки дня `LAST` пуст у всех бумаг при
+    `NUMTRADES` = 0. В будни утренний такт приходит уже на утреннюю сессию, в
+    выходной и в биржевой праздник — на пустую таблицу. Такой ответ — «новых
+    точек нет» (`Collected.idle`), выпуск считается на последней принятой цене.
+    Пустой `LAST` при ненулевом числе сделок, пропавшая строка эмитента или
+    ответ без `NUMTRADES` остаются отказом.
     """
     sink = RawSink(store, "moex") if store is not None else None
-    tickers = ",".join(dict.fromkeys((issuer.TICKER, *issuer.PEER_TICKERS)))
+    tickers = tuple(dict.fromkeys((issuer.TICKER, *issuer.PEER_TICKERS)))
     url = (f"https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json"
-           f"?iss.meta=off&securities={tickers}&iss.only=marketdata"
-           f"&marketdata.columns=SECID,LAST,UPDATETIME")
+           f"?iss.meta=off&securities={','.join(tickers)}&iss.only=marketdata"
+           f"&marketdata.columns=SECID,LAST,NUMTRADES,TRADINGSTATUS,UPDATETIME")
     response = fetch(url, sink=sink, name="quotes.json")
     md = response.json()["marketdata"]
     idx = {c: i for i, c in enumerate(md["columns"])}
@@ -242,8 +258,15 @@ def collect_moex_quote(*, store=None) -> Collected:
             series[f"moex.price.{row[idx['SECID']]}"] = [Point(
                 period=today, value=float(row[idx["LAST"]]),
                 fetched_at=response.fetched_at, source_sha256=response.sha256)]
+    idle = ""
+    if not series and "NUMTRADES" in idx:
+        rows = {row[idx["SECID"]]: row for row in md["data"]}
+        if issuer.TICKER in rows and all(row[idx["NUMTRADES"]] == 0 for row in rows.values()):
+            idle = (f"торгов сегодня ещё не было (последняя сделка пуста, сделок 0 у "
+                    f"{len(rows)} бумаг) — новых точек нет")
     return Collected("moex", 1, series,
-                     [] if sink is not None else [("quotes.json", response.body, response)])
+                     [] if sink is not None else [("quotes.json", response.body, response)],
+                     idle=idle)
 
 
 # ------------------------------------------ описание бумаги: листинг и выпуск
@@ -1357,6 +1380,12 @@ def run_collectors(names, store: Store) -> dict[str, str]:
             # а отказ назван — как у любого мусора в ответе.
             report[name] = (f"ОШИБКА: неконечные значения отброшены ({len(rejected)}): "
                             + "; ".join(rejected[:3]))
+            continue
+        if not result.series and result.idle:
+            # Пустой день, НАЗВАННЫЙ самим сборщиком (биржа ещё не торгует):
+            # статус «ок» с причиной, точек нет. Отметку «собран за сутки» такой
+            # ответ не ставит — следующий такт дня спросит источник снова.
+            report[name] = f"ок: {result.idle}"
             continue
         if not result.series and name not in MAY_PARSE_NOTHING:
             # Ответ пришёл, а разобрать из него не удалось ничего. Это не

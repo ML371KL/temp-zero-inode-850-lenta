@@ -9,6 +9,7 @@
 | Каталог / файл | Источник | Что сделано | sha256 исходного ответа (первые 16) |
 |---|---|---|---|
 | `moex_quote/quotes.json` | ISS TQBR `securities.json?securities=LENT,MGNT,X5&iss.only=marketdata` | как есть | `51c009e6d3f39bdb` |
+| `moex_quote/quotes_no_trades.json` | тот же запрос с `marketdata.columns=SECID,LAST,NUMTRADES,TRADINGSTATUS,UPDATETIME`, записан 03.10.2026 (суббота) в 04:30 UTC — таблица сброшена в 07:00 МСК, торгов ещё не было | как есть | `5809f0c24360bfc8` |
 | `moex_security/security_LENT.json` | ISS `/iss/securities/LENT.json?iss.only=description` | как есть (LISTLEVEL 3, ISSUESIZE 115 985 197) | `24df81c6b2606e4e` |
 | `bonds/bonds_search_7826087713.json` | ISS `/iss/securities.json?q=7826087713` (ООО «О'КЕЙ», эмитент 4867) | как есть | `7ebd9a3bbf4a786d` |
 | `bonds/bonds_search_7814148471.json` | ISS `/iss/securities.json?q=7814148471` (ООО «Лента», эмитент 5997) | как есть: все выпуски `is_traded = 0` | `84d95f1e0a0c2381` |
