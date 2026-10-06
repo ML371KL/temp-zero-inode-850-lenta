@@ -238,10 +238,11 @@ WRITTEN: dict[str, frozenset[str]] = {
     f"joint.regime_update.observations.{TRAJECTORY}": frozenset({"se", "value"}),
 }
 
-# Необязательные ключи правил диагностик медианы (без ключа — первое значение:
-# `model.book.REVERSE_BOUNDS`, `MEDIAN_REFINE_STEPS`).
+# Необязательные ключи правил диагностик медианы и сложения осей полосы на общем
+# пути (без ключа — первое значение: `model.book.REVERSE_BOUNDS`,
+# `MEDIAN_REFINE_STEPS`, `AXIS_MERGES`).
 OPTIONAL: dict[str, frozenset[str]] = {
-    "valuation.uncertainty": frozenset({"median_refine", "reverse_bounds"}),
+    "valuation.uncertainty": frozenset({"axis_merge", "median_refine", "reverse_bounds"}),
 }
 
 

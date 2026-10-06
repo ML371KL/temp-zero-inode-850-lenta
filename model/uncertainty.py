@@ -41,8 +41,8 @@ from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures.process import BrokenProcessPool
 from multiprocessing import get_context, parent_process
 
-from model.book import (limited_liability_rule, median_draws, median_refine, reverse_bounds,
-                        validate_book)
+from model.book import (BookError, axis_merge, limited_liability_rule, median_draws,
+                        median_refine, reverse_bounds, validate_book)
 from model.engine import with_overrides
 from model.grid import (CENTER_EV_SEARCH, NEUTRAL_MARGIN_SEARCH, PERCENTILES, CenterEV,
                         build_grid, fair_value, layers, own_macro_confidence, report_period,
@@ -292,15 +292,55 @@ def band_rows(A: dict, n: int) -> list[dict]:
     return rows if rows is not None else band_chunk(A, axes, points)
 
 
+def merge_axis_overrides(ov: dict, new: dict, name: str) -> None:
+    """Подмены ещё одной оси — в общий словарь прогона (`axis_merge: add`).
+
+    Оси независимы (A-V9), поэтому на равном пути сдвиги складываются, а
+    множители перемножаются. Значение, выбор или словарь весов на пути, который
+    уже подменила другая ось, — отказ: от двух суждений осталось бы одно, и
+    какое — решал бы порядок осей (книга с такими осями не проходит и загрузку,
+    `model.book._refuse_conflicting_axes`)."""
+    for path, value in new.items():
+        if path not in ov:
+            ov[path] = value
+            continue
+        was = ov[path]
+        both = isinstance(was, dict) and isinstance(value, dict)
+        if both and set(was) == set(value) == {"__shift__"}:
+            ov[path] = {"__shift__": was["__shift__"] + value["__shift__"]}
+        elif both and set(was) == set(value) == {"__scale__"}:
+            ov[path] = {"__scale__": was["__scale__"] * value["__scale__"]}
+        else:
+            raise BookError(f"ось полосы «{name}»: путь {path} уже подменён другой осью — на "
+                            "общем пути складываются только сдвиг со сдвигом и множитель с "
+                            "множителем")
+
+
+def draw_overrides(A: dict, axes: list[dict], s: list[float]) -> dict:
+    """Подмены книги одного прогона полосы: все оси в своих точках s.
+
+    Как собираются подмены двух осей на равном пути — ключ книги
+    `valuation.uncertainty.axis_merge` (внешний аудит 30.09.2026, A01): `add` —
+    `merge_axis_overrides`; `replace` (нет ключа, 850oa) — словарём по пути:
+    поздняя ось заменяет раннюю, в своём центре — нулевым сдвигом, то есть ранняя
+    ось на общем пути в полосе не работает вовсе.
+    """
+    add = axis_merge(A) == "add"
+    ov: dict = {}
+    for ax, sj in zip(axes, s):
+        if add:
+            merge_axis_overrides(ov, axis_overrides(A, ax, sj), ax["name"])
+        else:
+            ov.update(axis_overrides(A, ax, sj))
+    return ov
+
+
 def band_chunk(A: dict, axes: list[dict], points: list[list[float]]) -> list[dict]:
     """Прогоны полосы в точках `points` по порядку — одна функция для
     последовательного расчёта и для рабочего процесса пула."""
     rows = []
     for s in points:
-        ov = {}
-        for ax, sj in zip(axes, s):
-            ov.update(axis_overrides(A, ax, sj))
-        trial, _, layer_map, fv = evaluate(A, ov)
+        trial, _, layer_map, fv = evaluate(A, draw_overrides(A, axes, s))
         own, market = layer_map["analytical"], layer_map["macro_neutral"]
         rows.append(dict(s=s, low=fv.low, central=fv.central, high=fv.high,
                          v0_own=own.v0, v0_market=market.v0, d=own.claims, d_market=market.claims,

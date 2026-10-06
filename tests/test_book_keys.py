@@ -408,9 +408,10 @@ def test_the_closed_blocks_agree_with_the_schema():
     assert SCHEMA["reverse_dcf[]"] == B.REVERSE_DCF_KEYS
 
 
-# Ключи правил диагностик медианы и их значения.
+# Ключи правил диагностик медианы и сложения осей полосы и их значения.
 KEYS_151 = (("valuation.uncertainty", "reverse_bounds", "follow_center"),
-            ("valuation.uncertainty", "median_refine", 1))
+            ("valuation.uncertainty", "median_refine", 1),
+            ("valuation.uncertainty", "axis_merge", "add"))
 
 
 def _with_keys_151() -> dict:
@@ -427,8 +428,8 @@ def _node(A: dict, dotted: str) -> dict:
 
 
 def test_the_keys_of_the_mapping_and_median_rules_are_in_the_schema():
-    """Ключи границ оси обратного DCF и уточнения медианы — в схеме; их
-    опечатка — отказ."""
+    """Ключи границ оси обратного DCF, уточнения медианы и сложения осей полосы —
+    в схеме; их опечатка — отказ."""
     A = _with_keys_151()
     validate_book(A)
     for block, key, _ in KEYS_151:
@@ -443,6 +444,9 @@ def test_the_keys_of_the_mapping_and_median_rules_are_in_the_schema():
     ("valuation.uncertainty", "median_refine", 2),
     ("valuation.uncertainty", "median_refine", 1.0),
     ("valuation.uncertainty", "median_refine", "1"),
+    ("valuation.uncertainty", "axis_merge", "sum"),
+    ("valuation.uncertainty", "axis_merge", True),
+    ("valuation.uncertainty", "axis_merge", 1),
 ])
 def test_an_unknown_value_of_the_rule_keys_is_refused(block, key, bad):
     A = _book()
@@ -454,6 +458,7 @@ def test_an_unknown_value_of_the_rule_keys_is_refused(block, key, bad):
 @pytest.mark.parametrize("block,key,default", [
     ("valuation.uncertainty", "reverse_bounds", "fixed"),
     ("valuation.uncertainty", "median_refine", 0),
+    ("valuation.uncertainty", "axis_merge", "replace"),
 ])
 def test_the_rule_keys_name_their_default(block, key, default):
     """Без ключа — значение по умолчанию; записанное явно оно читается так же."""
@@ -461,7 +466,7 @@ def test_the_rule_keys_name_their_default(block, key, default):
 
     reader = getattr(B, key)
     A = _book()
-    del _node(A, block)[key]
+    _node(A, block).pop(key, None)
     assert reader(A) == default
     _node(A, block)[key] = default
     validate_book(A)

@@ -134,7 +134,7 @@ def refuse_incomplete(A: dict) -> None:
 HEADLINE_KEYS = frozenset({"method", "print_step", "diagnostics", "limited_liability",
                            "jump_guard"})
 UNCERTAINTY_KEYS = frozenset({"draws", "seed", "quantiles", "axes", "median_draws",
-                              "reverse_bounds", "median_refine"})
+                              "reverse_bounds", "median_refine", "axis_merge"})
 AXIS_KEYS = frozenset({"name", "path", "paths", "kind", "low", "high",
                        "shift_low", "shift_high", "low_label", "high_label"})
 REVERSE_DCF_KEYS = frozenset({"name", "paths", "kind", "search", "range"})
@@ -283,6 +283,57 @@ def _refuse_unknown_axes(A: dict) -> None:
         _refuse_unknown_kind(axis, REVERSE_DCF_KINDS, where)
 
 
+# Виды осей, подмены которых на одном пути составимы в любом порядке: сдвиг со
+# сдвигом — сумма, множитель с множителем — произведение.
+COMPOSABLE_AXIS_KINDS = ("shift", "scale")
+
+
+def _axis_kind(axis: dict) -> str:
+    """Вид оси — тем же правилом, что `model.uncertainty.axis_spec`."""
+    if "shift_low" in axis:
+        return "shift"
+    return axis.get("kind") or ("dict" if isinstance(axis.get("low"), dict) else "value")
+
+
+def _refuse_conflicting_axes(A: dict) -> None:
+    """Две оси полосы на одном пути книги — только сдвиг со сдвигом или множитель
+    с множителем (внешний аудит 30.09.2026, A01).
+
+    Оси полосы независимы (A-V9), а подмены прогона собираются в один словарь по
+    пути. Значение, выбор или словарь весов на пути, который подменяет и другая
+    ось (или на его части — пути-предке или пути-потомке), оставили бы от двух
+    суждений одно, и какое — решал бы порядок осей в книге; сдвиг с множителем
+    тоже не переставляются. Такая книга — отказ при загрузке, а не внутри пула
+    полосы. Как складываются составимые оси на РАВНОМ пути — ключ
+    `valuation.uncertainty.axis_merge` (`axis_merge`).
+    """
+    U = (A.get("valuation") or {}).get("uncertainty")
+    if not isinstance(U, dict):
+        return
+    seen: list[tuple[list, str, str, int]] = []
+    for number, axis in enumerate(U.get("axes", []) or []):
+        kind = _axis_kind(axis)
+        for path in axis.get("paths") or [axis.get("path")]:
+            if not isinstance(path, str):
+                continue
+            segments = path_segments(path)
+            for other_segments, other_path, other_kind, other_number in seen:
+                if other_number == number:
+                    continue
+                shared = min(len(segments), len(other_segments))
+                if segments[:shared] != other_segments[:shared]:
+                    continue
+                if kind == other_kind and kind in COMPOSABLE_AXIS_KINDS:
+                    continue
+                raise BookError(
+                    f"книга: оси полосы «{U['axes'][other_number].get('name')}» ({other_kind}, "
+                    f"{other_path}) и «{axis.get('name')}» ({kind}, {path}) подменяют один путь "
+                    "несоставимо: оси независимы, на общем пути складываются только сдвиг со "
+                    "сдвигом и множитель с множителем — иначе одно суждение молча затёрло бы "
+                    "другое, и какое — решал бы порядок осей")
+            seen.append((segments, path, kind, number))
+
+
 def _validate_closed_blocks(A: dict) -> None:
     """Обязательные ключи однородности чека, обновления режимов и справедливых спредов."""
     where = "revenue.ticket_lt_homogeneity"
@@ -328,6 +379,7 @@ def validate_book(A: dict) -> None:
     refuse_off_schema(A)
     refuse_incomplete(A)
     _refuse_unknown_axes(A)
+    _refuse_conflicting_axes(A)
     _validate_closed_blocks(A)
     capex_network_rules(A)
     distress_rule(A)
@@ -338,6 +390,7 @@ def validate_book(A: dict) -> None:
     median_draws(A)
     reverse_bounds(A)
     median_refine(A)
+    axis_merge(A)
     anchor_facts(A)
     season_from_period(A)
     season_free_halves(A)
@@ -439,6 +492,11 @@ def median_draws(A: dict) -> int:
 # Ключи правил диагностик медианы; без ключа — первое значение.
 REVERSE_BOUNDS = ("fixed", "follow_center")
 MEDIAN_REFINE_STEPS = (0, 1)
+# Подмены двух осей полосы на РАВНОМ пути (`valuation.uncertainty.axis_merge`):
+# `replace` — поздняя ось заменяет раннюю, в центре — нулевым сдвигом (850oa, где
+# общих путей у осей нет); `add` — сдвиги складываются, множители перемножаются
+# (внешний аудит 30.09.2026, A01).
+AXIS_MERGES = ("replace", "add")
 
 
 def _choice(block: dict, key: str, where: str, allowed: tuple) -> Any:
@@ -463,6 +521,16 @@ def median_refine(A: dict) -> int:
     поиска корня медианы на `median_draws` прогонах (0 — нет ключа)."""
     return _choice(A["valuation"]["uncertainty"], "median_refine", "valuation.uncertainty",
                    MEDIAN_REFINE_STEPS)
+
+
+def axis_merge(A: dict) -> str:
+    """`valuation.uncertainty.axis_merge` — как прогон полосы собирает подмены двух
+    осей на равном пути книги: `replace` (нет ключа) — словарём, поздняя ось
+    заменяет раннюю даже в своём центре; `add` — сдвиг + сдвиг = сумма, множитель ×
+    множитель = произведение (`model.uncertainty.draw_overrides`). Несоставимые оси
+    на одном пути книга не допускает вовсе (`_refuse_conflicting_axes`)."""
+    return _choice(A["valuation"]["uncertainty"], "axis_merge", "valuation.uncertainty",
+                   AXIS_MERGES)
 
 
 # ---------------------------------------- факты якоря, годы и периоды правил
