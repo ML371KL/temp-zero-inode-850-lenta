@@ -725,7 +725,10 @@ def cmd_record_actual(args) -> int:
                   "отчёта, факт вносится после его выхода", file=sys.stderr)
             return 64
     else:
-        reported = today
+        # Без даты журнал берёт день публикации из прежней записи периода, а у
+        # первой — сегодня (`Journal.record_actual`): повтор команды без даты не
+        # сдвигает день публикации на день внесения.
+        reported = None
 
     journal = Journal()
     actual = journal.record_actual(args.target, args.period, args.value,
@@ -743,8 +746,11 @@ def cmd_record_actual(args) -> int:
                 print(f"    {days:>4} дн  {item['value']:.6g}  ошибка {item['error']:+.6g}")
         verdict = ("обгоняет главный эталон" if row["beats_benchmark"]
                    else "не обгоняет главный эталон" if row["beats_benchmark"] is False
+                   else "главного эталона на момент зачёта нет" if row["forecast"] is not None
                    else "не зачтено: " + row["note"])
         print(f"  зачёт на {row['scoring_horizon_days']} дн: {verdict}")
+        if row["forecast"] is not None and row["note"]:
+            print(f"    {row['note']}")
     return 0
 
 

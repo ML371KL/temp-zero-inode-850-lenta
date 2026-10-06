@@ -342,11 +342,23 @@ class Journal:
 
     def record_actual(self, target: str, period: str, value: float, source: str = "",
                       reported_on: date | None = None) -> Actual:
-        """Вносит факт. `reported_on` — день ПУБЛИКАЦИИ, а не день внесения."""
-        reported_on = reported_on or _utc_today()
+        """Вносит факт. `reported_on` — день ПУБЛИКАЦИИ, а не день внесения.
+
+        Исправление — новой строкой (правка и удаление запрещены триггерами):
+        действует последняя. Строка не пишется, только если совпали И число, И
+        день публикации: от дня публикации меряются горизонты зачёта, и
+        исправить его при том же числе должно быть можно (внешний аудит
+        30.09.2026, T12 — прежде такое исправление молча возвращало старую
+        строку). Без `reported_on` день берётся из прежней записи периода
+        (исправление числа не сдвигает день публикации на день внесения), а у
+        первой записи — сегодня.
+        """
         recorded_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
         previous = self.actual(target, period)
-        if previous is not None and _same_value(previous.value, value, None):
+        if reported_on is None:
+            reported_on = previous.reported_on if previous is not None else _utc_today()
+        if (previous is not None and _same_value(previous.value, value, None)
+                and previous.reported_on == reported_on):
             return previous
         with closing(sqlite3.connect(self.path)) as db:
             db.execute("INSERT INTO actuals (target, period, value, reported_on, recorded_at,"
@@ -459,10 +471,13 @@ class Journal:
         периода одного раскрытия легко получают разные даты. Из периодов
         одного отчёта в зачёт идёт квартал, затем полугодие, затем год.
         """
+        # День публикации — из ПОСЛЕДНЕЙ строки периода, как у `actual`: исправленный
+        # день (T12) двигает и порядок событий, а не только горизонты.
         with closing(sqlite3.connect(self.path)) as db:
             rows = db.execute(
-                "SELECT period, MIN(reported_on) FROM actuals WHERE target = ?"
-                " GROUP BY period ORDER BY MIN(reported_on), period", (target,)).fetchall()
+                "SELECT a.period, a.reported_on FROM actuals a JOIN (SELECT MAX(id) AS id"
+                " FROM actuals WHERE target = ? GROUP BY period) last ON a.id = last.id"
+                " ORDER BY a.reported_on, a.period", (target,)).fetchall()
         gives = target_gives(target)
         by_report: dict[str, list[tuple[str, str]]] = {}
         for period, reported_on in rows:
