@@ -499,3 +499,29 @@ def test_the_centres_moved_by_the_audit_are_the_centres_of_the_sheets(A):
     assert A["nwc"]["anchor_level"] == pytest.approx(-10.9559 - ltip, abs=5e-5)
     assert A["nwc"]["nwc_pct"]["hold"] == pytest.approx(round(-0.029 - ltip / 1393.313037, 4), abs=1e-12)
     assert all(i["id"] != "ltip_long_term" for i in A["bridge"]["items"])
+
+
+def test_the_json_copy_reads_as_the_same_book(A, monkeypatch, tmp_path):
+    """Внешний аудит, A02: `assumptions.json` — копия книги, и `load_book` читает её в
+    тот же объект, что YAML (сроки кривых миров в JSON — строки, схема их сроками не
+    признаёт). Запасной путь без PyYAML читает JSON рядом с ЗАПРОШЕННЫМ файлом, а не
+    канон: книга-кандидат не подменяется молча."""
+    import builtins
+
+    assert load_book(BOOK_DIR / "assumptions.json") == A
+    candidate = copy.deepcopy(A)
+    candidate["valuation"]["beta_u"] = A["valuation"]["beta_u"] + 0.01
+    (tmp_path / "assumptions.json").write_text(json.dumps(candidate, ensure_ascii=False),
+                                               encoding="utf-8")
+    real_import = builtins.__import__
+
+    def no_yaml(name, *args, **kwargs):
+        if name == "yaml":
+            raise ImportError(name)
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", no_yaml)
+    assert load_book(BOOK_DIR / "assumptions.yaml") == A
+    assert load_book(tmp_path / "assumptions.yaml") == candidate
+    with pytest.raises(FileNotFoundError):
+        load_book(tmp_path / "missing" / "assumptions.yaml")

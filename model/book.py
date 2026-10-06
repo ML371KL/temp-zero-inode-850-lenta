@@ -34,15 +34,18 @@ def load_book(path: Path | None = None) -> dict[str, Any]:
 
     Книга проверяется `validate_book`: незнакомый ключ блока, который ядро
     читает через `.get`, книга прежней версии и число вне границ — отказ.
+    JSON-копия читается в тот же объект, что YAML (`_read_json_book`). Без PyYAML
+    читается JSON РЯДОМ с запрошенным файлом, а не канон: вместо запрошенной
+    книги-кандидата молча посчиталась бы другая (внешний аудит 30.09.2026, A02).
     """
     path = path or BOOK_YAML
     if path.suffix == ".json":
-        A = json.loads(path.read_text(encoding="utf-8"))
+        A = _read_json_book(path)
     else:
         try:
             import yaml
-        except ImportError:  # pragma: no cover
-            A = json.loads(BOOK_JSON.read_text(encoding="utf-8"))
+        except ImportError:
+            A = _read_json_book(path.with_suffix(".json"))
         else:
             A = yaml.safe_load(path.read_text(encoding="utf-8"))
     validate_book(A)
@@ -51,6 +54,20 @@ def load_book(path: Path | None = None) -> dict[str, Any]:
     check_governance_sum(A)
     check_effective_area_history(A)
     return A
+
+
+# Сроки кривых миров (`zero_curve: {1: …, 3: …, 5: …, 10: …}`) в YAML — целые
+# ключи, а JSON пишет любой ключ строкой, и схема книги строку «1» сроком не
+# признаёт. Годы траекторий в YAML уже строки («2027»), поэтому целыми
+# возвращаются только ключи из 1–3 цифр.
+_TENOR_KEY = re.compile(r"^\d{1,3}$")
+
+
+def _read_json_book(path: Path) -> dict[str, Any]:
+    """JSON-копия книги — тем же объектом, что её YAML."""
+    return json.loads(path.read_text(encoding="utf-8"),
+                      object_hook=lambda block: {int(key) if _TENOR_KEY.match(key) else key: value
+                                                 for key, value in block.items()})
 
 
 @lru_cache(maxsize=1)
