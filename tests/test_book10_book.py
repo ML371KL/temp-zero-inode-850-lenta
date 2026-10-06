@@ -47,10 +47,16 @@ def _evidence(rel: str) -> dict:
 # ================================================================ книга и миры
 
 
-def test_the_book_loads_and_is_version_one(A):
-    assert A["meta"]["version"] == "1.0"
+def test_the_book_loads_and_is_version_one_point_one(A):
+    """Версия 1.1 — суждения 1.0 и четыре правила расчёта по внешнему аудиту
+    30.09.2026, каждое включено ключом книги (умолчания ключей — версия 1.0)."""
+    assert A["meta"]["version"] == "1.1"
     assert A["meta"]["company"] == {"name": "Лента", "ticker": "LENT"}
     assert A["valuation"]["headline"]["method"] == "intrinsic"
+    assert A["valuation"]["uncertainty"]["axis_merge"] == "add"
+    terminal = A["valuation"]["terminal"]
+    assert (terminal["da_convention"], terminal["boundary_levels"], terminal["tax_floor"]) == (
+        "cohort_explicit", "rolling", "exact")
 
 
 def test_the_world_record_is_stored_byte_for_byte():
@@ -301,7 +307,7 @@ def test_the_fast_path_prints_the_release_and_writes_nothing(A, tmp_path, monkey
     from model import book_results
 
     text = book_results.fast_summary(copy.deepcopy(A))
-    assert "книга 1.0" in text and "точка: низ" in text
+    assert f"книга {A['meta']['version']} " in text and "точка: низ" in text
     assert "инварианты: чисто" in text
     monkeypatch.chdir(tmp_path)
     assert book_results.main(["--fast", "--out", str(tmp_path)]) == 0

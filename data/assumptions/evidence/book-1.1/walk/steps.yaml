@@ -1,0 +1,12 @@
+# Прогулка книги 1.0 → 1.1: правки по одной, накопительно (ops/tools/walk_book.py).
+# Суждения, факты и миры не меняются: каждый шаг включает одно правило расчёта ключом книги.
+- name: "Версия 1.1 (номер версии, чисел не меняет)"
+  from_end: [meta.version]
+- name: "A01. Оси полосы на общем пути складываются (axis_merge: add)"
+  from_end: [valuation.uncertainty.axis_merge]
+- name: "A04. D&A терминала — правило когорт явного периода (da_convention: cohort_explicit)"
+  from_end: [valuation.terminal.da_convention]
+- name: "A05. Уровни ОК и кассы на границе терминала — на скользящей выручке (boundary_levels: rolling)"
+  from_end: [valuation.terminal.boundary_levels]
+- name: "A06. Нулевой предел налога — в каждом полугодии терминала (tax_floor: exact)"
+  from_end: [valuation.terminal.tax_floor]

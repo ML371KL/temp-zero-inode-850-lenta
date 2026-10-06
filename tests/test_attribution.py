@@ -31,7 +31,7 @@ def A():
 
 def test_snapshot_captures_what_changes_between_releases(A):
     snap = inputs_snapshot(A)
-    assert snap["book_version"] == str(A["meta"]["version"]) == "1.0"
+    assert snap["book_version"] == str(A["meta"]["version"]) == "1.1"
     assert snap["curve"], "кривая обязана попасть в снимок"
     assert "market_price" in snap and "observations" in snap
 

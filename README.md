@@ -38,25 +38,25 @@
 
 ## Что печатает модель
 
-На входах книги 1.0 (кривая 18.09.2026, цена LEGALCLOSEPRICE <!--=headline.market r1-->1 619,5<!--/--> ₽,
+На входах книги 1.1 (кривая 18.09.2026, цена LEGALCLOSEPRICE <!--=headline.market r1-->1 619,5<!--/--> ₽,
 отчётная база 30.06.2026, базис IAS 17) крупно — **медиана по суждениям книги
-≈<!--=headline.printed_central r0-->3 150<!--/--> ₽** с полосами **80 % — <!--=headline.printed_band[0] r0-->2 650<!--/-->–<!--=headline.printed_band[1] r0-->3 650<!--/--> ₽** и **50 % — <!--=headline.printed_inner[0] r0-->2 900<!--/-->–<!--=headline.printed_inner[1] r0-->3 400<!--/--> ₽** (точные <!--=headline.central r0-->3 131<!--/-->; <!--=headline.band[0] r0-->2 648<!--/-->–<!--=headline.band[1] r0-->3 654<!--/-->; <!--=headline.inner[0] r0-->2 887<!--/-->–<!--=headline.inner[1] r0-->3 404<!--/-->);
+≈<!--=headline.printed_central r0-->3 150<!--/--> ₽** с полосами **80 % — <!--=headline.printed_band[0] r0-->2 600<!--/-->–<!--=headline.printed_band[1] r0-->3 650<!--/--> ₽** и **50 % — <!--=headline.printed_inner[0] r0-->2 850<!--/-->–<!--=headline.printed_inner[1] r0-->3 400<!--/--> ₽** (точные <!--=headline.central r0-->3 125<!--/-->; <!--=headline.band[0] r0-->2 604<!--/-->–<!--=headline.band[1] r0-->3 670<!--/-->; <!--=headline.inner[0] r0-->2 859<!--/-->–<!--=headline.inner[1] r0-->3 413<!--/-->);
 вероятность, что центр ниже рынка, — <!--=headline.p_central_below_market p0-->0<!--/--> %. Первой строкой — **EV
-медианы <!--=median_diagnostics.center_ev.center.v0 r0-->524<!--/--> млрд ₽ против рыночного V\* <!--=median_diagnostics.center_ev.center.v_star r0-->337<!--/--> млрд ₽
-(<!--=median_diagnostics.center_ev.center.gap_vs_v_star sp1-->+55,4<!--/--> %)**; 1 % EV — ≈<!--=median_diagnostics.center_ev.center.rub_per_1pct_ev r0-->42<!--/--> ₽ медианы. Точка при центральных
-значениях — ≈<!--=headline.printed_point r0-->3 250<!--/--> ₽ (точная <!--=fair_value.central r0-->3 271<!--/-->; ось ставок <!--=fair_value.low r0-->3 172<!--/-->–<!--=fair_value.high r0-->3 369<!--/--> ₽,
-вклад собственного взгляда на инфляцию и ставки <!--=fair_value.rates_view.rub s0-->+197<!--/--> ₽).
+медианы <!--=median_diagnostics.center_ev.center.v0 r0-->523<!--/--> млрд ₽ против рыночного V\* <!--=median_diagnostics.center_ev.center.v_star r0-->337<!--/--> млрд ₽
+(<!--=median_diagnostics.center_ev.center.gap_vs_v_star sp1-->+55,2<!--/--> %)**; 1 % EV — ≈<!--=median_diagnostics.center_ev.center.rub_per_1pct_ev r0-->42<!--/--> ₽ медианы. Точка при центральных
+значениях — ≈<!--=headline.printed_point r0-->3 250<!--/--> ₽ (точная <!--=fair_value.central r0-->3 271<!--/-->; ось ставок <!--=fair_value.low r0-->3 175<!--/-->–<!--=fair_value.high r0-->3 368<!--/--> ₽,
+вклад собственного взгляда на инфляцию и ставки <!--=fair_value.rates_view.rub s0-->+192<!--/--> ₽).
 
 Что заложено в цену (обратный DCF медианы, одно суждение при остальных в
-центре): долгосрочная маржа <!--=median_diagnostics.reverse_dcf[name=Долгосрочный уровень маржи (сдвиг целей 2031–2035 и LT всех режимов)].value sp2n-->−1,86<!--/--> п.п., поддерживающий capex <!--=median_diagnostics.reverse_dcf[name=Поддерживающий capex (сдвиг всех уровней)].value sp2n-->+1,14<!--/--> п.п., долгий реальный LFL <!--=median_diagnostics.reverse_dcf[name=Долгий реальный LFL (сдвиг s LT)].value sp2n-->−2,83<!--/--> п.п., β_u <!--=median_diagnostics.reverse_dcf[name=Бета активов β_u].value r2n-->1,78<!--/-->,
-ERP <!--=median_diagnostics.reverse_dcf[name=ERP].value p1n-->18,7<!--/--> %, дисконт за управление <!--=median_diagnostics.reverse_dcf[name=Дисконт за управление].value p1n-->57,0<!--/--> % — все за границами
+центре): долгосрочная маржа <!--=median_diagnostics.reverse_dcf[name=Долгосрочный уровень маржи (сдвиг целей 2031–2035 и LT всех режимов)].value sp2n-->−1,81<!--/--> п.п., поддерживающий capex <!--=median_diagnostics.reverse_dcf[name=Поддерживающий capex (сдвиг всех уровней)].value sp2n-->+1,10<!--/--> п.п., долгий реальный LFL <!--=median_diagnostics.reverse_dcf[name=Долгий реальный LFL (сдвиг s LT)].value sp2n-->−2,76<!--/--> п.п., β_u <!--=median_diagnostics.reverse_dcf[name=Бета активов β_u].value r2n-->1,75<!--/-->,
+ERP <!--=median_diagnostics.reverse_dcf[name=ERP].value p1n-->18,1<!--/--> %, дисконт за управление <!--=median_diagnostics.reverse_dcf[name=Дисконт за управление].value p1n-->56,4<!--/--> % — все за границами
 диапазонов книги; ни одно суждение в своём диапазоне рыночную цену не даёт.
 Модельный V0 — <!--=peer_crosscheck.model_v0_multiple.analytical r1-->6,2<!--/-->× EBITDA LTM проформы против рыночных <!--=peer_crosscheck.market_implied_ev_multiple r1-->3,7<!--/-->×.
-Полосу определяют поддерживающий capex (<!--=uncertainty.contributions[axis=Поддерживающий capex (все уровни)].share p0-->31<!--/--> % разброса), долгий
-реальный LFL (<!--=uncertainty.contributions[axis=Долгий реальный LFL (сдвиг s LT)].share p0-->12<!--/--> %), долгосрочная маржа (<!--=uncertainty.contributions[axis=Долгосрочный уровень маржи (цели 2031–2035 и LT всех режимов)].share p0-->9<!--/--> %), дисконт за
-управление (<!--=uncertainty.contributions[axis=Дисконт за управление].share p0-->8<!--/--> %), плотность новой площади «у дома» (<!--=uncertainty.contributions[axis=Плотность новой площади «у дома»].share p0-->8<!--/--> %) и β_u
-(<!--=uncertainty.contributions[axis=β_u].share p0-->8<!--/--> %). Нейтральная маржа 2П2026 (факт, при котором медиана не
-меняется) — <!--=median_diagnostics.next_report_neutral.margin p2-->6,23<!--/--> %.
+Полосу определяют поддерживающий capex (<!--=uncertainty.contributions[axis=Поддерживающий capex (все уровни)].share p0-->27<!--/--> % разброса), долгосрочная
+маржа (<!--=uncertainty.contributions[axis=Долгосрочный уровень маржи (цели 2031–2035 и LT всех режимов)].share p0-->19<!--/--> %), долгий реальный LFL (<!--=uncertainty.contributions[axis=Долгий реальный LFL (сдвиг s LT)].share p0-->11<!--/--> %), дисконт за
+управление (<!--=uncertainty.contributions[axis=Дисконт за управление].share p0-->8<!--/--> %), плотность новой площади «у дома» (<!--=uncertainty.contributions[axis=Плотность новой площади «у дома»].share p0-->7<!--/--> %) и β_u
+(<!--=uncertainty.contributions[axis=β_u].share p0-->7<!--/--> %). Нейтральная маржа 2П2026 (факт, при котором медиана не
+меняется) — <!--=median_diagnostics.next_report_neutral.margin p2-->6,26<!--/--> %.
 
 Числа выше — метки результатов книги (`data/assumptions/results.json`); живой
 выпуск считает на сегодняшней цене и печатает свои числа — экран «Оценка» и

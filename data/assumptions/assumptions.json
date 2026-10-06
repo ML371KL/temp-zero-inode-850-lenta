@@ -1,6 +1,6 @@
 {
  "meta": {
-  "version": "1.0",
+  "version": "1.1",
   "company": {
    "name": "Лента",
    "ticker": "LENT"
@@ -1811,8 +1811,10 @@
   "terminal": {
    "half_rate_convention": "compound",
    "revenue_base": "exit_area",
-   "da_convention": "cohort_runoff",
-   "shield_leverage": "cycle_average"
+   "da_convention": "cohort_explicit",
+   "shield_leverage": "cycle_average",
+   "boundary_levels": "rolling",
+   "tax_floor": "exact"
   },
   "governance_discount": 0.06415,
   "governance_components": [
@@ -1888,6 +1890,7 @@
    "median_draws": 200,
    "reverse_bounds": "follow_center",
    "median_refine": 1,
+   "axis_merge": "add",
    "axes": [
     {
      "name": "Долгосрочный уровень маржи (цели 2031–2035 и LT всех режимов)",
