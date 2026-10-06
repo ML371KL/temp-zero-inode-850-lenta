@@ -9720,557 +9720,283 @@
   }
  },
  "fy": {
-  "FY2020": {
+  "FY2018": {
    "ias17": {
     "pl": {
      "revenue": {
-      "v": 445.543829,
-      "src": "PL!T10"
+      "v": 413.562197,
+      "src": "PL!P10"
      },
      "cogs": {
-      "v": -344.050325,
-      "src": "PL!T11"
+      "v": -324.76789,
+      "src": "PL!P11"
      },
      "gross_profit": {
-      "v": 101.493504,
-      "src": "PL!T12"
+      "v": 88.794307,
+      "src": "PL!P12"
      },
      "sga": {
-      "v": -81.538426,
-      "src": "PL!T15"
+      "v": -69.094871,
+      "src": "PL!P15"
      },
      "staff": {
-      "v": -31.264457,
-      "src": "PL!T16"
+      "v": -25.556037,
+      "src": "PL!P16"
      },
      "da": {
-      "v": -14.724444,
-      "src": "PL!T17"
+      "v": -11.977519,
+      "src": "PL!P17"
      },
      "professional_fees": {
-      "v": -4.31819,
-      "src": "PL!T18"
+      "v": -3.863897,
+      "src": "PL!P18"
      },
      "advertising": {
-      "v": -5.748928,
-      "src": "PL!T19"
+      "v": -5.217256,
+      "src": "PL!P19"
      },
      "utilities": {
-      "v": -4.969707,
-      "src": "PL!T20"
+      "v": -4.517562,
+      "src": "PL!P20"
      },
      "repairs": {
-      "v": -3.523836,
-      "src": "PL!T21"
+      "v": -2.642799,
+      "src": "PL!P21"
      },
      "cleaning": {
-      "v": -3.508353,
-      "src": "PL!T22"
+      "v": -2.882658,
+      "src": "PL!P22"
      },
      "lease_premises": {
-      "v": -5.958372,
-      "src": "PL!T23"
+      "v": -5.767878,
+      "src": "PL!P23"
      },
      "sga_other": {
-      "v": -3.67023,
-      "src": "PL!T24"
+      "v": -2.971267,
+      "src": "PL!P24"
      },
      "taxes_other": {
-      "v": -1.456812,
-      "src": "PL!T25"
+      "v": -1.509046,
+      "src": "PL!P25"
      },
      "security": {
-      "v": -2.082074,
-      "src": "PL!T26"
+      "v": -1.893165,
+      "src": "PL!P26"
      },
      "preopening": {
-      "v": null,
-      "src": "PL!T27"
+      "v": 0.0,
+      "src": "PL!P27"
      },
      "lease_land_equipment": {
-      "v": -0.313023,
-      "src": "PL!T28"
+      "v": -0.295787,
+      "src": "PL!P28"
      },
      "other_op_income": {
-      "v": 5.167359,
-      "src": "PL!T30"
+      "v": 4.993245,
+      "src": "PL!P30"
      },
      "other_op_expense": {
-      "v": -0.531785,
-      "src": "PL!T31"
+      "v": -0.47604,
+      "src": "PL!P31"
      },
      "opbi": {
-      "v": 24.590652,
-      "src": "PL!T32"
+      "v": 24.216641,
+      "src": "PL!P32"
      },
      "impairment": {
-      "v": 3.004799,
-      "src": "PL!T33"
+      "v": -0.132188,
+      "src": "PL!P33"
      },
      "ebit": {
-      "v": 27.595451,
-      "src": "PL!T34"
+      "v": 24.084453,
+      "src": "PL!P34"
      },
      "interest_expense": {
-      "v": -6.795768,
-      "src": "PL!T36"
+      "v": -9.699272,
+      "src": "PL!P36"
      },
      "interest_income": {
-      "v": 0.578438,
-      "src": "PL!T37"
+      "v": 0.608472,
+      "src": "PL!P37"
      },
      "put_revaluation": {
       "v": null,
-      "src": "PL!T38"
+      "src": "PL!P38"
      },
      "swaps_fv": {
       "v": null,
-      "src": "PL!T39"
+      "src": "PL!P39"
      },
      "other_non_operating": {
       "v": null,
-      "src": "PL!T40"
+      "src": "PL!P40"
      },
      "fx": {
-      "v": -0.247145,
-      "src": "PL!T41"
+      "v": -0.176371,
+      "src": "PL!P41"
      },
      "pbt": {
-      "v": 21.130976,
-      "src": "PL!T43"
+      "v": 14.817282,
+      "src": "PL!P43"
      },
      "income_tax": {
-      "v": -3.683657,
-      "src": "PL!T44"
+      "v": -3.022988,
+      "src": "PL!P44"
      },
      "net_income": {
-      "v": 17.447319,
-      "src": "PL!T46"
+      "v": 11.794294,
+      "src": "PL!P46"
      },
      "ebitda": {
-      "v": 39.315096,
-      "src": "PL!T49"
+      "v": 36.19416,
+      "src": "PL!P49"
      },
      "lease_expense": {
-      "v": -6.271395,
-      "src": "PL!T23 + PL!T28",
+      "v": -6.063665,
+      "src": "PL!P23 + PL!P28",
       "kind": "calc"
      }
     },
     "cf": {
      "pbt": {
-      "v": 21.130976,
-      "src": "CF!T11"
+      "v": 14.817282,
+      "src": "CF!P11"
      },
      "interest_expense_addback": {
-      "v": 6.795768,
-      "src": "CF!T18"
+      "v": 9.699272,
+      "src": "CF!P18"
      },
      "da": {
-      "v": 0.067147,
-      "src": "CF!T22"
+      "v": 12.109707,
+      "src": "CF!P22"
      },
      "bargain_purchase_gain": {
       "v": null,
-      "src": "CF!T29"
+      "src": "CF!P29"
      },
      "d_receivables": {
-      "v": -2.388253,
-      "src": "CF!T37"
+      "v": -0.684178,
+      "src": "CF!P37"
      },
      "d_advances_paid": {
-      "v": -0.193842,
-      "src": "CF!T38"
+      "v": -0.548409,
+      "src": "CF!P38"
      },
      "d_prepaid": {
-      "v": -0.203295,
-      "src": "CF!T39"
+      "v": -0.020686,
+      "src": "CF!P39"
      },
      "d_inventories": {
-      "v": -4.213554,
-      "src": "CF!T40"
+      "v": -4.964974,
+      "src": "CF!P40"
      },
      "d_payables": {
-      "v": 4.602437,
-      "src": "CF!T41"
+      "v": 0.042165,
+      "src": "CF!P41"
      },
      "d_advances_received": {
-      "v": 0.289025,
-      "src": "CF!T42"
+      "v": -0.015988,
+      "src": "CF!P42"
      },
      "d_other_taxes": {
-      "v": 0.036173,
-      "src": "CF!T43"
+      "v": 1.79182,
+      "src": "CF!P43"
      },
      "cash_generated": {
-      "v": 38.306604,
-      "src": "CF!T45"
+      "v": 32.415702,
+      "src": "CF!P45"
      },
      "income_tax_paid": {
-      "v": -4.768884,
-      "src": "CF!T47"
+      "v": -0.871201,
+      "src": "CF!P47"
      },
      "interest_paid": {
-      "v": -6.938225,
-      "src": "CF!T48"
+      "v": -10.440177,
+      "src": "CF!P48"
      },
      "interest_received": {
-      "v": 0.660905,
-      "src": "CF!T49"
+      "v": 0.522871,
+      "src": "CF!P49"
      },
      "net_ocf": {
-      "v": 27.2604,
-      "src": "CF!T51"
+      "v": 21.627195,
+      "src": "CF!P51"
      },
      "capex_ppe": {
-      "v": -6.869398,
-      "src": "CF!T54"
+      "v": -21.411263,
+      "src": "CF!P54"
      },
      "acquisitions_net": {
-      "v": 0.0,
-      "src": "CF!T55"
+      "v": null,
+      "src": "CF!P55"
      },
      "capex_intangibles": {
-      "v": -0.778002,
-      "src": "CF!T56"
+      "v": -0.642512,
+      "src": "CF!P56"
      },
      "capex_leasehold_rights": {
-      "v": 0.0,
-      "src": "CF!T57"
-     },
-     "loans_given_net": {
-      "v": 0.0,
-      "src": "CF!T58"
-     },
-     "proceeds_disposals_lr": {
-      "v": 0.0,
-      "src": "CF!T59"
-     },
-     "proceeds_ppe": {
-      "v": 0.23834,
-      "src": "CF!T60"
-     },
-     "transfer_restricted": {
-      "v": null,
-      "src": "CF!T61"
-     },
-     "net_icf": {
-      "v": -7.40906,
-      "src": "CF!T63"
-     },
-     "borrowings_in": {
-      "v": 45.792775,
-      "src": "CF!T66"
-     },
-     "borrowings_out": {
-      "v": -117.240001,
-      "src": "CF!T67"
-     },
-     "lease_principal": {
-      "v": 0.0,
-      "src": "CF!T68"
-     },
-     "finance_lease_repaid": {
-      "v": 0.0,
-      "src": "CF!T69"
-     },
-     "share_issue": {
-      "v": 0.0,
-      "src": "CF!T71"
-     },
-     "buyback": {
-      "v": null,
-      "src": "CF!T72"
-     },
-     "net_fcf": {
-      "v": -71.447226,
-      "src": "CF!T76"
-     },
-     "cash_begin": {
-      "v": 73.40476,
-      "src": "CF!T78"
-     },
-     "net_change_cash": {
-      "v": -51.595886,
-      "src": "CF!T79"
-     },
-     "cash_end": {
-      "v": 21.808874,
-      "src": "CF!T81"
-     }
-    }
-   },
-   "ifrs16": {
-    "pl": {
-     "revenue": {
-      "v": 445.543829,
-      "src": "PL!AJ10"
-     },
-     "cogs": {
-      "v": -343.728186,
-      "src": "PL!AJ11"
-     },
-     "gross_profit": {
-      "v": 101.815643,
-      "src": "PL!AJ12"
-     },
-     "sga": {
-      "v": -80.114179,
-      "src": "PL!AJ15"
-     },
-     "staff": {
-      "v": -31.264457,
-      "src": "PL!AJ16"
-     },
-     "da": {
-      "v": -18.540233,
-      "src": "PL!AJ17"
-     },
-     "professional_fees": {
-      "v": -4.31819,
-      "src": "PL!AJ18"
-     },
-     "advertising": {
-      "v": -5.748928,
-      "src": "PL!AJ19"
-     },
-     "utilities": {
-      "v": -4.969707,
-      "src": "PL!AJ20"
-     },
-     "repairs": {
-      "v": -3.523836,
-      "src": "PL!AJ21"
-     },
-     "cleaning": {
-      "v": -3.508353,
-      "src": "PL!AJ22"
-     },
-     "lease_premises": {
-      "v": -0.880499,
-      "src": "PL!AJ23"
-     },
-     "sga_other": {
-      "v": -3.67023,
-      "src": "PL!AJ24"
-     },
-     "taxes_other": {
-      "v": -1.456812,
-      "src": "PL!AJ25"
-     },
-     "security": {
-      "v": -2.082074,
-      "src": "PL!AJ26"
-     },
-     "preopening": {
-      "v": 0.0,
-      "src": "PL!AJ27"
-     },
-     "lease_land_equipment": {
-      "v": -0.15086,
-      "src": "PL!AJ28"
-     },
-     "other_op_income": {
-      "v": 5.199902,
-      "src": "PL!AJ30"
-     },
-     "other_op_expense": {
-      "v": -0.52247,
-      "src": "PL!AJ31"
-     },
-     "opbi": {
-      "v": 26.378896,
-      "src": "PL!AJ32"
-     },
-     "impairment": {
-      "v": 2.907125,
-      "src": "PL!AJ33"
-     },
-     "ebit": {
-      "v": 29.286021,
-      "src": "PL!AJ34"
-     },
-     "interest_expense": {
-      "v": -9.512254,
-      "src": "PL!AJ36"
-     },
-     "interest_income": {
-      "v": 0.60997,
-      "src": "PL!AJ37"
-     },
-     "put_revaluation": {
-      "v": 0.0,
-      "src": "PL!AJ38"
-     },
-     "swaps_fv": {
-      "v": 0.0,
-      "src": "PL!AJ39"
-     },
-     "other_non_operating": {
-      "v": 0.0,
-      "src": "PL!AJ40"
-     },
-     "fx": {
-      "v": -0.386122,
-      "src": "PL!AJ41"
-     },
-     "pbt": {
-      "v": 19.997615,
-      "src": "PL!AJ43"
-     },
-     "income_tax": {
-      "v": -3.456984,
-      "src": "PL!AJ44"
-     },
-     "net_income": {
-      "v": 16.540631,
-      "src": "PL!AJ46"
-     },
-     "ebitda": {
-      "v": 44.919129,
-      "src": "PL!AJ49"
-     }
-    },
-    "cf": {
-     "pbt": {
-      "v": 19.997615,
-      "src": "CF!AJ11"
-     },
-     "interest_expense_addback": {
-      "v": 9.512254,
-      "src": "CF!AJ18"
-     },
-     "da": {
-      "v": 18.540233,
-      "src": "CF!AJ22"
-     },
-     "bargain_purchase_gain": {
-      "v": null,
-      "src": "CF!AJ29"
-     },
-     "d_receivables": {
-      "v": -2.388253,
-      "src": "CF!AJ37"
-     },
-     "d_advances_paid": {
-      "v": -0.259025,
-      "src": "CF!AJ38"
-     },
-     "d_prepaid": {
-      "v": -0.203295,
-      "src": "CF!AJ39"
-     },
-     "d_inventories": {
-      "v": -4.213554,
-      "src": "CF!AJ40"
-     },
-     "d_payables": {
-      "v": 4.60105,
-      "src": "CF!AJ41"
-     },
-     "d_advances_received": {
-      "v": 0.289025,
-      "src": "CF!AJ42"
-     },
-     "d_other_taxes": {
-      "v": 0.036173,
-      "src": "CF!AJ43"
-     },
-     "cash_generated": {
-      "v": 43.80262,
-      "src": "CF!AJ45"
-     },
-     "income_tax_paid": {
-      "v": -4.768884,
-      "src": "CF!AJ47"
-     },
-     "interest_paid": {
-      "v": -9.654711,
-      "src": "CF!AJ48"
-     },
-     "interest_received": {
-      "v": 0.660905,
-      "src": "CF!AJ49"
-     },
-     "net_ocf": {
-      "v": 30.03993,
-      "src": "CF!AJ51"
-     },
-     "capex_ppe": {
-      "v": -6.834086,
-      "src": "CF!AJ54"
-     },
-     "acquisitions_net": {
-      "v": 0.0,
-      "src": "CF!AJ55"
-     },
-     "capex_intangibles": {
-      "v": -0.778002,
-      "src": "CF!AJ56"
-     },
-     "capex_leasehold_rights": {
-      "v": 0.0,
-      "src": "CF!AJ57"
+      "v": -0.26764,
+      "src": "CF!P57"
      },
      "loans_given_net": {
       "v": null,
-      "src": "CF!AJ58"
+      "src": "CF!P58"
      },
      "proceeds_disposals_lr": {
-      "v": 0.0,
-      "src": "CF!AJ59"
+      "v": null,
+      "src": "CF!P59"
      },
      "proceeds_ppe": {
-      "v": 0.23834,
-      "src": "CF!AJ60"
+      "v": 0.177087,
+      "src": "CF!P60"
      },
      "transfer_restricted": {
       "v": null,
-      "src": "CF!AJ61"
+      "src": "CF!P61"
      },
      "net_icf": {
-      "v": -7.373748,
-      "src": "CF!AJ63"
+      "v": -22.144328,
+      "src": "CF!P63"
      },
      "borrowings_in": {
-      "v": 45.792775,
-      "src": "CF!AJ66"
+      "v": 132.183,
+      "src": "CF!P66"
      },
      "borrowings_out": {
-      "v": -117.240001,
-      "src": "CF!AJ67"
+      "v": -111.871775,
+      "src": "CF!P67"
      },
      "lease_principal": {
-      "v": -2.814842,
-      "src": "CF!AJ68"
+      "v": 0.0,
+      "src": "CF!P68"
      },
      "finance_lease_repaid": {
       "v": 0.0,
-      "src": "CF!AJ69"
+      "src": "CF!P69"
      },
      "share_issue": {
       "v": 0.0,
-      "src": "CF!AJ71"
+      "src": "CF!P71"
      },
      "buyback": {
-      "v": null,
-      "src": "CF!AJ72"
+      "v": -0.291091,
+      "src": "CF!P72"
      },
      "net_fcf": {
-      "v": -74.262068,
-      "src": "CF!AJ76"
+      "v": 20.020134,
+      "src": "CF!P76"
      },
      "cash_begin": {
-      "v": 73.40476,
-      "src": "CF!AJ78"
+      "v": 14.301859,
+      "src": "CF!P78"
      },
      "net_change_cash": {
-      "v": -51.595886,
-      "src": "CF!AJ79"
+      "v": 19.503001,
+      "src": "CF!P79"
      },
      "cash_end": {
-      "v": 21.808874,
-      "src": "CF!AJ81"
+      "v": 33.80486,
+      "src": "CF!P81"
      }
     }
    }
@@ -10830,1112 +10556,557 @@
     }
    }
   },
-  "FY2025": {
+  "FY2020": {
    "ias17": {
     "pl": {
      "revenue": {
-      "v": 1103.662719,
-      "src": "PL!AD10"
+      "v": 445.543829,
+      "src": "PL!T10"
      },
      "cogs": {
-      "v": -851.595467,
-      "src": "PL!AD11"
+      "v": -344.050325,
+      "src": "PL!T11"
      },
      "gross_profit": {
-      "v": 252.067252,
-      "src": "PL!AD12"
+      "v": 101.493504,
+      "src": "PL!T12"
      },
      "sga": {
-      "v": -206.951782,
-      "src": "PL!AD15"
+      "v": -81.538426,
+      "src": "PL!T15"
      },
      "staff": {
-      "v": -94.393772,
-      "src": "PL!AD16"
+      "v": -31.264457,
+      "src": "PL!T16"
      },
      "da": {
-      "v": -26.283008,
-      "src": "PL!AD17"
+      "v": -14.724444,
+      "src": "PL!T17"
      },
      "professional_fees": {
-      "v": -10.420145,
-      "src": "PL!AD18"
+      "v": -4.31819,
+      "src": "PL!T18"
      },
      "advertising": {
-      "v": -9.577702,
-      "src": "PL!AD19"
+      "v": -5.748928,
+      "src": "PL!T19"
      },
      "utilities": {
-      "v": -11.575845,
-      "src": "PL!AD20"
+      "v": -4.969707,
+      "src": "PL!T20"
      },
      "repairs": {
-      "v": -4.08848,
-      "src": "PL!AD21"
+      "v": -3.523836,
+      "src": "PL!T21"
      },
      "cleaning": {
-      "v": -1.836877,
-      "src": "PL!AD22"
+      "v": -3.508353,
+      "src": "PL!T22"
      },
      "lease_premises": {
-      "v": -32.266979,
-      "src": "PL!AD23"
+      "v": -5.958372,
+      "src": "PL!T23"
      },
      "sga_other": {
-      "v": -10.664148,
-      "src": "PL!AD24"
+      "v": -3.67023,
+      "src": "PL!T24"
      },
      "taxes_other": {
-      "v": -1.88528,
-      "src": "PL!AD25"
+      "v": -1.456812,
+      "src": "PL!T25"
      },
      "security": {
-      "v": -3.498392,
-      "src": "PL!AD26"
+      "v": -2.082074,
+      "src": "PL!T26"
      },
      "preopening": {
-      "v": 0.0,
-      "src": "PL!AD27"
+      "v": null,
+      "src": "PL!T27"
      },
      "lease_land_equipment": {
-      "v": -0.461154,
-      "src": "PL!AD28"
+      "v": -0.313023,
+      "src": "PL!T28"
      },
      "other_op_income": {
-      "v": 13.179303,
-      "src": "PL!AD30"
+      "v": 5.167359,
+      "src": "PL!T30"
      },
      "other_op_expense": {
-      "v": -0.932438,
-      "src": "PL!AD31"
+      "v": -0.531785,
+      "src": "PL!T31"
      },
      "opbi": {
-      "v": 57.362335,
-      "src": "PL!AD32"
+      "v": 24.590652,
+      "src": "PL!T32"
      },
      "impairment": {
-      "v": -0.516637,
-      "src": "PL!AD33"
+      "v": 3.004799,
+      "src": "PL!T33"
      },
      "ebit": {
-      "v": 56.845698,
-      "src": "PL!AD34"
+      "v": 27.595451,
+      "src": "PL!T34"
      },
      "interest_expense": {
-      "v": -13.168288,
-      "src": "PL!AD36"
+      "v": -6.795768,
+      "src": "PL!T36"
      },
      "interest_income": {
-      "v": 5.377898,
-      "src": "PL!AD37"
+      "v": 0.578438,
+      "src": "PL!T37"
      },
      "put_revaluation": {
-      "v": 0.0,
-      "src": "PL!AD38"
+      "v": null,
+      "src": "PL!T38"
      },
      "swaps_fv": {
-      "v": 0.0,
-      "src": "PL!AD39"
+      "v": null,
+      "src": "PL!T39"
      },
      "other_non_operating": {
-      "v": 0.0,
-      "src": "PL!AD40"
+      "v": null,
+      "src": "PL!T40"
      },
      "fx": {
-      "v": 0.077496,
-      "src": "PL!AD41"
+      "v": -0.247145,
+      "src": "PL!T41"
      },
      "pbt": {
-      "v": 49.132804,
-      "src": "PL!AD43"
+      "v": 21.130976,
+      "src": "PL!T43"
      },
      "income_tax": {
-      "v": -10.898838,
-      "src": "PL!AD44"
+      "v": -3.683657,
+      "src": "PL!T44"
      },
      "net_income": {
-      "v": 38.233966,
-      "src": "PL!AD46"
+      "v": 17.447319,
+      "src": "PL!T46"
      },
      "ebitda": {
-      "v": 83.684261,
-      "src": "PL!AD49"
+      "v": 39.315096,
+      "src": "PL!T49"
      },
      "lease_expense": {
-      "v": -32.728133,
-      "src": "PL!AD23 + PL!AD28",
+      "v": -6.271395,
+      "src": "PL!T23 + PL!T28",
       "kind": "calc"
      }
     },
     "cf": {
      "pbt": {
-      "v": 49.1328,
-      "src": "CF!AD11"
+      "v": 21.130976,
+      "src": "CF!T11"
      },
      "interest_expense_addback": {
-      "v": 13.168288,
-      "src": "CF!AD18"
+      "v": 6.795768,
+      "src": "CF!T18"
      },
      "da": {
-      "v": 26.283008,
-      "src": "CF!AD22"
+      "v": 0.067147,
+      "src": "CF!T22"
      },
      "bargain_purchase_gain": {
-      "v": 0.0,
-      "src": "CF!AD29"
+      "v": null,
+      "src": "CF!T29"
      },
      "d_receivables": {
-      "v": -0.862373,
-      "src": "CF!AD37"
+      "v": -2.388253,
+      "src": "CF!T37"
      },
      "d_advances_paid": {
-      "v": 0.796393,
-      "src": "CF!AD38"
+      "v": -0.193842,
+      "src": "CF!T38"
      },
      "d_prepaid": {
-      "v": -0.06135,
-      "src": "CF!AD39"
+      "v": -0.203295,
+      "src": "CF!T39"
      },
      "d_inventories": {
-      "v": -13.381626,
-      "src": "CF!AD40"
+      "v": -4.213554,
+      "src": "CF!T40"
      },
      "d_payables": {
-      "v": 24.985319,
-      "src": "CF!AD41"
+      "v": 4.602437,
+      "src": "CF!T41"
      },
      "d_advances_received": {
-      "v": 0.953701,
-      "src": "CF!AD42"
+      "v": 0.289025,
+      "src": "CF!T42"
      },
      "d_other_taxes": {
-      "v": 1.084814,
-      "src": "CF!AD43"
+      "v": 0.036173,
+      "src": "CF!T43"
      },
      "cash_generated": {
-      "v": 96.945319,
-      "src": "CF!AD45"
+      "v": 38.306604,
+      "src": "CF!T45"
      },
      "income_tax_paid": {
-      "v": -6.729541,
-      "src": "CF!AD47"
+      "v": -4.768884,
+      "src": "CF!T47"
      },
      "interest_paid": {
-      "v": -13.180266,
-      "src": "CF!AD48"
+      "v": -6.938225,
+      "src": "CF!T48"
      },
      "interest_received": {
-      "v": 4.027673,
-      "src": "CF!AD49"
+      "v": 0.660905,
+      "src": "CF!T49"
      },
      "net_ocf": {
-      "v": 81.063185,
-      "src": "CF!AD51"
+      "v": 27.2604,
+      "src": "CF!T51"
      },
      "capex_ppe": {
-      "v": -40.038332,
-      "src": "CF!AD54"
+      "v": -6.869398,
+      "src": "CF!T54"
      },
      "acquisitions_net": {
-      "v": -2.702449,
-      "src": "CF!AD55"
+      "v": 0.0,
+      "src": "CF!T55"
      },
      "capex_intangibles": {
-      "v": -6.219984,
-      "src": "CF!AD56"
+      "v": -0.778002,
+      "src": "CF!T56"
      },
      "capex_leasehold_rights": {
       "v": 0.0,
-      "src": "CF!AD57"
+      "src": "CF!T57"
      },
      "loans_given_net": {
-      "v": -10.47,
-      "src": "CF!AD58"
+      "v": 0.0,
+      "src": "CF!T58"
      },
      "proceeds_disposals_lr": {
       "v": 0.0,
-      "src": "CF!AD59"
+      "src": "CF!T59"
      },
      "proceeds_ppe": {
-      "v": 0.835034,
-      "src": "CF!AD60"
+      "v": 0.23834,
+      "src": "CF!T60"
      },
      "transfer_restricted": {
-      "v": -8.191,
-      "src": "CF!AD61"
+      "v": null,
+      "src": "CF!T61"
      },
      "net_icf": {
-      "v": -66.786731,
-      "src": "CF!AD63"
+      "v": -7.40906,
+      "src": "CF!T63"
      },
      "borrowings_in": {
-      "v": 59.954,
-      "src": "CF!AD66"
+      "v": 45.792775,
+      "src": "CF!T66"
      },
      "borrowings_out": {
-      "v": -70.199245,
-      "src": "CF!AD67"
+      "v": -117.240001,
+      "src": "CF!T67"
      },
      "lease_principal": {
       "v": 0.0,
-      "src": "CF!AD68"
+      "src": "CF!T68"
      },
      "finance_lease_repaid": {
       "v": 0.0,
-      "src": "CF!AD69"
+      "src": "CF!T69"
      },
      "share_issue": {
       "v": 0.0,
-      "src": "CF!AD71"
+      "src": "CF!T71"
      },
      "buyback": {
-      "v": 0.0,
-      "src": "CF!AD72"
+      "v": null,
+      "src": "CF!T72"
      },
      "net_fcf": {
-      "v": -10.245245,
-      "src": "CF!AD76"
+      "v": -71.447226,
+      "src": "CF!T76"
      },
      "cash_begin": {
-      "v": 47.032323,
-      "src": "CF!AD78"
+      "v": 73.40476,
+      "src": "CF!T78"
      },
      "net_change_cash": {
-      "v": 4.031209,
-      "src": "CF!AD79"
+      "v": -51.595886,
+      "src": "CF!T79"
      },
      "cash_end": {
-      "v": 51.063533,
-      "src": "CF!AD81"
+      "v": 21.808874,
+      "src": "CF!T81"
      }
     }
    },
    "ifrs16": {
     "pl": {
      "revenue": {
-      "v": 1103.662719,
-      "src": "PL!AT10"
+      "v": 445.543829,
+      "src": "PL!AJ10"
      },
      "cogs": {
-      "v": -851.163385,
-      "src": "PL!AT11"
+      "v": -343.728186,
+      "src": "PL!AJ11"
      },
      "gross_profit": {
-      "v": 252.499334,
-      "src": "PL!AT12"
+      "v": 101.815643,
+      "src": "PL!AJ12"
      },
      "sga": {
-      "v": -194.840959,
-      "src": "PL!AT15"
+      "v": -80.114179,
+      "src": "PL!AJ15"
      },
      "staff": {
-      "v": -94.393772,
-      "src": "PL!AT16"
+      "v": -31.264457,
+      "src": "PL!AJ16"
      },
      "da": {
-      "v": -42.70701,
-      "src": "PL!AT17"
+      "v": -18.540233,
+      "src": "PL!AJ17"
      },
      "professional_fees": {
-      "v": -10.420145,
-      "src": "PL!AT18"
+      "v": -4.31819,
+      "src": "PL!AJ18"
      },
      "advertising": {
-      "v": -9.577702,
-      "src": "PL!AT19"
+      "v": -5.748928,
+      "src": "PL!AJ19"
      },
      "utilities": {
-      "v": -11.575845,
-      "src": "PL!AT20"
+      "v": -4.969707,
+      "src": "PL!AJ20"
      },
      "repairs": {
-      "v": -4.08848,
-      "src": "PL!AT21"
+      "v": -3.523836,
+      "src": "PL!AJ21"
      },
      "cleaning": {
-      "v": -1.836877,
-      "src": "PL!AT22"
+      "v": -3.508353,
+      "src": "PL!AJ22"
      },
      "lease_premises": {
-      "v": -4.168719,
-      "src": "PL!AT23"
+      "v": -0.880499,
+      "src": "PL!AJ23"
      },
      "sga_other": {
-      "v": -10.664149,
-      "src": "PL!AT24"
+      "v": -3.67023,
+      "src": "PL!AJ24"
      },
      "taxes_other": {
-      "v": -1.88528,
-      "src": "PL!AT25"
+      "v": -1.456812,
+      "src": "PL!AJ25"
      },
      "security": {
-      "v": -3.498392,
-      "src": "PL!AT26"
+      "v": -2.082074,
+      "src": "PL!AJ26"
      },
      "preopening": {
       "v": 0.0,
-      "src": "PL!AT27"
+      "src": "PL!AJ27"
      },
      "lease_land_equipment": {
-      "v": -0.024588,
-      "src": "PL!AT28"
+      "v": -0.15086,
+      "src": "PL!AJ28"
      },
      "other_op_income": {
-      "v": 13.845633,
-      "src": "PL!AT30"
+      "v": 5.199902,
+      "src": "PL!AJ30"
      },
      "other_op_expense": {
-      "v": -1.234493,
-      "src": "PL!AT31"
+      "v": -0.52247,
+      "src": "PL!AJ31"
      },
      "opbi": {
-      "v": 70.269515,
-      "src": "PL!AT32"
+      "v": 26.378896,
+      "src": "PL!AJ32"
      },
      "impairment": {
-      "v": -0.508353,
-      "src": "PL!AT33"
+      "v": 2.907125,
+      "src": "PL!AJ33"
      },
      "ebit": {
-      "v": 69.761162,
-      "src": "PL!AT34"
+      "v": 29.286021,
+      "src": "PL!AJ34"
      },
      "interest_expense": {
-      "v": -31.172005,
-      "src": "PL!AT36"
+      "v": -9.512254,
+      "src": "PL!AJ36"
      },
      "interest_income": {
-      "v": 5.39343,
-      "src": "PL!AT37"
+      "v": 0.60997,
+      "src": "PL!AJ37"
      },
      "put_revaluation": {
       "v": 0.0,
-      "src": "PL!AT38"
+      "src": "PL!AJ38"
      },
      "swaps_fv": {
       "v": 0.0,
-      "src": "PL!AT39"
+      "src": "PL!AJ39"
      },
      "other_non_operating": {
       "v": 0.0,
-      "src": "PL!AT40"
+      "src": "PL!AJ40"
      },
      "fx": {
-      "v": 0.419927,
-      "src": "PL!AT41"
+      "v": -0.386122,
+      "src": "PL!AJ41"
      },
      "pbt": {
-      "v": 44.402514,
-      "src": "PL!AT43"
+      "v": 19.997615,
+      "src": "PL!AJ43"
      },
      "income_tax": {
-      "v": -9.551203,
-      "src": "PL!AT44"
+      "v": -3.456984,
+      "src": "PL!AJ44"
      },
      "net_income": {
-      "v": 34.851311,
-      "src": "PL!AT46"
+      "v": 16.540631,
+      "src": "PL!AJ46"
      },
      "ebitda": {
-      "v": 113.015443,
-      "src": "PL!AT49"
+      "v": 44.919129,
+      "src": "PL!AJ49"
      }
     },
     "cf": {
      "pbt": {
-      "v": 44.402514,
-      "src": "CF!AT11"
+      "v": 19.997615,
+      "src": "CF!AJ11"
      },
      "interest_expense_addback": {
-      "v": 31.172005,
-      "src": "CF!AT18"
+      "v": 9.512254,
+      "src": "CF!AJ18"
      },
      "da": {
-      "v": 42.70701,
-      "src": "CF!AT22"
+      "v": 18.540233,
+      "src": "CF!AJ22"
      },
      "bargain_purchase_gain": {
-      "v": 0.0,
-      "src": "CF!AT29"
+      "v": null,
+      "src": "CF!AJ29"
      },
      "d_receivables": {
-      "v": -0.862373,
-      "src": "CF!AT37"
+      "v": -2.388253,
+      "src": "CF!AJ37"
      },
      "d_advances_paid": {
-      "v": 0.904164,
-      "src": "CF!AT38"
+      "v": -0.259025,
+      "src": "CF!AJ38"
      },
      "d_prepaid": {
-      "v": -0.06135,
-      "src": "CF!AT39"
+      "v": -0.203295,
+      "src": "CF!AJ39"
      },
      "d_inventories": {
-      "v": -13.381626,
-      "src": "CF!AT40"
+      "v": -4.213554,
+      "src": "CF!AJ40"
      },
      "d_payables": {
-      "v": 25.537132,
-      "src": "CF!AT41"
+      "v": 4.60105,
+      "src": "CF!AJ41"
      },
      "d_advances_received": {
-      "v": 0.953701,
-      "src": "CF!AT42"
+      "v": 0.289025,
+      "src": "CF!AJ42"
      },
      "d_other_taxes": {
-      "v": 1.084814,
-      "src": "CF!AT43"
+      "v": 0.036173,
+      "src": "CF!AJ43"
      },
      "cash_generated": {
-      "v": 126.572746,
-      "src": "CF!AT45"
+      "v": 43.80262,
+      "src": "CF!AJ45"
      },
      "income_tax_paid": {
-      "v": -6.729541,
-      "src": "CF!AT47"
+      "v": -4.768884,
+      "src": "CF!AJ47"
      },
      "interest_paid": {
-      "v": -31.183983,
-      "src": "CF!AT48"
+      "v": -9.654711,
+      "src": "CF!AJ48"
      },
      "interest_received": {
-      "v": 4.027673,
-      "src": "CF!AT49"
+      "v": 0.660905,
+      "src": "CF!AJ49"
      },
      "net_ocf": {
-      "v": 92.686895,
-      "src": "CF!AT51"
+      "v": 30.03993,
+      "src": "CF!AJ51"
      },
      "capex_ppe": {
-      "v": -39.515269,
-      "src": "CF!AT54"
+      "v": -6.834086,
+      "src": "CF!AJ54"
      },
      "acquisitions_net": {
-      "v": -2.702449,
-      "src": "CF!AT55"
+      "v": 0.0,
+      "src": "CF!AJ55"
      },
      "capex_intangibles": {
-      "v": -6.219984,
-      "src": "CF!AT56"
+      "v": -0.778002,
+      "src": "CF!AJ56"
      },
      "capex_leasehold_rights": {
       "v": 0.0,
-      "src": "CF!AT57"
+      "src": "CF!AJ57"
      },
      "loans_given_net": {
-      "v": -10.47,
-      "src": "CF!AT58"
+      "v": null,
+      "src": "CF!AJ58"
      },
      "proceeds_disposals_lr": {
       "v": 0.0,
-      "src": "CF!AT59"
+      "src": "CF!AJ59"
      },
      "proceeds_ppe": {
-      "v": 0.835034,
-      "src": "CF!AT60"
+      "v": 0.23834,
+      "src": "CF!AJ60"
      },
      "transfer_restricted": {
-      "v": -8.191,
-      "src": "CF!AT61"
+      "v": null,
+      "src": "CF!AJ61"
      },
      "net_icf": {
-      "v": -66.263668,
-      "src": "CF!AT63"
+      "v": -7.373748,
+      "src": "CF!AJ63"
      },
      "borrowings_in": {
-      "v": 59.954,
-      "src": "CF!AT66"
+      "v": 45.792775,
+      "src": "CF!AJ66"
      },
      "borrowings_out": {
-      "v": -70.199245,
-      "src": "CF!AT67"
+      "v": -117.240001,
+      "src": "CF!AJ67"
      },
      "lease_principal": {
-      "v": -12.146772,
-      "src": "CF!AT68"
+      "v": -2.814842,
+      "src": "CF!AJ68"
      },
      "finance_lease_repaid": {
       "v": 0.0,
-      "src": "CF!AT69"
+      "src": "CF!AJ69"
      },
      "share_issue": {
       "v": 0.0,
-      "src": "CF!AT71"
+      "src": "CF!AJ71"
      },
      "buyback": {
-      "v": 0.0,
-      "src": "CF!AT72"
+      "v": null,
+      "src": "CF!AJ72"
      },
      "net_fcf": {
-      "v": -22.392017,
-      "src": "CF!AT76"
+      "v": -74.262068,
+      "src": "CF!AJ76"
      },
      "cash_begin": {
-      "v": 47.032323,
-      "src": "CF!AT78"
+      "v": 73.40476,
+      "src": "CF!AJ78"
      },
      "net_change_cash": {
-      "v": 4.03121,
-      "src": "CF!AT79"
+      "v": -51.595886,
+      "src": "CF!AJ79"
      },
      "cash_end": {
-      "v": 51.063533,
-      "src": "CF!AT81"
-     }
-    }
-   }
-  },
-  "FY2024": {
-   "ias17": {
-    "pl": {
-     "revenue": {
-      "v": 888.306765,
-      "src": "PL!AB10"
-     },
-     "cogs": {
-      "v": -696.072965,
-      "src": "PL!AB11"
-     },
-     "gross_profit": {
-      "v": 192.2338,
-      "src": "PL!AB12"
-     },
-     "sga": {
-      "v": -158.79129,
-      "src": "PL!AB15"
-     },
-     "staff": {
-      "v": -69.770654,
-      "src": "PL!AB16"
-     },
-     "da": {
-      "v": -23.658849,
-      "src": "PL!AB17"
-     },
-     "professional_fees": {
-      "v": -8.080389,
-      "src": "PL!AB18"
-     },
-     "advertising": {
-      "v": -6.341009,
-      "src": "PL!AB19"
-     },
-     "utilities": {
-      "v": -9.54578,
-      "src": "PL!AB20"
-     },
-     "repairs": {
-      "v": -4.090482,
-      "src": "PL!AB21"
-     },
-     "cleaning": {
-      "v": -2.597838,
-      "src": "PL!AB22"
-     },
-     "lease_premises": {
-      "v": -21.685334,
-      "src": "PL!AB23"
-     },
-     "sga_other": {
-      "v": -7.163091,
-      "src": "PL!AB24"
-     },
-     "taxes_other": {
-      "v": -2.160805,
-      "src": "PL!AB25"
-     },
-     "security": {
-      "v": -3.151539,
-      "src": "PL!AB26"
-     },
-     "preopening": {
-      "v": 0.0,
-      "src": "PL!AB27"
-     },
-     "lease_land_equipment": {
-      "v": -0.54552,
-      "src": "PL!AB28"
-     },
-     "other_op_income": {
-      "v": 11.934371,
-      "src": "PL!AB30"
-     },
-     "other_op_expense": {
-      "v": -0.912774,
-      "src": "PL!AB31"
-     },
-     "opbi": {
-      "v": 44.464107,
-      "src": "PL!AB32"
-     },
-     "impairment": {
-      "v": -2.838114,
-      "src": "PL!AB33"
-     },
-     "ebit": {
-      "v": 41.625993,
-      "src": "PL!AB34"
-     },
-     "interest_expense": {
-      "v": -14.247764,
-      "src": "PL!AB36"
-     },
-     "interest_income": {
-      "v": 5.579295,
-      "src": "PL!AB37"
-     },
-     "put_revaluation": {
-      "v": 0.0,
-      "src": "PL!AB38"
-     },
-     "swaps_fv": {
-      "v": 0.0,
-      "src": "PL!AB39"
-     },
-     "other_non_operating": {
-      "v": 0.0,
-      "src": "PL!AB40"
-     },
-     "fx": {
-      "v": -0.077839,
-      "src": "PL!AB41"
-     },
-     "pbt": {
-      "v": 32.879685,
-      "src": "PL!AB43"
-     },
-     "income_tax": {
-      "v": -8.367016,
-      "src": "PL!AB44"
-     },
-     "net_income": {
-      "v": 24.512669,
-      "src": "PL!AB46"
-     },
-     "ebitda": {
-      "v": 68.122956,
-      "src": "PL!AB49"
-     },
-     "lease_expense": {
-      "v": -22.230854,
-      "src": "PL!AB23 + PL!AB28",
-      "kind": "calc"
-     }
-    },
-    "cf": {
-     "pbt": {
-      "v": 32.879685,
-      "src": "CF!AB11"
-     },
-     "interest_expense_addback": {
-      "v": 14.247764,
-      "src": "CF!AB18"
-     },
-     "da": {
-      "v": 23.658848,
-      "src": "CF!AB22"
-     },
-     "bargain_purchase_gain": {
-      "v": -1.114605,
-      "src": "CF!AB29"
-     },
-     "d_receivables": {
-      "v": 3.61444,
-      "src": "CF!AB37"
-     },
-     "d_advances_paid": {
-      "v": -0.237892,
-      "src": "CF!AB38"
-     },
-     "d_prepaid": {
-      "v": -0.107481,
-      "src": "CF!AB39"
-     },
-     "d_inventories": {
-      "v": -10.887261,
-      "src": "CF!AB40"
-     },
-     "d_payables": {
-      "v": 17.515385,
-      "src": "CF!AB41"
-     },
-     "d_advances_received": {
-      "v": -0.109211,
-      "src": "CF!AB42"
-     },
-     "d_other_taxes": {
-      "v": -1.484691,
-      "src": "CF!AB43"
-     },
-     "cash_generated": {
-      "v": 74.897252,
-      "src": "CF!AB45"
-     },
-     "income_tax_paid": {
-      "v": -3.328834,
-      "src": "CF!AB47"
-     },
-     "interest_paid": {
-      "v": -14.244547,
-      "src": "CF!AB48"
-     },
-     "interest_received": {
-      "v": 4.815568,
-      "src": "CF!AB49"
-     },
-     "net_ocf": {
-      "v": 62.139439,
-      "src": "CF!AB51"
-     },
-     "capex_ppe": {
-      "v": -26.444122,
-      "src": "CF!AB54"
-     },
-     "acquisitions_net": {
-      "v": 1.865903,
-      "src": "CF!AB55"
-     },
-     "capex_intangibles": {
-      "v": -4.195154,
-      "src": "CF!AB56"
-     },
-     "capex_leasehold_rights": {
-      "v": 0.1,
-      "src": "CF!AB57"
-     },
-     "loans_given_net": {
-      "v": 0.021918,
-      "src": "CF!AB58"
-     },
-     "proceeds_disposals_lr": {
-      "v": 0.0,
-      "src": "CF!AB59"
-     },
-     "proceeds_ppe": {
-      "v": 1.03977,
-      "src": "CF!AB60"
-     },
-     "transfer_restricted": {
-      "v": 0.0,
-      "src": "CF!AB61"
-     },
-     "net_icf": {
-      "v": -27.611685,
-      "src": "CF!AB63"
-     },
-     "borrowings_in": {
-      "v": 10.0,
-      "src": "CF!AB66"
-     },
-     "borrowings_out": {
-      "v": -42.0,
-      "src": "CF!AB67"
-     },
-     "lease_principal": {
-      "v": 0.0,
-      "src": "CF!AB68"
-     },
-     "finance_lease_repaid": {
-      "v": 0.0,
-      "src": "CF!AB69"
-     },
-     "share_issue": {
-      "v": 0.0,
-      "src": "CF!AB71"
-     },
-     "buyback": {
-      "v": 0.0,
-      "src": "CF!AB72"
-     },
-     "net_fcf": {
-      "v": -32.0,
-      "src": "CF!AB76"
-     },
-     "cash_begin": {
-      "v": 44.516248,
-      "src": "CF!AB78"
-     },
-     "net_change_cash": {
-      "v": 2.527754,
-      "src": "CF!AB79"
-     },
-     "cash_end": {
-      "v": 47.032323,
-      "src": "CF!AB81"
-     }
-    }
-   },
-   "ifrs16": {
-    "pl": {
-     "revenue": {
-      "v": 888.306765,
-      "src": "PL!AR10"
-     },
-     "cogs": {
-      "v": -695.755716,
-      "src": "PL!AR11"
-     },
-     "gross_profit": {
-      "v": 192.551049,
-      "src": "PL!AR12"
-     },
-     "sga": {
-      "v": -151.31078,
-      "src": "PL!AR15"
-     },
-     "staff": {
-      "v": -69.770654,
-      "src": "PL!AR16"
-     },
-     "da": {
-      "v": -35.25757,
-      "src": "PL!AR17"
-     },
-     "professional_fees": {
-      "v": -8.080389,
-      "src": "PL!AR18"
-     },
-     "advertising": {
-      "v": -6.341009,
-      "src": "PL!AR19"
-     },
-     "utilities": {
-      "v": -9.54578,
-      "src": "PL!AR20"
-     },
-     "repairs": {
-      "v": -4.090482,
-      "src": "PL!AR21"
-     },
-     "cleaning": {
-      "v": -2.597838,
-      "src": "PL!AR22"
-     },
-     "lease_premises": {
-      "v": -3.040002,
-      "src": "PL!AR23"
-     },
-     "sga_other": {
-      "v": -7.163091,
-      "src": "PL!AR24"
-     },
-     "taxes_other": {
-      "v": -2.160805,
-      "src": "PL!AR25"
-     },
-     "security": {
-      "v": -3.151539,
-      "src": "PL!AR26"
-     },
-     "preopening": {
-      "v": 0.0,
-      "src": "PL!AR27"
-     },
-     "lease_land_equipment": {
-      "v": -0.111621,
-      "src": "PL!AR28"
-     },
-     "other_op_income": {
-      "v": 13.138161,
-      "src": "PL!AR30"
-     },
-     "other_op_expense": {
-      "v": -1.55442,
-      "src": "PL!AR31"
-     },
-     "opbi": {
-      "v": 52.82401,
-      "src": "PL!AR32"
-     },
-     "impairment": {
-      "v": -2.817766,
-      "src": "PL!AR33"
-     },
-     "ebit": {
-      "v": 50.006244,
-      "src": "PL!AR34"
-     },
-     "interest_expense": {
-      "v": -25.284992,
-      "src": "PL!AR36"
-     },
-     "interest_income": {
-      "v": 5.604648,
-      "src": "PL!AR37"
-     },
-     "put_revaluation": {
-      "v": 0.0,
-      "src": "PL!AR38"
-     },
-     "swaps_fv": {
-      "v": 0.0,
-      "src": "PL!AR39"
-     },
-     "other_non_operating": {
-      "v": 0.0,
-      "src": "PL!AR40"
-     },
-     "fx": {
-      "v": -0.188445,
-      "src": "PL!AR41"
-     },
-     "pbt": {
-      "v": 30.137455,
-      "src": "PL!AR43"
-     },
-     "income_tax": {
-      "v": -7.674063,
-      "src": "PL!AR44"
-     },
-     "net_income": {
-      "v": 22.463392,
-      "src": "PL!AR46"
-     },
-     "ebitda": {
-      "v": 88.08158,
-      "src": "PL!AR49"
-     }
-    },
-    "cf": {
-     "pbt": {
-      "v": 30.137455,
-      "src": "CF!AR11"
-     },
-     "interest_expense_addback": {
-      "v": 25.284992,
-      "src": "CF!AR18"
-     },
-     "da": {
-      "v": 35.257569,
-      "src": "CF!AR22"
-     },
-     "bargain_purchase_gain": {
-      "v": -1.114605,
-      "src": "CF!AR29"
-     },
-     "d_receivables": {
-      "v": 3.61444,
-      "src": "CF!AR37"
-     },
-     "d_advances_paid": {
-      "v": -0.05651,
-      "src": "CF!AR38"
-     },
-     "d_prepaid": {
-      "v": -0.107481,
-      "src": "CF!AR39"
-     },
-     "d_inventories": {
-      "v": -10.887261,
-      "src": "CF!AR40"
-     },
-     "d_payables": {
-      "v": 17.8544,
-      "src": "CF!AR41"
-     },
-     "d_advances_received": {
-      "v": -0.109211,
-      "src": "CF!AR42"
-     },
-     "d_other_taxes": {
-      "v": -1.484691,
-      "src": "CF!AR43"
-     },
-     "cash_generated": {
-      "v": 94.81413,
-      "src": "CF!AR45"
-     },
-     "income_tax_paid": {
-      "v": -3.328834,
-      "src": "CF!AR47"
-     },
-     "interest_paid": {
-      "v": -25.281775,
-      "src": "CF!AR48"
-     },
-     "interest_received": {
-      "v": 4.815568,
-      "src": "CF!AR49"
-     },
-     "net_ocf": {
-      "v": 71.019089,
-      "src": "CF!AR51"
-     },
-     "capex_ppe": {
-      "v": -26.206365,
-      "src": "CF!AR54"
-     },
-     "acquisitions_net": {
-      "v": 1.865903,
-      "src": "CF!AR55"
-     },
-     "capex_intangibles": {
-      "v": -4.195154,
-      "src": "CF!AR56"
-     },
-     "capex_leasehold_rights": {
-      "v": 0.1,
-      "src": "CF!AR57"
-     },
-     "loans_given_net": {
-      "v": 0.021918,
-      "src": "CF!AR58"
-     },
-     "proceeds_disposals_lr": {
-      "v": 0.0,
-      "src": "CF!AR59"
-     },
-     "proceeds_ppe": {
-      "v": 1.03977,
-      "src": "CF!AR60"
-     },
-     "transfer_restricted": {
-      "v": 0.0,
-      "src": "CF!AR61"
-     },
-     "net_icf": {
-      "v": -27.373928,
-      "src": "CF!AR63"
-     },
-     "borrowings_in": {
-      "v": 10.0,
-      "src": "CF!AR66"
-     },
-     "borrowings_out": {
-      "v": -42.0,
-      "src": "CF!AR67"
-     },
-     "lease_principal": {
-      "v": -9.117407,
-      "src": "CF!AR68"
-     },
-     "finance_lease_repaid": {
-      "v": 0.0,
-      "src": "CF!AR69"
-     },
-     "share_issue": {
-      "v": 0.0,
-      "src": "CF!AR71"
-     },
-     "buyback": {
-      "v": 0.0,
-      "src": "CF!AR72"
-     },
-     "net_fcf": {
-      "v": -41.117407,
-      "src": "CF!AR76"
-     },
-     "cash_begin": {
-      "v": 44.516248,
-      "src": "CF!AR78"
-     },
-     "net_change_cash": {
-      "v": 2.527754,
-      "src": "CF!AR79"
-     },
-     "cash_end": {
-      "v": 47.032323,
-      "src": "CF!AR81"
+      "v": 21.808874,
+      "src": "CF!AJ81"
      }
     }
    }
@@ -12495,283 +11666,557 @@
     }
    }
   },
-  "FY2018": {
+  "FY2022": {
    "ias17": {
     "pl": {
      "revenue": {
-      "v": 413.562197,
-      "src": "PL!P10"
+      "v": 537.400687,
+      "src": "PL!X10"
      },
      "cogs": {
-      "v": -324.76789,
-      "src": "PL!P11"
+      "v": -416.661746,
+      "src": "PL!X11"
      },
      "gross_profit": {
-      "v": 88.794307,
-      "src": "PL!P12"
+      "v": 120.738941,
+      "src": "PL!X12"
      },
      "sga": {
-      "v": -69.094871,
-      "src": "PL!P15"
+      "v": -112.987054,
+      "src": "PL!X15"
      },
      "staff": {
-      "v": -25.556037,
-      "src": "PL!P16"
+      "v": -44.168935,
+      "src": "PL!X16"
      },
      "da": {
-      "v": -11.977519,
-      "src": "PL!P17"
+      "v": -18.234274,
+      "src": "PL!X17"
      },
      "professional_fees": {
-      "v": -3.863897,
-      "src": "PL!P18"
+      "v": -5.994236,
+      "src": "PL!X18"
      },
      "advertising": {
-      "v": -5.217256,
-      "src": "PL!P19"
+      "v": -8.030869,
+      "src": "PL!X19"
      },
      "utilities": {
-      "v": -4.517562,
-      "src": "PL!P20"
+      "v": -6.053108,
+      "src": "PL!X20"
      },
      "repairs": {
-      "v": -2.642799,
-      "src": "PL!P21"
+      "v": -4.03078,
+      "src": "PL!X21"
      },
      "cleaning": {
-      "v": -2.882658,
-      "src": "PL!P22"
+      "v": -4.473324,
+      "src": "PL!X22"
      },
      "lease_premises": {
-      "v": -5.767878,
-      "src": "PL!P23"
+      "v": -11.653165,
+      "src": "PL!X23"
      },
      "sga_other": {
-      "v": -2.971267,
-      "src": "PL!P24"
+      "v": -5.5051,
+      "src": "PL!X24"
      },
      "taxes_other": {
-      "v": -1.509046,
-      "src": "PL!P25"
+      "v": -1.739188,
+      "src": "PL!X25"
      },
      "security": {
-      "v": -1.893165,
-      "src": "PL!P26"
+      "v": -2.714267,
+      "src": "PL!X26"
      },
      "preopening": {
       "v": 0.0,
-      "src": "PL!P27"
+      "src": "PL!X27"
      },
      "lease_land_equipment": {
-      "v": -0.295787,
-      "src": "PL!P28"
+      "v": -0.389808,
+      "src": "PL!X28"
      },
      "other_op_income": {
-      "v": 4.993245,
-      "src": "PL!P30"
+      "v": 7.673108,
+      "src": "PL!X30"
      },
      "other_op_expense": {
-      "v": -0.47604,
-      "src": "PL!P31"
+      "v": -1.020944,
+      "src": "PL!X31"
      },
      "opbi": {
-      "v": 24.216641,
-      "src": "PL!P32"
+      "v": 14.404051,
+      "src": "PL!X32"
      },
      "impairment": {
-      "v": -0.132188,
-      "src": "PL!P33"
+      "v": -2.322241,
+      "src": "PL!X33"
      },
      "ebit": {
-      "v": 24.084453,
-      "src": "PL!P34"
+      "v": 12.08181,
+      "src": "PL!X34"
      },
      "interest_expense": {
-      "v": -9.699272,
-      "src": "PL!P36"
+      "v": -6.562433,
+      "src": "PL!X36"
      },
      "interest_income": {
-      "v": 0.608472,
-      "src": "PL!P37"
+      "v": 1.638101,
+      "src": "PL!X37"
      },
      "put_revaluation": {
-      "v": null,
-      "src": "PL!P38"
+      "v": 0.0,
+      "src": "PL!X38"
      },
      "swaps_fv": {
-      "v": null,
-      "src": "PL!P39"
+      "v": 0.0,
+      "src": "PL!X39"
      },
      "other_non_operating": {
-      "v": null,
-      "src": "PL!P40"
+      "v": 0.0,
+      "src": "PL!X40"
      },
      "fx": {
-      "v": -0.176371,
-      "src": "PL!P41"
+      "v": -0.051914,
+      "src": "PL!X41"
      },
      "pbt": {
-      "v": 14.817282,
-      "src": "PL!P43"
+      "v": 7.105564,
+      "src": "PL!X43"
      },
      "income_tax": {
-      "v": -3.022988,
-      "src": "PL!P44"
+      "v": -2.255408,
+      "src": "PL!X44"
      },
      "net_income": {
-      "v": 11.794294,
-      "src": "PL!P46"
+      "v": 4.850156,
+      "src": "PL!X46"
      },
      "ebitda": {
-      "v": 36.19416,
-      "src": "PL!P49"
+      "v": 32.638325,
+      "src": "PL!X49"
      },
      "lease_expense": {
-      "v": -6.063665,
-      "src": "PL!P23 + PL!P28",
+      "v": -12.042973,
+      "src": "PL!X23 + PL!X28",
       "kind": "calc"
      }
     },
     "cf": {
      "pbt": {
-      "v": 14.817282,
-      "src": "CF!P11"
+      "v": 7.105564,
+      "src": "CF!X11"
      },
      "interest_expense_addback": {
-      "v": 9.699272,
-      "src": "CF!P18"
+      "v": 6.562433,
+      "src": "CF!X18"
      },
      "da": {
-      "v": 12.109707,
-      "src": "CF!P22"
+      "v": 18.234274,
+      "src": "CF!X22"
      },
      "bargain_purchase_gain": {
-      "v": null,
-      "src": "CF!P29"
+      "v": 0.0,
+      "src": "CF!X29"
      },
      "d_receivables": {
-      "v": -0.684178,
-      "src": "CF!P37"
+      "v": 3.279373,
+      "src": "CF!X37"
      },
      "d_advances_paid": {
-      "v": -0.548409,
-      "src": "CF!P38"
+      "v": -3.630284,
+      "src": "CF!X38"
      },
      "d_prepaid": {
-      "v": -0.020686,
-      "src": "CF!P39"
+      "v": 0.25049,
+      "src": "CF!X39"
      },
      "d_inventories": {
-      "v": -4.964974,
-      "src": "CF!P40"
+      "v": -4.946626,
+      "src": "CF!X40"
      },
      "d_payables": {
-      "v": 0.042165,
-      "src": "CF!P41"
+      "v": -0.107919,
+      "src": "CF!X41"
      },
      "d_advances_received": {
-      "v": -0.015988,
-      "src": "CF!P42"
+      "v": 0.069565,
+      "src": "CF!X42"
      },
      "d_other_taxes": {
-      "v": 1.79182,
-      "src": "CF!P43"
+      "v": 2.250971,
+      "src": "CF!X43"
      },
      "cash_generated": {
-      "v": 32.415702,
-      "src": "CF!P45"
+      "v": 29.716164,
+      "src": "CF!X45"
      },
      "income_tax_paid": {
-      "v": -0.871201,
-      "src": "CF!P47"
+      "v": -4.280396,
+      "src": "CF!X47"
      },
      "interest_paid": {
-      "v": -10.440177,
-      "src": "CF!P48"
+      "v": -6.788297,
+      "src": "CF!X48"
      },
      "interest_received": {
-      "v": 0.522871,
-      "src": "CF!P49"
+      "v": 1.557229,
+      "src": "CF!X49"
      },
      "net_ocf": {
-      "v": 21.627195,
-      "src": "CF!P51"
+      "v": 20.2047,
+      "src": "CF!X51"
      },
      "capex_ppe": {
-      "v": -21.411263,
-      "src": "CF!P54"
+      "v": -9.31427,
+      "src": "CF!X54"
      },
      "acquisitions_net": {
-      "v": null,
-      "src": "CF!P55"
+      "v": 0.07689,
+      "src": "CF!X55"
      },
      "capex_intangibles": {
-      "v": -0.642512,
-      "src": "CF!P56"
+      "v": -1.542403,
+      "src": "CF!X56"
      },
      "capex_leasehold_rights": {
-      "v": -0.26764,
-      "src": "CF!P57"
+      "v": 0.0,
+      "src": "CF!X57"
      },
      "loans_given_net": {
-      "v": null,
-      "src": "CF!P58"
+      "v": -6.750348,
+      "src": "CF!X58"
      },
      "proceeds_disposals_lr": {
-      "v": null,
-      "src": "CF!P59"
+      "v": 0.0,
+      "src": "CF!X59"
      },
      "proceeds_ppe": {
-      "v": 0.177087,
-      "src": "CF!P60"
+      "v": 0.614477,
+      "src": "CF!X60"
      },
      "transfer_restricted": {
-      "v": null,
-      "src": "CF!P61"
+      "v": -0.374623,
+      "src": "CF!X61"
      },
      "net_icf": {
-      "v": -22.144328,
-      "src": "CF!P63"
+      "v": -17.290277,
+      "src": "CF!X63"
      },
      "borrowings_in": {
-      "v": 132.183,
-      "src": "CF!P66"
+      "v": 35.434,
+      "src": "CF!X66"
      },
      "borrowings_out": {
-      "v": -111.871775,
-      "src": "CF!P67"
+      "v": -42.5,
+      "src": "CF!X67"
      },
      "lease_principal": {
       "v": 0.0,
-      "src": "CF!P68"
+      "src": "CF!X68"
      },
      "finance_lease_repaid": {
       "v": 0.0,
-      "src": "CF!P69"
+      "src": "CF!X69"
      },
      "share_issue": {
       "v": 0.0,
-      "src": "CF!P71"
+      "src": "CF!X71"
      },
      "buyback": {
-      "v": -0.291091,
-      "src": "CF!P72"
+      "v": 0.0,
+      "src": "CF!X72"
      },
      "net_fcf": {
-      "v": 20.020134,
-      "src": "CF!P76"
+      "v": -7.066,
+      "src": "CF!X76"
      },
      "cash_begin": {
-      "v": 14.301859,
-      "src": "CF!P78"
+      "v": 33.326489,
+      "src": "CF!X78"
      },
      "net_change_cash": {
-      "v": 19.503001,
-      "src": "CF!P79"
+      "v": -4.151577,
+      "src": "CF!X79"
      },
      "cash_end": {
-      "v": 33.80486,
-      "src": "CF!P81"
+      "v": 29.019581,
+      "src": "CF!X81"
+     }
+    }
+   },
+   "ifrs16": {
+    "pl": {
+     "revenue": {
+      "v": 537.400687,
+      "src": "PL!AN10"
+     },
+     "cogs": {
+      "v": -416.196767,
+      "src": "PL!AN11"
+     },
+     "gross_profit": {
+      "v": 121.20392,
+      "src": "PL!AN12"
+     },
+     "sga": {
+      "v": -110.26377,
+      "src": "PL!AN15"
+     },
+     "staff": {
+      "v": -44.168935,
+      "src": "PL!AN16"
+     },
+     "da": {
+      "v": -25.93043,
+      "src": "PL!AN17"
+     },
+     "professional_fees": {
+      "v": -5.994236,
+      "src": "PL!AN18"
+     },
+     "advertising": {
+      "v": -8.030869,
+      "src": "PL!AN19"
+     },
+     "utilities": {
+      "v": -6.053108,
+      "src": "PL!AN20"
+     },
+     "repairs": {
+      "v": -4.03078,
+      "src": "PL!AN21"
+     },
+     "cleaning": {
+      "v": -4.473324,
+      "src": "PL!AN22"
+     },
+     "lease_premises": {
+      "v": -1.469961,
+      "src": "PL!AN23"
+     },
+     "sga_other": {
+      "v": -5.5051,
+      "src": "PL!AN24"
+     },
+     "taxes_other": {
+      "v": -1.739188,
+      "src": "PL!AN25"
+     },
+     "security": {
+      "v": -2.714267,
+      "src": "PL!AN26"
+     },
+     "preopening": {
+      "v": 0.0,
+      "src": "PL!AN27"
+     },
+     "lease_land_equipment": {
+      "v": -0.153572,
+      "src": "PL!AN28"
+     },
+     "other_op_income": {
+      "v": 7.844648,
+      "src": "PL!AN30"
+     },
+     "other_op_expense": {
+      "v": -1.050087,
+      "src": "PL!AN31"
+     },
+     "opbi": {
+      "v": 17.734711,
+      "src": "PL!AN32"
+     },
+     "impairment": {
+      "v": -2.322241,
+      "src": "PL!AN33"
+     },
+     "ebit": {
+      "v": 15.41247,
+      "src": "PL!AN34"
+     },
+     "interest_expense": {
+      "v": -11.684186,
+      "src": "PL!AN36"
+     },
+     "interest_income": {
+      "v": 1.66575,
+      "src": "PL!AN37"
+     },
+     "put_revaluation": {
+      "v": 0.0,
+      "src": "PL!AN38"
+     },
+     "swaps_fv": {
+      "v": 0.0,
+      "src": "PL!AN39"
+     },
+     "other_non_operating": {
+      "v": 0.0,
+      "src": "PL!AN40"
+     },
+     "fx": {
+      "v": 0.162122,
+      "src": "PL!AN41"
+     },
+     "pbt": {
+      "v": 5.557156,
+      "src": "PL!AN43"
+     },
+     "income_tax": {
+      "v": -1.945727,
+      "src": "PL!AN44"
+     },
+     "net_income": {
+      "v": 3.611429,
+      "src": "PL!AN46"
+     },
+     "ebitda": {
+      "v": 43.665141,
+      "src": "PL!AN49"
+     }
+    },
+    "cf": {
+     "pbt": {
+      "v": 5.557156,
+      "src": "CF!AN11"
+     },
+     "interest_expense_addback": {
+      "v": 11.684186,
+      "src": "CF!AN18"
+     },
+     "da": {
+      "v": 25.93043,
+      "src": "CF!AN22"
+     },
+     "bargain_purchase_gain": {
+      "v": 0.0,
+      "src": "CF!AN29"
+     },
+     "d_receivables": {
+      "v": 3.279372,
+      "src": "CF!AN37"
+     },
+     "d_advances_paid": {
+      "v": -3.61211,
+      "src": "CF!AN38"
+     },
+     "d_prepaid": {
+      "v": 0.25049,
+      "src": "CF!AN39"
+     },
+     "d_inventories": {
+      "v": -4.946626,
+      "src": "CF!AN40"
+     },
+     "d_payables": {
+      "v": -0.02762,
+      "src": "CF!AN41"
+     },
+     "d_advances_received": {
+      "v": 0.069565,
+      "src": "CF!AN42"
+     },
+     "d_other_taxes": {
+      "v": 2.250971,
+      "src": "CF!AN43"
+     },
+     "cash_generated": {
+      "v": 40.700088,
+      "src": "CF!AN45"
+     },
+     "income_tax_paid": {
+      "v": -4.280396,
+      "src": "CF!AN47"
+     },
+     "interest_paid": {
+      "v": -11.91005,
+      "src": "CF!AN48"
+     },
+     "interest_received": {
+      "v": 1.557229,
+      "src": "CF!AN49"
+     },
+     "net_ocf": {
+      "v": 26.066871,
+      "src": "CF!AN51"
+     },
+     "capex_ppe": {
+      "v": -9.276328,
+      "src": "CF!AN54"
+     },
+     "acquisitions_net": {
+      "v": 0.07689,
+      "src": "CF!AN55"
+     },
+     "capex_intangibles": {
+      "v": -1.542403,
+      "src": "CF!AN56"
+     },
+     "capex_leasehold_rights": {
+      "v": 0.0,
+      "src": "CF!AN57"
+     },
+     "loans_given_net": {
+      "v": -6.750348,
+      "src": "CF!AN58"
+     },
+     "proceeds_disposals_lr": {
+      "v": 0.0,
+      "src": "CF!AN59"
+     },
+     "proceeds_ppe": {
+      "v": 0.614477,
+      "src": "CF!AN60"
+     },
+     "transfer_restricted": {
+      "v": -0.374623,
+      "src": "CF!AN61"
+     },
+     "net_icf": {
+      "v": -17.252335,
+      "src": "CF!AN63"
+     },
+     "borrowings_in": {
+      "v": 35.434,
+      "src": "CF!AN66"
+     },
+     "borrowings_out": {
+      "v": -42.5,
+      "src": "CF!AN67"
+     },
+     "lease_principal": {
+      "v": -5.900113,
+      "src": "CF!AN68"
+     },
+     "finance_lease_repaid": {
+      "v": 0.0,
+      "src": "CF!AN69"
+     },
+     "share_issue": {
+      "v": 0.0,
+      "src": "CF!AN71"
+     },
+     "buyback": {
+      "v": 0.0,
+      "src": "CF!AN72"
+     },
+     "net_fcf": {
+      "v": -12.966113,
+      "src": "CF!AN76"
+     },
+     "cash_begin": {
+      "v": 33.326489,
+      "src": "CF!AN78"
+     },
+     "net_change_cash": {
+      "v": -4.151577,
+      "src": "CF!AN79"
+     },
+     "cash_end": {
+      "v": 29.019581,
+      "src": "CF!AN81"
      }
     }
    }
@@ -13331,557 +12776,1112 @@
     }
    }
   },
-  "FY2022": {
+  "FY2024": {
    "ias17": {
     "pl": {
      "revenue": {
-      "v": 537.400687,
-      "src": "PL!X10"
+      "v": 888.306765,
+      "src": "PL!AB10"
      },
      "cogs": {
-      "v": -416.661746,
-      "src": "PL!X11"
+      "v": -696.072965,
+      "src": "PL!AB11"
      },
      "gross_profit": {
-      "v": 120.738941,
-      "src": "PL!X12"
+      "v": 192.2338,
+      "src": "PL!AB12"
      },
      "sga": {
-      "v": -112.987054,
-      "src": "PL!X15"
+      "v": -158.79129,
+      "src": "PL!AB15"
      },
      "staff": {
-      "v": -44.168935,
-      "src": "PL!X16"
+      "v": -69.770654,
+      "src": "PL!AB16"
      },
      "da": {
-      "v": -18.234274,
-      "src": "PL!X17"
+      "v": -23.658849,
+      "src": "PL!AB17"
      },
      "professional_fees": {
-      "v": -5.994236,
-      "src": "PL!X18"
+      "v": -8.080389,
+      "src": "PL!AB18"
      },
      "advertising": {
-      "v": -8.030869,
-      "src": "PL!X19"
+      "v": -6.341009,
+      "src": "PL!AB19"
      },
      "utilities": {
-      "v": -6.053108,
-      "src": "PL!X20"
+      "v": -9.54578,
+      "src": "PL!AB20"
      },
      "repairs": {
-      "v": -4.03078,
-      "src": "PL!X21"
+      "v": -4.090482,
+      "src": "PL!AB21"
      },
      "cleaning": {
-      "v": -4.473324,
-      "src": "PL!X22"
+      "v": -2.597838,
+      "src": "PL!AB22"
      },
      "lease_premises": {
-      "v": -11.653165,
-      "src": "PL!X23"
+      "v": -21.685334,
+      "src": "PL!AB23"
      },
      "sga_other": {
-      "v": -5.5051,
-      "src": "PL!X24"
+      "v": -7.163091,
+      "src": "PL!AB24"
      },
      "taxes_other": {
-      "v": -1.739188,
-      "src": "PL!X25"
+      "v": -2.160805,
+      "src": "PL!AB25"
      },
      "security": {
-      "v": -2.714267,
-      "src": "PL!X26"
+      "v": -3.151539,
+      "src": "PL!AB26"
      },
      "preopening": {
       "v": 0.0,
-      "src": "PL!X27"
+      "src": "PL!AB27"
      },
      "lease_land_equipment": {
-      "v": -0.389808,
-      "src": "PL!X28"
+      "v": -0.54552,
+      "src": "PL!AB28"
      },
      "other_op_income": {
-      "v": 7.673108,
-      "src": "PL!X30"
+      "v": 11.934371,
+      "src": "PL!AB30"
      },
      "other_op_expense": {
-      "v": -1.020944,
-      "src": "PL!X31"
+      "v": -0.912774,
+      "src": "PL!AB31"
      },
      "opbi": {
-      "v": 14.404051,
-      "src": "PL!X32"
+      "v": 44.464107,
+      "src": "PL!AB32"
      },
      "impairment": {
-      "v": -2.322241,
-      "src": "PL!X33"
+      "v": -2.838114,
+      "src": "PL!AB33"
      },
      "ebit": {
-      "v": 12.08181,
-      "src": "PL!X34"
+      "v": 41.625993,
+      "src": "PL!AB34"
      },
      "interest_expense": {
-      "v": -6.562433,
-      "src": "PL!X36"
+      "v": -14.247764,
+      "src": "PL!AB36"
      },
      "interest_income": {
-      "v": 1.638101,
-      "src": "PL!X37"
+      "v": 5.579295,
+      "src": "PL!AB37"
      },
      "put_revaluation": {
       "v": 0.0,
-      "src": "PL!X38"
+      "src": "PL!AB38"
      },
      "swaps_fv": {
       "v": 0.0,
-      "src": "PL!X39"
+      "src": "PL!AB39"
      },
      "other_non_operating": {
       "v": 0.0,
-      "src": "PL!X40"
+      "src": "PL!AB40"
      },
      "fx": {
-      "v": -0.051914,
-      "src": "PL!X41"
+      "v": -0.077839,
+      "src": "PL!AB41"
      },
      "pbt": {
-      "v": 7.105564,
-      "src": "PL!X43"
+      "v": 32.879685,
+      "src": "PL!AB43"
      },
      "income_tax": {
-      "v": -2.255408,
-      "src": "PL!X44"
+      "v": -8.367016,
+      "src": "PL!AB44"
      },
      "net_income": {
-      "v": 4.850156,
-      "src": "PL!X46"
+      "v": 24.512669,
+      "src": "PL!AB46"
      },
      "ebitda": {
-      "v": 32.638325,
-      "src": "PL!X49"
+      "v": 68.122956,
+      "src": "PL!AB49"
      },
      "lease_expense": {
-      "v": -12.042973,
-      "src": "PL!X23 + PL!X28",
+      "v": -22.230854,
+      "src": "PL!AB23 + PL!AB28",
       "kind": "calc"
      }
     },
     "cf": {
      "pbt": {
-      "v": 7.105564,
-      "src": "CF!X11"
+      "v": 32.879685,
+      "src": "CF!AB11"
      },
      "interest_expense_addback": {
-      "v": 6.562433,
-      "src": "CF!X18"
+      "v": 14.247764,
+      "src": "CF!AB18"
      },
      "da": {
-      "v": 18.234274,
-      "src": "CF!X22"
+      "v": 23.658848,
+      "src": "CF!AB22"
      },
      "bargain_purchase_gain": {
-      "v": 0.0,
-      "src": "CF!X29"
+      "v": -1.114605,
+      "src": "CF!AB29"
      },
      "d_receivables": {
-      "v": 3.279373,
-      "src": "CF!X37"
+      "v": 3.61444,
+      "src": "CF!AB37"
      },
      "d_advances_paid": {
-      "v": -3.630284,
-      "src": "CF!X38"
+      "v": -0.237892,
+      "src": "CF!AB38"
      },
      "d_prepaid": {
-      "v": 0.25049,
-      "src": "CF!X39"
+      "v": -0.107481,
+      "src": "CF!AB39"
      },
      "d_inventories": {
-      "v": -4.946626,
-      "src": "CF!X40"
+      "v": -10.887261,
+      "src": "CF!AB40"
      },
      "d_payables": {
-      "v": -0.107919,
-      "src": "CF!X41"
+      "v": 17.515385,
+      "src": "CF!AB41"
      },
      "d_advances_received": {
-      "v": 0.069565,
-      "src": "CF!X42"
+      "v": -0.109211,
+      "src": "CF!AB42"
      },
      "d_other_taxes": {
-      "v": 2.250971,
-      "src": "CF!X43"
+      "v": -1.484691,
+      "src": "CF!AB43"
      },
      "cash_generated": {
-      "v": 29.716164,
-      "src": "CF!X45"
+      "v": 74.897252,
+      "src": "CF!AB45"
      },
      "income_tax_paid": {
-      "v": -4.280396,
-      "src": "CF!X47"
+      "v": -3.328834,
+      "src": "CF!AB47"
      },
      "interest_paid": {
-      "v": -6.788297,
-      "src": "CF!X48"
+      "v": -14.244547,
+      "src": "CF!AB48"
      },
      "interest_received": {
-      "v": 1.557229,
-      "src": "CF!X49"
+      "v": 4.815568,
+      "src": "CF!AB49"
      },
      "net_ocf": {
-      "v": 20.2047,
-      "src": "CF!X51"
+      "v": 62.139439,
+      "src": "CF!AB51"
      },
      "capex_ppe": {
-      "v": -9.31427,
-      "src": "CF!X54"
+      "v": -26.444122,
+      "src": "CF!AB54"
      },
      "acquisitions_net": {
-      "v": 0.07689,
-      "src": "CF!X55"
+      "v": 1.865903,
+      "src": "CF!AB55"
      },
      "capex_intangibles": {
-      "v": -1.542403,
-      "src": "CF!X56"
+      "v": -4.195154,
+      "src": "CF!AB56"
      },
      "capex_leasehold_rights": {
-      "v": 0.0,
-      "src": "CF!X57"
+      "v": 0.1,
+      "src": "CF!AB57"
      },
      "loans_given_net": {
-      "v": -6.750348,
-      "src": "CF!X58"
+      "v": 0.021918,
+      "src": "CF!AB58"
      },
      "proceeds_disposals_lr": {
       "v": 0.0,
-      "src": "CF!X59"
+      "src": "CF!AB59"
      },
      "proceeds_ppe": {
-      "v": 0.614477,
-      "src": "CF!X60"
+      "v": 1.03977,
+      "src": "CF!AB60"
      },
      "transfer_restricted": {
-      "v": -0.374623,
-      "src": "CF!X61"
+      "v": 0.0,
+      "src": "CF!AB61"
      },
      "net_icf": {
-      "v": -17.290277,
-      "src": "CF!X63"
+      "v": -27.611685,
+      "src": "CF!AB63"
      },
      "borrowings_in": {
-      "v": 35.434,
-      "src": "CF!X66"
+      "v": 10.0,
+      "src": "CF!AB66"
      },
      "borrowings_out": {
-      "v": -42.5,
-      "src": "CF!X67"
+      "v": -42.0,
+      "src": "CF!AB67"
      },
      "lease_principal": {
       "v": 0.0,
-      "src": "CF!X68"
+      "src": "CF!AB68"
      },
      "finance_lease_repaid": {
       "v": 0.0,
-      "src": "CF!X69"
+      "src": "CF!AB69"
      },
      "share_issue": {
       "v": 0.0,
-      "src": "CF!X71"
+      "src": "CF!AB71"
      },
      "buyback": {
       "v": 0.0,
-      "src": "CF!X72"
+      "src": "CF!AB72"
      },
      "net_fcf": {
-      "v": -7.066,
-      "src": "CF!X76"
+      "v": -32.0,
+      "src": "CF!AB76"
      },
      "cash_begin": {
-      "v": 33.326489,
-      "src": "CF!X78"
+      "v": 44.516248,
+      "src": "CF!AB78"
      },
      "net_change_cash": {
-      "v": -4.151577,
-      "src": "CF!X79"
+      "v": 2.527754,
+      "src": "CF!AB79"
      },
      "cash_end": {
-      "v": 29.019581,
-      "src": "CF!X81"
+      "v": 47.032323,
+      "src": "CF!AB81"
      }
     }
    },
    "ifrs16": {
     "pl": {
      "revenue": {
-      "v": 537.400687,
-      "src": "PL!AN10"
+      "v": 888.306765,
+      "src": "PL!AR10"
      },
      "cogs": {
-      "v": -416.196767,
-      "src": "PL!AN11"
+      "v": -695.755716,
+      "src": "PL!AR11"
      },
      "gross_profit": {
-      "v": 121.20392,
-      "src": "PL!AN12"
+      "v": 192.551049,
+      "src": "PL!AR12"
      },
      "sga": {
-      "v": -110.26377,
-      "src": "PL!AN15"
+      "v": -151.31078,
+      "src": "PL!AR15"
      },
      "staff": {
-      "v": -44.168935,
-      "src": "PL!AN16"
+      "v": -69.770654,
+      "src": "PL!AR16"
      },
      "da": {
-      "v": -25.93043,
-      "src": "PL!AN17"
+      "v": -35.25757,
+      "src": "PL!AR17"
      },
      "professional_fees": {
-      "v": -5.994236,
-      "src": "PL!AN18"
+      "v": -8.080389,
+      "src": "PL!AR18"
      },
      "advertising": {
-      "v": -8.030869,
-      "src": "PL!AN19"
+      "v": -6.341009,
+      "src": "PL!AR19"
      },
      "utilities": {
-      "v": -6.053108,
-      "src": "PL!AN20"
+      "v": -9.54578,
+      "src": "PL!AR20"
      },
      "repairs": {
-      "v": -4.03078,
-      "src": "PL!AN21"
+      "v": -4.090482,
+      "src": "PL!AR21"
      },
      "cleaning": {
-      "v": -4.473324,
-      "src": "PL!AN22"
+      "v": -2.597838,
+      "src": "PL!AR22"
      },
      "lease_premises": {
-      "v": -1.469961,
-      "src": "PL!AN23"
+      "v": -3.040002,
+      "src": "PL!AR23"
      },
      "sga_other": {
-      "v": -5.5051,
-      "src": "PL!AN24"
+      "v": -7.163091,
+      "src": "PL!AR24"
      },
      "taxes_other": {
-      "v": -1.739188,
-      "src": "PL!AN25"
+      "v": -2.160805,
+      "src": "PL!AR25"
      },
      "security": {
-      "v": -2.714267,
-      "src": "PL!AN26"
+      "v": -3.151539,
+      "src": "PL!AR26"
      },
      "preopening": {
       "v": 0.0,
-      "src": "PL!AN27"
+      "src": "PL!AR27"
      },
      "lease_land_equipment": {
-      "v": -0.153572,
-      "src": "PL!AN28"
+      "v": -0.111621,
+      "src": "PL!AR28"
      },
      "other_op_income": {
-      "v": 7.844648,
-      "src": "PL!AN30"
+      "v": 13.138161,
+      "src": "PL!AR30"
      },
      "other_op_expense": {
-      "v": -1.050087,
-      "src": "PL!AN31"
+      "v": -1.55442,
+      "src": "PL!AR31"
      },
      "opbi": {
-      "v": 17.734711,
-      "src": "PL!AN32"
+      "v": 52.82401,
+      "src": "PL!AR32"
      },
      "impairment": {
-      "v": -2.322241,
-      "src": "PL!AN33"
+      "v": -2.817766,
+      "src": "PL!AR33"
      },
      "ebit": {
-      "v": 15.41247,
-      "src": "PL!AN34"
+      "v": 50.006244,
+      "src": "PL!AR34"
      },
      "interest_expense": {
-      "v": -11.684186,
-      "src": "PL!AN36"
+      "v": -25.284992,
+      "src": "PL!AR36"
      },
      "interest_income": {
-      "v": 1.66575,
-      "src": "PL!AN37"
+      "v": 5.604648,
+      "src": "PL!AR37"
      },
      "put_revaluation": {
       "v": 0.0,
-      "src": "PL!AN38"
+      "src": "PL!AR38"
      },
      "swaps_fv": {
       "v": 0.0,
-      "src": "PL!AN39"
+      "src": "PL!AR39"
      },
      "other_non_operating": {
       "v": 0.0,
-      "src": "PL!AN40"
+      "src": "PL!AR40"
      },
      "fx": {
-      "v": 0.162122,
-      "src": "PL!AN41"
+      "v": -0.188445,
+      "src": "PL!AR41"
      },
      "pbt": {
-      "v": 5.557156,
-      "src": "PL!AN43"
+      "v": 30.137455,
+      "src": "PL!AR43"
      },
      "income_tax": {
-      "v": -1.945727,
-      "src": "PL!AN44"
+      "v": -7.674063,
+      "src": "PL!AR44"
      },
      "net_income": {
-      "v": 3.611429,
-      "src": "PL!AN46"
+      "v": 22.463392,
+      "src": "PL!AR46"
      },
      "ebitda": {
-      "v": 43.665141,
-      "src": "PL!AN49"
+      "v": 88.08158,
+      "src": "PL!AR49"
      }
     },
     "cf": {
      "pbt": {
-      "v": 5.557156,
-      "src": "CF!AN11"
+      "v": 30.137455,
+      "src": "CF!AR11"
      },
      "interest_expense_addback": {
-      "v": 11.684186,
-      "src": "CF!AN18"
+      "v": 25.284992,
+      "src": "CF!AR18"
      },
      "da": {
-      "v": 25.93043,
-      "src": "CF!AN22"
+      "v": 35.257569,
+      "src": "CF!AR22"
      },
      "bargain_purchase_gain": {
-      "v": 0.0,
-      "src": "CF!AN29"
+      "v": -1.114605,
+      "src": "CF!AR29"
      },
      "d_receivables": {
-      "v": 3.279372,
-      "src": "CF!AN37"
+      "v": 3.61444,
+      "src": "CF!AR37"
      },
      "d_advances_paid": {
-      "v": -3.61211,
-      "src": "CF!AN38"
+      "v": -0.05651,
+      "src": "CF!AR38"
      },
      "d_prepaid": {
-      "v": 0.25049,
-      "src": "CF!AN39"
+      "v": -0.107481,
+      "src": "CF!AR39"
      },
      "d_inventories": {
-      "v": -4.946626,
-      "src": "CF!AN40"
+      "v": -10.887261,
+      "src": "CF!AR40"
      },
      "d_payables": {
-      "v": -0.02762,
-      "src": "CF!AN41"
+      "v": 17.8544,
+      "src": "CF!AR41"
      },
      "d_advances_received": {
-      "v": 0.069565,
-      "src": "CF!AN42"
+      "v": -0.109211,
+      "src": "CF!AR42"
      },
      "d_other_taxes": {
-      "v": 2.250971,
-      "src": "CF!AN43"
+      "v": -1.484691,
+      "src": "CF!AR43"
      },
      "cash_generated": {
-      "v": 40.700088,
-      "src": "CF!AN45"
+      "v": 94.81413,
+      "src": "CF!AR45"
      },
      "income_tax_paid": {
-      "v": -4.280396,
-      "src": "CF!AN47"
+      "v": -3.328834,
+      "src": "CF!AR47"
      },
      "interest_paid": {
-      "v": -11.91005,
-      "src": "CF!AN48"
+      "v": -25.281775,
+      "src": "CF!AR48"
      },
      "interest_received": {
-      "v": 1.557229,
-      "src": "CF!AN49"
+      "v": 4.815568,
+      "src": "CF!AR49"
      },
      "net_ocf": {
-      "v": 26.066871,
-      "src": "CF!AN51"
+      "v": 71.019089,
+      "src": "CF!AR51"
      },
      "capex_ppe": {
-      "v": -9.276328,
-      "src": "CF!AN54"
+      "v": -26.206365,
+      "src": "CF!AR54"
      },
      "acquisitions_net": {
-      "v": 0.07689,
-      "src": "CF!AN55"
+      "v": 1.865903,
+      "src": "CF!AR55"
      },
      "capex_intangibles": {
-      "v": -1.542403,
-      "src": "CF!AN56"
+      "v": -4.195154,
+      "src": "CF!AR56"
      },
      "capex_leasehold_rights": {
-      "v": 0.0,
-      "src": "CF!AN57"
+      "v": 0.1,
+      "src": "CF!AR57"
      },
      "loans_given_net": {
-      "v": -6.750348,
-      "src": "CF!AN58"
+      "v": 0.021918,
+      "src": "CF!AR58"
      },
      "proceeds_disposals_lr": {
       "v": 0.0,
-      "src": "CF!AN59"
+      "src": "CF!AR59"
      },
      "proceeds_ppe": {
-      "v": 0.614477,
-      "src": "CF!AN60"
+      "v": 1.03977,
+      "src": "CF!AR60"
      },
      "transfer_restricted": {
-      "v": -0.374623,
-      "src": "CF!AN61"
+      "v": 0.0,
+      "src": "CF!AR61"
      },
      "net_icf": {
-      "v": -17.252335,
-      "src": "CF!AN63"
+      "v": -27.373928,
+      "src": "CF!AR63"
      },
      "borrowings_in": {
-      "v": 35.434,
-      "src": "CF!AN66"
+      "v": 10.0,
+      "src": "CF!AR66"
      },
      "borrowings_out": {
-      "v": -42.5,
-      "src": "CF!AN67"
+      "v": -42.0,
+      "src": "CF!AR67"
      },
      "lease_principal": {
-      "v": -5.900113,
-      "src": "CF!AN68"
+      "v": -9.117407,
+      "src": "CF!AR68"
      },
      "finance_lease_repaid": {
       "v": 0.0,
-      "src": "CF!AN69"
+      "src": "CF!AR69"
      },
      "share_issue": {
       "v": 0.0,
-      "src": "CF!AN71"
+      "src": "CF!AR71"
      },
      "buyback": {
       "v": 0.0,
-      "src": "CF!AN72"
+      "src": "CF!AR72"
      },
      "net_fcf": {
-      "v": -12.966113,
-      "src": "CF!AN76"
+      "v": -41.117407,
+      "src": "CF!AR76"
      },
      "cash_begin": {
-      "v": 33.326489,
-      "src": "CF!AN78"
+      "v": 44.516248,
+      "src": "CF!AR78"
      },
      "net_change_cash": {
-      "v": -4.151577,
-      "src": "CF!AN79"
+      "v": 2.527754,
+      "src": "CF!AR79"
      },
      "cash_end": {
-      "v": 29.019581,
-      "src": "CF!AN81"
+      "v": 47.032323,
+      "src": "CF!AR81"
+     }
+    }
+   }
+  },
+  "FY2025": {
+   "ias17": {
+    "pl": {
+     "revenue": {
+      "v": 1103.662719,
+      "src": "PL!AD10"
+     },
+     "cogs": {
+      "v": -851.595467,
+      "src": "PL!AD11"
+     },
+     "gross_profit": {
+      "v": 252.067252,
+      "src": "PL!AD12"
+     },
+     "sga": {
+      "v": -206.951782,
+      "src": "PL!AD15"
+     },
+     "staff": {
+      "v": -94.393772,
+      "src": "PL!AD16"
+     },
+     "da": {
+      "v": -26.283008,
+      "src": "PL!AD17"
+     },
+     "professional_fees": {
+      "v": -10.420145,
+      "src": "PL!AD18"
+     },
+     "advertising": {
+      "v": -9.577702,
+      "src": "PL!AD19"
+     },
+     "utilities": {
+      "v": -11.575845,
+      "src": "PL!AD20"
+     },
+     "repairs": {
+      "v": -4.08848,
+      "src": "PL!AD21"
+     },
+     "cleaning": {
+      "v": -1.836877,
+      "src": "PL!AD22"
+     },
+     "lease_premises": {
+      "v": -32.266979,
+      "src": "PL!AD23"
+     },
+     "sga_other": {
+      "v": -10.664148,
+      "src": "PL!AD24"
+     },
+     "taxes_other": {
+      "v": -1.88528,
+      "src": "PL!AD25"
+     },
+     "security": {
+      "v": -3.498392,
+      "src": "PL!AD26"
+     },
+     "preopening": {
+      "v": 0.0,
+      "src": "PL!AD27"
+     },
+     "lease_land_equipment": {
+      "v": -0.461154,
+      "src": "PL!AD28"
+     },
+     "other_op_income": {
+      "v": 13.179303,
+      "src": "PL!AD30"
+     },
+     "other_op_expense": {
+      "v": -0.932438,
+      "src": "PL!AD31"
+     },
+     "opbi": {
+      "v": 57.362335,
+      "src": "PL!AD32"
+     },
+     "impairment": {
+      "v": -0.516637,
+      "src": "PL!AD33"
+     },
+     "ebit": {
+      "v": 56.845698,
+      "src": "PL!AD34"
+     },
+     "interest_expense": {
+      "v": -13.168288,
+      "src": "PL!AD36"
+     },
+     "interest_income": {
+      "v": 5.377898,
+      "src": "PL!AD37"
+     },
+     "put_revaluation": {
+      "v": 0.0,
+      "src": "PL!AD38"
+     },
+     "swaps_fv": {
+      "v": 0.0,
+      "src": "PL!AD39"
+     },
+     "other_non_operating": {
+      "v": 0.0,
+      "src": "PL!AD40"
+     },
+     "fx": {
+      "v": 0.077496,
+      "src": "PL!AD41"
+     },
+     "pbt": {
+      "v": 49.132804,
+      "src": "PL!AD43"
+     },
+     "income_tax": {
+      "v": -10.898838,
+      "src": "PL!AD44"
+     },
+     "net_income": {
+      "v": 38.233966,
+      "src": "PL!AD46"
+     },
+     "ebitda": {
+      "v": 83.684261,
+      "src": "PL!AD49"
+     },
+     "lease_expense": {
+      "v": -32.728133,
+      "src": "PL!AD23 + PL!AD28",
+      "kind": "calc"
+     }
+    },
+    "cf": {
+     "pbt": {
+      "v": 49.1328,
+      "src": "CF!AD11"
+     },
+     "interest_expense_addback": {
+      "v": 13.168288,
+      "src": "CF!AD18"
+     },
+     "da": {
+      "v": 26.283008,
+      "src": "CF!AD22"
+     },
+     "bargain_purchase_gain": {
+      "v": 0.0,
+      "src": "CF!AD29"
+     },
+     "d_receivables": {
+      "v": -0.862373,
+      "src": "CF!AD37"
+     },
+     "d_advances_paid": {
+      "v": 0.796393,
+      "src": "CF!AD38"
+     },
+     "d_prepaid": {
+      "v": -0.06135,
+      "src": "CF!AD39"
+     },
+     "d_inventories": {
+      "v": -13.381626,
+      "src": "CF!AD40"
+     },
+     "d_payables": {
+      "v": 24.985319,
+      "src": "CF!AD41"
+     },
+     "d_advances_received": {
+      "v": 0.953701,
+      "src": "CF!AD42"
+     },
+     "d_other_taxes": {
+      "v": 1.084814,
+      "src": "CF!AD43"
+     },
+     "cash_generated": {
+      "v": 96.945319,
+      "src": "CF!AD45"
+     },
+     "income_tax_paid": {
+      "v": -6.729541,
+      "src": "CF!AD47"
+     },
+     "interest_paid": {
+      "v": -13.180266,
+      "src": "CF!AD48"
+     },
+     "interest_received": {
+      "v": 4.027673,
+      "src": "CF!AD49"
+     },
+     "net_ocf": {
+      "v": 81.063185,
+      "src": "CF!AD51"
+     },
+     "capex_ppe": {
+      "v": -40.038332,
+      "src": "CF!AD54"
+     },
+     "acquisitions_net": {
+      "v": -2.702449,
+      "src": "CF!AD55"
+     },
+     "capex_intangibles": {
+      "v": -6.219984,
+      "src": "CF!AD56"
+     },
+     "capex_leasehold_rights": {
+      "v": 0.0,
+      "src": "CF!AD57"
+     },
+     "loans_given_net": {
+      "v": -10.47,
+      "src": "CF!AD58"
+     },
+     "proceeds_disposals_lr": {
+      "v": 0.0,
+      "src": "CF!AD59"
+     },
+     "proceeds_ppe": {
+      "v": 0.835034,
+      "src": "CF!AD60"
+     },
+     "transfer_restricted": {
+      "v": -8.191,
+      "src": "CF!AD61"
+     },
+     "net_icf": {
+      "v": -66.786731,
+      "src": "CF!AD63"
+     },
+     "borrowings_in": {
+      "v": 59.954,
+      "src": "CF!AD66"
+     },
+     "borrowings_out": {
+      "v": -70.199245,
+      "src": "CF!AD67"
+     },
+     "lease_principal": {
+      "v": 0.0,
+      "src": "CF!AD68"
+     },
+     "finance_lease_repaid": {
+      "v": 0.0,
+      "src": "CF!AD69"
+     },
+     "share_issue": {
+      "v": 0.0,
+      "src": "CF!AD71"
+     },
+     "buyback": {
+      "v": 0.0,
+      "src": "CF!AD72"
+     },
+     "net_fcf": {
+      "v": -10.245245,
+      "src": "CF!AD76"
+     },
+     "cash_begin": {
+      "v": 47.032323,
+      "src": "CF!AD78"
+     },
+     "net_change_cash": {
+      "v": 4.031209,
+      "src": "CF!AD79"
+     },
+     "cash_end": {
+      "v": 51.063533,
+      "src": "CF!AD81"
+     }
+    }
+   },
+   "ifrs16": {
+    "pl": {
+     "revenue": {
+      "v": 1103.662719,
+      "src": "PL!AT10"
+     },
+     "cogs": {
+      "v": -851.163385,
+      "src": "PL!AT11"
+     },
+     "gross_profit": {
+      "v": 252.499334,
+      "src": "PL!AT12"
+     },
+     "sga": {
+      "v": -194.840959,
+      "src": "PL!AT15"
+     },
+     "staff": {
+      "v": -94.393772,
+      "src": "PL!AT16"
+     },
+     "da": {
+      "v": -42.70701,
+      "src": "PL!AT17"
+     },
+     "professional_fees": {
+      "v": -10.420145,
+      "src": "PL!AT18"
+     },
+     "advertising": {
+      "v": -9.577702,
+      "src": "PL!AT19"
+     },
+     "utilities": {
+      "v": -11.575845,
+      "src": "PL!AT20"
+     },
+     "repairs": {
+      "v": -4.08848,
+      "src": "PL!AT21"
+     },
+     "cleaning": {
+      "v": -1.836877,
+      "src": "PL!AT22"
+     },
+     "lease_premises": {
+      "v": -4.168719,
+      "src": "PL!AT23"
+     },
+     "sga_other": {
+      "v": -10.664149,
+      "src": "PL!AT24"
+     },
+     "taxes_other": {
+      "v": -1.88528,
+      "src": "PL!AT25"
+     },
+     "security": {
+      "v": -3.498392,
+      "src": "PL!AT26"
+     },
+     "preopening": {
+      "v": 0.0,
+      "src": "PL!AT27"
+     },
+     "lease_land_equipment": {
+      "v": -0.024588,
+      "src": "PL!AT28"
+     },
+     "other_op_income": {
+      "v": 13.845633,
+      "src": "PL!AT30"
+     },
+     "other_op_expense": {
+      "v": -1.234493,
+      "src": "PL!AT31"
+     },
+     "opbi": {
+      "v": 70.269515,
+      "src": "PL!AT32"
+     },
+     "impairment": {
+      "v": -0.508353,
+      "src": "PL!AT33"
+     },
+     "ebit": {
+      "v": 69.761162,
+      "src": "PL!AT34"
+     },
+     "interest_expense": {
+      "v": -31.172005,
+      "src": "PL!AT36"
+     },
+     "interest_income": {
+      "v": 5.39343,
+      "src": "PL!AT37"
+     },
+     "put_revaluation": {
+      "v": 0.0,
+      "src": "PL!AT38"
+     },
+     "swaps_fv": {
+      "v": 0.0,
+      "src": "PL!AT39"
+     },
+     "other_non_operating": {
+      "v": 0.0,
+      "src": "PL!AT40"
+     },
+     "fx": {
+      "v": 0.419927,
+      "src": "PL!AT41"
+     },
+     "pbt": {
+      "v": 44.402514,
+      "src": "PL!AT43"
+     },
+     "income_tax": {
+      "v": -9.551203,
+      "src": "PL!AT44"
+     },
+     "net_income": {
+      "v": 34.851311,
+      "src": "PL!AT46"
+     },
+     "ebitda": {
+      "v": 113.015443,
+      "src": "PL!AT49"
+     }
+    },
+    "cf": {
+     "pbt": {
+      "v": 44.402514,
+      "src": "CF!AT11"
+     },
+     "interest_expense_addback": {
+      "v": 31.172005,
+      "src": "CF!AT18"
+     },
+     "da": {
+      "v": 42.70701,
+      "src": "CF!AT22"
+     },
+     "bargain_purchase_gain": {
+      "v": 0.0,
+      "src": "CF!AT29"
+     },
+     "d_receivables": {
+      "v": -0.862373,
+      "src": "CF!AT37"
+     },
+     "d_advances_paid": {
+      "v": 0.904164,
+      "src": "CF!AT38"
+     },
+     "d_prepaid": {
+      "v": -0.06135,
+      "src": "CF!AT39"
+     },
+     "d_inventories": {
+      "v": -13.381626,
+      "src": "CF!AT40"
+     },
+     "d_payables": {
+      "v": 25.537132,
+      "src": "CF!AT41"
+     },
+     "d_advances_received": {
+      "v": 0.953701,
+      "src": "CF!AT42"
+     },
+     "d_other_taxes": {
+      "v": 1.084814,
+      "src": "CF!AT43"
+     },
+     "cash_generated": {
+      "v": 126.572746,
+      "src": "CF!AT45"
+     },
+     "income_tax_paid": {
+      "v": -6.729541,
+      "src": "CF!AT47"
+     },
+     "interest_paid": {
+      "v": -31.183983,
+      "src": "CF!AT48"
+     },
+     "interest_received": {
+      "v": 4.027673,
+      "src": "CF!AT49"
+     },
+     "net_ocf": {
+      "v": 92.686895,
+      "src": "CF!AT51"
+     },
+     "capex_ppe": {
+      "v": -39.515269,
+      "src": "CF!AT54"
+     },
+     "acquisitions_net": {
+      "v": -2.702449,
+      "src": "CF!AT55"
+     },
+     "capex_intangibles": {
+      "v": -6.219984,
+      "src": "CF!AT56"
+     },
+     "capex_leasehold_rights": {
+      "v": 0.0,
+      "src": "CF!AT57"
+     },
+     "loans_given_net": {
+      "v": -10.47,
+      "src": "CF!AT58"
+     },
+     "proceeds_disposals_lr": {
+      "v": 0.0,
+      "src": "CF!AT59"
+     },
+     "proceeds_ppe": {
+      "v": 0.835034,
+      "src": "CF!AT60"
+     },
+     "transfer_restricted": {
+      "v": -8.191,
+      "src": "CF!AT61"
+     },
+     "net_icf": {
+      "v": -66.263668,
+      "src": "CF!AT63"
+     },
+     "borrowings_in": {
+      "v": 59.954,
+      "src": "CF!AT66"
+     },
+     "borrowings_out": {
+      "v": -70.199245,
+      "src": "CF!AT67"
+     },
+     "lease_principal": {
+      "v": -12.146772,
+      "src": "CF!AT68"
+     },
+     "finance_lease_repaid": {
+      "v": 0.0,
+      "src": "CF!AT69"
+     },
+     "share_issue": {
+      "v": 0.0,
+      "src": "CF!AT71"
+     },
+     "buyback": {
+      "v": 0.0,
+      "src": "CF!AT72"
+     },
+     "net_fcf": {
+      "v": -22.392017,
+      "src": "CF!AT76"
+     },
+     "cash_begin": {
+      "v": 47.032323,
+      "src": "CF!AT78"
+     },
+     "net_change_cash": {
+      "v": 4.03121,
+      "src": "CF!AT79"
+     },
+     "cash_end": {
+      "v": 51.063533,
+      "src": "CF!AT81"
      }
     }
    }

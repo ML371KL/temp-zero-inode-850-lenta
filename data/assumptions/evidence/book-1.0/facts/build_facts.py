@@ -642,6 +642,25 @@ def verify_ifrs16(halves16, bal16):
     return checks
 
 
+def manifest_gate(sources) -> list[str]:
+    """Документы первички, чей sha256 не совпал с MANIFEST.md, — пути по порядку реестра.
+
+    Непустой список останавливает сборку кодом 2 (VERIFY.md, «Сборка»): подмена первички,
+    которую не покрывают ни транскрипции PDF, ни тождества (карточка бумаги ISS, история и
+    операционный лист датабука), иначе уходила бы в факты с кодом 0 и одной строкой
+    «ВНИМАНИЕ» в логе (внешний аудит 30.09.2026, D01).
+    """
+    return [s["path"] for s in sources.values() if not s["hash_matches_manifest"]]
+
+
+def stop(reason: str):
+    """Отказ сборки: причина — в лог и на экран, лог — в файл, код 2."""
+    log("ОШИБКА: " + reason + " — сборка остановлена")
+    (HERE / "out").mkdir(parents=True, exist_ok=True)
+    (HERE / "out" / "build_log.txt").write_text("\n".join(LOG) + "\n", encoding="utf-8")
+    sys.exit(2)
+
+
 # =========================================================================== основной сбор
 def main():
     P = primary_dir()
@@ -670,12 +689,13 @@ def main():
         if not match:
             log(f"[sources] ВНИМАНИЕ: {rel}: manifest={m['sha256'][:16] if m else None} actual={actual[:16]}")
     log(f"[sources] документов: {len(sources)}, хэш = MANIFEST: {sum(s['hash_matches_manifest'] for s in sources.values())}")
+    changed = manifest_gate(sources)
+    if changed:
+        stop("sha256 первички не совпал с MANIFEST.md: " + ", ".join(changed))
 
     notes, quotes, bad = verify_notes()
     if bad:
-        log("ОШИБКА: не все транскрипции подтверждены первичкой — сборка остановлена")
-        (HERE / "out" / "build_log.txt").write_text("\n".join(LOG) + "\n", encoding="utf-8")
-        sys.exit(2)
+        stop("не все транскрипции подтверждены первичкой")
 
     def N(fid):
         return notes[fid]
@@ -695,9 +715,12 @@ def main():
     for basis in ("ias17", "ifrs16"):
         h_pl, f_pl = flows(pl, PL_LINES, basis)
         h_cf, f_cf = flows(cf, CF_LINES, basis)
-        for per in set(h_pl) | set(h_cf):
+        # Порядок периодов — сортировкой, а не обходом множества: иначе байты
+        # accounting_base.json зависели бы от PYTHONHASHSEED, и хэш производного файла в
+        # sources.json давал бы ложную тревогу при каждой пересборке.
+        for per in sorted(set(h_pl) | set(h_cf)):
             halves.setdefault(per, {})[basis] = {"pl": h_pl.get(per, {}), "cf": h_cf.get(per, {})}
-        for per in set(f_pl) | set(f_cf):
+        for per in sorted(set(f_pl) | set(f_cf)):
             fys.setdefault(per, {})[basis] = {"pl": f_pl.get(per, {}), "cf": f_cf.get(per, {})}
         for date, rec in balances(bs, basis).items():
             bal.setdefault(date, {})[basis] = rec
@@ -1228,7 +1251,7 @@ def main():
         ("sellside_targets", {"all": targets, "latest_by_house": list(latest.values()), "latest_median": med,
                               "latest_n": len(vals), "latest_range": [vals[0], vals[-1]] if vals else None,
                               "src": "research/lent_sellside_targets.csv (вторичные источники с датами; класс B)"}),
-        ("hygiene_note", "строка MGNT — публичные данные Магнита (databook 1H 2026); для публичного репозитория нужен разрешённый шаблон гигиены или загрузка databook Магнита и X5 в primary с sha256 (Возражения ведущему)"),
+        ("hygiene_note", "строки X5 и MGNT — публичные отчётные данные аналогов (databook X5 2026_08, Magnit Databook 1H 2026) со ссылкой на первоисточник: в публичном репозитории допустимы (решение ведущего F33; разрешение — tests/test_public_hygiene.py); databook аналогов — в первичку с sha256 (решение ведущего A5)"),
     ])
     dump_json(peers, out / "peers.json")
 

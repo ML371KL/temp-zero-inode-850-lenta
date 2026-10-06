@@ -196,13 +196,13 @@
   }
  },
  "derived_files": {
-  "accounting_base.json": "0f19f2f5929fde08da45f22a20db93d36d9ae65adfb87fdcf31ddaf839190a96",
-  "anchor.json": "7e8e97a96cf4491420c09f676a948e4976a80c2e1a9388559b2d3fe978ce9d1a",
+  "accounting_base.json": "3b9e498c7b28c53e2bda772e1348d970c82d2ccec75ae2e1b5431b22fe24e3c0",
+  "anchor.json": "a859dff84c05c502c9fbecb56ce09beaae183eeb1d9f8b8596c74981f3185305",
   "shares.json": "18a3bb0acabf6676fa065d53537e117ed63865e8957cb2254d2362d99d99af3b",
   "debt.json": "98a4f186fcff771593911676b0a3a811dc9c8c8fc932014b327a7cc06de26608",
   "bridge_balance.json": "3133398f352eb42d0b0d718fb57fe74e49ddb8f89ab119632c5fdcbd0305bdcf",
   "inorganic.json": "53fa3ca335cda896dd844766e7176975e9b646f0bd8e2f2a3cb3b6b3bdea04a5",
-  "peers.json": "9f32d5a861d398fbf4741bf7c0b1344baacb30c37d0cdcb72b1993854a855ee4"
+  "peers.json": "0ae8fbed9631395ee84fa7ef8f2488dd1b1fae039aff70fc247c344859b32cb0"
  },
  "verification": {
   "note_numbers": 230,

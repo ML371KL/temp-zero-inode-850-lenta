@@ -13,10 +13,13 @@
     ОС 0,701; оценка листа фактов 17,595 по темпу группы завышена ≈втрое);
   * `margin_pro_forma` и se Монте-Карло моста `margin_pro_forma_se_mc` — лист «Маржа» (`margin/anchor_out.json`);
     кандидаты листа фактов (`pro_forma_candidate`) снимаются — их заменил канон.
+Шаг переписывает `anchor.json` ПОСЛЕ листа фактов, поэтому здесь же обновляется его sha256 в
+`sources.json → derived_files` (внешний аудит 30.09.2026, D01: хэш оставался от сборки до канона).
 Запуск: python -B canon.py [каталог фактов] (по умолчанию ../../../../facts от места скрипта — data/facts репозитория).
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -65,8 +68,20 @@ def main() -> dict:
         if A[key].pop("pro_forma_candidate", None) is not None:
             A[key]["pro_forma_candidate_note"] = "кандидат листа фактов до листов «Маржа», «Сеть», capex заменён каноном (canon.py)"
     path.write_text(json.dumps(A, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
+    record_hash(path)
     return dict(ebitda_ltm=A["ebitda_ltm"]["pro_forma"], revenue_ltm=A["revenue_ltm"]["pro_forma"],
                 da_pre16=A["da_pre16"]["pro_forma"], margin=A["margin_pro_forma"])
+
+
+def record_hash(path: Path) -> None:
+    """sha256 переписанного файла фактов — в `sources.json → derived_files` рядом с ним
+    (тем же видом, каким файл пишет лист фактов: отступ 1, перевод строки в конце)."""
+    sources = path.parent / "sources.json"
+    if not sources.exists():
+        return
+    S = json.loads(sources.read_text(encoding="utf-8"))
+    S.setdefault("derived_files", {})[path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
+    sources.write_text(json.dumps(S, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":
