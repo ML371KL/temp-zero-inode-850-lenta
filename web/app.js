@@ -2316,6 +2316,9 @@ function countdownCard(d) {
       `Первый засчитываемый отчёт — ${periodLabel(admission.first_countable)} (главный эталон не сломан сделкой); решение о допуске — не раньше ${periodLabel(admission.earliest_decision)}.`) : null,
     (admission.broken_ahead || []).length ? detailsBlock(`Отчёты с разрывом периметра · ${admission.broken_ahead.length}`,
       admission.broken_ahead.map((b) => `${periodLabel(b.quarter)} — ${b.deals.map((id) => dealName(d, id)).join(", ")}`).join("; ") + ".") : null,
+    (admission.short_horizon_ahead || []).length ? detailsBlock(`Зачёт на фактическом горизонте · ${admission.short_horizon_ahead.length}`,
+      admission.short_horizon_ahead.map((q) => `${periodLabel(q.quarter)} — ${fmt.num(q.days)} дн`).join("; ")
+      + `: прогноз появляется после факта предыдущего ${reportUnit(d).gen}, в зачёт идёт первый.`) : null,
     isNum(admission.mse_ratio)
       ? el("p", { class: "ink-2 small" }, `Отношение MSE к лучшему эталону: ${fmt.num(admission.mse_ratio, 2)} (${benchTitle(d, admission.best_benchmark)}).`)
       : null,
@@ -2619,6 +2622,7 @@ function scoreboardLine(d) {
     { title: "Прогноз", num: true, value: (r) => targetValue("margin", r.forecast) },
     { title: "Факт", num: true, value: (r) => targetValue("margin", r.actual) },
     { title: "Ошибка", num: true, value: (r) => isNum(r.error) ? fmt.pp(r.error, 2) : "—" },
+    { title: "Горизонт, дн", num: true, value: (r) => isNum(r.forecast) && isNum(r.scoring_horizon_days) ? fmt.num(r.scoring_horizon_days) : "—" },
   ], rows, { cls: "compact" });
 }
 

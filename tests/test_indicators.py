@@ -497,10 +497,15 @@ def test_the_calendar_quarter_is_not_the_forecast_period(tmp_path):
     assert forecast_period(journal, "t", today=date(2026, 10, 15)) == "2026Q3"
     journal.record_actual("t", "2026Q3", 0.07, reported_on=date(2026, 10, 29))
     assert forecast_period(journal, "t", today=date(2026, 10, 30)) == "2026Q4"
+    # Маржа 4 кв. выходит годовым отчётом ≈26.03: до него слой остаётся на 4 кв. —
+    # и 1 февраля, и 15 марта, за 45 дней до отчёта 1 кв. (внешний аудит, T02:
+    # прежде факт 4 кв. вносился здесь раньше этих проверок, чего не бывает).
+    assert forecast_period(journal, "t", today=date(2027, 2, 1)) == "2026Q4"
+    assert forecast_period(journal, "t", today=date(2027, 3, 15)) == "2026Q4"
     journal.record_actual("t", "2026Q4", 0.08, reported_on=date(2027, 3, 26))
+    assert forecast_period(journal, "t", today=date(2027, 3, 26)) == "2027Q1"
     assert forecast_period(journal, "t", today=date(2026, 12, 1)) == "2026Q4", (
         "за квартал, который ещё не начался, слой не забегает")
-    assert forecast_period(journal, "t", today=date(2027, 2, 1)) == "2027Q1"
 
 
 # -------------------------------------------------------------- нау-каст

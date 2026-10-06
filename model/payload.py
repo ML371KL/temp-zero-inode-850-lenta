@@ -808,7 +808,7 @@ NOWCAST_TARGET_TITLES = {
     issuer.series("net_interest"): "чистые процентные расходы",
 }
 # Сколько кварталов вперёд искать первый засчитываемый: предел цикла, а не
-# допущение (8 засчитываемых кварталов при разрывах ≈ через 3 года).
+# допущение (8 засчитываемых кварталов при разрывах — через ≈3 года).
 ADMISSION_SEARCH_QUARTERS = 40
 
 
@@ -819,26 +819,37 @@ def _admission_calendar(period: str, events_needed) -> dict:
     (`indicators.perimeter.broken_by` с методом `journal.MAIN_BENCHMARK` — то же
     правило, что у `Journal.admission`). Решение о допуске — не раньше квартала,
     в котором наберётся `events_needed` засчитанных отчётов (D15: 8 кварталов).
+
+    Квартал, чей предыдущий квартал отчитывается позже момента зачёта (1 кв.:
+    маржа 4 кв. выходит годовым отчётом), идёт в счёт первым прогнозом после
+    факта предыдущего, на фактическом горизонте (`journal.expected_scoring`,
+    решение владельца 30.09.2026): такие кварталы названы в `short_horizon_ahead`
+    с ожидаемым горизонтом в днях. `countable` — сами засчитываемые кварталы по
+    порядку; календарь сверяется с посуточной симуляцией планировщика (тест).
     """
     from indicators import perimeter, periods
     from indicators.collect import MARGIN_TARGET
-    from indicators.journal import MAIN_BENCHMARK
+    from indicators.journal import MAIN_BENCHMARK, SCORE_AFTER_PREVIOUS_FACT, expected_scoring
 
     main = MAIN_BENCHMARK[MARGIN_TARGET]
     need = int(events_needed or 0)
-    countable, broken, q = [], [], period
+    countable, broken, short, q = [], [], [], period
     for _ in range(ADMISSION_SEARCH_QUARTERS):
         hit = perimeter.broken_by(q, main)
         if hit:
             broken.append(dict(quarter=q, deals=[b.id for b in hit]))
         else:
             countable.append(q)
+            rule, days = expected_scoring(q, MARGIN_TARGET)
+            if rule == SCORE_AFTER_PREVIOUS_FACT:
+                short.append(dict(quarter=q, days=days))
             if len(countable) >= max(need, 1):
                 break
         q = periods.shift(q, 1)
     return dict(first_countable=countable[0] if countable else None,
                 earliest_decision=(countable[need - 1] if need and len(countable) >= need
                                    else None),
+                countable=countable, short_horizon_ahead=short,
                 broken_ahead=broken, main_benchmark=main)
 
 

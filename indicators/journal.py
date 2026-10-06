@@ -7,6 +7,12 @@
 
 * горизонты 90 / 45 / 15 дней до публикации, в зачёт идёт **45** — почти весь
   квартал прожит, отчётов аналогов за него ещё нет (study/04 §10.3);
+* квартал, чей предыдущий квартал отчитывается ПОЗЖЕ момента зачёта (1 кв.: маржа
+  4 кв. выходит годовым отчётом ≈26.03, а 45 дней до отчёта 1 кв. — ≈15.03),
+  прогноза на 45 дней иметь не может — слой переходит на квартал только после
+  факта предыдущего. В зачёт у него идёт ПЕРВЫЙ прогноз после этого факта, на
+  фактическом горизонте (≈34 дня; решение владельца 30.09.2026, вариант B2):
+  модель и эталоны видят факт предыдущего квартала на одну дату;
 * допуск к правилу A-P2u — решение владельца, не раньше чем после
   `ADMISSION_MIN_EVENTS` = 8 отчётных кварталов вне выборки и при отношении MSE
   к лучшему эталону (включая ожидание модели без индикаторов) не больше 0,8;
@@ -127,6 +133,10 @@ INTEREST_TARGET = issuer.series("net_interest")
 # отсчитываются от его собственной даты, как и у всех.
 HORIZONS_DAYS = (90, 45, 15)
 SCORING_HORIZON_DAYS = 45
+# Как выбран зачётный прогноз: на горизонте `SCORING_HORIZON_DAYS` или первым
+# после факта предыдущего периода, если тот вышел позже момента зачёта.
+SCORE_AT_HORIZON = "horizon"
+SCORE_AFTER_PREVIOUS_FACT = "after_previous_fact"
 
 MODEL_EXPECTATION = "model_expectation"
 GUIDANCE = "guidance"
@@ -255,6 +265,25 @@ def forecast_period(journal: "Journal", target: str, *, today: date | None = Non
             return period
         period = periods.next_period(period)
     return limit
+
+
+def expected_scoring(period: str, target: str = "") -> tuple[str, int]:
+    """Как период пойдёт в зачёт ПО КАЛЕНДАРЮ отчётов: (правило, горизонт в днях).
+
+    `forecast_period` переходит на квартал только после ФАКТА предыдущего. Если
+    отчёт предыдущего периода ожидается позже, чем за `SCORING_HORIZON_DAYS` до
+    отчёта самого периода, прогноза на горизонте зачёта не будет, и в зачёт
+    пойдёт первый прогноз после факта предыдущего — на горизонте «от отчёта до
+    отчёта» (у 1 кв. ≈34 дня: годовой отчёт ≈26.03, отчёт 1 кв. ≈29.04). Иначе —
+    обычный горизонт. То же правило, что применяет `Journal.scored` к внесённым
+    фактам; здесь — для календаря допуска вперёд.
+    """
+    gives = target_gives(target) if target else GIVES_MARGIN
+    own = report_date(period, gives)
+    before = report_date(periods.previous_period(period), gives) if own else None
+    if own is None or before is None or before <= own - timedelta(days=SCORING_HORIZON_DAYS):
+        return SCORE_AT_HORIZON, SCORING_HORIZON_DAYS
+    return SCORE_AFTER_PREVIOUS_FACT, (own - before).days
 
 
 class Journal:
@@ -439,29 +468,76 @@ class Journal:
         actual = self.actual(target, period)
         if actual is None:
             return {}
-        main = MAIN_BENCHMARK.get(target)
         out: dict[int, dict | None] = {}
         for days in HORIZONS_DAYS:
             moment = actual.reported_on - timedelta(days=days)
             forecast = self.forecast_as_of(target, period, moment)
-            if forecast is None:
-                out[days] = None
-                continue
-            benchmarks = self.naive_as_of(target, period, moment)
-            benchmark = benchmarks.get(main) if main else None
-            item = dict(
-                made_at=forecast.made_at, value=forecast.value, std_error=forecast.std_error,
-                version=forecast.version, equation=forecast.equation,
-                error=forecast.value - actual.value,
-                abs_error=abs(forecast.value - actual.value),
-                benchmark=main if benchmark is not None else None,
-                benchmark_value=benchmark,
-                benchmark_abs_error=(None if benchmark is None
-                                     else abs(benchmark - actual.value)))
-            item["beats_benchmark"] = (None if benchmark is None else
-                                       item["abs_error"] < item["benchmark_abs_error"])
-            out[days] = item
+            out[days] = (None if forecast is None
+                         else self._against_the_fact(target, period, actual, forecast, moment))
         return out
+
+    def _against_the_fact(self, target: str, period: str, actual: Actual, forecast: Forecast,
+                          moment: date) -> dict:
+        """Прогноз против факта и главный эталон, каким он был на день `moment`."""
+        main = MAIN_BENCHMARK.get(target)
+        benchmark = self.naive_as_of(target, period, moment).get(main) if main else None
+        item = dict(
+            made_at=forecast.made_at, value=forecast.value, std_error=forecast.std_error,
+            version=forecast.version, equation=forecast.equation,
+            error=forecast.value - actual.value,
+            abs_error=abs(forecast.value - actual.value),
+            benchmark=main if benchmark is not None else None,
+            benchmark_value=benchmark,
+            benchmark_abs_error=(None if benchmark is None
+                                 else abs(benchmark - actual.value)))
+        item["beats_benchmark"] = (None if benchmark is None else
+                                   item["abs_error"] < item["benchmark_abs_error"])
+        return item
+
+    def scored(self, target: str, period: str) -> dict | None:
+        """Прогноз, который идёт в ЗАЧЁТ, эталон на тот же момент и горизонт.
+
+        Обычно — прогноз на `SCORING_HORIZON_DAYS` до публикации факта
+        (`rule: horizon`). Если на тот момент прогноза не было, а факт
+        предыдущего периода вышел позже него, раньше прогноз появиться и не мог:
+        слой переходит на период только после факта предыдущего
+        (`forecast_period`). Тогда в зачёт идёт ПЕРВЫЙ прогноз периода,
+        сделанный до дня публикации его факта (`rule: after_previous_fact`), на
+        фактическом горизонте — днях от этого прогноза до публикации. Эталоны
+        берутся на день того же прогноза: модель и эталоны видят факт
+        предыдущего периода на одну дату. `None` — в зачёт идти нечему.
+
+        К словарю `_against_the_fact` добавлены `rule`, `moment` (день, на
+        который взяты прогноз и эталоны), `horizon_days` и, для второго
+        правила, `previous_period` и `previous_reported_on`.
+        """
+        actual = self.actual(target, period)
+        if actual is None:
+            return None
+        nominal = actual.reported_on - timedelta(days=SCORING_HORIZON_DAYS)
+        forecast = self.forecast_as_of(target, period, nominal)
+        if forecast is not None:
+            item = self._against_the_fact(target, period, actual, forecast, nominal)
+            item.update(rule=SCORE_AT_HORIZON, moment=nominal.isoformat(),
+                        horizon_days=SCORING_HORIZON_DAYS)
+            return item
+        if not periods.is_period(period):
+            return None
+        before = periods.previous_period(period)
+        previous = self.actual(target, before)
+        if previous is None or previous.reported_on <= nominal:
+            return None
+        first = next((f for f in self.forecasts(target, period)
+                      if date.fromisoformat(f.made_at[:10]) < actual.reported_on), None)
+        if first is None:
+            return None
+        moment = date.fromisoformat(first.made_at[:10])
+        item = self._against_the_fact(target, period, actual, first, moment)
+        item.update(rule=SCORE_AFTER_PREVIOUS_FACT, moment=moment.isoformat(),
+                    horizon_days=(actual.reported_on - moment).days,
+                    previous_period=before,
+                    previous_reported_on=previous.reported_on.isoformat())
+        return item
 
     def events(self, target: str) -> list[str]:
         """СОБЫТИЯ — отчёты, а не периоды. Один отчёт даёт одно событие.
@@ -495,24 +571,28 @@ class Journal:
     def scoreboard(self, target: str) -> list[dict]:
         """«Прогноз против факта»: ОДНА строка на событие, а не на запись.
 
-        В зачёт идёт прогноз на горизонте `SCORING_HORIZON_DAYS`. Рядом —
-        остальные горизонты, последнее слово перед отчётом и разрывы
-        периметра главного эталона (`perimeter_breaks`): событие со сломанным
-        главным эталоном печатается, но в счёт допуска не идёт
+        В зачёт идёт прогноз `scored`: на горизонте `SCORING_HORIZON_DAYS`, а у
+        периода, чей предыдущий отчитался позже, — первый после его факта
+        (`scoring_rule`, фактический горизонт — `scoring_horizon_days`, причина
+        — в `note`). Рядом — остальные горизонты, последнее слово перед отчётом
+        и разрывы периметра главного эталона (`perimeter_breaks`): событие со
+        сломанным главным эталоном печатается, но в счёт допуска не идёт
         (`admission_excluded`).
         """
         out = []
         for period in self.events(target):
             actual = self.actual(target, period)
             horizons = self.horizons(target, period)
-            scored = horizons.get(SCORING_HORIZON_DAYS)
+            scored = self.scored(target, period)
             last = self.forecast_as_of(target, period, actual.reported_on)
             main = MAIN_BENCHMARK.get(target)
             broken = perimeter.broken_by(period, main) if main else []
             row = dict(
                 period=period, target=target,
                 actual=actual.value, reported_on=actual.reported_on.isoformat(),
-                scoring_horizon_days=SCORING_HORIZON_DAYS,
+                scoring_horizon_days=(SCORING_HORIZON_DAYS if scored is None
+                                      else scored["horizon_days"]),
+                scoring_rule=None if scored is None else scored["rule"],
                 horizons={str(k): v for k, v in horizons.items()},
                 last_word=None if last is None else dict(
                     made_at=last.made_at, value=last.value, version=last.version,
@@ -523,17 +603,22 @@ class Journal:
             if scored is None:
                 row.update(made_at=None, equation=None, version=None, forecast=None,
                            error=None, abs_error=None, beats_benchmark=None,
-                           note="прогноза за %d дней до отчёта не было" % SCORING_HORIZON_DAYS)
+                           note=self._unscored_reason(target, period, actual))
             else:
                 row.update(made_at=scored["made_at"], equation=scored["equation"],
                            version=scored["version"], forecast=scored["value"],
                            error=scored["error"], abs_error=scored["abs_error"], note="")
+                if scored["rule"] == SCORE_AFTER_PREVIOUS_FACT:
+                    row["note"] = (
+                        f"зачёт на фактическом горизонте {scored['horizon_days']} дн: факт за "
+                        f"{scored['previous_period']} вышел {scored['previous_reported_on']} — "
+                        f"позже чем за {SCORING_HORIZON_DAYS} дней до отчёта, в зачёт идёт "
+                        "первый прогноз после него")
             if broken:
                 row["note"] = ((row["note"] + "; ") if row["note"] else "") + (
                     "разрыв периметра главного эталона (" + ", ".join(b.name for b in broken)
                     + ") — в счёт допуска не идёт")
-            at = (None if scored is None
-                  else actual.reported_on - timedelta(days=SCORING_HORIZON_DAYS))
+            at = None if scored is None else date.fromisoformat(scored["moment"])
             benchmarks = self.naive_as_of(target, period, at)
             if main is None and len(benchmarks) == 1:
                 main = next(iter(benchmarks))
@@ -549,11 +634,25 @@ class Journal:
             out.append(row)
         return out
 
+    def _unscored_reason(self, target: str, period: str, actual: Actual) -> str:
+        """Почему у события нет зачётного прогноза — словами для табло."""
+        reason = "прогноза за %d дней до отчёта не было" % SCORING_HORIZON_DAYS
+        rows = self.forecasts(target, period)
+        if not rows:
+            return reason
+        reason += f": первый записан {rows[0].made_at[:10]}"
+        previous = (self.actual(target, periods.previous_period(period))
+                    if periods.is_period(period) else None)
+        if previous is not None:
+            reason += (f", факт за {previous.period} (опубликован "
+                       f"{previous.reported_on.isoformat()}) внесён {previous.recorded_at[:10]}")
+        return reason
+
     def admission(self, target: str, *, version: str | None = None,
                   min_events: int = ADMISSION_MIN_EVENTS) -> "Admission":
         """Статус допуска уравнения к правилу A-P2u.
 
-        Считаются СОБЫТИЯ с прогнозом на горизонте зачёта и эталонами на тот
+        Считаются СОБЫТИЯ с зачётным прогнозом (`scored`) и эталонами на тот
         же момент, без разрыва периметра главного эталона; с `version` —
         только отчёты, где зачтённый прогноз сделан этой версией уравнения.
         """
@@ -633,7 +732,10 @@ def admission_rule_text(min_events: int = ADMISSION_MIN_EVENTS, target: str = ""
             f"периметра главного эталона) и при отношении MSE уравнения к лучшему "
             f"эталону{among} не больше {_ru(ADMISSION_MAX_MSE_RATIO)}; понижение до "
             f"справочного — если на последних {DEMOTION_WINDOW} отчётах отношение "
-            f"больше {_ru(DEMOTION_MSE_RATIO)}")
+            f"больше {_ru(DEMOTION_MSE_RATIO)}; в зачёт идёт прогноз за "
+            f"{SCORING_HORIZON_DAYS} дней до отчёта, а у квартала, чей предыдущий квартал "
+            "отчитался позже этого момента (1 кв.: маржа 4 кв. выходит годовым отчётом), — "
+            "первый прогноз после факта предыдущего, на фактическом горизонте")
 
 
 def _ru(value: float, digits: int = 1) -> str:
