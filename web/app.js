@@ -2615,7 +2615,7 @@ function scoreboardLine(d) {
   if (!rows.length) {
     const retro = d.nowcast && d.nowcast.retro;
     return el("p", { class: "card-foot" }, "Табло «прогноз против факта» пусто: фактов после начала журнала ещё не было",
-      retro && retro.first_exam ? ` — первый зачёт ${fmt.dateLong(retro.first_exam)}.` : ".");
+      retro && retro.first_exam ? ` — первая сверка с фактом ${fmt.dateLong(retro.first_exam)}.` : ".");
   }
   return dataTable([
     { title: upperFirst(reportUnit(d).one), value: (r) => periodLabel(r.period), cls: "name" },

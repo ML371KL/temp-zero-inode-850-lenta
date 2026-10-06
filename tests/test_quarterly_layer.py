@@ -293,7 +293,7 @@ def test_the_retro_check_lists_the_perimeter_breaks_and_scores_the_rest(tmp_path
     assert {e["period"] for e in revenue["excluded"]} >= {"2023Q4", "2024Q3"}
     assert [b["id"] for b in block["perimeter_breaks"]][-1] == "okey"
     assert block["source"]["kind"] == "facts" and "один винтаж" in block["source"]["pit_warning"]
-    assert "первый зачёт — отчёт за 3 кв. 2026" in block["note"]
+    assert "первая сверка с фактом — отчёт за 3 кв. 2026" in block["note"]
     table = retro.markdown_table(block)
     assert "тот же квартал год назад + сдвиг прошлого квартала г/г (главный)" in table
     assert block["interest"]["available"] is False
