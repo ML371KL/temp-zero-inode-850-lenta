@@ -416,12 +416,14 @@ def test_the_tax_floor_defaults_to_the_first_year():
 
 
 @pytest.mark.needs_book
-@pytest.mark.parametrize("spec", [("N", "stress", "high"), ("H", "partial", "base"),
-                                  ("M", "full", "low")], ids="|".join)
+@pytest.mark.parametrize("spec", [(world, regime, capex) for world in ("N", "H", "M")
+                                  for regime in ("stress", "floor", "partial", "full")
+                                  for capex in ("low", "base", "high")], ids="|".join)
 def test_on_the_book_the_terminal_is_the_direct_sum_over_the_halves(spec):
-    """Книга «Ленты» с тремя правилами: стоимость потока и щита терминала клетки —
-    прямая сумма по полугодиям (когорты, налог τ·max(0, база), щит не больше
-    налога); в «стрессе» (π выше g) она ниже линейной капитализации."""
+    """Книга «Ленты» с тремя правилами, все 36 клеток сетки: стоимость потока и щита
+    терминала клетки — прямая сумма по полугодиям (когорты, налог τ·max(0, база),
+    щит не больше налога); в «стрессе» (π выше g на 1,7–1,8 п.п.) она ниже линейной
+    капитализации, в остальных клетках правила совпадают."""
     from model.book import book
 
     A = _with_terminal(book(), da_convention="cohort_explicit", boundary_levels="rolling",
@@ -435,5 +437,7 @@ def test_on_the_book_the_terminal_is_the_direct_sum_over_the_halves(spec):
         assert res.terminal_flow_value < linear.terminal_flow_value - 1e-3
         assert res.terminal_shield_value < linear.terminal_shield_value - 1e-3
     else:
-        assert res.terminal_flow_value == pytest.approx(linear.terminal_flow_value, rel=1e-12)
-        assert res.terminal_shield_value == pytest.approx(linear.terminal_shield_value, rel=1e-12)
+        # В «дне» и «частичной сходимости» π выше g на 0,01–0,2 п.п.: база меняет знак
+        # через сотни лет, и разница правил тонет в дисконте.
+        assert res.terminal_flow_value == pytest.approx(linear.terminal_flow_value, rel=1e-10)
+        assert res.terminal_shield_value == pytest.approx(linear.terminal_shield_value, rel=1e-10)
