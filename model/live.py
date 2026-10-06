@@ -462,7 +462,7 @@ def _observe_curve(store, report: LiveReport, today: dt.date, previous: dict,
                                       or was_live.get("observed_curve_date") or "")
 
     curve: dict[float, float] = {}
-    days: list[dt.date] = []
+    days: dict[float, dt.date] = {}
     out_of_range: list[str] = []
     for series in store.all_series():
         if not series.id.startswith(CURVE_PREFIX):
@@ -476,7 +476,7 @@ def _observe_curve(store, report: LiveReport, today: dt.date, previous: dict,
             out_of_range.append(f"{tenor:g}y={value:.4g}")
             continue
         curve[tenor] = value
-        days.append(dt.date.fromisoformat(point.period[:10]))
+        days[tenor] = dt.date.fromisoformat(point.period[:10])
 
     if out_of_range:
         report.degraded.append(
@@ -484,13 +484,31 @@ def _observe_curve(store, report: LiveReport, today: dt.date, previous: dict,
             + ", ".join(sorted(out_of_range)[:4])
             + " — кривая не принята как наблюдение")
         return
+    # Узлы разных дней в одну кривую не склеиваются — то же правило, что у
+    # `state_curve` инструмента пересборки миров (внешний аудит 30.09.2026, T06).
+    # Сборщик пишет каждый узел своим рядом: узел, не пришедший в ответе (или
+    # срок, который биржа сняла), остаётся в состоянии со старой датой и
+    # подклеивался бы к свежим. Тогда минимум узлов и возраст кривой мерились бы
+    # по самому свежему узлу, а сдвиг застрявшего узла к книге стоял бы на месте
+    # — гейт обновления книги молчал бы при движении «брюха» кривой. Отказ, а не
+    # «оставить узлы свежего дня»: недостающий узел сдвига заполнила бы
+    # интерполяция соседних сроков.
+    if len(set(days.values())) > 1:
+        newest = max(days.values())
+        behind = sorted((tenor, day) for tenor, day in days.items() if day != newest)
+        report.degraded.append(
+            "узлы кривой из разных дней: "
+            + ", ".join(f"{tenor:g}y ({day})" for tenor, day in behind[:4])
+            + f" при кривой {newest} — ответ источника неполный, кривая не принята как "
+              "наблюдение")
+        return
     if len(curve) < MIN_CURVE_NODES:
         report.degraded.append(
             f"кривая из {len(curve)} узлов при минимуме {MIN_CURVE_NODES} "
             "— не принята как наблюдение")
         return
 
-    curve_date = max(days)
+    curve_date = max(days.values())
     age = _business_days(curve_date, today)
     if age > MAX_CURVE_AGE_BUSINESS_DAYS:
         report.degraded.append(
