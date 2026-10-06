@@ -658,6 +658,141 @@ def test_every_new_databook_version_is_kept_with_its_sha256(tmp_path, monkeypatc
     assert len([v for v in sources.databook_versions(store) if v["kind"] == "version"]) == 2
 
 
+def _renamed_sheet(body: bytes, title: str) -> bytes:
+    """Тот же датабук с переименованным листом — «сайт сменил раскладку»."""
+    import openpyxl
+
+    book = openpyxl.load_workbook(io.BytesIO(body))
+    book[sources.DATABOOK_SHEET].title = title
+    buffer = io.BytesIO()
+    book.save(buffer)
+    return buffer.getvalue()
+
+
+def _databook_tact(monkeypatch, store: Store, day: date, web: FakeWeb, **kwargs) -> int:
+    """Такт сбора датабука «в день `day`» штатным `collect.cmd_collect`."""
+    from indicators import collect
+
+    monkeypatch.setattr(sources, "fetch", web)
+    monkeypatch.setattr(sources, "UTC_TODAY", lambda: day.isoformat())
+    monkeypatch.setitem(sources.COLLECTORS, "lenta_databook", (functools.partial(
+        sources.collect_lenta_databook, today=day),) + _DATABOOK_ENTRY[1:])
+    return collect.cmd_collect(["lenta_databook"], store, pause=0.0, **kwargs)
+
+
+_DATABOOK_ENTRY = sources.COLLECTORS["lenta_databook"]
+
+
+def test_a_databook_that_failed_to_parse_keeps_the_alarm_until_the_parser_is_fixed(
+        tmp_path, monkeypatch, capsys):
+    """T01 внешнего аудита. Версия ложится в архив ДО разбора, и прежде повторный
+    вызов видел «ту же ссылку» и отвечал «ок»: вечерний такт с повтором гасил
+    тревогу сам, а квартальные ряды и «ВЫШЕЛ ОТЧЁТ» не появлялись никогда. Теперь
+    отказ держится в каждом такте и в повторе, день публикации при этом собран;
+    починенный разбор применяется ближайшим тактом к АРХИВНОЙ копии — без
+    скачивания, с исходным винтажом, одной версией и одним файлом."""
+    from indicators import collect
+
+    store = Store(tmp_path)
+    new_title = "Financials Quarterly (IAS 17)"
+    web = FakeWeb([(r"/publications/$", fixture("lenta_databook", "publications.html")),
+                   (DATABOOK_LINK, _renamed_sheet(_databook_xlsx(EXTRACT), new_title))])
+    day = date(2026, 10, 29)
+
+    # Вечерний такт с повтором — первый, кто видит новый датабук.
+    assert _databook_tact(monkeypatch, store, day, web, retry=True) == collect.ALARM_EXIT
+    captured = capsys.readouterr()
+    assert "НЕВОСПОЛНИМЫЙ ПРОПУСК: lenta_databook" in captured.err
+    assert "ВЫШЕЛ ОТЧЁТ" not in captured.err
+    report = json.loads((store.root / collect.COLLECTOR_REPORT_NAME).read_text(encoding="utf-8"))
+    status = report["sources"]["lenta_databook"]
+    assert status["irrecoverable"] and "DatabookLayoutError" in status["status"]
+    assert sum(bool(re.search(DATABOOK_LINK, u)) for u in web.calls) == 1, (
+        "повтор разбирает архивную копию, файл второй раз не качается")
+    assert store.load(issuer.series("databook.published")) is not None, "день публикации собран"
+    assert store.load(sources.databook_series_id("revenue")) is None
+    assert sources.databook_applied(store) == set()
+    first_fetch = sources.databook_versions(store)[0]["fetched_at"]
+
+    # Утро следующего дня (без повтора) и ещё через неделю — тревога держится.
+    for later in (1, 8):
+        assert _databook_tact(monkeypatch, store, day + timedelta(days=later), web) == \
+            collect.ALARM_EXIT
+    capsys.readouterr()
+
+    # Разбор починен: ближайший такт кладёт версию в ряды из архива.
+    monkeypatch.setattr(sources, "DATABOOK_SHEET", new_title)
+    calls = len(web.calls)
+    fixed_day = day + timedelta(days=9)
+    assert _databook_tact(monkeypatch, store, fixed_day, web) == 0
+    assert "ВЫШЕЛ ОТЧЁТ" in capsys.readouterr().err
+    assert all(not re.search(DATABOOK_LINK, u) for u in web.calls[calls:])
+    revenue = store.load(sources.databook_series_id("revenue"))
+    assert revenue is not None and {p.fetched_at for p in revenue.points} == {first_fetch}
+    signal = store.load(issuer.series("databook.new_version"))
+    assert [(p.period, p.value) for p in signal.points] == [(fixed_day.isoformat(), 1.0)]
+    versions = [v for v in sources.databook_versions(store) if v["kind"] == "version"]
+    assert len(versions) == 1 and {versions[0]["sha256"]} == sources.databook_applied(store)
+    assert len([p for p in _raw_files(store, "lenta_databook")
+                if p.name.startswith("databook_") and "recheck" not in p.name]) == 1
+    report = json.loads((store.root / collect.COLLECTOR_REPORT_NAME).read_text(encoding="utf-8"))
+    assert "lenta_databook" not in report["sources"]
+
+    # Дальше — как у любой учтённой версии: без скачивания и без нового сигнала.
+    again = sources.collect_lenta_databook(store=store, today=fixed_day + timedelta(days=1))
+    assert "тот же" in again.note and issuer.series("databook.new_version") not in again.series
+
+
+def test_a_maintenance_page_on_the_databook_link_is_not_a_version(tmp_path, monkeypatch):
+    """По ссылке xlsx отдали страницу техработ с кодом 200: отказ, тело — рядом в
+    архиве, версией оно не становится — следующий такт качает файл снова, а не
+    через неделю."""
+    store = Store(tmp_path)
+    answers = iter([b"<html>maintenance</html>", _databook_xlsx(EXTRACT)])
+    web = FakeWeb([(r"/publications/$", fixture("lenta_databook", "publications.html")),
+                   (DATABOOK_LINK, lambda: next(answers))])
+    monkeypatch.setattr(sources, "fetch", web)
+    report = sources.run_collectors(["lenta_databook"], store)
+    assert report["lenta_databook"].startswith("ОШИБКА: DatabookLayoutError: по ссылке датабука "
+                                               "пришёл не xlsx"), report
+    assert sources.databook_versions(store) == []
+    assert [p.name for p in _raw_files(store, "lenta_databook")][0].startswith("rejected_")
+    report = sources.run_collectors(["lenta_databook"], store)
+    assert report["lenta_databook"].startswith("ок"), report
+    assert store.load(sources.databook_series_id("revenue")) is not None
+    assert len(sources.databook_applied(store)) == 1
+
+
+def test_two_databook_versions_of_one_day_are_both_counted(tmp_path, monkeypatch):
+    """Файл заменили в день выхода: обе версии ложатся в ряды и обе учтены —
+    вторая точка сигнала того же дня не сливается с первой (иначе версия считалась
+    бы неприменённой и разбиралась бы в каждом такте)."""
+    store = Store(tmp_path)
+    day = date(2026, 10, 29)
+    pages = fixture("lenta_databook", "publications.html")
+    for number, scale in enumerate((1.0, 1.01), start=1):
+        page = pages.decode("utf-8").replace("Q22026_LENTA", f"Q32026_v{number}_LENTA").encode()
+        web = FakeWeb([(r"/publications/$", page),
+                       (DATABOOK_LINK, _databook_xlsx(EXTRACT, scale=scale))])
+        assert _databook_tact(monkeypatch, store, day, web) == 0
+    signal = store.load(issuer.series("databook.new_version"))
+    assert sorted(p.value for p in signal.points) == [1.0, 2.0]
+    assert len(sources.databook_applied(store)) == 2
+    revenue = store.load(sources.databook_series_id("revenue"))
+    assert len([p for p in revenue.points if p.period == "2026Q2"]) == 2
+
+
+def test_a_databook_without_a_single_revenue_number_is_a_layout_error():
+    """Строка Total Sales есть, а чисел в ней нет — та же ошибка раскладки: версия
+    без точек выручки легла бы в ряды пустой."""
+    empty = json.loads(json.dumps(EXTRACT))
+    for row in empty["rows"]:
+        if row["label"].strip().lower() == "total sales":
+            row["values"] = [None] * len(row["values"])
+    with pytest.raises(sources.DatabookLayoutError, match="Total Sales"):
+        sources.parse_databook(_databook_xlsx(empty))
+
+
 def test_the_databook_collector_is_irrecoverable_and_protected():
     from indicators.store import PROTECTED_SOURCES
 

@@ -963,6 +963,8 @@ DATABOOK_SHEET = "Financials quarterly"
 DATABOOK_RECHECK_DAYS = 7
 DATABOOK_UNIT = 1e-3
 """Лист «Financials quarterly» — млн ₽; ряды — млрд ₽."""
+XLSX_SIGNATURE = bytes((0x50, 0x4B, 0x03, 0x04))
+"""Первые байты xlsx (архив zip, «PK»): ответ без них — не файл датабука."""
 
 QUARTER_LABEL_RE = re.compile(r"^\s*([1-4])Q\s*(\d{4})\s*$")
 
@@ -1013,7 +1015,9 @@ def parse_databook(body: bytes) -> dict[str, dict[str, float]]:
     Шапка — строка, где встречается «IAS 17»; строка под ней — метки
     кварталов («1Q 2020»); блок кончается там, где начинается «IFRS 16» (или
     метка перестаёт быть кварталом). Пустая ячейка — нет числа, а не ноль.
-    Маржа EBITDA считается здесь же (EBITDA / выручка).
+    Маржа EBITDA считается здесь же (EBITDA / выручка). Строка выручки без
+    единого числа — тот же отказ раскладки, что её отсутствие: версия без точек
+    выручки легла бы в ряды пустой.
     """
     import io
 
@@ -1059,8 +1063,9 @@ def parse_databook(body: bytes) -> dict[str, dict[str, float]]:
             if isinstance(value, (int, float)) and not isinstance(value, bool):
                 values[quarter] = round(sign * float(value) * DATABOOK_UNIT, 9)
         out[name] = values
-    if "revenue" not in out or "ebitda_pre16" not in out:
-        raise DatabookLayoutError("в блоке IAS 17 нет строк Total Sales и EBITDA")
+    if not out.get("revenue") or "ebitda_pre16" not in out:
+        raise DatabookLayoutError("в блоке IAS 17 нет строк Total Sales и EBITDA "
+                                  "(или в строке выручки нет ни одного числа)")
     out["ebitda_margin_pre16"] = {
         q: round(out["ebitda_pre16"][q] / out["revenue"][q], 9)
         for q in out["revenue"] if q in out["ebitda_pre16"] and out["revenue"][q]}
@@ -1084,9 +1089,10 @@ def databook_link(app: dict) -> dict:
 def databook_versions(store) -> list[dict]:
     """Что архив знает о датабуке: сохранённые версии и отметки перепроверки.
 
-    Запись — {kind: version|recheck, sha256 (файла датабука), link, day}. По
-    версиям решается «эта уже есть», по всем записям — когда ссылку
-    проверяли в последний раз.
+    Запись — {kind: version|recheck, sha256 (файла датабука), link, day, path
+    (файл версии в архиве)}. По версиям решается «эта уже есть», по всем записям
+    — когда ссылку проверяли в последний раз. «Лежит в архиве» не значит «легла
+    в ряды» — это решает `databook_applied`.
     """
     out = []
     directory = store.raw / DATABOOK_SOURCE if store is not None else None
@@ -1102,8 +1108,21 @@ def databook_versions(store) -> list[dict]:
                         sha256=meta.get("checked_sha256" if recheck else "sha256", ""),
                         link=meta.get("link", ""), day=meta_path.parent.name,
                         fetched_at=meta.get("fetched_at", ""),
-                        name=meta.get("file_name", "")))
+                        name=meta.get("file_name", ""),
+                        path=str(meta_path)[:-len(".meta.json")]))
     return out
+
+
+def databook_applied(store) -> set[str]:
+    """sha256 версий датабука, которые ЛЕГЛИ В РЯДЫ.
+
+    Версия кладётся в архив до разбора, и ошибка разбора оставляет её в архиве,
+    но не в рядах. Применённая версия пишет ровно одну точку ряда
+    `<префикс>.databook.new_version` со своим sha256 (`_databook_series`) — по
+    ним и решается «эта версия уже учтена»; факт архивации для этого не годится.
+    """
+    series = store.load(issuer.series("databook.new_version")) if store is not None else None
+    return {p.source_sha256 for p in series.points} if series is not None else set()
 
 
 def collect_lenta_databook(*, store=None, today: date | None = None) -> Collected:
@@ -1117,12 +1136,25 @@ def collect_lenta_databook(*, store=None, today: date | None = None) -> Collecte
     ссылке или раз в `DATABOOK_RECHECK_DAYS` на прежней (замена файла без
     смены ссылки); известная версия второй раз не сохраняется.
 
+    **«В архиве» и «в рядах» — разное** (внешний аудит 30.09.2026, T01). Версия
+    ложится в архив ДО разбора. Пока последняя версия текущей ссылки не легла в
+    ряды (`databook_applied`), каждый такт — и повтор в том же такте — разбирает
+    её АРХИВНУЮ копию: сломанный разбор даёт отказ невосполнимого источника в
+    каждом такте, а починенный применяется ближайшим тактом без скачивания, с
+    исходным винтажом. Прежде повторный вызов видел «ту же ссылку» и отвечал
+    «ок»: тревога гасла в том же вечернем такте, а квартальные ряды и сигнал
+    «вышел отчёт» по этой версии не появлялись никогда. Ответ без подписи xlsx
+    (страница техработ с кодом 200) версией не становится: тело ложится рядом
+    (`rejected_<sha12>.bin`), ссылка остаётся непроверенной — следующий такт
+    скачает файл снова.
+
     Ряды:
     * `<префикс>.databook.published` — день публикации (activeFrom, по Москве),
       значение 1, в примечании — название релиза и имя файла; новая точка =
       новый отчёт на странице;
-    * `<префикс>.databook.new_version` — день получения новой версии (sha256
-      в примечании) — сигнал такту «вышел отчёт»;
+    * `<префикс>.databook.new_version` — день, когда версия легла в ряды
+      (значение — её номер среди версий этого дня, sha256 — в примечании и в
+      `source_sha256`) — сигнал такту «вышел отчёт» и признак «версия учтена»;
     * `<префикс>.databook.q.<имя>` — квартальные ряды IAS 17 (млрд ₽; маржа —
       доля), винтаж — момент получения файла: пересчитанная история ложится
       рядом с прежней (`Store.upsert`).
@@ -1149,12 +1181,39 @@ def collect_lenta_databook(*, store=None, today: date | None = None) -> Collecte
             period=info["published"], value=1.0,
             note=f"{info['title']}; {info['name']}"[:200], **page_stamp)]
 
+    def apply(body: bytes, sha: str, fetched_at: str, what: str) -> Collected:
+        """Версия → ряды. Разбор не удался — собранное (день публикации) остаётся, а
+        источник получает отказ: версия ждёт в архиве следующего такта."""
+        try:
+            last_quarter = _databook_series(series, body, store=store, today=today, sha=sha,
+                                            fetched_at=fetched_at, name=info["name"])
+        except DatabookLayoutError as exc:
+            return Collected(
+                DATABOOK_SOURCE, 7, series, raw,
+                error=f"DatabookLayoutError: версия датабука {sha[:12]} лежит в архиве, но не "
+                      f"разобрана — {exc}. Квартальных рядов и сигнала «вышел отчёт» по ней "
+                      "нет; после починки разбора она ляжет в ряды ближайшим тактом")
+        return Collected(DATABOOK_SOURCE, 7, series, raw,
+                         note=f"{what} (последний квартал {last_quarter})")
+
     versions = databook_versions(store)
-    known_sha = {v["sha256"] for v in versions if v["kind"] == "version"}
+    applied = databook_applied(store)
+    archived = {v["sha256"]: v for v in versions if v["kind"] == "version"}
     same_link = [v for v in versions if v["link"] == info["link"]]
+    # Последняя версия текущей ссылки, которая лежит в архиве, но в ряды не легла.
+    latest = max((v for v in same_link if v["kind"] == "version"),
+                 key=lambda v: (v["day"], v["fetched_at"]), default=None)
+    pending = latest if latest is not None and latest["sha256"] not in applied else None
     if same_link:
         last_day = date.fromisoformat(max(v["day"] for v in same_link))
         if (today - last_day).days < DATABOOK_RECHECK_DAYS:
+            if pending is not None:
+                # Разбор архивной копии: отказ — на каждом такте, пока разбор не
+                # починен; винтаж — момент, когда файл был получен.
+                return apply(Store.read_raw(Path(pending["path"])), pending["sha256"],
+                             pending["fetched_at"],
+                             f"версия датабука {pending['sha256'][:12]} из архива "
+                             f"(получена {pending['day']}) легла в ряды")
             return Collected(DATABOOK_SOURCE, 7, series, raw,
                              note="датабук на странице тот же; перепроверка файла — "
                                   f"не раньше чем через {DATABOOK_RECHECK_DAYS} дн")
@@ -1163,7 +1222,7 @@ def collect_lenta_databook(*, store=None, today: date | None = None) -> Collecte
     sha = response.sha256
     extra = dict(link=info["link"], file_name=info["name"], title=info["title"],
                  published=info["published"])
-    if sha in known_sha:
+    if sha in archived:
         # Файл перепроверен и не изменился: второй копии в архиве не нужно,
         # но отметка перепроверки нужна — иначе неделя считалась бы от старой
         # даты, и файл качался бы каждый такт.
@@ -1173,27 +1232,61 @@ def collect_lenta_databook(*, store=None, today: date | None = None) -> Collecte
                            fetched_at=response.fetched_at, day=today.isoformat(),
                            sha256=hashlib.sha256(marker).hexdigest(),
                            extra=dict(link=info["link"], checked_sha256=sha))
-        return Collected(DATABOOK_SOURCE, 7, series, raw,
-                         note=f"датабук перепроверен: версия {sha[:12]} не изменилась")
+        if sha in applied:
+            return Collected(DATABOOK_SOURCE, 7, series, raw,
+                             note=f"датабук перепроверен: версия {sha[:12]} не изменилась")
+        # Версия в архиве есть, а в рядах её нет: разбирается сейчас, с винтажом
+        # первого получения.
+        return apply(response.body, sha, archived[sha]["fetched_at"] or response.fetched_at,
+                     f"версия датабука {sha[:12]} из архива легла в ряды")
 
+    if not response.body.startswith(XLSX_SIGNATURE):
+        # Не xlsx (страница техработ, заглушка с кодом 200): тело — в архив для
+        # разбора причин, но ВЕРСИЕЙ оно не становится — иначе повтор увидел бы
+        # «ту же ссылку» и ответил «ок», а настоящий файл пришёл бы через неделю.
+        rejected = f"rejected_{sha[:12]}.bin"
+        if sink is not None:
+            sink.keep(rejected, response, sha256=sha, extra=extra)
+        else:
+            raw.append((rejected, response.body, response, dict(sha256=sha, extra=extra)))
+        return Collected(
+            DATABOOK_SOURCE, 7, series, raw,
+            error=f"DatabookLayoutError: по ссылке датабука пришёл не xlsx "
+                  f"({len(response.body)} байт, sha256 {sha[:12]}) — версией не считается, "
+                  "ссылка будет проверена в следующем такте")
     name = f"databook_{sha[:12]}.xlsx"
     if sink is not None:
         sink.keep(name, response, sha256=sha, extra=extra)
     else:
         raw.append((name, response.body, response, dict(sha256=sha, extra=extra)))
-    blocks = parse_databook(response.body)
-    stamp = dict(fetched_at=response.fetched_at, source_sha256=sha)
-    last_quarter = max(blocks["revenue"], key=lambda q: (q[:4], q[5:])) if blocks["revenue"] else ""
+    return apply(response.body, sha, response.fetched_at, f"новая версия датабука {sha[:12]}")
+
+
+def _databook_series(series: dict, body: bytes, *, store, today: date, sha: str,
+                     fetched_at: str, name: str) -> str:
+    """Версия датабука → ряды в `series`; возвращает её последний квартал.
+
+    Квартальные ряды — с винтажом `fetched_at` (момент получения файла); точка
+    `new_version` — день `today`, значение — номер версии среди лёгших в ряды в
+    этот день (вторая версия того же дня не сливается с первой при записи:
+    `Store.upsert` отбросил бы равное значение, и версия осталась бы неучтённой).
+    Разбор не удался — `DatabookLayoutError`, в `series` ничего не добавлено.
+    """
+    blocks = parse_databook(body)
+    stamp = dict(fetched_at=fetched_at, source_sha256=sha)
+    last_quarter = max(blocks["revenue"], key=lambda q: (q[:4], q[5:]))
     for key, values in blocks.items():
         series[databook_series_id(key)] = [
-            Point(period=q, value=v, note=f"датабук {info['name']}", **stamp)
+            Point(period=q, value=v, note=f"датабук {name}", **stamp)
             for q, v in sorted(values.items())]
+    signal = store.load(issuer.series("databook.new_version")) if store is not None else None
+    same_day = {p.source_sha256 for p in signal.points
+                if p.period == today.isoformat()} if signal is not None else set()
     series[issuer.series("databook.new_version")] = [Point(
-        period=today.isoformat(), value=1.0,
-        note=f"{info['name']}, sha256 {sha[:12]}, последний квартал {last_quarter}"[:200],
+        period=today.isoformat(), value=float(len(same_day - {sha}) + 1),
+        note=f"{name}, sha256 {sha[:12]}, последний квартал {last_quarter}"[:200],
         **stamp)]
-    return Collected(DATABOOK_SOURCE, 7, series, raw,
-                     note=f"новая версия датабука {sha[:12]} (последний квартал {last_quarter})")
+    return last_quarter
 
 
 # ------------------------------------------- вакансии «Работы России»
