@@ -170,6 +170,12 @@ FAILURE_WHAT = {NOWCAST_SOURCE: "прогноз не записан в журн�
 # раньше, чем появится попытка, которая её снимет.
 DEGRADED_MEMORY_DAYS = 7
 
+# Сколько дней после публикации сообщение класса тревоги ещё даёт строку «СОБЫТИЕ»,
+# когда его класс узнан (тело прочитано) позже дня публикации. Первый такт после
+# появления нового правила классов дописывает историю задним числом — старые
+# публикации строку не дают.
+ALARM_FRESH_DAYS = 7
+
 # Пауза перед повтором невосполнимого источника. Секунды, а не минуты: такт
 # ограничен `RuntimeMaxSec` юнита (у суточного — 30 минут), а вежливость к
 # источнику считается обходами в сутки, не запросами в минуту.
@@ -353,8 +359,12 @@ def _post_collection(names, report: dict[str, str], store: Store) -> None:
 
     * справочный индекс вилок — после удачного обхода «Работы России»;
     * «ВЫШЕЛ ОТЧЁТ» — новая версия датабука сегодня (сигнал источника);
-    * «СОБЫТИЕ» — сегодняшние сообщения классов `DISCLOSURE_ALARM_KINDS`
-      (сделки, собственные акции, дивиденды, листинг, оферты);
+    * «СОБЫТИЕ» — сообщения классов `DISCLOSURE_ALARM_KINDS` (сделки, собственные
+      акции, дивиденды, листинг, оферты), узнанные сегодня: точка ряда класса
+      получена сегодня, а публикация — не старше `ALARM_FRESH_DAYS`. Признак —
+      день получения, а не «опубликовано сегодня»: класс сделки и дивидендов
+      уточняется по тексту, и тело вечерней публикации (или тело, не
+      разобравшееся с первого раза) читается уже на следующий день;
     * «КАРТОЧКА АКЦИИ» — смена уровня листинга или объёма выпуска (гейт
       «пересмотреть g», D15).
 
@@ -377,12 +387,15 @@ def _post_collection(names, report: dict[str, str], store: Store) -> None:
         print(f"ВЫШЕЛ ОТЧЁТ: новая версия датабука ({note}). Внести факты — "
               "`record-actual`; проверить календарь.", file=sys.stderr)
     fresh = []
+    edge = (date.fromisoformat(today) - timedelta(days=ALARM_FRESH_DAYS)).isoformat()
     for kind in DISCLOSURE_ALARM_KINDS:
         series = store.load(issuer.series(f"disclosure.{kind}"))
-        if series and any(p.period == today for p in series.points):
-            fresh.append(kind)
+        days = sorted({p.period for p in (series.points if series else [])
+                       if p.fetched_at[:10] == today and p.period >= edge})
+        if days:
+            fresh.append(f"{kind} (публикация {', '.join(days)})")
     if fresh:
-        print("СОБЫТИЕ: сегодня в ленте раскрытия — " + ", ".join(fresh)
+        print("СОБЫТИЕ: в ленте раскрытия — " + "; ".join(fresh)
               + ". Проверьте, не нужна ли новая версия книги.", file=sys.stderr)
     for change in security_changes(store):
         if change["since"] == today:

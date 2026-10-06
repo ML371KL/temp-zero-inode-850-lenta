@@ -1403,12 +1403,24 @@ def _recent_events(store=None) -> list[dict]:
     store, out = store or Store(), []
     edge = (datetime.now(timezone.utc).date() - timedelta(days=ALARM_EVENT_DAYS)).isoformat()
     for kind in _alarm_event_kinds():
-        series = store.load(issuer.series(f"disclosure.{kind}"))
+        series_id = issuer.series(f"disclosure.{kind}")
+        series = store.load(series_id)
         if not series:
             continue
-        for point in series.points:
-            if point.period >= edge:
-                out.append(dict(date=point.period, kind=kind, title=point.note[:160]))
+        # Подпись класса: у сообщения, чей класс уточнён по тексту, официальное
+        # название — общее «существенное влияние», и без подписи плашка не
+        # говорила бы, что это сделка или дивиденды.
+        label = INDICATOR_TITLES.get(series_id, kind).split(": ", 1)[-1]
+        # Один день — одна строка: последняя версия точки (счёт дня растёт, когда
+        # дочитано ещё одно тело).
+        latest: dict[str, tuple] = {}
+        for order, point in enumerate(series.points):
+            if point.period >= edge and point.status == "ok":
+                key = (point.fetched_at, order)
+                if point.period not in latest or key > latest[point.period][0]:
+                    latest[point.period] = (key, point)
+        for period, (_, point) in latest.items():
+            out.append(dict(date=period, kind=kind, label=label, title=point.note[:160]))
     return sorted(out, key=lambda item: item["date"], reverse=True)[:8]
 
 

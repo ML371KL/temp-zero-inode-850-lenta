@@ -3089,6 +3089,12 @@ function sensitivityCard(d) {
       ], events, { cls: "compact" })) : null);
 }
 
+// Корпоративное событие строкой: дата, класс (у сообщения «о существенном влиянии»
+// название общее — сделку или дивиденды называет класс, уточнённый по тексту), название.
+function eventLine(e) {
+  return `${fmt.date(e.date)} — ${e.label ? e.label + ": " : ""}${e.title}`;
+}
+
 function registerCard(d) {
   const debt = d.debt || {};
   const tranches = debt.tranches || [];
@@ -3104,7 +3110,7 @@ function registerCard(d) {
       { title: "Ставка", num: true, value: (t) => isNum(t.fixed_rate) ? fmt.pct(t.fixed_rate, 2) : isNum(t.spread) ? `ключевая + ${fmt.num(t.spread * 100, 2)} п.п.` : "—" },
     ], tranches) : empty(sentence(`Реестра траншей в выпуске нет: ${reg.reason || "причина не названа"}`)),
     el("div", { class: "card-foot" },
-      el("p", {}, recent.length ? sentence("События за 30 дней: " + recent.map((e) => `${fmt.date(e.date)} — ${e.title}`).join("; "))
+      el("p", {}, recent.length ? sentence("События за 30 дней: " + recent.map(eventLine).join("; "))
         : "Корпоративных событий за 30 дней в ленте раскрытия нет.")));
 }
 
@@ -3368,7 +3374,7 @@ function banners(d) {
   const week = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
   const events = ((d.debt || {}).recent_events || []).filter((e) => e.date >= week);
   if (events.length) {
-    out.push(plain("banner-event", `Корпоративные события: ${events.map((e) => `${fmt.date(e.date)} — ${e.title}`).join("; ")}.`));
+    out.push(plain("banner-event", `Корпоративные события: ${events.map(eventLine).join("; ")}.`));
   }
   return out.length ? [el("div", { class: "belt" }, out)] : [];
 }

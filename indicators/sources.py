@@ -590,7 +590,7 @@ BODY_NEEDLES = {
                 "списка ценных бумаг"),
     "dividends": ("дивиденд",),
     "own_shares": ("собственных акций", "обратный выкуп", "выкупа акций"),
-    "ma": ("приобретает", "приобретени", "сделк", "покупк"),
+    "ma": ("приобретает", "приобретени", "сделк", "покупк", "покупает"),
 }
 HEADLINE_ORDER = ("listing", "dividends", "own_shares", "ma", "results")
 BODY_ORDER = ("results", "listing", "dividends", "own_shares", "ma")
@@ -609,7 +609,19 @@ BODY_BACKFILL_DAYS = 400
 
 EVENT_ID_RE = re.compile(r"/(\d+)/?$")
 EVENT_FILE = re.compile(r"event_(\d+)\.json(?:\.gz)?$")
-FEED_FILE = re.compile(r"feed\.json(?:\.gz)?$|feed\.\d+\.json(?:\.gz)?$")
+# Тело, которое сайт отдал с ответом 200, но из которого текст сообщения не
+# вынулся (заглушка, смена вёрстки страницы): отдельное имя, id прочитанным НЕ
+# считается. Первые `MAX_PARSE_ATTEMPTS` попыток — в ближайших тактах и с
+# отказом в статусе источника; дальше — молча и не чаще раза в
+# `UNPARSED_RETRY_DAYS`: починенный разбор подхватит тело сам, а сообщение,
+# которое не читается никогда, не тратит запросы и не шумит.
+UNPARSED_FILE = re.compile(r"event_(\d+)\.unparsed(?:\.\d+)?\.json(?:\.\d+)?(?:\.gz)?$")
+MAX_PARSE_ATTEMPTS = 3
+UNPARSED_RETRY_DAYS = 7
+# Номер копии за день `Store.save_raw` ставит перед ПОСЛЕДНИМ суффиксом: несжатая
+# копия — `feed.1.json`, сжатая (лента от 32 КиБ, то есть боевая) —
+# `feed.json.1.gz`. Шаблон и порядок копий узнают обе формы.
+FEED_FILE = re.compile(r"feed(?:\.(\d+))?\.json(?:\.(\d+))?(?:\.gz)?$")
 
 EVENT_DATE_RE = re.compile(
     r"1\.7\.\s*Дата наступления события[^:]*:\s*(\d{1,2})\.(\d{1,2})\.(\d{4})")
@@ -733,6 +745,30 @@ def saved_event_ids(store) -> set[str]:
             for p in _raw_files(store, DISCLOSURE_SOURCE, EVENT_FILE)}
 
 
+def saved_event_kinds(store) -> dict[str, str]:
+    """id → класс, уточнённый по тексту, из тел, УЖЕ лежащих в архиве источника."""
+    out: dict[str, str] = {}
+    for path in _raw_files(store, DISCLOSURE_SOURCE, EVENT_FILE):
+        try:
+            kind = json.loads(Store.read_raw(path)).get("kind")
+        except (OSError, ValueError, AttributeError):
+            continue
+        if kind:
+            out[EVENT_FILE.match(path.name).group(1)] = str(kind)
+    return out
+
+
+def unparsed_attempts(store) -> dict[str, tuple[int, str]]:
+    """id → (сколько раз тело пришло с ответом 200 и не разобралось, день последней
+    попытки) — по именам файлов `UNPARSED_FILE`, содержимое не читается."""
+    out: dict[str, tuple[int, str]] = {}
+    for path in _raw_files(store, DISCLOSURE_SOURCE, UNPARSED_FILE):
+        key = UNPARSED_FILE.match(path.name).group(1)
+        count, last = out.get(key, (0, ""))
+        out[key] = (count + 1, max(last, path.parent.name))
+    return out
+
+
 def previous_feed(store) -> tuple[list[dict] | None, str]:
     """Последний сохранённый снимок ленты и его sha256 (нет — (None, ""))."""
     files = _raw_files(store, DISCLOSURE_SOURCE, FEED_FILE)
@@ -740,8 +776,8 @@ def previous_feed(store) -> tuple[list[dict] | None, str]:
         return None, ""
     # Последний по дню каталога и по номеру копии внутри дня.
     def order(path: Path):
-        number = re.search(r"feed\.(\d+)\.json", path.name)
-        return (path.parent.name, int(number.group(1)) if number else 0)
+        match = FEED_FILE.match(path.name)
+        return (path.parent.name, int(match.group(1) or match.group(2) or 0))
     latest = max(files, key=order)
     body = Store.read_raw(latest)
     try:
@@ -762,10 +798,25 @@ def collect_lenta_disclosure(*, store=None, today: date | None = None) -> Collec
     * **дата события — по п. 1.7 текста** сообщения («Дата наступления
       события»), а не по метке публикации: у заседания совета 16.09.2026
       публикация 17.09. Ряд `<префикс>.disclosure.events` — по дате события,
-      из прочитанных тел; ряды классов `<префикс>.disclosure.<класс>` — по дню
-      ПУБЛИКАЦИИ из ленты целиком (полные с первого дня);
+      из прочитанных тел;
     * **без блока подписанта и контактов** — тело ложится на диск очищенным
       (`clean_fact_text`, sha256 от очищенных байтов).
+
+    **Ряды классов** `<префикс>.disclosure.<класс>` — по дню ПУБЛИКАЦИИ из ленты
+    целиком (полные с первого дня). Класс — по официальному названию; сообщение,
+    чьё тело прочитано (в этом такте или раньше), входит ещё и в ряд класса,
+    уточнённого по тексту (`refine_kind`): все сделки 2024–2026 гг. и решения о
+    дивидендах опубликованы под названиями «существенное влияние» и «решения
+    совета директоров», а строка «СОБЫТИЕ» такта и плашка витрины читают именно
+    ряды классов. Ряд класса по названию при этом не убывает: счёт дня не
+    пересматривается задним числом.
+
+    **Тело, которое не разобралось.** Ответ 200 без текста сообщения (заглушка,
+    смена вёрстки) ложится под именем `event_<id>.unparsed.json`, id прочитанным
+    не считается: первые `MAX_PARSE_ATTEMPTS` попыток идут в ближайших тактах, и
+    источник получает статус «ОШИБКА» (собранное сохранено); дальше тело
+    перечитывается молча, не чаще раза в `UNPARSED_RETRY_DAYS`. Сетевой отказ
+    файла не оставляет и повторяется в следующем такте, как прежде.
 
     В архив кладётся сам список ленты (≈75 КБ), а не страница (≈1 МБ
     вёрстки), и только когда он изменился. Непонятая страница —
@@ -774,7 +825,8 @@ def collect_lenta_disclosure(*, store=None, today: date | None = None) -> Collec
     `IRRECOVERABLE`, но в `PROTECTED_SOURCES` хранилища (тела не ротируются).
     """
     today_iso = (today or datetime.now(timezone.utc).date()).isoformat()
-    sink = RawSink(store, DISCLOSURE_SOURCE) if store is not None else None
+    # День каталога — день такта: по нему считается срок повтора неразобранного тела.
+    sink = RawSink(store, DISCLOSURE_SOURCE, day=today_iso) if store is not None else None
     raw: list = []
     response = fetch(issuer.DISCLOSURE_URL)
     try:
@@ -794,7 +846,7 @@ def collect_lenta_disclosure(*, store=None, today: date | None = None) -> Collec
             sink.keep("feed.json", response, body=feed_bytes, sha256=feed_sha,
                       extra=dict(feed=".".join(issuer.DISCLOSURE_FEED), items=len(items)))
         else:
-            raw.append(("feed.json", feed_bytes, response, dict(sha256=feed_sha)))
+            raw.append(("feed.json", feed_bytes, response, dict(sha256=feed_sha, day=today_iso)))
 
     series: dict[str, list[Point]] = {}
     stamp = dict(fetched_at=response.fetched_at, source_sha256=feed_sha)
@@ -802,13 +854,6 @@ def collect_lenta_disclosure(*, store=None, today: date | None = None) -> Collec
         last = items[-1]
         series[issuer.series("disclosure.latest")] = [Point(
             period=last["published"], value=1.0, note=last["name"][:160], **stamp)]
-    by_kind_day: dict[tuple[str, str], list[str]] = {}
-    for item in items:
-        by_kind_day.setdefault((item["kind"], item["published"]), []).append(item["name"])
-    for (kind, day), names in sorted(by_kind_day.items()):
-        series.setdefault(issuer.series("disclosure." + kind), []).append(Point(
-            period=day, value=float(len(names)), note="; ".join(names)[:160], **stamp))
-
     known = None if before is None else {str(x.get("id")) for x in before}
     new = [] if known is None else [x for x in items if x["id"] not in known]
     series[issuer.series("disclosure.new")] = [Point(
@@ -820,10 +865,22 @@ def collect_lenta_disclosure(*, store=None, today: date | None = None) -> Collec
     # --- тела сообщений: дата события (п. 1.7) и класс по тексту
     saved = saved_event_ids(store)
     horizon = (date.fromisoformat(today_iso) - timedelta(days=BODY_BACKFILL_DAYS)).isoformat()
-    queue = [x for x in reversed(items) if x["id"] not in saved and x["published"] >= horizon]
+    tried = unparsed_attempts(store)
+
+    def due(item: dict) -> bool:
+        """Пора ли читать тело: не читалось, идут первые попытки или прошёл срок повтора."""
+        count, last = tried.get(item["id"], (0, ""))
+        if count < MAX_PARSE_ATTEMPTS:
+            return True
+        waited = (date.fromisoformat(today_iso) - date.fromisoformat(last)).days
+        return waited >= UNPARSED_RETRY_DAYS
+
+    queue = [x for x in reversed(items)
+             if x["id"] not in saved and x["published"] >= horizon and due(x)]
     new_ids = {x["id"] for x in new}
     queue.sort(key=lambda x: (x["id"] not in new_ids, -x["stamp"]))
     events: list[dict] = []
+    unparsed: list[tuple[str, int]] = []       # (id, номер попытки) тел без текста
     for item in queue[:MAX_EVENT_BODIES]:
         try:
             page = fetch(issuer.IR_SITE + item["link"])
@@ -839,17 +896,34 @@ def collect_lenta_disclosure(*, store=None, today: date | None = None) -> Collec
                     title=item["name"][:300], event_date=event_date(text),
                     kind=refine_kind(item["kind"], text), text=text,
                     parsed=bool(text))
+        if not text:
+            # Момент попытки — в файле: каждая попытка ложится своей копией, и
+            # счёт попыток виден по именам (`unparsed_attempts`).
+            fact["attempted_at"] = page.fetched_at
         body = json.dumps(fact, ensure_ascii=False, sort_keys=True).encode("utf-8")
         digest = hashlib.sha256(body).hexdigest()
         extra = dict(cleaned=True, event_date=fact["event_date"], event_kind=fact["kind"])
-        name = f"event_{item['id']}.json"
+        name = f"event_{item['id']}.json" if text else f"event_{item['id']}.unparsed.json"
         if sink is not None:
             sink.keep(name, page, body=body, sha256=digest, extra=extra)
         else:
-            raw.append((name, body, page, dict(sha256=digest, extra=extra)))
-        saved.add(item["id"])
+            raw.append((name, body, page, dict(sha256=digest, extra=extra, day=today_iso)))
         if text:
+            saved.add(item["id"])
             events.append(fact)
+        else:
+            unparsed.append((item["id"], tried.get(item["id"], (0, ""))[0] + 1))
+
+    # --- ряды классов: по названию, а у прочитанных тел — ещё и по тексту
+    refined = saved_event_kinds(store)
+    refined.update({fact["id"]: fact["kind"] for fact in events})
+    by_kind_day: dict[tuple[str, str], list[str]] = {}
+    for item in items:
+        for kind in dict.fromkeys((item["kind"], refined.get(item["id"]) or item["kind"])):
+            by_kind_day.setdefault((kind, item["published"]), []).append(item["name"])
+    for (kind, day), names in sorted(by_kind_day.items()):
+        series.setdefault(issuer.series("disclosure." + kind), []).append(Point(
+            period=day, value=float(len(names)), note="; ".join(names)[:160], **stamp))
 
     by_event_day: dict[str, list[dict]] = {}
     for fact in events:
@@ -859,9 +933,23 @@ def collect_lenta_disclosure(*, store=None, today: date | None = None) -> Collec
             period=day, value=float(len(facts)),
             note="; ".join(f"{f['kind']}: {f['title']}" for f in facts)[:200], **stamp))
 
+    # Первые попытки неразобранного тела — отказ в статусе источника: без него
+    # смена вёрстки страницы сообщения молча оставила бы сделки и дивиденды без
+    # уточнённого класса, то есть без «СОБЫТИЯ» и плашки.
+    loud = [(identifier, attempt) for identifier, attempt in unparsed
+            if attempt <= MAX_PARSE_ATTEMPTS]
+    error = ""
+    if loud:
+        error = ("тело сообщения получено, но текст из него не вынут: "
+                 + ", ".join(f"{identifier} (попытка {attempt} из {MAX_PARSE_ATTEMPTS})"
+                             for identifier, attempt in loud)
+                 + " — класс по тексту и дата события не определены; после "
+                   f"{MAX_PARSE_ATTEMPTS} попыток тело перечитывается раз в "
+                   f"{UNPARSED_RETRY_DAYS} дн")
     return Collected(DISCLOSURE_SOURCE, 7, series, raw,
-                     note="событий %d, новых %d, прочитано тел %d"
-                          % (len(items), len(new), len(events)))
+                     note="событий %d, новых %d, прочитано тел %d, не разобрано %d"
+                          % (len(items), len(new), len(events), len(unparsed)),
+                     error=error)
 
 
 # ------------------------------------------------------------- датабук

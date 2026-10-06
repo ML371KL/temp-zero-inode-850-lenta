@@ -9,6 +9,8 @@
 """
 from __future__ import annotations
 
+import dataclasses
+import functools
 import hashlib
 import io
 import json
@@ -216,6 +218,41 @@ def _disclosure_web(feed: bytes) -> FakeWeb:
     return FakeWeb(routes)
 
 
+def _stamped(web: FakeWeb, stamp: str):
+    """Подмена `fetch` с заданным моментом получения ответа: такты разных дней
+    (и разные попытки одного тела) отличаются им, как на сервере."""
+    def fetch(url, **kwargs):
+        return dataclasses.replace(web(url, **kwargs), fetched_at=stamp)
+    return fetch
+
+
+def _disclosure_tact(monkeypatch, store: Store, day: str, web: FakeWeb, **kwargs) -> int:
+    """Такт сбора ленты раскрытия «в день `day`» штатным `collect.cmd_collect`."""
+    from indicators import collect
+
+    monkeypatch.setattr(sources, "fetch", _stamped(web, f"{day}T14:25:00+00:00"))
+    monkeypatch.setattr(sources, "UTC_TODAY", lambda: day)
+    monkeypatch.setitem(sources.COLLECTORS, "lenta_disclosure", (functools.partial(
+        sources.collect_lenta_disclosure, today=date.fromisoformat(day)),)
+        + _DISCLOSURE_ENTRY[1:])
+    return collect.cmd_collect(["lenta_disclosure"], store, **kwargs)
+
+
+_DISCLOSURE_ENTRY = sources.COLLECTORS["lenta_disclosure"]
+
+
+def _feed_until(day: str) -> bytes:
+    """Страница ленты из фикстуры, какой она была на конец дня `day` (по Москве)."""
+    page = fixture("lenta_disclosure", "regulatory_filings.html").decode("utf-8")
+    app = sources.app_json(page)
+    facts = app["components"]["ipjsc-lenta"]["material-facts"]
+    app["components"]["ipjsc-lenta"]["material-facts"] = [
+        f for f in facts if (sources.msk_day(f.get("date")) or "9999") <= day]
+    start = page.index("App = ") + len("App = ")
+    _, end = json.JSONDecoder().raw_decode(page[start:])
+    return (page[:start] + json.dumps(app, ensure_ascii=False) + page[start + end:]).encode()
+
+
 def test_disclosure_novelty_is_by_ids_and_the_event_date_by_item_1_7(tmp_path, monkeypatch):
     store = Store(tmp_path)
     # Вчера: снимок без двух новейших сообщений — первый снимок, новых 0.
@@ -289,6 +326,166 @@ def test_material_facts_are_refined_by_their_text():
         text = sources.clean_fact_text(detail["detail"])
         assert sources.refine_kind(sources.classify_disclosure(detail["name"]), text) == kind, fid
         assert sources.event_date(text) == day, fid
+
+
+def test_a_class_refined_by_the_text_reaches_its_series_the_alarm_and_the_banner(
+        tmp_path, monkeypatch, capsys):
+    """T03 внешнего аудита: «существенное влияние» о покупке «Молнии» (26.06.2025)
+    уточняется по телу в `ma` — и именно `ma` видят ряд класса, строка «СОБЫТИЕ»
+    такта и плашка витрины (`payload._recent_events`). Ряд класса по названию при
+    этом не убывает: сообщение остаётся и в `material`."""
+    import model.payload as payload
+
+    store = Store(tmp_path)
+    monkeypatch.setattr(sources, "BODY_BACKFILL_DAYS", 30)
+    assert _disclosure_tact(monkeypatch, store, "2025-06-25",
+                            _disclosure_web(_feed_until("2025-06-25"))) == 0
+    assert "СОБЫТИЕ" not in capsys.readouterr().err
+    assert _disclosure_tact(monkeypatch, store, "2025-06-26",
+                            _disclosure_web(_feed_until("2025-06-26"))) == 0
+    err = capsys.readouterr().err
+    ma = store.load(issuer.series("disclosure.ma"))
+    assert ma is not None and "2025-06-26" in {p.period for p in ma.points}
+    material = store.load(issuer.series("disclosure.material"))
+    assert "2025-06-26" in {p.period for p in material.points}
+    assert "СОБЫТИЕ: в ленте раскрытия — ma (публикация 2025-06-26)" in err
+
+    class Frozen(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return datetime(2025, 6, 27, 12, tzinfo=timezone.utc)
+
+    monkeypatch.setattr(payload, "datetime", Frozen)
+    events = payload._recent_events(store)
+    assert [(e["date"], e["kind"], e["label"]) for e in events] == [
+        ("2025-06-26", "ma", "сделки M&A")]
+
+
+def test_a_class_learnt_a_day_late_still_raises_the_alarm_but_old_history_does_not(
+        tmp_path, monkeypatch, capsys):
+    """Тело прочитано на следующий день после публикации (вечерняя публикация,
+    сбой загрузки, очередь) — «СОБЫТИЕ» даёт такт, который узнал класс: признак —
+    день получения точки, а не «опубликовано сегодня». Историю, дочитанную через
+    месяц, строка не поднимает; плашка окна 30 дней её ещё показывает."""
+    store = Store(tmp_path)
+    monkeypatch.setattr(sources, "BODY_BACKFILL_DAYS", 60)
+    monkeypatch.setattr(sources, "MAX_EVENT_BODIES", 0)
+    _disclosure_tact(monkeypatch, store, "2025-06-26", _disclosure_web(_feed_until("2025-06-26")))
+    assert "СОБЫТИЕ" not in capsys.readouterr().err, "класс по названию — `material`"
+    assert store.load(issuer.series("disclosure.ma")) is None
+    monkeypatch.setattr(sources, "MAX_EVENT_BODIES", 3)
+    _disclosure_tact(monkeypatch, store, "2025-06-27", _disclosure_web(_feed_until("2025-06-26")))
+    assert "СОБЫТИЕ: в ленте раскрытия — ma (публикация 2025-06-26)" in capsys.readouterr().err
+
+    late = Store(tmp_path / "late")
+    monkeypatch.setattr(sources, "MAX_EVENT_BODIES", 0)
+    _disclosure_tact(monkeypatch, late, "2025-06-26", _disclosure_web(_feed_until("2025-06-26")))
+    monkeypatch.setattr(sources, "MAX_EVENT_BODIES", 3)
+    capsys.readouterr()
+    _disclosure_tact(monkeypatch, late, "2025-07-20", _disclosure_web(_feed_until("2025-06-26")))
+    assert "СОБЫТИЕ" not in capsys.readouterr().err
+    assert "2025-06-26" in {p.period for p in late.load(issuer.series("disclosure.ma")).points}
+
+
+def test_the_press_release_about_a_purchase_is_a_deal():
+    """«…ПОКУПАЕТ КОНТРОЛЬНУЮ ДОЛЮ…» — сделка: корень «покупк» это слово не ловил,
+    и пресс-релиз уточнялся бы по слову «выручка» в результаты."""
+    text = ("2. Содержание сообщения Пресс-релиз «ЛЕНТА» ВЫХОДИТ НА ДАЛЬНИЙ ВОСТОК – ПОКУПАЕТ "
+            "КОНТРОЛЬНУЮ ДОЛЮ В РОЗНИЧНОЙ СЕТИ Выручка сети за год выросла")
+    assert sources.refine_kind("material", text) == "ma"
+    assert sources.refine_kind("board", text) == "board"
+
+
+def test_an_unparsed_body_is_named_as_a_failure_and_read_again(tmp_path, monkeypatch, capsys):
+    """T08 внешнего аудита: ответ 200 без текста сообщения не делает id
+    «прочитанным». Источник получает отказ (собранное сохранено), следующий такт
+    перечитывает тело — и событие появляется."""
+    store = Store(tmp_path)
+    web = _disclosure_web(_feed_page())
+    web.routes.insert(1, (r"statement-of-material-facts/29130/$",
+                          b"<html><body>tech works</body></html>"))
+    code = _disclosure_tact(monkeypatch, store, "2026-09-28", web)
+    captured = capsys.readouterr()
+    assert code == 0, "лента восполнима: отказ второстепенного источника такт не роняет"
+    assert "lenta_disclosure" in captured.err and "ТРЕВОГА" in captured.err
+    report = json.loads((store.root / "collector_report.json").read_text(encoding="utf-8"))
+    assert "29130 (попытка 1 из 3)" in report["sources"]["lenta_disclosure"]["status"]
+    assert "29130" not in sources.saved_event_ids(store)
+    assert sources.unparsed_attempts(store) == {"29130": (1, "2026-09-28")}
+    names = {p.name for p in _raw_files(store, "lenta_disclosure")}
+    assert "event_29130.unparsed.json" in names and "event_29130.json" not in names
+    assert store.load(issuer.series("disclosure.board")) is not None, "собранное сохранено"
+
+    # Сайт починился: следующий такт перечитывает тело, отказ снят.
+    web = _disclosure_web(_feed_page())
+    assert _disclosure_tact(monkeypatch, store, "2026-09-29", web) == 0
+    assert any("/29130/" in u for u in web.calls)
+    events = {p.period: p for p in store.load(issuer.series("disclosure.events")).points}
+    assert "board:" in events["2026-09-16"].note
+    assert "29130" in sources.saved_event_ids(store)
+    report = json.loads((store.root / "collector_report.json").read_text(encoding="utf-8"))
+    assert "lenta_disclosure" not in report["sources"]
+
+
+def test_a_body_that_never_parses_is_tried_thrice_then_weekly_and_quietly(tmp_path, monkeypatch):
+    """Тело, которое не читается никогда: три попытки подряд — с отказом источника,
+    дальше — раз в неделю и молча (починенный разбор подхватит его сам, а запросы и
+    внимание владельца не тратятся)."""
+    store = Store(tmp_path)
+    asked, failed = {}, {}
+    start = date(2026, 10, 1)
+    for offset in range(0, 19):
+        day = (start + timedelta(days=offset)).isoformat()
+        web = _disclosure_web(_feed_page())
+        web.routes.insert(1, (r"statement-of-material-facts/29130/$",
+                              b"<html><body>tech works</body></html>"))
+        monkeypatch.setattr(sources, "fetch", _stamped(web, f"{day}T04:20:00+00:00"))
+        result = sources.collect_lenta_disclosure(store=store, today=date.fromisoformat(day))
+        asked[offset] = sum("/29130/" in u for u in web.calls)
+        failed[offset] = bool(result.error)
+    assert [d for d, n in asked.items() if n] == [0, 1, 2, 9, 16]
+    assert [d for d, bad in failed.items() if bad] == [0, 1, 2]
+    assert sources.unparsed_attempts(store)["29130"] == (5, "2026-10-17")
+    # Две попытки одного дня (утренний и вечерний такт) — две копии, обе в счёте.
+    twice = Store(tmp_path / "twice")
+    for hour in ("04", "14"):
+        web = _disclosure_web(_feed_page())
+        web.routes.insert(1, (r"statement-of-material-facts/29130/$", b"<html></html>"))
+        monkeypatch.setattr(sources, "fetch", _stamped(web, f"2026-10-01T{hour}:20:00+00:00"))
+        sources.collect_lenta_disclosure(store=twice, today=start)
+    assert sources.unparsed_attempts(twice)["29130"] == (2, "2026-10-01")
+
+
+def test_a_compressed_same_day_copy_of_the_feed_is_the_latest(tmp_path, monkeypatch):
+    """T09 внешнего аудита: боевая лента больше порога сжатия, и вторая копия дня
+    ложится как `feed.json.1.gz` — прежний шаблон её не узнавал, последним снимком
+    оставался первый, и уже учтённые id снова шли «новыми». Фикстура — 6 КБ:
+    порог сжатия опускается, чтобы тест шёл по боевой ветке имён."""
+    from indicators import store as store_module
+
+    monkeypatch.setattr(store_module, "COMPRESS_ABOVE_BYTES", 1024)
+    monkeypatch.setattr(sources, "MAX_EVENT_BODIES", 0)
+    store = Store(tmp_path)
+    day = date(2026, 10, 1)
+
+    def run(drop: int) -> float:
+        monkeypatch.setattr(sources, "fetch", _disclosure_web(_feed_page(drop=drop)))
+        result = sources.collect_lenta_disclosure(store=store, today=day)
+        return result.series[issuer.series("disclosure.new")][0].value
+
+    assert run(2) == 0.0            # первый снимок — feed.json.gz
+    assert run(1) == 1.0            # новое сообщение — feed.json.1.gz
+    names = {p.name for p in _raw_files(store, "lenta_disclosure") if p.name.startswith("feed")}
+    assert names == {"feed.json.gz", "feed.json.1.gz"}
+    assert run(1) == 0.0, "тот же ответ ещё раз: новых нет"
+    before, _ = sources.previous_feed(store)
+    assert len(before) == len(sources.feed_items(sources.app_json(_feed_page(drop=1).decode())))
+    assert run(0) == 1.0            # ещё одно — feed.json.2.gz, счёт — от .1.gz
+    assert run(0) == 0.0
+    for name in ("feed.json", "feed.json.gz", "feed.1.json", "feed.2.json.gz", "feed.json.3.gz"):
+        assert sources.FEED_FILE.match(name), name
+    for name in ("feed.json.meta.json", "feed.json.1.gz.meta.json", "feedback.json"):
+        assert not sources.FEED_FILE.match(name), name
 
 
 def test_the_feed_is_stored_only_when_it_changes(tmp_path, monkeypatch):
