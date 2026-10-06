@@ -15,6 +15,13 @@
 
     python ops/tools/render_numbers.py           # переписать значения в документах
     python ops/tools/render_numbers.py --check   # выход 1, если документ устарел
+    python ops/tools/render_numbers.py --freeze ФАЙЛ…   # снять метки, числа оставить
+
+**Заморозка.** Метка — число ТЕКУЩЕЙ книги: журнал прежней версии книги и
+датированные записи истории после новой версии молча переписались бы на её числа.
+Перед пересчётом таблиц новой версии журнал прежней замораживается (`--freeze`:
+метки сняты, значения остались как текст); в датированных записях числа пишутся
+без меток.
 
 Путь: имена через точку; `[3]` — элемент списка; `[axis=ERP]` — единственный
 элемент списка, у которого поле равно значению (порядок строк от версии к
@@ -172,6 +179,27 @@ def render(text: str, results: dict) -> tuple[str, list[str]]:
     return "\n".join(lines), errors
 
 
+def freeze(text: str) -> str:
+    """Текст без меток: значение между метками остаётся обычным текстом.
+
+    Метки в `коде` и в блоках кода — примеры синтаксиса — не трогаются, как и при
+    перерисовке."""
+    lines = text.split("\n")
+    fenced = False
+    for index, line in enumerate(lines):
+        if FENCE.match(line):
+            fenced = not fenced
+        if fenced or OPEN not in line:
+            continue
+        pieces, pos = [], 0
+        for code in CODE.finditer(line):
+            pieces += [MARK.sub(lambda m: m.group(2), line[pos:code.start()]), code.group(0)]
+            pos = code.end()
+        pieces.append(MARK.sub(lambda m: m.group(2), line[pos:]))
+        lines[index] = "".join(pieces)
+    return "\n".join(lines)
+
+
 def documents(root: Path = ROOT):
     """Документы `*.md` с метками: путь и текст (байты как есть, с их переводами строк)."""
     for folder, dirs, files in os.walk(root):
@@ -188,8 +216,20 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--check", action="store_true",
                         help="ничего не писать; выход 1, если документ устарел или метка сломана")
+    parser.add_argument("--freeze", nargs="+", metavar="ФАЙЛ", type=Path,
+                        help="снять метки в этих документах, оставив числа текстом (журнал "
+                             "прежней версии книги перед пересчётом таблиц новой)")
     parser.add_argument("--root", type=Path, default=ROOT, help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
+    if args.freeze:
+        for path in args.freeze:
+            text = path.read_bytes().decode("utf-8")
+            frozen = freeze(text)
+            if frozen != text:
+                path.write_bytes(frozen.encode("utf-8"))
+            print(f"заморожено: {path.as_posix()} (меток снято: "
+                  f"{text.count(OPEN) - frozen.count(OPEN)})")
+        return 0
     results = json.loads((args.root / RESULTS.relative_to(ROOT)).read_text(encoding="utf-8"))
     bad = 0
     for path, text in documents(args.root):
