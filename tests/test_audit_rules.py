@@ -240,23 +240,15 @@ def test_the_exit_area_factors_follow_the_formula():
 # ================================================== терминал: доамортизация когорт явного периода
 
 
-def test_the_runoff_vanishes_when_the_cohorts_are_the_annuity_history():
-    """capex-06: если фактические когорты — ровно та история, которую предполагает
-    аннуитет (capex растёт темпом терминала), поправки нет ни в одном полугодии;
-    ряд конечен (не длиннее 2L полугодий)."""
-    from model.core import terminal_da_runoff
-
-    L2, g, pi, cg, cp = 24.0, 0.06, 0.05, 80.0, 20.0
-    cohorts = [cg / 2 * (1 + g) ** (-(j + 1) / 2) + cp / 2 * (1 + pi) ** (-(j + 1) / 2)
-               for j in reversed(range(30))]
-    out = terminal_da_runoff(cohorts, 0.0, 0, 21, L2, cg, cp, g, pi, None)
-    assert len(out) <= L2
-    assert max(abs(x) for x in out) < 1e-9
+# Тест «поправка обнуляется на истории аннуитета» снят: история, которую вычитает
+# `cohort_runoff` (полугодовые когорты годового capex), — не та, что заложена в
+# годовой аннуитет пополам (внешний аудит 30.09.2026, A04). Что правило делает на
+# самом деле и чем его заменяет `cohort_explicit` — `tests/test_ext_audit_rules.py`.
 
 
 def test_heavier_cohorts_and_the_anchor_base_are_amortised_after_the_horizon():
-    """Когорты тяжелее аннуитетной истории — поправка положительна и гаснет к 2L;
-    база якоря даёт вклад, пока не списана, её невычитаемая часть — нет."""
+    """Когорты тяжелее истории правила `cohort_runoff` — поправка положительна и
+    гаснет к 2L; база якоря даёт вклад, пока не списана, её невычитаемая часть — нет."""
     from model.core import terminal_da_runoff
 
     L2, g, pi, cg, cp = 24.0, 0.06, 0.05, 80.0, 20.0

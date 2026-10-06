@@ -669,15 +669,29 @@ HALF_RATE_CONVENTIONS = ("simple", "compound")
 TERMINAL_REVENUE_BASES = ("last_year", "exit_area")
 # Амортизация терминала в налоге (`valuation.terminal.da_convention`): `annuity` —
 # аннуитет терминального capex (850oa); `cohort_runoff` — плюс доамортизация когорт
-# capex явного периода и базы D&A якоря (аудит 30.09.2026, capex-06).
-TERMINAL_DA_CONVENTIONS = ("annuity", "cohort_runoff")
+# capex явного периода и базы D&A якоря (аудит 30.09.2026, capex-06);
+# `cohort_explicit` — правило когорт явного периода, продолженное навсегда:
+# стационарная D&A по полугодиям и доамортизация против истории самих полугодий
+# терминала (внешний аудит 30.09.2026, A04).
+TERMINAL_DA_CONVENTIONS = ("annuity", "cohort_runoff", "cohort_explicit")
 # Рычаг долга терминального щита (`valuation.terminal.shield_leverage`): `key` —
 # ключ цели лестницы `financing.leverage_target` (850oa); `cycle_average` —
 # измеренный средний отчётный ЧД/EBITDA LTM клетки на 30.06 и 31.12 цикла правила
 # выплат (решение ведущего по проверке пакета аудита, 30.09.2026).
 TERMINAL_SHIELD_LEVERAGES = ("key", "cycle_average")
+# Уровни ОК и операционной кассы на границе терминала при базе выручки
+# `exit_area` (`valuation.terminal.boundary_levels`): `second_half` — множителем
+# второго полугодия; `rolling` — средним по выручке множителем двух полугодий
+# последнего года, потому что уровни стоят на скользящей годовой выручке (внешний
+# аудит 30.09.2026, A05).
+TERMINAL_BOUNDARY_LEVELS = ("second_half", "rolling")
+# Нулевой предел налога без рычага в терминале (`valuation.terminal.tax_floor`):
+# `first_year` — только в первом терминальном году, дальше налог и щит
+# капитализируются линейно (850oa); `exact` — в каждом полугодии терминала, налог и
+# процентный щит — точной суммой (внешний аудит 30.09.2026, A06).
+TERMINAL_TAX_FLOORS = ("first_year", "exact")
 TERMINAL_KEYS = frozenset({"half_rate_convention", "revenue_base", "da_convention",
-                           "shield_leverage"})
+                           "shield_leverage", "boundary_levels", "tax_floor"})
 TERMINAL_REQUIRED = ("half_rate_convention",)
 
 
@@ -700,8 +714,26 @@ def terminal_rule(A: dict) -> dict:
     терминала = аннуитет терминального capex, как если бы capex всегда рос
     темпом g): `cohort_runoff` — плюс разница между фактическими когортами
     capex явного периода с базой D&A якоря, которые доамортизируются после
-    горизонта, и той историей capex, которую предполагает аннуитет
-    (`model.core.terminal_da_runoff`).
+    горизонта, и историей полугодовых когорт годового capex терминала
+    (`model.core.terminal_da_runoff`); `cohort_explicit` — правило когорт явного
+    периода, продолженное навсегда: стационарная D&A считается по полугодиям
+    терминала (`model.core.steady_cohort_da` — второе полугодие несёт когорту
+    первого), а доамортизация — против истории тех же полугодий, продолженных
+    назад годовым ростом; сумма равна D&A правила явного периода на фактических
+    когортах и capex терминала.
+
+    `boundary_levels` (необязательный, по умолчанию `second_half`): чем уровни ОК и
+    операционной кассы конца явного периода переводятся на базу выручки
+    `exit_area` — множителем второго полугодия или (`rolling`) средним по выручке
+    множителем двух полугодий последнего года; уровни стоят на скользящей годовой
+    выручке, и только второй вариант не оставляет в первом терминальном полугодии
+    разового изменения, которое Гордон повторял бы каждый год.
+
+    `tax_floor` (необязательный, по умолчанию `first_year`): нулевой предел налога
+    без рычага в терминале — только в первом терминальном году, дальше линейная
+    капитализация обеих частей базы (850oa), или (`exact`) в каждом полугодии:
+    налог — точной суммой Σ τ·max(0, база), процентный щит — разностью налога без
+    рычага и налога с вычетом процентов (`model.core.terminal_tax_pv`).
 
     `shield_leverage` (необязательный, по умолчанию `key` — долг терминала =
     `financing.leverage_target` × EBITDA терминала, как у 850oa): `cycle_average` —
@@ -733,8 +765,16 @@ def terminal_rule(A: dict) -> dict:
     if shield not in TERMINAL_SHIELD_LEVERAGES:
         raise BookError(f"книга: valuation.terminal.shield_leverage = {shield!r} "
                         f"(известны: {', '.join(TERMINAL_SHIELD_LEVERAGES)})")
+    boundary = raw.get("boundary_levels", TERMINAL_BOUNDARY_LEVELS[0])
+    if boundary not in TERMINAL_BOUNDARY_LEVELS:
+        raise BookError(f"книга: valuation.terminal.boundary_levels = {boundary!r} "
+                        f"(известны: {', '.join(TERMINAL_BOUNDARY_LEVELS)})")
+    floor = raw.get("tax_floor", TERMINAL_TAX_FLOORS[0])
+    if floor not in TERMINAL_TAX_FLOORS:
+        raise BookError(f"книга: valuation.terminal.tax_floor = {floor!r} "
+                        f"(известны: {', '.join(TERMINAL_TAX_FLOORS)})")
     return dict(half_rate_convention=convention, revenue_base=base, da_convention=da,
-                shield_leverage=shield)
+                shield_leverage=shield, boundary_levels=boundary, tax_floor=floor)
 
 
 # ------------------------------------------------ корзины ставок и дивиденды

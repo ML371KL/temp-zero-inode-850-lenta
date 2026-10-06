@@ -203,10 +203,13 @@ BOOK: dict[str, frozenset[str]] = {
     "valuation.governance_components[]": frozenset({"basis", "in_850oa_scope", "name", "sign",
                                                     "value"}),
     # `revenue_base` — база выручки терминала (discount-terminal-01); `da_convention` —
-    # амортизация терминала в налоге (capex-06); `shield_leverage` — рычаг долга
-    # терминального щита: ключ L или средний рычаг цикла (проверка пакета аудита).
-    "valuation.terminal": frozenset({"da_convention", "half_rate_convention", "revenue_base",
-                                     "shield_leverage"}),
+    # амортизация терминала в налоге (capex-06; внешний аудит A04); `shield_leverage` —
+    # рычаг долга терминального щита: ключ L или средний рычаг цикла (проверка пакета
+    # аудита); `boundary_levels` — множитель уровней ОК и кассы на границе терминала
+    # (внешний аудит A05); `tax_floor` — нулевой предел налога терминала (внешний
+    # аудит A06).
+    "valuation.terminal": frozenset({"boundary_levels", "da_convention", "half_rate_convention",
+                                     "revenue_base", "shield_leverage", "tax_floor"}),
     "valuation.distress": frozenset({"cost_pct_ev", "credit_limit_trigger",
                                      "net_leverage_trigger"}),
     # Заголовок: метод (только `intrinsic`), шаг печати, диагностики, пороги

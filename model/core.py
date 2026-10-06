@@ -244,6 +244,13 @@ class CellResult:
     `terminal_ebitda` (`valuation.terminal.shield_leverage`: цель L или средний
     отчётный ЧД/EBITDA LTM цикла выплат клетки, `cycle_average_leverage`). Поле —
     чтобы правило проверялось аналитически по строкам клетки."""
+    terminal_halves: tuple = ()
+    """Два полугодия первого терминального года, млрд ₽: `rev`, `ebitda`, `capex`,
+    `capex_pi` (статьи capex, растущие с ценами), `d_nwc`, `d_opc`, `tax_da` и
+    `tax_da_pi` (стационарная налоговая D&A, вся и её часть по статьям с π),
+    `interest` (вычитаемые проценты на долг терминала, α·долг·полугодовая ставка).
+    Поле — чтобы правила терминала (D&A по когортам, нулевой предел налога, щит)
+    проверялись прямой суммой по полугодиям, а не той же замкнутой формулой."""
 
     def annual(self) -> list[dict]:
         out: dict[int, dict] = {}
@@ -648,6 +655,105 @@ def annuity_ratio(rate: float, life: float) -> float:
     return (1 - (1 + rate) ** (-life)) / (life * rate)
 
 
+def steady_cohort_da(first: float, second: float, growth: float,
+                     half_life: float) -> tuple[float, float]:
+    """Линейная D&A двух полугодий первого терминального года по правилу когорт
+    явного периода (A-K6) в стационаре (`valuation.terminal.da_convention:
+    cohort_explicit`; внешний аудит 30.09.2026, A04).
+
+    Capex полугодий терминала `first` и `second` растёт темпом `growth` раз в год
+    и продолжен тем же темпом назад: capex полугодия i (i = 0 — первое
+    терминальное, i < 0 — до него) = (first, second)[i mod 2]·(1 + growth)^(i div 2).
+    Когорта списывается равными долями 1/(2L) в 2L СЛЕДУЮЩИХ полугодиях (дробный
+    срок — неполной последней долей), поэтому D&A полугодия h — сумма по возрастам
+    a = 0, 1, …: min(1, 2L − a)·capex(h − 1 − a)/(2L).
+
+    При целом L первое полугодие — ровно половина годового аннуитета
+    (`annuity_ratio`), а второе больше на first·growth·аннуитет/2: когорта первого
+    полугодия начинает списываться уже во втором. Годовой аннуитет пополам эту
+    доплату теряет в каждом году терминала.
+    """
+    pair = (first, second)
+    out = []
+    for h in (0, 1):
+        total, age = 0.0, 0
+        while age < half_life:
+            year, half = divmod(h - 1 - age, 2)
+            total += min(1.0, half_life - age) * pair[half] * (1 + growth) ** year
+            age += 1
+        out.append(total / half_life)
+    return out[0], out[1]
+
+
+def _geometric(q: float, n1: int, n2: float) -> float:
+    """Σ_{n = n1..n2} q^n при 0 < q < 1; n2 = inf — бесконечный хвост."""
+    if n2 < n1:
+        return 0.0
+    head = q ** n1
+    if n2 == math.inf:
+        return head / (1.0 - q)
+    return (head - q ** (n2 + 1)) / (1.0 - q)
+
+
+def positive_part_pv(a: float, b: float, x: float, y: float, r: float, n0: int) -> float:
+    """Σ_{n ≥ n0} max(0, a·(1 + x)^n − b·(1 + y)^n)·(1 + r)^(−n) при x, y < r.
+
+    Хвост налога терминала с нулевым пределом (`valuation.terminal.tax_floor:
+    exact`; внешний аудит 30.09.2026, A06; та же функция, что в модели X5).
+    a·(1 + x)^n − b·(1 + y)^n = (1 + y)^n·(a·ρ^n − b), ρ = (1 + x)/(1 + y): ρ^n
+    монотонна, поэтому знак меняется не больше одного раза — в n_c = ln(b/a)/ln ρ,
+    если a и b одного знака и x ≠ y; иначе знак постоянен (знак a − b). Сумма —
+    два геометрических ряда по тем n ≥ n0, где разность положительна.
+    """
+    log_rho = math.log1p(x) - math.log1p(y)
+    n1, n2 = n0, math.inf
+    if (a > 0.0 and b > 0.0) or (a < 0.0 and b < 0.0):
+        if log_rho == 0.0:
+            if a <= b:
+                return 0.0
+        else:
+            crossing = math.log(b / a) / log_rho        # a·ρ^n = b
+            if (a > 0.0) == (log_rho > 0.0):            # положительна после n_c
+                if crossing == math.inf:
+                    return 0.0
+                if crossing > -math.inf:
+                    n1 = max(n0, math.floor(crossing) + 1)
+            else:                                       # положительна до n_c
+                if crossing == -math.inf:
+                    return 0.0
+                if crossing < math.inf:
+                    n2 = math.ceil(crossing) - 1
+    elif a <= b:
+        return 0.0
+    qa, qb = (1.0 + x) / (1.0 + r), (1.0 + y) / (1.0 + r)
+    return a * _geometric(qa, n1, n2) - b * _geometric(qb, n1, n2)
+
+
+def terminal_tax_pv(x: list[float], y: list[float], growth: float, growth_price: float,
+                    rate: float, deltas: list[float] | tuple = ()) -> float:
+    """Σ max(0, налоговая база) по ВСЕМ полугодиям терминала, приведённая к концу
+    явного периода, без ставки налога (`valuation.terminal.tax_floor: exact`).
+
+    База полугодия h (0, 1) терминального года n = x[h]·(1 + growth)^n −
+    y[h]·(1 + growth_price)^n − deltas[2n + h]: часть, растущая с g, минус налоговая
+    D&A статей, растущих с π, минус конечная поправка (доамортизация когорт явного
+    периода, `terminal_da_runoff`; за концом ряда — ноль). Первые len(deltas)
+    полугодий считаются явной суммой, хвост — `positive_part_pv`. Потоки — в
+    серединах полугодий, как у всего терминала.
+    """
+    total = 0.0
+    for k, delta in enumerate(deltas):
+        n, h = divmod(k, 2)
+        base = x[h] * (1 + growth) ** n - y[h] * (1 + growth_price) ** n - delta
+        if base > 0.0:
+            total += base * (1 + rate) ** -(0.25 + 0.5 * k)
+    for h in (0, 1):
+        first = (len(deltas) + 1 - h) // 2             # первый год хвоста: 2n + h ≥ len(deltas)
+        total += (positive_part_pv(x[h], y[h], growth, growth_price, rate, first)
+                  * (1 + rate) ** -(0.25 + 0.5 * h))
+    return total
+
+
 def _discount_factory(A: dict, cell: Cell):
     """Коэффициент дисконтирования: кривая СВОЕГО мира плюс β_u × ERP.
 
@@ -936,19 +1042,34 @@ def cycle_average_leverage(rows: list, ebitda_ltm: list[float], from_year: int) 
 
 def terminal_da_runoff(cohorts: list[float], legacy: float, legacy_halves: int, explicit: int,
                        half_life: float, capex_growth_year: float, capex_price_year: float,
-                       growth: float, growth_price: float, nondeductible: float | None) -> list[float]:
+                       growth: float, growth_price: float, nondeductible: float | None,
+                       halves: list[tuple[float, float]] | None = None) -> list[float]:
     """Поправка налоговой D&A терминала по полугодиям k = 0, 1, … после горизонта
-    (`valuation.terminal.da_convention: cohort_runoff`; аудит 30.09.2026, capex-06).
+    (`valuation.terminal.da_convention: cohort_runoff | cohort_explicit`; аудит
+    30.09.2026, capex-06; внешний аудит 30.09.2026, A04).
 
-    Аннуитет терминала считает D&A так, будто capex всегда рос темпом терминала:
-    D&A года = аннуитет от capex года. На деле после горизонта доамортизируются
-    фактические когорты явного периода (линейно, 1/(2L) полугодия со следующего
-    за затратами) и база D&A якоря (убывает до нуля за 2L полугодий от якоря).
-    Поправка полугодия k = [база якоря(k) − её невычитаемая часть + Σ фактических
-    когорт(k)] − Σ когорт той истории, которую предполагает аннуитет(k):
-    полугодовые когорты capex_g/2·(1 + g)^(−(j+1)/2) и capex_π/2·(1 + π)^(−(j+1)/2),
-    j = 0 — последнее полугодие горизонта. Когорты терминала у обоих одинаковы и
-    сокращаются; через 2L полугодий обе суммы — ноль, ряд конечен.
+    Стационарная D&A терминала считается так, будто capex всегда рос темпом
+    терминала. На деле после горизонта доамортизируются фактические когорты
+    явного периода (линейно, 1/(2L) полугодия со следующего за затратами) и база
+    D&A якоря (убывает до нуля за 2L полугодий от якоря). Поправка полугодия k =
+    [база якоря(k) − её невычитаемая часть + Σ фактических когорт(k)] − Σ когорт
+    истории до горизонта, которая заложена в стационарную D&A(k). Когорты
+    терминала у обоих одинаковы и сокращаются; через 2L полугодий обе суммы —
+    ноль, ряд конечен.
+
+    История до горизонта, j = 0 — последнее полугодие горизонта:
+
+    * `cohort_runoff` (`halves` не названы): полугодовые когорты
+      capex_g/2·(1 + g)^(−(j+1)/2) и capex_π/2·(1 + π)^(−(j+1)/2) от годового
+      capex терминала. Годовой аннуитет пополам (`annuity_ratio`) такую историю
+      НЕ предполагает — её D&A больше в (1 + √(1 + g))/2 раз, — поэтому сумма
+      «аннуитет + поправка» не равна D&A правила явного периода;
+    * `cohort_explicit` (`halves` = [(g₁, π₁), (g₂, π₂)] — части capex двух
+      полугодий терминала, растущие с g и с π): полугодия терминала, продолженные
+      назад годовым ростом, — когорта полугодия i = −(j+1) равна
+      g_h·(1 + g)^m + π_h·(1 + π)^m, m = i div 2, h = i mod 2. Это ровно история
+      `steady_cohort_da`, и сумма «стационарная D&A + поправка» — правило когорт
+      явного периода, применённое к фактическим когортам и к capex терминала.
 
     `cohorts` — capex полугодий, из которых идёт линейная D&A на конце горизонта
     (capex якоря и полугодий явного периода, последний — последнее полугодие),
@@ -969,8 +1090,14 @@ def terminal_da_runoff(cohorts: list[float], legacy: float, legacy_halves: int, 
         j = 0
         while j + k < half_life:
             weight = min(1.0, half_life - (j + k)) / half_life
-            hypothetical += weight * (capex_growth_year / 2.0 * (1 + growth) ** (-(j + 1) / 2.0)
-                                      + capex_price_year / 2.0 * (1 + growth_price) ** (-(j + 1) / 2.0))
+            if halves is None:
+                hypothetical += weight * (capex_growth_year / 2.0 * (1 + growth) ** (-(j + 1) / 2.0)
+                                          + capex_price_year / 2.0 * (1 + growth_price) ** (-(j + 1) / 2.0))
+            else:
+                year, half = divmod(-(j + 1), 2)
+                part_growth, part_price = halves[half]
+                hypothetical += weight * (part_growth * (1 + growth) ** year
+                                          + part_price * (1 + growth_price) ** year)
             j += 1
         if k >= half_life and not actual and not hypothetical:
             break
@@ -1580,6 +1707,7 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         g = r_long - 1e-4
 
     life = C["asset_life_years"]
+    half_life = 2 * life
     ratio = annuity_ratio(g, life)
     # Статьи capex, индексируемые ценами (замещающие открытия, физическая доля
     # поддерживающего capex), капитализируются отдельным Гордоном с ростом π,
@@ -1622,14 +1750,26 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     terminal = terminal_rule(A)
     # База выручки терминала (`valuation.terminal.revenue_base`): при `exit_area` —
     # эффективная площадь на выходе явного периода (`terminal_revenue_factors`);
-    # уровни ОК и операционной кассы на границе — тем же множителем, чтобы
-    # разовый сдвиг базы не капитализировался Гордоном как поток.
+    # уровни ОК и операционной кассы на границе переводятся на ту же базу, чтобы
+    # разовый сдвиг базы не капитализировался Гордоном как поток
+    # (`valuation.terminal.boundary_levels`). Уровни стоят на СКОЛЬЗЯЩЕЙ годовой
+    # выручке: `second_half` — множителем второго полугодия (он переводит только
+    # половину окна, и остаток доля·R₁·(f₁ − f₂) в изменении первого терминального
+    # полугодия Гордон повторяет каждый год); `rolling` — средним по выручке
+    # множителем двух полугодий последнего года: открывающий уровень равен уровню
+    # конца первого терминального года, делённому на (1 + g), и пара изменений
+    # стационарна (внешний аудит 30.09.2026, A05).
     revenue_factors = (1.0, 1.0)
     if terminal["revenue_base"] == "exit_area":
         revenue_factors = terminal_revenue_factors(network, maturity, P, prev_half, last)
         revenue_back = last.revenue * revenue_factors[1]
-        nwc_level_prev = nwc_prev * revenue_factors[1]
-        opc_level_prev = operating_cash_prev * revenue_factors[1]
+        boundary_factor = revenue_factors[1]
+        if terminal["boundary_levels"] == "rolling":
+            boundary_factor = ((prev_half.revenue * revenue_factors[0]
+                                + last.revenue * revenue_factors[1])
+                               / (prev_half.revenue + last.revenue))
+        nwc_level_prev = nwc_prev * boundary_factor
+        opc_level_prev = operating_cash_prev * boundary_factor
 
     halves = []
     for half_row, half_no in ((prev_half, 1), (last, 2)):
@@ -1677,19 +1817,44 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
     capex_pi = sum(h["capex_pi"] for h in halves)
     da_pi = capex_pi * ratio_pi
     da_terminal = (capex_terminal - capex_pi) * ratio + da_pi
-    # Налоговая D&A терминала: без премии — аннуитет пополам; с премией
-    # (`tax.capex_tax_premium_share`) — премия·capex полугодия + (1 − премия)·
-    # аннуитет: стационарная разница налога и учёта при росте g (решение D25).
-    def tax_da(h: dict) -> float:
-        if tax_premium:
-            return tax_premium * h["capex"] + (1 - tax_premium) * da_terminal / 2.0
-        return da_terminal / 2.0
+    # Линейная D&A полугодий терминала — вся и её часть по статьям, растущим с π
+    # (`valuation.terminal.da_convention`): `annuity` и `cohort_runoff` — годовой
+    # аннуитет пополам; `cohort_explicit` — стационар правила когорт явного
+    # периода по полугодиям (`steady_cohort_da`: второе полугодие несёт когорту
+    # первого).
+    explicit_da = terminal["da_convention"] == "cohort_explicit"
+    da_halves = [da_terminal / 2.0, da_terminal / 2.0]
+    da_pi_halves = [da_pi / 2.0, da_pi / 2.0]
+    capex_parts = [(h["capex"] - h["capex_pi"], h["capex_pi"]) for h in halves]
+    if explicit_da:
+        da_pi_halves = list(steady_cohort_da(capex_parts[0][1], capex_parts[1][1],
+                                             growth_pi, half_life))
+        da_halves = [part_growth + part_price for part_growth, part_price in zip(
+            steady_cohort_da(capex_parts[0][0], capex_parts[1][0], g, half_life), da_pi_halves)]
 
+    # Налоговая D&A терминала: без премии — линейная; с премией
+    # (`tax.capex_tax_premium_share`) — премия·capex полугодия + (1 − премия)·
+    # линейная: стационарная разница налога и учёта при росте g (решение D25).
+    linear_share = 1.0 - (tax_premium or 0.0)
+
+    def tax_da(i: int) -> float:
+        if tax_premium:
+            return tax_premium * halves[i]["capex"] + (1 - tax_premium) * da_halves[i]
+        return da_halves[i]
+
+    # Та же налоговая D&A по статьям, растущим с π (остальная растёт с g).
+    def tax_da_pi(i: int) -> float:
+        if tax_premium:
+            return tax_premium * halves[i]["capex_pi"] + (1 - tax_premium) * da_pi_halves[i]
+        return da_pi_halves[i]
+
+    # Налоговая база полугодий первого терминального года (стационарная часть).
+    bases = [h["ebitda"] - tax_da(i) + addback_lt * h["rev"] for i, h in enumerate(halves)]
     flows = [h["ebitda"]
-             - max(0.0, tau * (h["ebitda"] - tax_da(h) + addback_lt * h["rev"]))
+             - max(0.0, tau * base)
              - h["capex"] - h["d_nwc"] - h["d_opc"] + M["cash_lease_adj_pct"] * h["rev"]
              + rules.disposal_proceeds_pct * h["rev"]
-             for h in halves]
+             for h, base in zip(halves, bases)]
 
     # Формула книги: полугодовые потоки первого терминального года, приведённые
     # к концу явного периода, делятся на (r − g). Номинальная
@@ -1699,27 +1864,54 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         return (first_half * (1 + r_long) ** 0.75
                 + second_half * (1 + r_long) ** 0.25) / (r_long - g)
 
-    # Часть потока, растущая с π: минус capex этих статей плюс щит их
-    # амортизации (пока налог полугодия положителен — иначе щита нет).
-    def pi_shield(h: dict) -> float:
-        if tax_premium:
-            return tau * (tax_premium * h["capex_pi"] + (1 - tax_premium) * da_pi / 2.0)
-        return tau * da_pi / 2.0
+    def gordon_pi(first_half: float, second_half: float) -> float:
+        """Та же пара, растущая темпом π (статьи, индексируемые ценами)."""
+        return (first_half * (1 + r_long) ** 0.75
+                + second_half * (1 + r_long) ** 0.25) / (r_long - growth_pi)
 
-    pi_flows = [(pi_shield(h) if h["ebitda"] - tax_da(h) + addback_lt * h["rev"] > 0 else 0.0)
-                - h["capex_pi"] for h in halves]
-    tv = (gordon(flows[0] - pi_flows[0], flows[1] - pi_flows[1])
-          + (pi_flows[0] * (1 + r_long) ** 0.75 + pi_flows[1] * (1 + r_long) ** 0.25)
-          / (r_long - growth_pi)) * growth_mult
-    if terminal["da_convention"] == "cohort_runoff":
-        # Доамортизация когорт явного периода и базы якоря после горизонта
-        # (`terminal_da_runoff`): поправка налоговой D&A × τ·(1 − премия) в
-        # серединах полугодий 2037+, пока налог терминала положителен.
+    # Доамортизация когорт явного периода и базы якоря после горизонта
+    # (`terminal_da_runoff`): поправка налоговой D&A в серединах полугодий 2037+.
+    runoff: list[float] = []
+    if terminal["da_convention"] != "annuity":
         runoff = terminal_da_runoff(
-            vintages + [capex_prev], da_anchor, legacy_halves, len(P), 2 * C["asset_life_years"],
-            capex_terminal - capex_pi, capex_pi, g, growth_pi, nondeductible_anchor)
-        if all(h["ebitda"] - tax_da(h) + addback_lt * h["rev"] > 0 for h in halves):
-            tv += sum(tau * (1.0 - (tax_premium or 0.0)) * delta * (1 + r_long) ** (-(0.25 + 0.5 * k))
+            vintages + [capex_prev], da_anchor, legacy_halves, len(P), half_life,
+            capex_terminal - capex_pi, capex_pi, g, growth_pi, nondeductible_anchor,
+            halves=capex_parts if explicit_da else None)
+
+    exact_floor = terminal["tax_floor"] == "exact"
+    if exact_floor:
+        # Нулевой предел налога без рычага — в каждом полугодии терминала, как в
+        # явном периоде (`valuation.terminal.tax_floor: exact`; внешний аудит
+        # 30.09.2026, A06). База полугодия h года n = x_h·(1 + g)^n − y_h·(1 + π)^n
+        # (минус доамортизация, пока она идёт): при π > g она со временем уходит в
+        # минус, и линейная капитализация начисляла бы возврат налога. Налог —
+        # точной суммой (`terminal_tax_pv`), поток до налога — Гордонами по g и π.
+        tax_y = [tax_da_pi(i) for i in range(len(halves))]
+        tax_x = [base + part for base, part in zip(bases, tax_y)]
+        tax_deltas = [linear_share * delta for delta in runoff]
+        tax_steady = terminal_tax_pv(tax_x, tax_y, g, growth_pi, r_long)
+        tax_unlevered_pv = (terminal_tax_pv(tax_x, tax_y, g, growth_pi, r_long, tax_deltas)
+                            if tax_deltas else tax_steady)
+        pretax = [h["ebitda"] - h["capex"] - h["d_nwc"] - h["d_opc"]
+                  + M["cash_lease_adj_pct"] * h["rev"] + rules.disposal_proceeds_pct * h["rev"]
+                  for h in halves]
+        # Доамортизация — конечная поправка к стационару: множитель реального
+        # роста к ней не применяется (как и при `first_year`).
+        tv = ((gordon(pretax[0] + halves[0]["capex_pi"], pretax[1] + halves[1]["capex_pi"])
+               - gordon_pi(halves[0]["capex_pi"], halves[1]["capex_pi"])
+               - tau * tax_steady) * growth_mult
+              + tau * (tax_steady - tax_unlevered_pv))
+    else:
+        # `first_year` (850oa): предел — только в первом терминальном году, дальше
+        # обе части базы капитализируются линейно. Часть потока, растущая с π:
+        # минус capex этих статей плюс щит их амортизации (пока налог полугодия
+        # первого года положителен — иначе щита нет).
+        pi_flows = [(tau * tax_da_pi(i) if bases[i] > 0 else 0.0) - h["capex_pi"]
+                    for i, h in enumerate(halves)]
+        tv = (gordon(flows[0] - pi_flows[0], flows[1] - pi_flows[1])
+              + gordon_pi(pi_flows[0], pi_flows[1])) * growth_mult
+        if runoff and all(base > 0 for base in bases):
+            tv += sum(tau * linear_share * delta * (1 + r_long) ** (-(0.25 + 0.5 * k))
                       for k, delta in enumerate(runoff))
     fcff_terminal = flows[0] + flows[1]
 
@@ -1750,9 +1942,21 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         shield_half = shield_terminal / 2.0
         excess_lt = max(0.0, shield_rate - rate_fair_lt)
         excess_half = debt_terminal * excess_lt / 2.0
-    # Налоговый щит терминала — тем же ПОЛУГОДОВЫМ Гордоном, что поток: щит
-    # возникает вместе с процентами, в тех же серединах полугодий.
-    tv_shield = gordon(shield_half, shield_half)
+    # Вычитаемые проценты полугодия на долг терминала: щит первого года — τ × они.
+    interest_half = (TX["alpha_terminal_shield"] * debt_terminal
+                     * (half_rate(shield_rate) if compound else shield_rate / 2.0))
+    # Налоговый щит терминала — в тех же серединах полугодий, что поток: щит
+    # возникает вместе с процентами.
+    if exact_floor:
+        # С точным пределом налога щит — разность налога без рычага и налога с
+        # вычетом процентов по тем же полугодиям: там, где база меньше процентов,
+        # щит ограничен налогом, а где она отрицательна — его нет. Пока база
+        # больше процентов, это та же величина τ·α·проценты, что у Гордона.
+        tv_shield = tau * (tax_unlevered_pv - terminal_tax_pv(
+            [value - interest_half for value in tax_x], tax_y, g, growth_pi, r_long, tax_deltas))
+    else:
+        # `first_year` (850oa): тем же ПОЛУГОДОВЫМ Гордоном, что поток.
+        tv_shield = gordon(shield_half, shield_half)
     df_end = discount(t_end)
     ev = pv_fcff + pv_shield + (tv + tv_shield) * df_end
     ev_dcf = ev
@@ -1882,6 +2086,8 @@ def run_cell(A: dict, cell: Cell) -> CellResult:
         max_net_debt=max_net_debt, max_gross_debt=max_gross_debt, max_leverage=max_leverage,
         max_net_debt_period=max_net_debt_period, max_gross_debt_period=max_gross_debt_period,
         claims_par=claims_par, terminal_ebitda=ebitda_terminal,
+        terminal_halves=tuple(dict(h, tax_da=tax_da(i), tax_da_pi=tax_da_pi(i),
+                                   interest=interest_half) for i, h in enumerate(halves)),
         distress_cost=distress_cost, cash_carry=pv_carry,
         ev_ebitda_ltm=ev / ebitda_ltm_valuation,
         ev_ebitda_ntm=ev / ebitda_ntm if ebitda_ntm > 0 else None,

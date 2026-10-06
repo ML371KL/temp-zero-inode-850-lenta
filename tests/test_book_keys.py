@@ -88,6 +88,11 @@ def test_a_typo_in_the_homogeneity_block_does_not_reach_the_release():
     ("margin.season_free_halves", 2.0, "season_free_halves"),
     ("valuation.terminal.half_rate_convention", "annual", "half_rate_convention"),
     ("valuation.terminal.shield_leverage", "peak", "shield_leverage"),
+    ("valuation.terminal.da_convention", "explicit", "da_convention"),
+    ("valuation.terminal.boundary_levels", "first_half", "boundary_levels"),
+    ("valuation.terminal.boundary_levels", True, "boundary_levels"),
+    ("valuation.terminal.tax_floor", "always", "tax_floor"),
+    ("valuation.terminal.tax_floor", 1, "tax_floor"),
     ("valuation.headline.jump_guard.median_pct", 1.5, "jump_guard"),
     ("valuation.headline.diagnostics", "mean", "diagnostics"),
     ("facts.anchor.period", "2026H2", "facts.anchor.period"),
@@ -185,11 +190,13 @@ def test_the_version_machine_is_gone():
         assert not hasattr(B, name), name
     # `valuation.terminal` вернулся с ключом соглашения полугодовой ставки
     # терминала (решение ведущего, P2), двумя правилами аудита 30.09.2026 —
-    # база выручки терминала и амортизация терминала в налоге — и рычагом долга
-    # терминального щита (решение ведущего по проверке пакета аудита): у каждого
-    # ключа два метода, оба в коде действующие.
+    # база выручки терминала и амортизация терминала в налоге, — рычагом долга
+    # терминального щита (решение ведущего по проверке пакета аудита) и двумя
+    # правилами внешнего аудита 30.09.2026 — множителем уровней ОК и кассы на
+    # границе (A05) и нулевым пределом налога (A06): у каждого ключа несколько
+    # методов, все в коде действующие.
     assert SCHEMA["valuation.terminal"] == {"half_rate_convention", "revenue_base", "da_convention",
-                                            "shield_leverage"}
+                                            "shield_leverage", "boundary_levels", "tax_floor"}
     for block, key in (("valuation", "roll_along_forwards"),
                        ("capex", "da_method"), ("financing", "cash_carry"),
                        ("financing", "gross_debt_net_of_opc_growth"),
