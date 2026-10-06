@@ -54,9 +54,11 @@ def world_block(w):
 
 template = (HERE / "assumptions_template.yaml").read_text(encoding="utf-8")
 out = template.replace("#{{WORLDS}}", "".join(world_block(w) for w in ("N", "H", "M")).rstrip("\n"))
-(HERE / "assumptions.yaml").write_text(out, encoding="utf-8")
+# Перевод строки — LF на любой платформе: git хранит книгу с LF (.gitattributes), а отпечаток каталога
+# данных в выпуске считается по байтам рабочей копии.
+(HERE / "assumptions.yaml").write_text(out, encoding="utf-8", newline="\n")
 print("assumptions.yaml written:", len(out), "chars")
 book = yaml.safe_load(out)                     # заодно проверка, что собранный файл разбирается
 js = json.dumps(book, ensure_ascii=False, indent=1)
-(HERE / "assumptions.json").write_text(js, encoding="utf-8")
+(HERE / "assumptions.json").write_text(js, encoding="utf-8", newline="\n")
 print("assumptions.json written:", len(js), "chars; version", book["meta"]["version"])
