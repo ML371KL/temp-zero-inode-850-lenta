@@ -592,8 +592,9 @@ def test_the_explanations_match_the_facts_of_the_book(release):
 
     # credit_lines: номинальный лимит — не триггер (F1): гейта нет, издержек
     # неустойчивости нет ни в одной клетке (рычаг пути далеко от 4,0×); за
-    # номинальным лимитом — справкой — 15 клеток в 2035–2036 гг.: при L 1,47
-    # (аудит 30.09.2026, п. 14) долг растёт вместе с EBITDA, а лимит — сумма одной даты.
+    # номинальным лимитом — справкой — 18 клеток в 2035–2036 гг. (на мирах книги 1.1 —
+    # 15: без H × частичная × base, M × дно × высокий capex, N × частичная × высокий capex): при
+    # L 1,47 (аудит 30.09.2026, п. 14) долг растёт вместе с EBITDA, а лимит — сумма одной даты.
     limit = credit_limit(release.book)
     trigger = release.book["valuation"]["distress"]["net_leverage_trigger"]
     assert not cells("credit_lines")
@@ -602,7 +603,8 @@ def test_the_explanations_match_the_facts_of_the_book(release):
     over = {k for k, c in by_key.items() if c.result.max_gross_debt > limit}
     assert over == ({f"{w}|full|{c}" for w in "NHM" for c in ("low", "base", "high")}
                     | {f"M|partial|{c}" for c in ("low", "base", "high")}
-                    | {"M|floor|low", "M|floor|base", "H|partial|high"}), sorted(over)
+                    | {"M|floor|low", "M|floor|base", "M|floor|high", "H|partial|base", "H|partial|high",
+                       "N|partial|high"}), sorted(over)
     assert all(by_key[k].result.max_gross_debt_period[:4] in ("2035", "2036") for k in over)
 
     # Молчат на книге (в заголовке файла: записи сняты, коридоры оставлены).
