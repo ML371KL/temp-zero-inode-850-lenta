@@ -1,7 +1,19 @@
 # -*- coding: utf-8 -*-
 """Рецепт макро-миров — книга-источник (850oa) — исполняемая спецификация к WORLDS-RECIPE.md.
 
-КОПИЯ-КАНДИДАТ ДЛЯ КНИГИ 1.4 (доказательный лист evidence/book-1.4/worlds, 24.09.2026). Отличия от канона 1.3.1:
+КНИГА 1.7 (пересборка миров после решения Банка России 23.10.2026, лист evidence/book-1.7/worlds). Всё новое —
+только ключами входов; без них рецепт считает бит в бит как в 1.4 (канон 1.4 и 1.3.1 воспроизводятся):
+  * правила яруса 2 (WORLDS-RECIPE.md, раздел 3): `anchor_rules.h_key_rule: monotone` — ключевая H монотонно к
+    установившейся, первый полный год ровно; `anchor_rules.h_cpi_rule: cbr_upper_linear` — ИПЦ H от верхней границы
+    диапазона ЦБ линейно к установившейся (инфляция сценария ОНДКП — только сверка); `anchor_rules.n_cpi_survey_blend`
+    — ИПЦ N смешан с опросом тем же весом, что ставка; блок `cpi_actual` — средний ИПЦ текущего полугодия по факту;
+    второй заход 29.10: `cpi_actual.food_spread` — продовольственный ИПЦ текущего полугодия = средний ИПЦ мира +
+    фактический спред; `wage_actual` — зарплаты текущего полугодия по факту опубликованных месяцев;
+    `anchor_rules.h_cpi_avg_rule: eop_mid` — средний ИПЦ H = середина соседних концов периода;
+  * `curve_lt_source: rule` — уровень кривой в терминале всех миров правилом (блок `curve_lt` записи);
+  * `curve.window` + `ofz_in.window` — рыночный снимок мира M окном дней (проверка окна и блок `market_window`).
+
+КНИГА 1.4 (доказательный лист evidence/book-1.4/worlds, 24.09.2026). Отличия от канона 1.3.1:
   * переключатель источника инфляции мира M: `m_inflation.source` во входах = judgement | forward_bei;
     judgement — ровно канон 1.3.1 (--check воспроизводит worlds_source.json 1.3.1 бит в бит);
     forward_bei — инфляция M = рыночные форвардные BEI на дату кривой (RealCurve + forward_bei_path ниже);
@@ -341,6 +353,10 @@ def build_worlds(inp: dict, curve: Curve | None = None, mid0: float | None = Non
         c0 = curve or Curve(inp["curve"]["nodes"], inp["curve"]["date"])
         if inp["ofz_in"].get("date") != c0.date:
             raise SystemExit(f"forward_bei: реальные доходности ОФЗ-ИН ({inp['ofz_in'].get('date')}) должны быть на дату кривой ({c0.date})")
+    # книга 1.7: снимок окном дней — проверка окна и шум по дням; только на кривой самих входов (запись), не на
+    # чужой кривой кандидата инструмента
+    window = market_window(inp) if (curve is None and (inp.get("curve") or {}).get("window")) else None
+    lt_rule = inp.get("curve_lt_source") == "rule"
     inp, bei = with_m_inflation(inp, curve, liquidity_adj_pp)
     P = inp["parameters"]
     spread = float(P["spread_short_vs_key_pp"])
@@ -403,6 +419,10 @@ def build_worlds(inp: dict, curve: Curve | None = None, mid0: float | None = Non
                               "first_market_period": bei["first_market_period"],
                               "pi_half_year_fwd": {p: round(v, 4) for p, v in zip(bei["periods"], bei["pi_h"])},
                               "pi_half_year_fwd_smoothed": {p: round(v, 4) for p, v in zip(bei["periods"], bei["pi_h_smoothed"])}}
+    if lt_rule:                                            # книга 1.7: уровень кривой в терминале всех миров — правилом
+        out["curve_lt"] = curve_lt_rule(out)
+    if window is not None:                                 # книга 1.7: дни окна и разброс по дням (мера шума снимка)
+        out["market_window"] = window
     return out
 
 
@@ -412,6 +432,87 @@ def curve_lt_rule(ws: dict, rd: int = 1) -> dict:
     for r in ws["rows"]:
         out[r["world"]] = round(r["ofz_10y"], rd)
     return out
+
+
+# ----------------------------------------------------------------------------- книга 1.7: окно рыночного снимка мира M
+def next_weekday(day: str) -> str:
+    """Расчёты T+1 — следующий будний день (праздники не учитываются; перед праздником дату задают во входах)."""
+    d = dt.date.fromisoformat(day) + dt.timedelta(days=1)
+    while d.weekday() >= 5:
+        d += dt.timedelta(days=1)
+    return d.isoformat()
+
+
+def window_mean(per_day: dict, digits: int = 4) -> dict:
+    """Среднее по дням окна для каждого ключа: {день: {ключ: x}} -> {ключ: среднее}, округление `digits`."""
+    keys = list(next(iter(per_day.values())))
+    return {k: round(sum(float(per_day[d][k]) for d in per_day) / len(per_day), digits) for k in keys}
+
+
+def check_window(inp: dict) -> list[str]:
+    """Правило окна (WORLDS-RECIPE.md, раздел 2.1): до `max_days` торговых дней по дату снимка, не раньше дня
+    последнего решения Банка России по ключевой ставке; меньше `min_days` дней — снимок ждёт третьего торгового дня
+    после решения. Номинальная и реальная стороны — одни и те же дни; узлы и доходности записи — их среднее."""
+    W, OW = inp["curve"]["window"], (inp["ofz_in"].get("window") or {})
+    days = sorted(W["days"])
+    bad = []
+    if days[-1] != inp["curve"]["date"] or inp["ofz_in"].get("date") != inp["curve"]["date"]:
+        bad.append(f"последний день окна {days[-1]} — не дата снимка (кривая {inp['curve']['date']}, ОФЗ-ИН {inp['ofz_in'].get('date')})")
+    if days[0] < str(W["last_decision"]):
+        bad.append(f"окно начинается {days[0]} — раньше дня решения Банка России {W['last_decision']}")
+    if len(days) > int(W.get("max_days", 10)):
+        bad.append(f"в окне {len(days)} дней — больше {W.get('max_days', 10)}")
+    if len(days) < int(W.get("min_days", 3)):
+        bad.append(f"в окне {len(days)} дн. после решения {W['last_decision']} — меньше {W.get('min_days', 3)}: снимок ждёт "
+                   "третьего торгового дня после решения")
+    if sorted(OW.get("days") or {}) != days:
+        bad.append(f"дни реальной стороны {sorted(OW.get('days') or {})} не равны дням кривой {days} — усреднять обе стороны по одним дням")
+        return bad
+    nodes = window_mean(W["days"])
+    if {str(k): round(float(v), 4) for k, v in inp["curve"]["nodes"].items()} != {str(k): v for k, v in nodes.items()}:
+        bad.append(f"узлы кривой записи не равны среднему по дням окна: {nodes}")
+    yields = window_mean(OW["days"])
+    rec = {str(b["secid"]): round(float(b["real_yield"]), 4) for b in inp["ofz_in"]["bonds"]}
+    if rec != {str(k): v for k, v in yields.items()}:
+        bad.append(f"доходности ОФЗ-ИН записи не равны среднему по дням окна: {yields}")
+    return bad
+
+
+def snapshot_stats(inp: dict, curve: Curve) -> dict:
+    """Шум снимка мира M одного дня (или окна): π_ss неокруглённый, уровень кривой в терминале мира M (ОФЗ 10 лет
+    последнего периода, 0,1), ключевая мира M на первый полный год и установившаяся — по правилу яруса 2."""
+    periods = periods_of(inp["grid"]["first_period"], int(inp["grid"]["n_periods"]))
+    mid_last = first_period_mid(inp, curve, periods) + 0.5 * (len(periods) - 1)
+    bei = forward_bei_path(inp, curve)
+    anchors, _ = candidate_anchors(inp, curve)
+    year = int(periods[0][:4]) + 1
+    keys = [anchors["M"]["key"][p] for p in (f"{year}H1", f"{year}H2")]
+    return {"pi_ss": round(bei["pi_ss_unrounded"], 4),
+            "curve_lt_M": round(round(100 * curve.fwd(mid_last, mid_last + 10), 2), 1),
+            f"key_M_{year}": round(sum(keys) / 2, 4), "key_M_steady": anchors["M"]["key"]["steady"]}
+
+
+def market_window(inp: dict) -> dict:
+    """Книга 1.7: окно рыночного снимка мира M. Проверяет окно (`check_window`, отказ SystemExit) и считает шум
+    по дням: те же входы, кривая и доходности ОФЗ-ИН одного дня (расчёты T+1)."""
+    import copy
+    bad = check_window(inp)
+    if bad:
+        raise SystemExit("окно рыночного снимка: " + "; ".join(bad))
+    W, OW = inp["curve"]["window"], inp["ofz_in"]["window"]
+    by_day = {}
+    for d in sorted(W["days"]):
+        x = copy.deepcopy(inp)
+        x["curve"] = {"date": d, "nodes": dict(W["days"][d])}
+        x["ofz_in"]["date"], x["ofz_in"]["settlement_date"] = d, next_weekday(d)
+        x["ofz_in"]["bonds"] = [dict(b, real_yield=float(OW["days"][d][str(b["secid"])])) for b in inp["ofz_in"]["bonds"]]
+        by_day[d] = snapshot_stats(x, Curve(x["curve"]["nodes"], d))
+    fields = list(next(iter(by_day.values())))
+    return {"rule": W["rule"], "last_decision": str(W["last_decision"]), "method": W["method"],
+            "days": sorted(by_day), "by_day": by_day,
+            "range": {f: [min(v[f] for v in by_day.values()), max(v[f] for v in by_day.values())] for f in fields},
+            "mean_of_days": {f: round(sum(v[f] for v in by_day.values()) / len(by_day), 4) for f in fields},
+            "window": snapshot_stats(inp, Curve(inp["curve"]["nodes"], inp["curve"]["date"]))}
 
 
 # ----------------------------------------------------------------------------- ярус 2: правила якорей
@@ -446,6 +547,76 @@ def split_halves(annual: dict[int, float], steady: float, step: float, first_ful
         s = (prev - nxt) / 2
         out[f"{y}H1"], out[f"{y}H2"] = rnd(a + s / 4, step), rnd(a - s / 4, step)
     return out
+
+
+def blend_cpi_with_survey(cbr: dict, survey: dict, w: float) -> dict:
+    """Книга 1.7 (раздел 3, правило N): ИПЦ мира N на конец года и средний — (1 − w)·середина диапазона ЦБ +
+    w·медиана опроса по годам, тот же вес, что у ставки; год без опроса — середина ЦБ."""
+    out = dict(cbr)
+    for k in ("cpi_eop", "cpi_avg"):
+        sv = survey.get(k) or {}
+        out[k] = {ys: ((1 - w) * mid_of(v) + w * float(sv[ys]) if ys in sv else v) for ys, v in cbr[k].items()}
+    return out
+
+
+def current_half_cpi_avg(inp: dict, period: str, eop_end: float) -> float | None:
+    """Книга 1.7 (раздел 3, текущее полугодие): средний ИПЦ г/г текущего полугодия по факту — опубликованные
+    месяцы ряда `cpi_actual.yoy` (с начала полугодия подряд) плюс путь к ИПЦ мира на конец полугодия: линейно
+    по месяцам от последнего факта. Без блока `cpi_actual` или без факта за первый месяц — None (правило 1.4)."""
+    act = (inp.get("cpi_actual") or {}).get("yoy") or {}
+    if not act:
+        return None
+    y, h = parse_period(period)
+    months = list(range(1, 7) if h == 1 else range(7, 13))
+    yoy = {str(k): float(v) for k, v in act.items()}
+    known = []
+    for m in months:
+        if f"{y}-{m:02d}" not in yoy:
+            break
+        known.append(m)
+    if not known:
+        return None
+    last_m, last_v = known[-1], yoy[f"{y}-{known[-1]:02d}"]
+    end_m = months[-1]
+    vals = [yoy[f"{y}-{m:02d}"] if m in known else last_v + (eop_end - last_v) * (m - last_m) / (end_m - last_m)
+            for m in months]
+    return sum(vals) / len(vals)
+
+
+def _months_known(period: str, table: dict) -> tuple[list[int], list[int], int]:
+    """Месяцы полугодия, опубликованные месяцы (подряд с начала полугодия) и год."""
+    y, h = parse_period(period)
+    months = list(range(1, 7) if h == 1 else range(7, 13))
+    known = []
+    for m in months:
+        if f"{y}-{m:02d}" not in table:
+            break
+        known.append(m)
+    return months, known, y
+
+
+def current_half_food_spread(inp: dict, period: str) -> float | None:
+    """Книга 1.7, второй заход (решение 29.10.2026): фактический спред продовольственного ИПЦ к ИПЦ за опубликованные
+    месяцы текущего полугодия — среднее г/г продовольственных товаров − среднее г/г всех товаров и услуг, оба ряда из
+    одной таблицы (`cpi_actual.food_spread`: `food_yoy`, `all_yoy`). Без блока или без первого месяца — None."""
+    fs = (inp.get("cpi_actual") or {}).get("food_spread") or {}
+    food = {str(k): float(v) for k, v in (fs.get("food_yoy") or {}).items()}
+    allc = {str(k): float(v) for k, v in (fs.get("all_yoy") or {}).items()}
+    _, known, y = _months_known(period, food)
+    known = [m for m in known if f"{y}-{m:02d}" in allc]
+    if not known:
+        return None
+    return (sum(food[f"{y}-{m:02d}"] for m in known) - sum(allc[f"{y}-{m:02d}"] for m in known)) / len(known)
+
+
+def current_half_wage(inp: dict, period: str, rule_value: float) -> float | None:
+    """Книга 1.7, второй заход: номинальные зарплаты г/г текущего полугодия — опубликованные месяцы по факту
+    (`wage_actual.yoy`, подряд с начала полугодия), остальные — правило мира; среднее шести месяцев."""
+    act = {str(k): float(v) for k, v in ((inp.get("wage_actual") or {}).get("yoy") or {}).items()}
+    months, known, y = _months_known(period, act)
+    if not known:
+        return None
+    return sum(act[f"{y}-{m:02d}"] if m in known else rule_value for m in months) / len(months)
 
 
 def candidate_anchors(inp: dict, curve: Curve | None = None) -> tuple[dict, list[str]]:
@@ -493,20 +664,48 @@ def candidate_anchors(inp: dict, curve: Curve | None = None) -> tuple[dict, list
         notes.append("текущее полугодие N: середина сноски ЦБ без взвешивания фактом (current_half_actual не задан)")
     keyN = split_halves(annual, float(sN["key"]), kstep, first_full, conv, prev_first=cur_val)
     keyN[periods[0]] = cur_val
+    cbrN = cbr
+    if R.get("n_cpi_survey_blend"):                        # книга 1.7: ИПЦ N смешан с опросом тем же весом, что ставка
+        cbrN = blend_cpi_with_survey(cbr, survey, w_s)
     eopN, avgN = {}, {}
     prev_eop = None
-    for ys, v in sorted(cbr["cpi_eop"].items()):
+    for ys, v in sorted(cbrN["cpi_eop"].items()):
         y, m = int(ys), mid_of(v)
         if y >= cur_year:
             if y > cur_year and prev_eop is not None:
                 eopN[f"{y}H1"] = rnd((prev_eop + m) / 2, cstep)
             eopN[f"{y}H2"] = rnd(m, cstep)
         prev_eop = m
-    avg_annual = {int(ys): mid_of(v) for ys, v in cbr["cpi_avg"].items() if int(ys) > cur_year}
-    avg_cur = rnd(mid_of(cbr["cpi_avg"][str(cur_year)]), cstep)
+    avg_annual = {int(ys): mid_of(v) for ys, v in cbrN["cpi_avg"].items() if int(ys) > cur_year}
+    avg_cur = rnd(mid_of(cbrN["cpi_avg"][str(cur_year)]), cstep)
     avgN = split_halves(avg_annual, float(sN["cpi_avg"]), cstep, first_full, conv, prev_first=avg_cur)
     avgN[periods[0]] = avg_cur
+    fact = {}                                              # книга 1.7: средний ИПЦ текущего полугодия по факту, по мирам
+
+    def fact_avg(world: str, eop_end: float) -> float | None:
+        v = current_half_cpi_avg(inp, periods[0], eop_end)
+        if v is not None:
+            fact[world] = rnd(v, cstep)
+        return fact.get(world)
+
+    if periods[0] in eopN and fact_avg("N", eopN[periods[0]]) is not None:
+        avgN[periods[0]] = fact["N"]
+    food_fact, wage_fact = {}, {}                          # второй заход: продовольствие и зарплаты текущего полугодия
+
+    def fact_food_wage(world: str, avg: dict, food: dict, wage: dict) -> None:
+        p0 = periods[0]
+        if p0 not in avg:
+            return
+        sp = current_half_food_spread(inp, p0)
+        if sp is not None:
+            food[p0] = food_fact[world] = rnd(avg[p0] + sp, cstep)
+        rw = float(R["real_wage_lt_pct"][world])
+        wv = current_half_wage(inp, p0, ((1 + avg[p0] / 100) * (1 + rw / 100) - 1) * 100)
+        if wv is not None:
+            wage[p0] = wage_fact[world] = rnd(wv, cstep)
+
     foodN, wageN = food_wage("N", avgN)
+    fact_food_wage("N", avgN, foodN, wageN)
     out["N"] = {"key": keyN, "cpi_eop": eopN, "cpi_avg": avgN, "food_avg": foodN, "wage": wageN}
 
     # ---- H: проинфляционный сценарий ОНДКП + сдвиг со второго года, затем линейно к установившемуся
@@ -514,10 +713,28 @@ def candidate_anchors(inp: dict, curve: Curve | None = None) -> tuple[dict, list
     pro = ondkp["proinflation"]["key_avg"]
     years = sorted(int(y) for y in pro)
     shift, off = float(R["h_shift_pp"]), int(R["h_shift_from_year_offset"])
-    annualH = {y: mid_of(pro[str(y)]) + (shift if y >= years[0] + off else 0.0) for y in years}
+    if R.get("h_key_rule") == "monotone":                  # книга 1.7: сценарий + сдвиг, пока не ниже установившейся
+        steadyH, annualH = float(sH["key"]), {}
+        for y in years:
+            v = mid_of(pro[str(y)]) + (shift if y >= years[0] + off else 0.0)
+            if annualH and v < steadyH:
+                notes.append(f"H: {y} — середина сценария + сдвиг {v:g} ниже установившейся {steadyH:g}: год в правило "
+                             f"не входит, с {max(annualH)} линейно к {steadyH:g} к {conv}")
+                break
+            annualH[y] = v
+    else:
+        annualH = {y: mid_of(pro[str(y)]) + (shift if y >= years[0] + off else 0.0) for y in years}
     keyH = split_halves(annualH, float(sH["key"]), kstep, first_full, conv, prev_first=cur_val)
+    if R.get("h_key_rule") == "monotone":                  # первый полный год — ровно, без наклона
+        flat = rnd(extend_to_steady(annualH, float(sH["key"]), conv)[first_full], kstep)
+        keyH[f"{first_full}H1"] = keyH[f"{first_full}H2"] = flat
     keyH[periods[0]] = cur_val
     pro_cpi = ondkp["proinflation"].get("cpi_eop") or {}
+    if R.get("h_cpi_rule") == "cbr_upper_linear" and pro_cpi:   # книга 1.7: инфляция сценария — только для сверки
+        notes.append("H: ИПЦ — от верхней границы диапазона ЦБ текущего года линейно к установившемуся; ИПЦ "
+                     "проинфляционного сценария ОНДКП (" + ", ".join(f"{y}: {v}" for y, v in sorted(pro_cpi.items()))
+                     + ") — только для сверки")
+        pro_cpi = {}
     hi = cbr["cpi_eop"][str(cur_year)]
     e0 = float(hi[1]) if isinstance(hi, (list, tuple)) else float(hi)   # текущий год: верхняя граница диапазона ЦБ
     eopH = {periods[0]: rnd(e0, cstep)}
@@ -533,9 +750,18 @@ def candidate_anchors(inp: dict, curve: Curve | None = None) -> tuple[dict, list
             e = e0 + (float(sH["cpi_eop"]) - e0) * (y - cur_year) / (conv - cur_year)
             eopH[f"{y}H1"], eopH[f"{y}H2"] = rnd((prev + e) / 2, cstep), rnd(e, cstep)
             prev = e
-        notes.append("ОНДКП без инфляции проинфляционного сценария — H: от верхней границы диапазона ЦБ текущего года линейно к установившемуся значению")
+        if R.get("h_cpi_rule") != "cbr_upper_linear":
+            notes.append("ОНДКП без инфляции проинфляционного сценария — H: от верхней границы диапазона ЦБ текущего года линейно к установившемуся значению")
     avgH = {p: rnd(v + (float(sH["cpi_avg"]) - float(sN["cpi_avg"])), cstep) for p, v in avgN.items()}
+    if R.get("h_cpi_avg_rule") == "eop_mid":               # второй заход: средний ИПЦ H — середина соседних концов периода
+        eop_path = path(eopH, float(sH["cpi_eop"]), periods)
+        for i, p in enumerate(periods):
+            if i > 0 and p in avgH:
+                avgH[p] = rnd((eop_path[i - 1] + eop_path[i]) / 2, cstep)
+    if fact_avg("H", eopH[periods[0]]) is not None:       # книга 1.7: текущее полугодие — по факту и пути к ИПЦ мира H
+        avgH[periods[0]] = fact["H"]
     foodH, wageH = food_wage("H", avgH)
+    fact_food_wage("H", avgH, foodH, wageH)
     out["H"] = {"key": keyH, "cpi_eop": eopH, "cpi_avg": avgH, "food_avg": foodH, "wage": wageH}
 
     # ---- M: 6-месячный форвард + надбавка; инфляция линейно к pi_ss
@@ -574,7 +800,19 @@ def candidate_anchors(inp: dict, curve: Curve | None = None) -> tuple[dict, list
         eopM[p] = rnd(e, cstep)
         avgM[p] = rnd((prev + e) / 2, cstep)
         prev = e
+    if fact_avg("M", eopM[periods[0]]) is not None:       # книга 1.7: текущее полугодие — по факту и пути к ИПЦ мира M
+        avgM[periods[0]] = fact["M"]
+    if fact:
+        notes.append("текущее полугодие: средний ИПЦ по факту (" + ", ".join(f"{k} {v}" for k, v in sorted((inp['cpi_actual']['yoy']).items()))
+                     + ") и линейно к ИПЦ мира на конец полугодия: " + ", ".join(f"{w} {v:g}" for w, v in fact.items()))
     foodM, wageM = food_wage("M", avgM)
+    fact_food_wage("M", avgM, foodM, wageM)
+    if food_fact:
+        notes.append(f"текущее полугодие: продовольственный ИПЦ = средний ИПЦ мира + фактический спред "
+                     f"{current_half_food_spread(inp, periods[0]):+.4f} п.п.: " + ", ".join(f"{w} {v:g}" for w, v in food_fact.items()))
+    if wage_fact:
+        notes.append("текущее полугодие: зарплаты — факт " + ", ".join(f"{k} {v}" for k, v in sorted(inp["wage_actual"]["yoy"].items()))
+                     + ", остальные месяцы — правило мира: " + ", ".join(f"{w} {v:g}" for w, v in wage_fact.items()))
     out["M"] = {"key": keyM, "cpi_eop": eopM, "cpi_avg": avgM, "food_avg": foodM, "wage": wageM}
     return out, notes
 
