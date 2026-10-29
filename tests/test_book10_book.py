@@ -47,10 +47,11 @@ def _evidence(rel: str) -> dict:
 # ================================================================ книга и миры
 
 
-def test_the_book_loads_and_is_version_one_point_one(A):
-    """Версия 1.1 — суждения 1.0 и четыре правила расчёта по внешнему аудиту
-    30.09.2026, каждое включено ключом книги (умолчания ключей — версия 1.0)."""
-    assert A["meta"]["version"] == "1.1"
+def test_the_book_loads_and_is_version_one_point_two(A):
+    """Версия 1.2 — миры ставок после решения Банка России 23.10.2026 (запись
+    28.10.2026); суждения 1.0 и четыре правила расчёта по внешнему аудиту
+    30.09.2026 (версия 1.1), каждое включено ключом книги (умолчания ключей — версия 1.0)."""
+    assert A["meta"]["version"] == "1.2"
     assert A["meta"]["company"] == {"name": "Лента", "ticker": "LENT"}
     assert A["valuation"]["headline"]["method"] == "intrinsic"
     assert A["valuation"]["uncertainty"]["axis_merge"] == "add"
@@ -60,12 +61,13 @@ def test_the_book_loads_and_is_version_one_point_one(A):
 
 
 def test_the_world_record_is_stored_byte_for_byte():
-    """D6, решение ведущего F35: `worlds_source.json` — sha256 7296567d… на ХРАНИМЫХ
+    """D6, решение ведущего F35: `worlds_source.json` — sha256 1e905cb7… (запись
+    28.10.2026, книга 1.2; до неё — 7296567d…, запись 18.09.2026) на ХРАНИМЫХ
     байтах (не после нормализации переводов строк), `.csv` — тот же канон записи;
     `.gitattributes` снимает с обоих преобразование текста."""
     data = (BOOK_DIR / "worlds_source.json").read_bytes()
-    assert hashlib.sha256(data).hexdigest().startswith("7296567d")
-    assert hashlib.sha256((BOOK_DIR / "worlds_source.csv").read_bytes()).hexdigest().startswith("2faae142")
+    assert hashlib.sha256(data).hexdigest().startswith("1e905cb7")
+    assert hashlib.sha256((BOOK_DIR / "worlds_source.csv").read_bytes()).hexdigest().startswith("5fc8e86b")
     # Канон записан с переводами строк CRLF — поэтому и нужен `-text`: git с
     # `text=auto eol=lf` превратил бы их в LF и сменил sha256.
     assert b"\r\n" in data
@@ -192,12 +194,16 @@ def test_the_central_cell_revenue_is_the_network_sheet(A):
     """E1: центральная клетка книги (H × частичная × base × mid) даёт выручку
     центральной клетки листа «Сеть» (`revsim.py`): 2П2026 777,2; 2027 1 675,8; 2028
     1 881,6 (плотности супер 0,95 и дрогери 0,67 — аудит 30.09.2026, п. 17) — те же правила сегментов (LFL + поправка, опт — LFL + прибавка, DIY — ИПЦ
-    мира, эффективная площадь с закрытиями истории)."""
+    мира, эффективная площадь с закрытиями истории). Лист считал на мирах книги 1.0
+    (запись 18.09.2026): с книги 1.2 клетка берётся на них же — продовольственный
+    ИПЦ мира H 2027–2036 в записи 28.10.2026 другой (`tests/test_book11_walk.py`)."""
     from model.book import named_cells
     from model.core import run_cell
+    from tests.test_book11_walk import with_the_worlds_of_1_1
 
     sheet = _evidence("network/checks_out.json")["base_cell"]["total"]
-    rows = run_cell(A, named_cells(A)["base"]).rows
+    B = with_the_worlds_of_1_1(A)
+    rows = run_cell(B, named_cells(B)["base"]).rows
     assert len(rows) == 21
     for row in rows:
         # Лист печатает выручку с тремя знаками, книга пишет историю площади и
