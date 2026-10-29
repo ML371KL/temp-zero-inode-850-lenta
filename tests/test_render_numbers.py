@@ -25,7 +25,7 @@ PLACEHOLDER = "⟨ядро⟩"
 # потерявший все метки (число вписали руками), выпадает из обхода
 # `documents()` молча — этот список ловит именно это.
 MARKED_DOCUMENTS = (
-    "data/assumptions/ASSUMPTIONS-BOOK.md", "data/assumptions/V1.1-CHANGES.md", "README.md",
+    "data/assumptions/ASSUMPTIONS-BOOK.md", "data/assumptions/V1.2-CHANGES.md", "README.md",
     "docs/MODEL.md", "docs/DASHBOARD.md", "docs/DECISIONS.md", "docs/MANUAL.md",
 )
 # Документы истории: журналы прежних версий книги и датированная история правок.
@@ -33,12 +33,12 @@ MARKED_DOCUMENTS = (
 # (до 06.10.2026 так были размечены журнал 1.0 и запись истории от 30.09.2026).
 # Перед пересчётом таблиц новой версии журнал прежней замораживается
 # (`render_numbers.py --freeze`), в датированных записях числа пишутся без меток.
-FROZEN_DOCUMENTS = ("data/assumptions/V1.0-CHANGES.md", "docs/CHANGELOG.md")
+FROZEN_DOCUMENTS = ("data/assumptions/V1.0-CHANGES.md", "data/assumptions/V1.1-CHANGES.md", "docs/CHANGELOG.md")
 # Тексты, где доля оси в полосе A-V9 называется «вклад» (доля квадрата ранговой
 # корреляции оси с центром), а не «дисперсия» (внешний аудит 30.09.2026, S01).
 CONTRIBUTION_DOCUMENTS = (
     "data/assumptions/ASSUMPTIONS-BOOK.md", "data/assumptions/V1.0-CHANGES.md",
-    "data/assumptions/V1.1-CHANGES.md", "README.md", "docs/MODEL.md", "docs/MANUAL.md",
+    "data/assumptions/V1.1-CHANGES.md", "data/assumptions/V1.2-CHANGES.md", "README.md", "docs/MODEL.md", "docs/MANUAL.md",
     "docs/DASHBOARD.md", "docs/DECISIONS.md",
     "data/assumptions/evidence/book-1.0/worlds-calendar/README.md",
 )
