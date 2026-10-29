@@ -950,7 +950,7 @@ def main(argv=None) -> int:
             print("\n".join(diffs[:40]), file=sys.stderr)
             return NOT_BUILT
         print(f"воспроизведено: {len(rebuilt['rows'])} строк, кривые {sorted(rebuilt['fair_zero_curve_today'])}, "
-              f"блоки {', '.join(k for k in ('lt_inflation', 'm_inflation') if k in rebuilt) or '—'} — "
+              f"блоки {', '.join(k for k in ('lt_inflation', 'm_inflation', 'curve_lt', 'market_window') if k in rebuilt) or '—'} — "
               f"совпадают с {BOOK / 'worlds_source.json'} строго")
         return OK
     if not args.out:

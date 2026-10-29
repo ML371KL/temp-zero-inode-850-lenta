@@ -26,6 +26,11 @@ for _w, _pi in (src.get("lt_inflation") or {}).items():
 # суждение записи (правило даёт на 0,1 ниже), таблица остаётся.
 if (src.get("m_inflation") or {}).get("source") == "forward_bei":
     LT["M"]["curve_lt"] = round(round([r for r in src["rows"] if r["world"] == "M"][-1]["ofz_10y"], 1) / 100.0, 5)
+# 1.7 книги-источника (книга 1.2 «Ленты»): рецепт пишет уровень кривой в терминале всех миров правилом (блок curve_lt
+# записи, worlds_recipe.curve_lt_rule; ключ curve_lt_source: rule входов) — он и берётся для N, H и M; записи до 1.7
+# блока не несут, правила выше остаются.
+for _w, _lt in (src.get("curve_lt") or {}).items():
+    LT[_w]["curve_lt"] = round(float(_lt) / 100.0, 5)
 
 
 def series(world, field, scale=0.01):
