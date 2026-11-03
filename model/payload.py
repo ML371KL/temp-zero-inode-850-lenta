@@ -1275,6 +1275,7 @@ def _interest_nowcast_block(store, A: dict, period: str) -> dict:
         net_interest=round(now.net_interest, 2),
         debt_interest=round(now.debt_interest, 2),
         cash_income=round(now.cash_income, 2),
+        bridge_accretion=round(now.bridge_accretion, 2),
         average_debt=round(now.average_debt, 1),
         average_cash=round(now.average_cash, 1),
         average_key_rate=round(now.average_key_rate, 5),

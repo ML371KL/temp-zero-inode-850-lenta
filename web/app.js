@@ -2684,7 +2684,7 @@ function interestCard(d) {
   const kinds = { bond: "облигации", bank: "банки", other: "прочие займы" };
   const u = reportUnit(d);
   return card({ title: `Чистые проценты ${periodLabel(interest.period)}`, span: 6,
-    sub: "посуточное начисление по реестру траншей: плавающие — ключевая + спред, фиксированные — ставка; минус доход на кассу" },
+    sub: "посуточное начисление по реестру траншей: плавающие — ключевая + спред, фиксированные — ставка; минус доход на кассу, плюс размотка обязательств моста" },
   el("div", { class: "kpis" },
     kpi(fmt.bn(interest.net_interest, 1), `прогноз · заявленная точность ± ${fmt.pct(interest.accuracy, 0)}`),
     bench !== null ? kpi(fmt.bn(bench, 1), `эталон: ${benchTitle(d, main)}`) : null,
@@ -2696,6 +2696,8 @@ function interestCard(d) {
     { name: "Проценты по долгу", value: fmt.num(interest.debt_interest, 2) },
     ...Object.entries(interest.by_kind || {}).map(([k, v]) => ({ name: `в т.ч. ${kinds[k] || k}`, value: fmt.num(v, 2), sub: true })),
     { name: "Доход на кассу (вычитается)", value: fmt.num(interest.cash_income, 2) },
+    ...(isNum(interest.bridge_accretion) && interest.bridge_accretion !== 0
+      ? [{ name: "Размотка обязательств моста (прибавляется)", value: fmt.num(interest.bridge_accretion, 2) }] : []),
     { name: "Чистые проценты", value: fmt.num(interest.net_interest, 2), total: true },
   ], { cls: "compact", rowClass: (r) => (r.sub ? "is-muted" : r.total ? "is-total" : null) }),
   el("p", { class: "card-foot" },

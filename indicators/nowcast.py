@@ -231,6 +231,66 @@ class InterestNowcast:
     survey_delta: float | None = None
     by_kind: dict = field(default_factory=dict)
     inputs: dict = field(default_factory=dict)
+    bridge_accretion: float = 0.0
+    """Размотка строк моста за период (пут «Реми»: `accrete_rate_half`), млрд ₽.
+
+    Факт канала — строка «Net Interest expense» датабука (IAS 17), а в ней
+    размотка пута сидит в процентных расходах (МСФО 1П2026, прим. 29–30:
+    «прочие» 0,448 за полугодие). Без неё прогноз и факт — разные величины
+    (отчёт за 3 кв. 2026: ≈0,24 млрд из промаха 0,93)."""
+
+
+def half_progress(A: dict, half: str, day) -> float:
+    """Доля изменения чистого долга полугодия `half`, прошедшая к началу дня `day`.
+
+    То же правило, что у ядра (`model.core.nwc_quarter_weight`): квартальные
+    веса книги `nwc.quarter_share` (у «Ленты» 3 кв. отрицателен — оборотный
+    капитал ещё растёт, 4 кв. его высвобождает), внутри квартала — по дням.
+    Канал процентов катил долг внутри полугодия линейно и к 30.09.2026 ждал
+    чистый долг ≈100 млрд при факте 124 (касса ≈41 против 19): доход на кассу
+    в прогнозе 3 кв. был завышен. Полугодие вне сетки книги или книга без
+    весов — линейно по дням, как прежде.
+    """
+    from model.book import periods as book_periods
+    from model.core import nwc_quarter_weight
+
+    start, end = periods.bounds(half)
+    span = (end - start).days or 1
+    linear = min(max((day - start).days / span, 0.0), 1.0)
+    grid = book_periods(A["meta"]["first_period"], A["meta"]["last_period"])
+    if half not in grid:
+        return linear
+    weight = nwc_quarter_weight(A, grid.index(half), day)
+    return linear if weight is None else weight
+
+
+def bridge_accretion(A: dict, start, end) -> float:
+    """Размотка строк моста с наращением за дни [start, end], млрд ₽ (со знаком процентов).
+
+    Требование — расход (плюс), актив — доход (минус, с долей признания);
+    после полугодия расчёта (`settle_period`) строка не наращивается. Сумма —
+    той же функцией, что мост ядра (`model.core.accreted`).
+    """
+    from datetime import timedelta
+
+    from model.book import bridge_items
+    from model.core import accreted, period_bounds
+
+    total = 0.0
+    for item in bridge_items(A):
+        if not item.accrete_rate_half:
+            continue
+        stop = end + timedelta(days=1)
+        if item.settle_period is not None:
+            stop = min(stop, period_bounds(item.settle_period)[1] + timedelta(days=1))
+        begin = max(start, item.as_of)
+        if stop <= begin:
+            continue
+        delta = accreted(A, item, stop) - accreted(A, item, begin)
+        if item.kind == "asset":
+            delta = -delta * (1.0 - (item.haircut or 0.0))
+        total += delta
+    return total
 
 
 def _row_of(rows, period: str):
@@ -249,9 +309,11 @@ def interest_nowcast(store: Store, A: dict, period: str) -> InterestNowcast:
     Расчёт — `indicators.interest.integrate` (простые проценты на фактические
     дни, остаток взвешен по времени, ставка — факт до последнего наблюдения,
     дальше путь мира книги). Касса привязана к пути чистого долга ядра:
-    внутри полугодия — линейно от начала полугодия к концу, квартал берёт
-    свою часть пути. Корзины ставок книги (D12) — следующий шаг (заметка в
-    `indicators/interest.py`).
+    внутри полугодия — правилом ядра (`half_progress`: квартальные веса книги),
+    квартал берёт свою часть пути. К процентам по долгу за вычетом дохода на
+    кассу прибавляется размотка строк моста (`bridge_accretion`) — так
+    устроена строка датабука, с которой прогноз сверяется. Корзины ставок
+    книги (D12) — следующий шаг (заметка в `indicators/interest.py`).
     """
     from indicators import interest as channel
     from model.book import Cell
@@ -268,15 +330,14 @@ def interest_nowcast(store: Store, A: dict, period: str) -> InterestNowcast:
     regime = max(priors, key=priors.get)
     cell = run_cell(A, Cell.build(A, world, regime, "base"))
     row, previous = _row_of(cell.rows, period)
-    half_start, half_end = (periods.bounds(row.period) if row is not None else (start, end))
     opening_net_debt = (previous.net_debt if previous is not None
                         else A["facts"]["anchor"]["net_debt"])
     closing_net_debt = row.net_debt if row else opening_net_debt
-    span = (half_end - half_start).days or 1
+    half = row.period if row is not None else None
 
     def cash_on(day):
         gross = sum(t.principal for t in on_tranches(day))
-        share = min(max((day - half_start).days / span, 0.0), 1.0)
+        share = half_progress(A, half, day) if half is not None else 0.0
         return max(gross - (opening_net_debt
                             + (closing_net_debt - opening_net_debt) * share), 0.0)
 
@@ -293,10 +354,12 @@ def interest_nowcast(store: Store, A: dict, period: str) -> InterestNowcast:
             deposit_factor=A["financing"]["cash_yield_k"], period=period)
         survey_delta = alternative.net_interest - result.net_interest
 
+    accretion = bridge_accretion(A, start, end)
     floating = sum(t.principal for t in tranches if t.fixed_rate is None)
     total = sum(t.principal for t in tranches) or 1.0
     return InterestNowcast(
-        period=period, net_interest=result.net_interest,
+        period=period, net_interest=result.net_interest + accretion,
+        bridge_accretion=accretion,
         debt_interest=result.debt_interest, cash_income=result.cash_income,
         average_key_rate=result.average_key_rate, average_debt=result.average_debt,
         average_cash=result.average_cash, floating_share=floating / total,

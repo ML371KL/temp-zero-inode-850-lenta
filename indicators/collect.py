@@ -485,7 +485,8 @@ def cmd_nowcast(store: Store, *, record: bool = True, today: date | None = None,
               "indicators/interest.py)")
     if interest is not None:
         print(f"чистые проценты {interest.period}: {interest.net_interest:.1f} млрд ₽ "
-              f"= {interest.debt_interest:.1f} по долгу − {interest.cash_income:.1f} на кассу")
+              f"= {interest.debt_interest:.1f} по долгу − {interest.cash_income:.1f} на кассу"
+              f" + {interest.bridge_accretion:.1f} размотка моста")
 
     if not record:
         return 0
