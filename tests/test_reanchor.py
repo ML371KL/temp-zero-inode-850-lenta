@@ -445,6 +445,36 @@ def test_the_pro_forma_anchor_margin_stays_evidence(tool, A):
         "проверка пуста: без проформы вероятности режимов те же"
 
 
+def test_an_axis_on_the_pro_forma_anchor_margin_follows_it_into_the_observations(tool, A):
+    """Ось на марже якоря на проформе уходит вместе с ключом в наблюдения A-P2u.
+
+    У книги 1.2 ось полосы и чувствительность A-C7 двигают
+    `facts.anchor.margin_pro_forma`; инструмент переносил ключ в наблюдения, а
+    ось оставлял на старом пути — полоса кандидата падала на первой подмене
+    (пробный счёт по отчёту за 3 кв. 2026). Синтетическая книга такой оси не
+    имеет — она добавляется здесь, в полосу и в чувствительности.
+    """
+    from model.core import margin_observations
+    from model.engine import apply_override
+
+    old = "facts.anchor.margin_pro_forma"
+    probe = {"name": "проба: маржа якоря на проформе", "paths": [old, "margin.seasonal_h1_pp"],
+             "shift_low": -0.002, "shift_high": 0.002}
+    A["valuation"]["uncertainty"]["axes"].append(copy.deepcopy(probe))
+    A.setdefault("sensitivities", []).append(dict(copy.deepcopy(probe), name="проба A-C7"))
+    anchor = A["facts"]["anchor"]
+    X = tool.reanchor(A, tool.expected_report(A), valuation_date=DATES[1]).book
+    new = f"joint.regime_update.observations.{anchor['period']}.value"
+    paths = [p for _, axes, _ in tool._axis_lists(X) for axis in axes
+             for p in tool._axis_paths(axis)]
+    assert old not in paths
+    assert paths.count(new) == 2
+    B = copy.deepcopy(X)
+    apply_override(B, new, anchor["margin_pro_forma"] + 0.002)
+    assert margin_observations(B)[anchor["period"]][0] == pytest.approx(
+        anchor["margin_pro_forma"] + 0.002)
+
+
 BAND_DRAWS = 80                               # прогонов полосы в тесте (пулом, `parallel_band`)
 
 

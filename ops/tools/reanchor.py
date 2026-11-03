@@ -755,6 +755,29 @@ def _drop_settled_rows(X: dict, settled: list[str]) -> list[str]:
             "(выплата в чистом долге отчёта)"] + notes
 
 
+def _repoint_axes(X: dict, old: str, new: str) -> list[str]:
+    """Перевести пути осей с ключа, который инструмент перенёс, на его новое место.
+
+    Маржа якоря на проформе уходит из `facts.anchor` в наблюдения A-P2u (её
+    смысл — свидетельство о закрытом полугодии — не меняется), а оси полосы и
+    чувствительностей книги двигали её по старому пути: полоса кандидата
+    падала на первой же подмене «в книге нет ключа facts.anchor.margin_pro_forma»
+    (пробный счёт на книге 1.2 по отчёту за 3 кв. 2026). Ось двигает то же
+    суждение по новому адресу.
+    """
+    notes = []
+    for where, axes, _ in _axis_lists(X):
+        for axis in axes:
+            if axis.get("path") == old:
+                axis["path"] = new
+            elif old in (axis.get("paths") or []):
+                axis["paths"] = [new if p == old else p for p in axis["paths"]]
+            else:
+                continue
+            notes.append(f"ось «{axis.get('name')}» ({where}): {old} → {new}")
+    return notes
+
+
 def margin_tail_shock(A: dict, period: str, margin: float, se: float = 0.0) -> float:
     """Диагностика: AR(1)-хвост наблюдения маржи в следующем полугодии, средний по режимам.
 
@@ -1109,6 +1132,10 @@ def reanchor(A: dict, facts: dict, *, valuation_date: str | None = None,
                                     else pro_forma[0])
         warnings.append(f"маржа якоря {old_anchor} на проформе ({pro_forma[0]:.5f}, se "
                         f"{pro_forma[1]:.5f}) перенесена из facts.anchor в наблюдения A-P2u")
+        warnings += _repoint_axes(
+            X, "facts.anchor.margin_pro_forma",
+            f"joint.regime_update.observations.{old_anchor}"
+            + (".value" if pro_forma[1] else ""))
     replaced = observations.get(period)
     if isinstance(replaced, dict):
         warnings.append(f"прогноз нау-каста за {period} ({replaced}) заменён фактом")
@@ -1236,8 +1263,10 @@ def manual_steps(A: dict, X: dict, derived: dict | None = None) -> list[str]:
                if decision == "hold" else
                "все траектории nwc_pct сдвинуты на разрыв — уровень факта держится")
             + ". Подтвердить в журнале версии книги (автор книги)")
-    out.append(f"миры и кривые — на {A['meta']['valuation_date']}: пересборка "
-               "ops/tools/refresh_worlds.py отдельно")
+    # дата кривых — `meta.curve_as_of` (книга 1.2: запись миров 28.10.2026 при цене 18.09);
+    # без ключа кривые книги стоят на дате её оценки
+    out.append(f"миры и кривые — на {A['meta'].get('curve_as_of', A['meta']['valuation_date'])}: "
+               "пересборка ops/tools/refresh_worlds.py отдельно")
     for sid, info in ((derived or {}).get("segments") or {}).items():
         if "density_fact" in info and \
                 abs(info["density_fact"] / info["density_book"] - 1) > DENSITY_CHECK:
