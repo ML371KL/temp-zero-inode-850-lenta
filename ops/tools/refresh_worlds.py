@@ -93,7 +93,8 @@ from model.book_results import fair_value_block, layer_block  # noqa: E402
 from model.engine import run_release  # noqa: E402
 from model.grid import layer_variants  # noqa: E402
 from model.live import (CURVE_PREFIX, MIN_CURVE_NODES, OFZ_IN_MAX, OFZ_IN_MIN,  # noqa: E402
-                        OFZ_IN_PREFIX, RATE_MAX, RATE_MIN, LiveReport, curve_shift)
+                        OFZ_IN_PREFIX, RATE_MAX, RATE_MIN, LiveReport, book_market_date,
+                        curve_shift)
 from model.uncertainty import headline_of, uncertainty  # noqa: E402
 
 BOOK = BOOK_DIR
@@ -544,7 +545,8 @@ def _gates(engine, cand_book: dict, cand: dict, release: dict, curve):
     Совещательный `book_update` считается на ЖИВОЙ кривой против мира M
     кандидата: он и отвечает на вопрос «гаснет ли плашка после пересборки».
     """
-    live = LiveReport(book_date=cand_book["meta"]["valuation_date"])
+    live = LiveReport(book_date=book_market_date(cand_book),
+                      book_valuation_date=cand_book["meta"]["valuation_date"])
     live.curve_shift = curve_shift(cand, {t: v / 100 for t, v in curve.nodes.items()})
     live.book_age_days = (dt.date.fromisoformat(cand["meta"]["valuation_date"])
                           - dt.date.fromisoformat(live.book_date)).days

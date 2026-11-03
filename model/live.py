@@ -113,9 +113,16 @@ class LiveReport:
     (аудит третьей итерации, D4)."""
     curve_reference_date: str = ""
     book_date: str = ""
-    """Дата, на которую откалибрована книга (её `meta.valuation_date` ДО
-    подстановки живой цены: после подстановки там стоит дата котировки)."""
+    """Дата рыночных входов книги — от неё считается её возраст (гейт
+    `book_update`, плашка и карточка «Выпуск и книга»): `meta.curve_as_of`
+    (дата кривых миров), а без ключа — `meta.valuation_date` ДО подстановки
+    живой цены (после подстановки там стоит дата котировки) — `book_market_date`."""
     book_age_days: int = 0
+    book_valuation_date: str = ""
+    """`meta.valuation_date` книги ДО подстановки живой цены — дата её цены и
+    суждений: «дата оценки не раньше даты книги» (`_apply_price`) и «смена
+    карточки акции после даты книги» (`model.checks.check_security_card`).
+    У книги без `meta.curve_as_of` совпадает с `book_date`."""
     price_reference: float = 0.0
     """ПОСЛЕДНЯЯ ПРИНЯТАЯ цена — эталон проверки скачка и замена отвергнутой.
 
@@ -157,6 +164,7 @@ class LiveReport:
                 "curve_reference_date": self.curve_reference_date,
                 "book_date": self.book_date,
                 "book_age_days": self.book_age_days,
+                "book_valuation_date": self.book_valuation_date,
                 "price_reference": self.price_reference,
                 "price_reference_date": self.price_reference_date,
                 "observed_ofz_in": dict(self.observed_ofz_in),
@@ -191,18 +199,33 @@ def _business_days(start: dt.date, end: dt.date) -> int:
                if (start + dt.timedelta(days=i + 1)).weekday() < 5)
 
 
+def book_market_date(A: dict) -> str:
+    """Дата рыночных входов книги, от которой считается её возраст.
+
+    `meta.curve_as_of` — дата кривых миров, а без ключа — `meta.valuation_date`
+    того же словаря (как у книг до 1.2). Плашка `book_update` говорит о свежести
+    рыночных входов книги: книга 1.2 сняла миры на 28.10.2026, а дата оценки и
+    цена книги остались 18.09.2026 — возраст от даты цены зажёг бы плашку о
+    «старой» книге на свежих мирах (решение ведущего 03.11.2026).
+    """
+    meta = A["meta"]
+    return str(meta.get("curve_as_of") or meta["valuation_date"])
+
+
 def apply_live_inputs(A: dict, store, *, today: dt.date | None = None) -> tuple[dict, LiveReport]:
     """Возвращает книгу с живыми входами и отчёт о том, что применилось."""
     A = copy.deepcopy(A)
     report = LiveReport()
     today = today or dt.date.today()
-    # Дата книги снимается ДО подстановки цены: та перепишет `valuation_date`
-    # датой котировки, и возраст книги стал бы нулём каждый день.
-    report.book_date = A["meta"]["valuation_date"]
+    # Даты книги снимаются ДО подстановки цены: та перепишет `valuation_date`
+    # датой котировки, и возраст книги стал бы нулём каждый день. Возраст — от
+    # даты рыночных входов (кривые миров), дата цены и суждений — отдельно.
+    report.book_date = book_market_date(A)
+    report.book_valuation_date = A["meta"]["valuation_date"]
     # Кривые миров остаются книжными: их дата записывается до того, как дата
     # оценки уйдёт на дату котировки (`model.core.curve_as_of`; перекат по
     # форвардам книги 1.5 меряет расстояние от неё).
-    A["meta"].setdefault("curve_as_of", report.book_date)
+    A["meta"].setdefault("curve_as_of", report.book_valuation_date)
     report.book_age_days = (today - dt.date.fromisoformat(report.book_date)).days
     # Прошлый выпуск — источник «последнего годного». Импорт отложенный:
     # `model.payload` тянет `model.engine`, а тот — этот модуль; круг
@@ -333,7 +356,7 @@ def _apply_price(A: dict, store, report: LiveReport, today: dt.date, previous: d
     reference, reference_stamp, source = _price_reference(A, previous)
     reference_date = _day(reference_stamp)
     report.price_reference, report.price_reference_date = reference, reference_stamp
-    book_date = dt.date.fromisoformat(report.book_date or A["meta"]["valuation_date"])
+    book_date = dt.date.fromisoformat(report.book_valuation_date or A["meta"]["valuation_date"])
     dated = f" от {reference_stamp[:10]}" if reference_stamp else ""
 
     def keep_last(reason: str) -> None:

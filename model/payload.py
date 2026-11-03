@@ -2950,10 +2950,11 @@ def release_gates(release: Release, slow: dict | None) -> tuple[list, list]:
 def _book_only_live(A: dict) -> dict:
     """Блок `live` выпуска на книжных входах (`--book-only`, тесты): те же поля,
     что у живого, с одной причиной деградации — витрина рисует плашку, а не пустоту."""
-    from model.live import LiveReport
+    from model.live import LiveReport, book_market_date
 
     report = LiveReport(degraded=["выпуск собран на книжных входах"])
-    report.book_date = A["meta"]["valuation_date"]
+    report.book_date = book_market_date(A)
+    report.book_valuation_date = A["meta"]["valuation_date"]
     report.price_reference = float(A["market"]["price"])
     report.price_reference_date = A["meta"]["valuation_date"]
     return report.as_dict()

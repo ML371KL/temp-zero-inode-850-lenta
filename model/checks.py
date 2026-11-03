@@ -520,7 +520,9 @@ def check_security_card(live) -> list[Finding]:
     if live is None:
         return []
     card = getattr(live, "security", None) or {}
-    book_date = str(getattr(live, "book_date", "") or "")
+    # Дата суждений книги (дата её цены), а не дата её кривых: книга 1.2 сменила
+    # только миры и дисконт за управление не пересматривала (`book_valuation_date`).
+    book_date = str(getattr(live, "book_valuation_date", "") or getattr(live, "book_date", "") or "")
     fresh = [c for c in card.get("changes") or [] if str(c.get("since", "")) > book_date]
     if not fresh:
         return []
