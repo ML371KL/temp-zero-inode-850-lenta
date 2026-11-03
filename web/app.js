@@ -2617,12 +2617,17 @@ function scoreboardLine(d) {
     return el("p", { class: "card-foot" }, "Табло «прогноз против факта» пусто: фактов после начала журнала ещё не было",
       retro && retro.first_exam ? ` — первая сверка с фактом ${fmt.dateLong(retro.first_exam)}.` : ".");
   }
+  // Отчёт без зачётного прогноза (прогноз записан позже момента зачёта) показывает
+  // последнее слово модели перед отчётом — сверку с фактом без зачёта.
+  const word = (r) => (!isNum(r.forecast) && r.last_word && isNum(r.last_word.value) ? r.last_word : null);
+  const days = (from, to) => Math.round((Date.parse(to.slice(0, 10)) - Date.parse(from.slice(0, 10))) / 864e5);
   return dataTable([
     { title: upperFirst(reportUnit(d).one), value: (r) => periodLabel(r.period), cls: "name" },
-    { title: "Прогноз", num: true, value: (r) => targetValue("margin", r.forecast) },
+    { title: "Прогноз", num: true, value: (r) => targetValue("margin", word(r) ? word(r).value : r.forecast) },
     { title: "Факт", num: true, value: (r) => targetValue("margin", r.actual) },
-    { title: "Ошибка", num: true, value: (r) => isNum(r.error) ? fmt.pp(r.error, 2) : "—" },
-    { title: "Горизонт, дн", num: true, value: (r) => isNum(r.forecast) && isNum(r.scoring_horizon_days) ? fmt.num(r.scoring_horizon_days) : "—" },
+    { title: "Ошибка", num: true, value: (r) => isNum(r.error) ? fmt.pp(r.error, 2) : word(r) && isNum(word(r).error) ? fmt.pp(word(r).error, 2) : "—" },
+    { title: "Горизонт, дн", num: true, value: (r) => isNum(r.forecast) && isNum(r.scoring_horizon_days) ? fmt.num(r.scoring_horizon_days)
+      : word(r) && word(r).made_at && r.reported_on ? `${fmt.num(days(word(r).made_at, r.reported_on))} · без зачёта` : "—" },
   ], rows, { cls: "compact" });
 }
 

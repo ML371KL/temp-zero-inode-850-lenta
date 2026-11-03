@@ -118,4 +118,22 @@ def test_the_calendar_gives_the_centre_and_the_end_of_the_window():
     assert ids[0] == issuer.series("q3_2026")
 
 
+def test_a_report_with_a_fact_in_the_journal_is_not_the_next_one_while_its_window_is_open():
+    """Отчёт за 3 кв. 2026 вышел 30.10 при окне до 03.11: после внесения факта
+    «до отчёта» считается до следующего (операционные 4 кв.), а не «−5 дней»."""
+    path = _FIXTURES / "calendar" / "calendar.json"
+    done = calendar.reported_ids([(issuer.series("ebitda_margin_pre16"), "2026Q3"),
+                                  (issuer.series("revenue_pre16"), "2026Q3")])
+    assert done == {issuer.series("q3_2026")}
+    assert calendar.next_fact(date(2026, 11, 3), path=path, done=done).id == \
+        issuer.series("q4_2026_ops")
+    assert issuer.series("q3_2026") not in [
+        e.id for e in calendar.upcoming(date(2026, 11, 3), path=path, done=done)]
+    # у 4 кв. два отчёта: выручка — операционными, маржа — годовым
+    assert calendar.reported_ids([(issuer.series("revenue_pre16"), "2026Q4")]) == {
+        issuer.series("q4_2026_ops")}
+    assert calendar.reported_ids([(issuer.series("ebitda_margin_pre16"), "2026Q4")]) == {
+        issuer.series("fy2026")}
+
+
 _FIXTURES = __import__("pathlib").Path(__file__).parent / "fixtures"

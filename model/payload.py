@@ -1014,7 +1014,8 @@ def _calendar_block(A: dict) -> dict:
     except ImportError:  # pragma: no cover
         return {}
     today = date.fromisoformat(A["meta"]["valuation_date"])
-    fact = cal.next_fact(today)
+    done = cal.reported_ids(_journal_actuals())
+    fact = cal.next_fact(today, done=done)
     return dict(
         today=today.isoformat(),
         # Окно даты (`earliest`–`latest`): у отчёта с точностью «окно» дату
@@ -1028,8 +1029,22 @@ def _calendar_block(A: dict) -> dict:
                      earliest=(e.window_from or e.when).isoformat(), latest=e.latest.isoformat(),
                      title=e.title, days=e.days_until(today),
                      gives=list(e.gives), prior_for=e.prior_for, note=e.note)
-                for e in cal.upcoming(today, limit=6)],
+                for e in cal.upcoming(today, limit=6, done=done)],
     )
+
+
+def _journal_actuals() -> list[tuple[str, str]]:
+    """(величина, период) фактов боевого журнала; журнала нет или он не читается — пусто."""
+    try:
+        import sqlite3
+        from contextlib import closing
+
+        from indicators.journal import Journal
+
+        with closing(sqlite3.connect(Journal().path)) as db:
+            return [(t, p) for t, p in db.execute("SELECT DISTINCT target, period FROM actuals")]
+    except Exception:  # noqa: BLE001 — календарь не роняет выпуск
+        return []
 
 
 # Единица значения суждения книги — правило ВИДА ЧИСЛА на экране, а не

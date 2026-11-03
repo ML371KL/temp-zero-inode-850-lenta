@@ -85,17 +85,42 @@ def _events_or_empty(path: Path | None = None) -> list[Event]:
         return []
 
 
-def upcoming(today: date, *, limit: int = 6, path: Path | None = None) -> list[Event]:
-    """Ближайшие события, ещё не прошедшие (окно ещё открыто)."""
-    return [event for event in _events_or_empty(path) if event.latest >= today][:limit]
+def upcoming(today: date, *, limit: int = 6, path: Path | None = None,
+             done: frozenset[str] = frozenset()) -> list[Event]:
+    """Ближайшие события, ещё не прошедшие (окно ещё открыто).
+
+    `done` — id отчётов, факт которых уже внесён в журнал (`reported_ids`):
+    вышедший отчёт не «ближайший», даже если окно календаря ещё открыто
+    (отчёт за 3 кв. 2026 вышел 30.10 при окне до 03.11 — экран считал
+    «−5 дней до отчёта», когда нау-каст уже перешёл на 4 кв.).
+    """
+    return [event for event in _events_or_empty(path)
+            if event.latest >= today and event.id not in done][:limit]
 
 
-def next_fact(today: date, *, path: Path | None = None) -> Event | None:
-    """Ближайший ОТЧЁТ эмитента — точка, относительно которой мерится опережение."""
+def next_fact(today: date, *, path: Path | None = None,
+              done: frozenset[str] = frozenset()) -> Event | None:
+    """Ближайший ОТЧЁТ эмитента — точка, относительно которой мерится опережение
+    (вышедшие — `done` — пропускаются, см. `upcoming`)."""
     for event in _events_or_empty(path):
-        if event.latest >= today and event.is_fact:
+        if event.latest >= today and event.is_fact and event.id not in done:
             return event
     return None
+
+
+def reported_ids(actuals: list[tuple[str, str]]) -> frozenset[str]:
+    """id отчётов календаря по внесённым фактам журнала [(величина, период)].
+
+    Отчёт определяется периодом и тем, что он даёт (`periods.report_id`): у
+    4 кв. выручка — операционные результаты, маржа — годовой отчёт.
+    """
+    out = set()
+    for target, period in actuals:
+        gives = periods.GIVES_REVENUE if target.endswith(".revenue_pre16") else periods.GIVES_MARGIN
+        rid = periods.report_id(period, gives)
+        if rid:
+            out.add(rid)
+    return frozenset(out)
 
 
 def report_dates(period: str, gives: str = periods.GIVES_MARGIN, *,
