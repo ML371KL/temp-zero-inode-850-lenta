@@ -102,8 +102,9 @@ def test_the_screen_shows_the_interest_channel(payload):
     """Прогноз процентов с эталоном рядом: прогноз без эталона нечем измерить."""
     interest = payload["nowcast"]["interest"]
     assert interest["net_interest"] > 0 and interest["naive"]
-    assert interest["debt_interest"] - interest["cash_income"] == pytest.approx(
-        interest["net_interest"], abs=0.05)
+    # строки карточки складываются: по долгу − доход на кассу + размотка моста (пут
+    # «Реми» сидит в строке датабука, с которой прогноз сверяется)
+    assert interest["debt_interest"] - interest["cash_income"] + interest["bridge_accretion"]         == pytest.approx(interest["net_interest"], abs=0.05)
     assert interest["opening_gross_debt"] > 0 and interest["redemptions_count"] >= 0
 
 
