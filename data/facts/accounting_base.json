@@ -13,6 +13,19 @@
   "hash_matches_manifest": true,
   "bytes": 1434226
  },
+ "later_quarters": {
+  "2026Q3": {
+   "id": "DATABOOK_Q3_2026",
+   "path": "Q32026_LENTA_DATABOOK_vF.xlsx",
+   "description": "Датабук компании за 3 кв. 2026 (IAS 17 и МСФО 16; кварталы 1кв2020–3кв2026, долг на 30.09.2026); опубликован 30.10.2026 — источник только квартала 2026Q3 (accounting_base.json → quarters); якорь и полугодия — датабук 2 кв.",
+   "sha256": "547dc9e41ee34417fab26c65efeec20a65a6dac33368fd51da0b0a71dac3b871",
+   "manifest_sha256": "547dc9e41ee34417fab26c65efeec20a65a6dac33368fd51da0b0a71dac3b871",
+   "manifest_url": "https://www.lentagroup.ru/upload/iblock/bc8/du3i7vw1mizz6nd8wn93twqkcoof53pc/Q32026_LENTA_DATABOOK_vF.xlsx",
+   "manifest_row": "Q32026_LENTA_DATABOOK_vF.xlsx",
+   "hash_matches_manifest": true,
+   "bytes": 1437275
+  }
+ },
  "src_convention": "«PL!AE10» — лист!ячейка датабука; для 2П: «FY − 1П» (kind: calc); сегменты полугодий — сумма кварталов листа Financials quarterly",
  "bases": {
   "ias17": "до МСФО 16 (управленческая с 2019; 2018 — аудированная IAS 17); база книги (D1)",
@@ -28121,6 +28134,308 @@
     "net_fcf": {
      "v": -0.02,
      "src": "Financials quarterly!BB85"
+    }
+   }
+  },
+  "2026Q3": {
+   "ias17": {
+    "revenue": {
+     "v": 359.321649,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB10"
+    },
+    "retail": {
+     "v": 356.122478,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB11"
+    },
+    "seg_hyper_db": {
+     "v": 175.614023,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB12"
+    },
+    "seg_super": {
+     "v": 35.488641,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB13"
+    },
+    "seg_convenience": {
+     "v": 109.464976,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB14"
+    },
+    "seg_utkonos": {
+     "v": 0.0,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB15"
+    },
+    "seg_droge": {
+     "v": 14.690427,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB16"
+    },
+    "seg_remi": {
+     "v": 13.609394,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB17"
+    },
+    "seg_diy": {
+     "v": 5.418199,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB18"
+    },
+    "seg_other_formats": {
+     "v": 1.836818,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB19"
+    },
+    "wholesale": {
+     "v": 3.199171,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB20"
+    },
+    "cogs": {
+     "v": -279.564649,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB21"
+    },
+    "gross_profit": {
+     "v": 79.757,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB22"
+    },
+    "sga": {
+     "v": -70.896,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB25"
+    },
+    "staff": {
+     "v": -31.179,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB27"
+    },
+    "da": {
+     "v": -8.999,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB28"
+    },
+    "lease_expense": {
+     "v": -12.737,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB29"
+    },
+    "utilities": {
+     "v": -4.398,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB30"
+    },
+    "store_operations": {
+     "v": -3.721,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB31"
+    },
+    "professional_fees": {
+     "v": -2.798,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB32"
+    },
+    "advertising": {
+     "v": -3.004,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB33"
+    },
+    "sga_other": {
+     "v": -4.06,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB34"
+    },
+    "ebitdar": {
+     "v": 34.801,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB36"
+    },
+    "ebitda": {
+     "v": 22.064,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB39"
+    },
+    "opbi": {
+     "v": 13.065,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB42"
+    },
+    "ebit": {
+     "v": 12.906,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB45"
+    },
+    "net_interest": {
+     "v": -5.09,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB47"
+    },
+    "fx": {
+     "v": -0.148,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB48"
+    },
+    "pbt": {
+     "v": 7.668,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB49"
+    },
+    "income_tax": {
+     "v": -1.92,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB50"
+    },
+    "net_income": {
+     "v": 5.748,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB51"
+    },
+    "d_nwc": {
+     "v": -5.237,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB79"
+    },
+    "cash_generated": {
+     "v": 16.726,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB80"
+    },
+    "interest_tax_paid": {
+     "v": -6.406,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB81"
+    },
+    "net_ocf": {
+     "v": 10.32,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB82"
+    },
+    "net_icf": {
+     "v": -15.108,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB83"
+    },
+    "net_fcf": {
+     "v": -1.252,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!AB84"
+    }
+   },
+   "ifrs16": {
+    "revenue": {
+     "v": 359.322,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD10"
+    },
+    "retail": {
+     "v": 356.122478,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD11"
+    },
+    "seg_hyper_db": {
+     "v": 175.614023,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD12"
+    },
+    "seg_super": {
+     "v": 35.488641,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD13"
+    },
+    "seg_convenience": {
+     "v": 109.464976,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD14"
+    },
+    "seg_utkonos": {
+     "v": 0.0,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD15"
+    },
+    "seg_droge": {
+     "v": 14.690427,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD16"
+    },
+    "seg_remi": {
+     "v": 13.609394,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD17"
+    },
+    "seg_diy": {
+     "v": 5.418199,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD18"
+    },
+    "seg_other_formats": {
+     "v": 1.836818,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD19"
+    },
+    "wholesale": {
+     "v": 3.199171,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD20"
+    },
+    "cogs": {
+     "v": -279.427,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD21"
+    },
+    "gross_profit": {
+     "v": 79.895,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD22"
+    },
+    "sga": {
+     "v": -65.272,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD25"
+    },
+    "staff": {
+     "v": -31.179,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD27"
+    },
+    "da": {
+     "v": -14.431,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD28"
+    },
+    "lease_expense": {
+     "v": -1.681,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD29"
+    },
+    "utilities": {
+     "v": -4.398,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD30"
+    },
+    "store_operations": {
+     "v": -3.721,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD31"
+    },
+    "professional_fees": {
+     "v": -2.798,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD32"
+    },
+    "advertising": {
+     "v": -3.004,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD33"
+    },
+    "sga_other": {
+     "v": -4.06,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD34"
+    },
+    "ebitdar": {
+     "v": 35.013,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD36"
+    },
+    "ebitda": {
+     "v": 33.332,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD39"
+    },
+    "opbi": {
+     "v": 18.903,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD42"
+    },
+    "ebit": {
+     "v": 18.743,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD45"
+    },
+    "net_interest": {
+     "v": -11.775,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD47"
+    },
+    "fx": {
+     "v": -0.175,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD48"
+    },
+    "pbt": {
+     "v": 6.793,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD49"
+    },
+    "income_tax": {
+     "v": -1.676,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD50"
+    },
+    "net_income": {
+     "v": 5.117,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD51"
+    },
+    "d_nwc": {
+     "v": -5.414,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD79"
+    },
+    "cash_generated": {
+     "v": 27.741,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD80"
+    },
+    "interest_tax_paid": {
+     "v": -13.099,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD81"
+    },
+    "net_ocf": {
+     "v": 14.642,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD82"
+    },
+    "net_icf": {
+     "v": -14.997,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD83"
+    },
+    "net_fcf": {
+     "v": -5.685,
+     "src": "DATABOOK_Q3_2026:Financials quarterly!BD84"
     }
    }
   }

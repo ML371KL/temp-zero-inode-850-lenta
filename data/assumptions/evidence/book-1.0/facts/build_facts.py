@@ -34,6 +34,7 @@ def log(msg: str):
 # =========================================================================== документы
 DOCS = OrderedDict([
     ("DATABOOK_Q2_2026", ("Lenta_Q22026_DATABOOK.xlsx", "Датабук компании за 2 кв. 2026 (IAS 17 и МСФО 16, полугодия 2010–1П2026, кварталы 1кв2020–2кв2026, долг, операционные данные); опубликован 03.08.2026")),
+    ("DATABOOK_Q3_2026", ("Q32026_LENTA_DATABOOK_vF.xlsx", "Датабук компании за 3 кв. 2026 (IAS 17 и МСФО 16; кварталы 1кв2020–3кв2026, долг на 30.09.2026); опубликован 30.10.2026 — источник только квартала 2026Q3 (accounting_base.json → quarters); якорь и полугодия — датабук 2 кв.")),
     ("IFRS_1H2026", ("ifrs_mkpao/ifrs_1H2026.pdf", "Обобщённая промежуточная сокращённая КФО МСФО за 6М2026, обзор ООО «Б1 – Аудит», утверждена СД 31.07.2026")),
     ("IFRS_FY2025", ("ifrs_mkpao/ifrs_FY2025.pdf", "Обобщённая годовая КФО МСФО за 2025, аудит")),
     ("IFRS_1H2025", ("ifrs_mkpao/ifrs_1H2025.pdf", "Обобщённая промежуточная КФО МСФО за 6М2025")),
@@ -449,7 +450,10 @@ FQ_LINES = [
     ("Net cash used in financing activities", "net_fcf"),
 ]
 HALVES = [f"{y}H{h}" for y in range(2018, 2027) for h in (1, 2)][:-1]      # 2018H1..2026H1
-QUARTERS = [f"{y}Q{q}" for y in range(2020, 2027) for q in (1, 2, 3, 4)][:-2]  # 2020Q1..2026Q2
+QUARTERS = [f"{y}Q{q}" for y in range(2020, 2027) for q in (1, 2, 3, 4)][:-1]  # 2020Q1..2026Q3
+# Кварталы после якоря 30.06.2026 — из датабука своего отчёта (якорь, полугодия и баланс — датабук 2 кв.):
+# {квартал: документ}. Прежние кварталы новый датабук не переписывает — расхождения печатаются в лог.
+LATER_QUARTERS = {"2026Q3": "DATABOOK_Q3_2026"}
 BS_DATES = {f"{y}H1": f"{y}-06-30" for y in range(2018, 2027)} | {f"FY{y}": f"{y}-12-31" for y in range(2017, 2026)}
 
 
@@ -734,6 +738,21 @@ def main():
                 x["lease_expense"] = {"v": r6(x["lease_premises"]["v"] + x["lease_land_equipment"]["v"]),
                                       "src": f"{x['lease_premises']['src']} + {x['lease_land_equipment']['src']}", "kind": "calc"}
     halves = {p: halves[p] for p in HALVES if p in halves}
+    for doc_id in sorted(set(LATER_QUARTERS.values())):
+        wb_later = openpyxl.load_workbook(P / doc_path(doc_id), data_only=True)
+        fq_later = Sheet(wb_later["Financials quarterly"], scale=1e-3)
+        for basis in ("ias17", "ifrs16"):
+            later = quarterly(fq_later, basis)
+            for q, rec in later.items():
+                if LATER_QUARTERS.get(q) == doc_id:
+                    quarters.setdefault(q, {})[basis] = {
+                        k: dict(v, src=f"{doc_id}:{v['src']}") for k, v in rec.items()}
+                    continue
+                old = quarters.get(q, {}).get(basis, {})
+                for k, v in rec.items():
+                    if k in old and old[k]["v"] is not None and v["v"] is not None                             and abs(old[k]["v"] - v["v"]) > 5e-4:
+                        log(f"[quarters] {doc_id} {q} {basis} {k}: {v['v']} против {old[k]['v']} "
+                            "(прежний датабук оставлен)")
     quarters = {q: quarters[q] for q in QUARTERS if q in quarters}
     debt_hist = debt_sheet(wb["Debt"])
     ops = operating(wb["Operating Results"])
@@ -792,6 +811,7 @@ def main():
         ("generated_by", "evidence/book-1.0/facts/build_facts.py"),
         ("unit", "млрд ₽ (из тыс. ₽ датабука ×1e-6; квартальный лист — из млн ₽ ×1e-3); знак как в отчётности: расходы и оттоки отрицательные"),
         ("source_doc", {"id": "DATABOOK_Q2_2026", **sources["DATABOOK_Q2_2026"]}),
+        ("later_quarters", {q: {"id": d, **sources[d]} for q, d in LATER_QUARTERS.items()}),
         ("src_convention", "«PL!AE10» — лист!ячейка датабука; для 2П: «FY − 1П» (kind: calc); сегменты полугодий — сумма кварталов листа Financials quarterly"),
         ("bases", {"ias17": "до МСФО 16 (управленческая с 2019; 2018 — аудированная IAS 17); база книги (D1)",
                    "ifrs16": "отчётная МСФО 16 с 2019; для 2018 блока нет (МСФО 16 применён с 01.01.2019 без пересчёта)"}),
