@@ -1,0 +1,471 @@
+{
+ "book_version": "1.2",
+ "sweep": {
+  "first_day": "2026-09-18",
+  "last_day": "2027-06-30",
+  "days": 286
+ },
+ "masses": {
+  "ev_ebitda": {
+   "mass": 0.5176,
+   "range": [
+    0.4888,
+    0.54
+   ]
+  },
+  "guidance_gap": {
+   "mass": 1.0,
+   "range": [
+    1.0,
+    1.0
+   ]
+  },
+  "terminal_share": {
+   "mass": 0.0315,
+   "range": [
+    0.0315,
+    0.0539
+   ]
+  }
+ },
+ "fired": [
+  "ev_ebitda",
+  "guidance_gap",
+  "terminal_share"
+ ],
+ "fired_any": [
+  "ev_ebitda",
+  "guidance_gap",
+  "terminal_share"
+ ],
+ "r_real": {
+  "N": 0.0749653846153846,
+  "H": 0.09475260663507123,
+  "M": 0.08625249772933707
+ },
+ "cells": {
+  "N|stress|low": {
+   "probability": 0.045325,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.32760321532906544,
+   "equity": 267.8681359059532,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.298726876127703
+  },
+  "N|stress|base": {
+   "probability": 0.06475,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.23711457057306293,
+   "equity": 143.52000929911017,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.124851411272189
+  },
+  "N|stress|high": {
+   "probability": 0.019425,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.11955606631271096,
+   "equity": 42.48828083849663,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.342093669280315
+  },
+  "N|floor|low": {
+   "probability": 0.0224,
+   "ev_ebitda_ltm": 9.681250946867449,
+   "terminal_share": 0.5257589308465683,
+   "equity": 671.9324316965156,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.701640120342143
+  },
+  "N|floor|base": {
+   "probability": 0.0672,
+   "ev_ebitda_ltm": 7.557417572028958,
+   "terminal_share": 0.5075178538098049,
+   "equity": 494.8042889831913,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.560263205526554
+  },
+  "N|floor|high": {
+   "probability": 0.0224,
+   "ev_ebitda_ltm": 5.923937476611149,
+   "terminal_share": 0.5090925820949684,
+   "equity": 357.80958488453075,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.450679247032882
+  },
+  "N|partial|low": {
+   "probability": 0.0154,
+   "ev_ebitda_ltm": 11.244592241162154,
+   "terminal_share": 0.5246453860988002,
+   "equity": 801.4649168796262,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.848065030186638
+  },
+  "N|partial|base": {
+   "probability": 0.0462,
+   "ev_ebitda_ltm": 9.09211330933159,
+   "terminal_share": 0.5092063735797929,
+   "equity": 621.9664989727366,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.731143149637012
+  },
+  "N|partial|high": {
+   "probability": 0.0154,
+   "ev_ebitda_ltm": 7.454158946459956,
+   "terminal_share": 0.5109741414406672,
+   "equity": 484.5964633529486,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.607010732887208
+  },
+  "N|full|low": {
+   "probability": 0.004725,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.5923608974773854,
+   "equity": 1234.7597842787195,
+   "r_real": 0.0749653846153846,
+   "cover_min": 5.089319685654762
+  },
+  "N|full|base": {
+   "probability": 0.0189,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.5897182656367702,
+   "equity": 1041.9545673713214,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.9645363760306624
+  },
+  "N|full|high": {
+   "probability": 0.007875,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.5994561966977219,
+   "equity": 893.8877070980957,
+   "r_real": 0.0749653846153846,
+   "cover_min": 4.865617626109656
+  },
+  "H|stress|low": {
+   "probability": 0.058275,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.2763283143089304,
+   "equity": 221.9077916069258,
+   "r_real": 0.09475260663507123,
+   "cover_min": 3.567036349036492
+  },
+  "H|stress|base": {
+   "probability": 0.08325,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.20536188746501582,
+   "equity": 119.78514808344862,
+   "r_real": 0.09475260663507123,
+   "cover_min": 3.467609454538229
+  },
+  "H|stress|high": {
+   "probability": 0.024975,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.1251176383579956,
+   "equity": 34.249762538393206,
+   "r_real": 0.09475260663507123,
+   "cover_min": 3.341877083628927
+  },
+  "H|floor|low": {
+   "probability": 0.028800000000000006,
+   "ev_ebitda_ltm": 7.533316783679705,
+   "terminal_share": 0.42258288752582046,
+   "equity": 495.0818089766474,
+   "r_real": 0.09475260663507123,
+   "cover_min": 3.9107803527936005
+  },
+  "H|floor|base": {
+   "probability": 0.0864,
+   "ev_ebitda_ltm": 6.000906479330577,
+   "terminal_share": 0.4038560471902051,
+   "equity": 366.79518671022333,
+   "r_real": 0.09475260663507123,
+   "cover_min": 3.7888386177374485
+  },
+  "H|floor|high": {
+   "probability": 0.028800000000000006,
+   "ev_ebitda_ltm": 4.774431316841192,
+   "terminal_share": 0.4036138434683799,
+   "equity": 263.4138577218525,
+   "r_real": 0.09475260663507123,
+   "cover_min": 3.691878544737667
+  },
+  "H|partial|low": {
+   "probability": 0.0198,
+   "ev_ebitda_ltm": 8.703077847786671,
+   "terminal_share": 0.4240976227656202,
+   "equity": 592.1140347392313,
+   "r_real": 0.09475260663507123,
+   "cover_min": 4.032982781048045
+  },
+  "H|partial|base": {
+   "probability": 0.0594,
+   "ev_ebitda_ltm": 7.150513266650528,
+   "terminal_share": 0.4085377649812699,
+   "equity": 462.15832449280407,
+   "r_real": 0.09475260663507123,
+   "cover_min": 3.9312987897619696
+  },
+  "H|partial|high": {
+   "probability": 0.0198,
+   "ev_ebitda_ltm": 5.921421686752467,
+   "terminal_share": 0.4094799456949147,
+   "equity": 358.5550996085995,
+   "r_real": 0.09475260663507123,
+   "cover_min": 3.824472452643034
+  },
+  "H|full|low": {
+   "probability": 0.006075,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.48590589938450984,
+   "equity": 874.0723448518954,
+   "r_real": 0.09475260663507123,
+   "cover_min": 4.2281368252939
+  },
+  "H|full|base": {
+   "probability": 0.0243,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.4817035857713437,
+   "equity": 736.074561232985,
+   "r_real": 0.09475260663507123,
+   "cover_min": 4.122507955992049
+  },
+  "H|full|high": {
+   "probability": 0.010125,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.4903118214830023,
+   "equity": 625.6513541920071,
+   "r_real": 0.09475260663507123,
+   "cover_min": 4.036706367123226
+  },
+  "M|stress|low": {
+   "probability": 0.025899999999999996,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.30951993671040084,
+   "equity": 260.328369403646,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.3291739401884928
+  },
+  "M|stress|base": {
+   "probability": 0.037,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.23116586222311947,
+   "equity": 143.2537133313217,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.232508835189574
+  },
+  "M|stress|high": {
+   "probability": 0.011099999999999999,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.13885961076685427,
+   "equity": 47.41602690323134,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.1638303622558666
+  },
+  "M|floor|low": {
+   "probability": 0.0128,
+   "ev_ebitda_ltm": 7.99537175081604,
+   "terminal_share": 0.42423048566526594,
+   "equity": 534.6038160619082,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.6203287056429945
+  },
+  "M|floor|base": {
+   "probability": 0.0384,
+   "ev_ebitda_ltm": 6.463523004760066,
+   "terminal_share": 0.4038324149372787,
+   "equity": 406.37814958516066,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.527066525463175
+  },
+  "M|floor|high": {
+   "probability": 0.0128,
+   "ev_ebitda_ltm": 5.262954916905011,
+   "terminal_share": 0.4006044079837107,
+   "equity": 305.151208600951,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.4409500378910636
+  },
+  "M|partial|low": {
+   "probability": 0.0088,
+   "ev_ebitda_ltm": 9.151851049183179,
+   "terminal_share": 0.42833772036988826,
+   "equity": 630.5376556384507,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.768623376565378
+  },
+  "M|partial|base": {
+   "probability": 0.026400000000000003,
+   "ev_ebitda_ltm": 7.61826708121409,
+   "terminal_share": 0.41197778374567817,
+   "equity": 502.16388912342086,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.6601169543889496
+  },
+  "M|partial|high": {
+   "probability": 0.0088,
+   "ev_ebitda_ltm": 6.422805668155744,
+   "terminal_share": 0.41091050208876034,
+   "equity": 401.3528252985567,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.5636451249077443
+  },
+  "M|full|low": {
+   "probability": 0.0026999999999999997,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.4972122113946295,
+   "equity": 924.9773993883488,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.950090392040279
+  },
+  "M|full|base": {
+   "probability": 0.010799999999999999,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.49297823492030973,
+   "equity": 790.0677261282711,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.8271627412176215
+  },
+  "M|full|high": {
+   "probability": 0.0045,
+   "ev_ebitda_ltm": null,
+   "terminal_share": 0.5000232946229045,
+   "equity": 680.0835811946442,
+   "r_real": 0.08625249772933707,
+   "cover_min": 3.7433326474707
+  }
+ },
+ "equity_min": {
+  "value": 34.249762538393206,
+  "cell": "H|stress|high"
+ },
+ "cover_min": {
+  "value": 3.1638303622558666,
+  "cell": "M|stress|high"
+ },
+ "ev_ebitda": {
+  "cells": [
+   "H|floor|base",
+   "H|floor|high",
+   "H|floor|low",
+   "H|partial|base",
+   "H|partial|high",
+   "H|partial|low",
+   "M|floor|base",
+   "M|floor|high",
+   "M|floor|low",
+   "M|partial|base",
+   "M|partial|high",
+   "M|partial|low",
+   "N|floor|base",
+   "N|floor|low",
+   "N|partial|base",
+   "N|partial|high",
+   "N|partial|low"
+  ],
+  "count": 17,
+  "of": 18,
+  "inside": [
+   "N|floor|high"
+  ],
+  "span": {
+   "N": [
+    7.454158946459956,
+    11.244592241162154
+   ],
+   "H": [
+    4.774431316841192,
+    8.703077847786671
+   ],
+   "M": [
+    5.262954916905011,
+    9.151851049183179
+   ]
+  },
+  "max_mass": 0.54,
+  "max_from": "2027-03-01",
+  "max_count": 18,
+  "max_added": [
+   "N|floor|high"
+  ],
+  "min_mass": 0.4888,
+  "min_day": "2027-01-01",
+  "min_count": 16,
+  "min_days": 1,
+  "min_removed": [
+   "H|floor|high"
+  ]
+ },
+ "terminal_share": {
+  "cells": [
+   "N|full|base",
+   "N|full|high",
+   "N|full|low"
+  ],
+  "count": 3,
+  "span": [
+   0.5897182656367702,
+   0.5994561966977219
+  ],
+  "worlds": [
+   "N"
+  ],
+  "floor_partial": [
+   0.5075178538098049,
+   0.5257589308465683
+  ],
+  "drift": {
+   "from": "2026-12-27",
+   "to": "2027-01-10",
+   "mass": 0.0539,
+   "count": 4,
+   "added": [
+    "N|floor|low"
+   ]
+  },
+  "min_cell": "N|stress|high",
+  "min": 0.11955606631271096
+ },
+ "capex_range": {
+  "min": 0.01761456099574065,
+  "min_period": "2036H2",
+  "min_cell": "M|full|low",
+  "max": 0.05012799619110497,
+  "max_period": "2026H2",
+  "max_cell": "N|floor|high"
+ },
+ "margin_range": {
+  "min": {
+   "value": 0.051751,
+   "period": "2029H1",
+   "cell": [
+    "H|stress",
+    "M|stress",
+    "N|stress"
+   ],
+   "target": 0.0542
+  },
+  "max": {
+   "value": 0.07939999850463866,
+   "period": "2036H2",
+   "cell": [
+    "H|full",
+    "M|full",
+    "N|full"
+   ],
+   "target": 0.077
+  }
+ },
+ "limited_liability": {
+  "v0": [
+   537.9419688926829,
+   551.8735206710032
+  ],
+  "d": [
+   136.26487813170723,
+   137.13159697682335
+  ],
+  "v0_to_d": [
+   3.937347064876778,
+   4.024408180444916
+  ]
+ }
+}

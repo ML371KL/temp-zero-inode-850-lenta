@@ -4,55 +4,48 @@
 
 Правило — функция `f(ctx) -> {"file": путь, "values": {ключ: число}, "decimals": {ключ: знаков}}`; `ctx` — контекст
 движка (`ctx.root` — корень дерева, `ctx.record` — запись миров, `ctx.yaml(rel)` — YAML дерева). Числа, которые здесь
-считаются, в книге и объяснениях не пишутся руками: сторож `tests/test_worlds_dependents.py` (через
-`adopt_worlds.py --check`) сверяет их с файлом.
+считаются, в книге не пишутся руками: сторож `tests/test_worlds_dependents.py` (через `adopt_worlds.py --check`)
+сверяет их с файлом.
 
-Числа книги, выведенные на мирах, у «Ленты» — только массы гейтов (`gate_explanations.yaml`): масса на дату книги и
-коридор дрейфа = развёртка гейтов (`evidence/book-<версия>/gates/gate_sweep.py`). Суждения (веса A-P1m, лист «Сеть»,
-дисконт за управление A-V7, пробы тестов) правилами не пересчитываются — `worlds_dependents.yaml`, раздел `judgement`.
+  governance   дисконт за управление g (A-V7) и каналы (а), (б), (г), (ж) — неподвижная точка листа пересчёта
+               `evidence/book-1.0/valuation/governance_fixed_point.py` на печатаемой медиане таблиц книги; пишется
+               всегда, без порога, при смене версии миров (шаг манифеста `when: change`).
+
+Числа объяснений гейтов (массы на дату книги, коридоры дрейфа, составы клеток) — не правило, а выход
+`ops/tools/gate_numbers.py` и шаблон `gate_explanations.tpl` (шаг `gate-texts` команды).
 """
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
-import yaml
-
-EXPLANATIONS = "data/assumptions/gate_explanations.yaml"
 TEMPLATE = "data/assumptions/assumptions_template.yaml"
-ND = 4                         # знаков массы в объяснениях (как печатает сводка развёртки)
+FIXED_POINT = "data/assumptions/evidence/book-1.0/valuation/out/governance_fixed_point.json"
+ND = 5                          # знаков g и каналов (как у листа «Оценка»)
+CHANNELS = ("а", "б", "г", "ж")  # каналы, которые зависят от капитала модели при медиане (остальные — константы листа)
 
 
 class RuleStop(Exception):
     """Правило не может дать число без суждения: команда останавливается."""
 
 
-def sweep_path(root: Path) -> Path:
-    version = yaml.safe_load((root / TEMPLATE).read_text(encoding="utf-8"))["meta"]["version"]
-    return root / "data" / "assumptions" / "evidence" / f"book-{version}" / "gates" / "out" / "gate_sweep.json"
-
-
-def gate_masses(ctx) -> dict:
-    """Масса гейта на дату книги → `expected_mass`; минимум и максимум развёртки → `expected_mass_range` (у гейтов,
-    где он есть). Гейт без объяснения или блокирующая находка на какой-нибудь дате развёртки — стоп: это суждение."""
-    path = sweep_path(ctx.root)
-    sweep = json.loads(path.read_text(encoding="utf-8"))
-    summary = path.with_suffix(".txt").read_text(encoding="utf-8")
-    line = next((ln for ln in summary.splitlines() if ln.startswith("Блокирующие находки")), "")
-    if not line.endswith("нет ни на одной дате."):
-        raise RuleStop(f"развёртка гейтов: {line or 'нет строки блокирующих находок'} — суждение")
-    expl = ctx.yaml(EXPLANATIONS)
-    at_book = sweep["book_date"]["gates"]
-    values, decimals = {}, {}
-    for key, g in at_book.items():
-        e = expl.get(key)
-        if not isinstance(e, dict):
-            raise RuleStop(f"гейт {key} сработал на дате книги, а объяснения нет — суждение")
-        if isinstance(e.get("expected_mass"), (int, float)):
-            values[f"{key}.expected_mass"] = round(g["mass"], ND)
-        if isinstance(e.get("expected_mass_range"), list):
-            masses = [r["gates"].get(key, {}).get("mass", 0.0) for r in sweep["by_day"]]
-            values[f"{key}.expected_mass_range.0"] = round(min(masses), ND)
-            values[f"{key}.expected_mass_range.1"] = round(max(masses), ND)
-    decimals = {k: ND for k in values}
-    return {"file": EXPLANATIONS, "values": values, "decimals": decimals}
+def governance(ctx) -> dict:
+    """g книги = центр листа пересчёта на медиане таблиц (`out/governance_fixed_point.json`, его пишет шаг листа перед
+    правилом); каналы шаблона (а), (б), (г), (ж) — его же. Канал листа без строки шаблона или строка без канала — стоп."""
+    fp = json.loads((ctx.root / FIXED_POINT).read_text(encoding="utf-8"))
+    tpl = ctx.yaml(TEMPLATE)
+    comps = tpl["valuation"]["governance_components"]
+    by_id = {c["id"]: c for c in fp["channels"]}
+    values = {"valuation.governance_discount": float(fp["g"])}
+    for i, comp in enumerate(comps):
+        cid = str(comp["name"])[1]                       # «(а) …» → «а»
+        if cid not in by_id:
+            raise RuleStop(f"канал {comp['name'][:20]!r} шаблона не в листе пересчёта")
+        if cid in CHANNELS:
+            values[("valuation", "governance_components", str(i), "value")] = float(by_id[cid]["value"])
+        elif abs(float(comp["value"]) - float(by_id[cid]["value"])) > 1e-12:
+            raise RuleStop(f"канал ({cid}) шаблона {comp['value']} ≠ листу {by_id[cid]['value']} — суждение листа «Оценка»")
+    total = sum(float(c["sign"]) * (values.get(("valuation", "governance_components", str(i), "value"), float(c["value"])))
+                for i, c in enumerate(comps))
+    if abs(total - float(fp["g"])) > 1e-9:
+        raise RuleStop(f"Σ каналов {total:.6f} ≠ g листа {fp['g']} (центр — медиана Монте-Карло, а не сумма: скошенность (ж))")
+    return {"file": TEMPLATE, "values": values, "decimals": {k: ND for k in values}}

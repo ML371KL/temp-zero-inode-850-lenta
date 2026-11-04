@@ -483,6 +483,9 @@ def test_the_governance_centre_is_the_mc_median_of_model_equity_channels(A):
     from model.book import governance_on_850oa_scope
 
     sheet = _evidence("valuation/out/governance_out.json")
+    if (EVIDENCE / "valuation/out/governance_fixed_point.json").exists():   # приём миров пересчитал неподвижную точку g
+        fp = _evidence("valuation/out/governance_fixed_point.json")         # на медиане книги: лист книги — пересчёт
+        sheet = {**sheet, "channels": fp["channels"], "result": fp["result"]}
     parts = {p["name"][1]: p for p in A["valuation"]["governance_components"]}
     for ch in sheet["channels"]:
         assert parts[ch["id"]]["value"] == pytest.approx(ch["value"], abs=1e-12), ch["id"]

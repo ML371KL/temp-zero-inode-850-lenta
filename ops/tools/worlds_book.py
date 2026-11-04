@@ -119,8 +119,9 @@ def bump() -> int:
         f"({entry['title']}; запись `{entry['record']['sha256'][:8]}…`, снимок {ru(entry['record']['curve_date'])}). "
         f"Листы пишет команда приёма `ops/tools/adopt_worlds.py --version {wv}` по манифесту "
         f"`data/assumptions/worlds_dependents.yaml`:\n\n"
-        f"- `gates/` — развёртка масс гейтов по датам оценки (копия листа книги {old}); массы объяснений "
-        f"`gate_explanations.yaml` — правило `ops/tools/worlds_rules.py:gate_masses`;\n"
+        f"- `gates/` — развёртка масс гейтов по датам оценки (копия листа книги {old}); числа объяснений "
+        f"`gate_explanations.yaml` (массы, коридоры дрейфа, составы клеток) — `ops/tools/gate_numbers.py` и шаблон "
+        f"`gate_explanations.tpl` (шаг `gate-texts` команды);\n"
         f"- `walk/` — прогулка книги {old} → {new} (`ops/tools/worlds_book.py walk`).\n",
         encoding="utf-8", newline="\n")
     print(f"книга {old} → {new} ({today}); лист гейтов {dst.relative_to(ROOT).as_posix()}")

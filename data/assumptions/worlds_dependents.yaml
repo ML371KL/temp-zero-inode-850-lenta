@@ -87,11 +87,50 @@ steps:
     title: "таблицы книги: results.json, run_output.txt (полоса 2 000, зерно книги)"
     cmd: ["{python}", "-B", "-m", "model.book_results"]
     timeout: 10800
+
+  # ---------------------------------------------------------------- дисконт за управление g (A-V7), только при смене версии
+  # Каналы (а), (б), (г) — доли капитала модели при печатаемой медиане: g — неподвижная точка листа пересчёта на медиане
+  # таблиц; пишется всегда, без порога (решение владельца 05.11.2026), книга и таблицы — заново на новом g.
+  - id: governance-sheet
+    kind: run
+    when: change
+    title: "лист пересчёта g на печатаемой медиане таблиц (evidence/book-1.0/valuation/out/governance_fixed_point.json)"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/book-1.0/valuation/governance_fixed_point.py", "--write"]
+  - id: governance
+    kind: rule
+    when: change
+    title: "g и каналы (а), (б), (г), (ж) шаблона = лист пересчёта"
+    module: ops/tools/worlds_rules.py
+    function: governance
+    comments_flag: false               # в комментарии ключа — правило и диапазон оси, не числа неподвижной точки
+  - id: build-g
+    kind: run
+    when: change
+    title: "машинная книга на новом g"
+    cmd: ["{python}", "-B", "data/assumptions/build_assumptions.py"]
+  - id: tables-g
+    kind: run
+    when: change
+    title: "таблицы книги на новом g (полоса 2 000, зерно книги)"
+    cmd: ["{python}", "-B", "-m", "model.book_results"]
+    timeout: 10800
+  - id: governance-check
+    kind: run
+    when: change
+    title: "g на медиане новых таблиц тот же — неподвижная точка (иначе стоп)"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/book-1.0/valuation/governance_fixed_point.py", "--check"]
+
   - id: table-numbers
     kind: numbers
     title: "числа книги из таблиц: точка, медиана, печать, низ, верх, миры"
     cmd: ["{python}", "-B", "ops/tools/worlds_book.py", "quick", "--out", "var/adopt/quick.json"]
     file: var/adopt/quick.json
+  - id: worlds-text
+    kind: marks
+    title: "таблица миров и числа миров раздела 2 книги — запись {version}; g и каналы A-V7 — лист пересчёта"
+    sources: {rec: data/assumptions/worlds_source.json, book: data/assumptions/assumptions.yaml,
+              gv: data/assumptions/evidence/book-1.0/valuation/out/governance_fixed_point.json}
+    files: [data/assumptions/ASSUMPTIONS-BOOK.md]
 
   # ---------------------------------------------------------------- гейты
   - id: gate-sweep
@@ -105,12 +144,16 @@ steps:
     file: data/assumptions/evidence/book-{book.version}/gates/out/gate_sweep.json
     path: book_date.gates
     flag: mass
-  - id: gate-masses
-    kind: rule
-    title: "массы объяснений гейтов: на дату книги и коридор дрейфа = развёртка"
-    module: ops/tools/worlds_rules.py
-    function: gate_masses
-    comments_flag: false
+  - id: gate-texts
+    kind: gate_texts
+    title: "объяснения гейтов: слова шаблона gate_explanations.tpl, числа — развёртка, таблицы, книга (массы и коридоры дрейфа — развёртка)"
+    cmd: ["{python}", "-B", "ops/tools/gate_numbers.py"]
+    template: data/assumptions/gate_explanations.tpl
+    file: data/assumptions/gate_explanations.yaml
+    sources: {g: data/assumptions/gate_numbers.json, res: data/assumptions/results.json,
+              tpl: data/assumptions/assumptions_template.yaml, book: data/assumptions/assumptions.yaml,
+              rec: data/assumptions/worlds_source.json}
+    fired: {source: g, path: fired}
 
   # ---------------------------------------------------------------- прогулка и журналы (только при смене версии)
   - id: walk
@@ -139,7 +182,7 @@ steps:
 
           **Печатаемое число — медиана ≈<!--=headline.printed_central r0-->…<!--/--> ₽** (точная <!--=headline.central r1-->…<!--/-->; книга {book.from_version} — {n.median_before}, печать {n.print_before}); полоса 80 % <!--=headline.printed_band[0] r0-->…<!--/-->–<!--=headline.printed_band[1] r0-->…<!--/--> ₽. Точка при центральных значениях <!--=fair_value.central r1-->…<!--/--> ₽ (было {n.point_before}), ось ставок <!--=fair_value.low r1-->…<!--/-->–<!--=fair_value.high r1-->…<!--/--> ₽ (было {n.low_before}–{n.high_before}).
 
-          Разложение — прогулка `evidence/book-{book.version}/walk/out/walk.txt`; гейты по датам — `evidence/book-{book.version}/gates/out/gate_sweep.txt` (массы объяснений — правилом `ops/tools/worlds_rules.py:gate_masses`); тексты объяснений гейтов, раздел 2 книги и суждения (A-P1m, A-V7) — просмотр ведущего.
+          Разложение — прогулка `evidence/book-{book.version}/walk/out/walk.txt`; гейты по датам — `evidence/book-{book.version}/gates/out/gate_sweep.txt` (числа объяснений — `ops/tools/gate_numbers.py`, шаблон `gate_explanations.tpl`); g (A-V7) — неподвижная точка листа `evidence/book-1.0/valuation/governance_fixed_point.py` на медиане таблиц; слова объяснений гейтов, проза раздела 2 книги и суждения (A-P1m) — просмотр ведущего.
       - file: docs/CHANGELOG.md
         before: "## "
         text: |
@@ -177,8 +220,8 @@ readers:
 # Числа, которые зависят от миров, но правилом не пересчитываются: суждение (просмотр ведущего при приёме).
 judgement:
   joint.world_prob_market_implied: "A-P1m 10/25/65 — суждение; контроль results.json → checks.market_implied_10y"
-  valuation.governance_discount: "A-V7, неподвижная точка g на медиане (в 1.2: 0,06415 → 0,06413 не записано) — открытый вопрос: правило записи не установлено"
-  gate_explanations.yaml (тексты): "числа текстов объяснений (EV/EBITDA клеток, доли терминала, r_u, V0) — по gate_sweep.txt руками"
+  valuation.governance_components (basis): "строки basis каналов — слова листа «Оценка» на его кадре (медиана ≈3 131 ₽); числа каналов и g — шаг governance (лист пересчёта)"
+  gate_explanations.tpl: "слова объяснений и состав, на котором они писались (#= состав), — ведущий; числа без поля в таблицах — словами шаблона: V0 против V* +55–70 %, путь EBITDA 104–128 и маржа 6,2–7,0 %, набор неблагоприятных концов ≈1 600 ₽, аналоги 2,8–3,7×, ожидания модели guidance_gap (6,19 / 6,68 / 6,16 %, 777,2 млрд)"
   tests/test_median_diagnostics.py (OUTSIDE_MARKET): "проба «рынок за низом оси» — окно считается, точку внутри выбирает человек"
   tests/test_gates_and_blocking.py (наборы клеток): "наборы клеток гейтов в тестах — зеркало текста объяснений"
-  ASSUMPTIONS-BOOK.md §2: "таблицы миров раздела 2 (A-M1…A-M6) — числами, не метками"
+  ASSUMPTIONS-BOOK.md §2: "проза раздела 2 (факты записи, даты окна, дневной π_ss, книга 1.1) — слова ведущего; таблица миров, кривые, r_u, π — метки шага worlds-text"
