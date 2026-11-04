@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import copy
 import datetime as dt
+import json
 from types import SimpleNamespace
 
 import pytest
@@ -21,9 +22,17 @@ from indicators.store import Store
 from model.book import book
 from model.checks import check_book_is_current, check_security_card
 from model.live import apply_live_inputs, book_market_date
+from model.paths import BOOK_DIR
 from tests.test_ofz_in import _price
 
 pytestmark = [pytest.mark.tact, pytest.mark.needs_book]
+
+
+def _curve_date() -> dt.date:
+    """Дата снимка записи миров книги — из состояния приёма миров (`worlds_state.json`, пишет
+    `ops/tools/adopt_worlds.py`), а не литералом: новая версия миров не роняет тест такта."""
+    state = json.loads((BOOK_DIR / "worlds_state.json").read_text(encoding="utf-8"))
+    return dt.date.fromisoformat(state["curve_date"])
 
 
 def _without_curve_date(A: dict) -> dict:
@@ -40,34 +49,36 @@ def test_the_market_date_is_the_curve_date_and_without_the_key_the_valuation_dat
 
 def test_the_age_of_a_book_with_a_curve_date_counts_from_it(tmp_path):
     A = book()
+    curve, today = _curve_date(), _curve_date() + dt.timedelta(days=6)
     store = Store(tmp_path / "state")
-    _price(store, "2026-11-03")
-    B, report = apply_live_inputs(A, store, today=dt.date(2026, 11, 3))
-    assert report.book_date == A["meta"]["curve_as_of"] == "2026-10-28"
+    _price(store, today.isoformat())
+    B, report = apply_live_inputs(A, store, today=today)
+    assert report.book_date == A["meta"]["curve_as_of"] == curve.isoformat()
     assert report.book_age_days == 6
     assert report.book_valuation_date == A["meta"]["valuation_date"] == "2026-09-18"
-    assert B["meta"]["curve_as_of"] == "2026-10-28", "кривые миров — книжные"
-    assert B["meta"]["valuation_date"] == "2026-11-03", "дата оценки — дата котировки"
+    assert B["meta"]["curve_as_of"] == curve.isoformat(), "кривые миров — книжные"
+    assert B["meta"]["valuation_date"] == today.isoformat(), "дата оценки — дата котировки"
     assert report.as_dict()["book_valuation_date"] == "2026-09-18"
 
 
 def test_the_age_of_a_book_without_the_key_counts_as_before(tmp_path):
     A = _without_curve_date(book())
+    today = _curve_date() + dt.timedelta(days=6)
     store = Store(tmp_path / "state")
-    _price(store, "2026-11-03")
-    B, report = apply_live_inputs(A, store, today=dt.date(2026, 11, 3))
+    _price(store, today.isoformat())
+    B, report = apply_live_inputs(A, store, today=today)
     assert report.book_date == report.book_valuation_date == "2026-09-18"
-    assert report.book_age_days == 46
+    assert report.book_age_days == (today - dt.date(2026, 9, 18)).days
     assert B["meta"]["curve_as_of"] == "2026-09-18", "без ключа кривые — на дату книги, как раньше"
 
 
 def test_the_gate_counts_and_names_the_curve_date():
-    A = book()
-    young = SimpleNamespace(curve_shift={}, book_age_days=6, book_date="2026-10-28")
+    A, curve = book(), _curve_date()
+    young = SimpleNamespace(curve_shift={}, book_age_days=6, book_date=curve.isoformat())
     assert check_book_is_current(A, young) == []
-    old = SimpleNamespace(curve_shift={}, book_age_days=53, book_date="2026-10-28")
+    old = SimpleNamespace(curve_shift={}, book_age_days=53, book_date=curve.isoformat())
     [finding] = check_book_is_current(A, old)
-    assert finding.key == "book_update" and "откалибрована 28.10.2026 — 53 дней назад" in finding.message
+    assert finding.key == "book_update" and f"откалибрована {curve:%d.%m.%Y} — 53 дней назад" in finding.message
 
 
 def test_the_listing_card_still_counts_from_the_valuation_date():

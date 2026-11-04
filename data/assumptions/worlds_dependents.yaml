@@ -1,0 +1,184 @@
+# Манифест приёма миров ставок семейства 850 — книга «Ленты» (команда ops/tools/adopt_worlds.py).
+#
+# Что из версии миров копируется в дерево, какие ключи книги пишутся из индекса источника, какие числа зависят от
+# миров и каким правилом книги пересчитываются, какие команды пересобирают книгу, таблицы, листы, тексты и журналы.
+# Правится руками вместе с кодом книги; на какой версии стоит книга — data/assumptions/worlds_state.json (пишет
+# команда). Сторож tests/test_worlds_dependents.py: каждый лист и инструмент, читающий миры, назван здесь в `readers`;
+# правила манифеста на мирах книги дают числа файлов (adopt_worlds.py --check).
+#
+# Шаги `when: change` идут только при смене версии миров (номер книги, заморозка журнала, прогулка, журналы): на книге,
+# уже стоящей на версии, прогон — неподвижная точка (машинная книга, таблицы и листы бит в бит, дифф дерева пуст).
+schema: worlds-dependents-v1
+model: lenta
+title: "Лента 850"
+book_gen: "«Ленты»"                      # имя книги в описании рецепта (<<book_gen>>)
+print_step: 50                           # шаг печати медианы на витрине, ₽ (valuation.headline.print_step)
+stop: {median_print_steps: 2}            # сдвиг медианы больше двух шагов печати — красный флаг
+workers_env: [LENTA_WORKERS]
+workers: 2                               # общая машина: тяжёлые прогоны — два процесса
+git_identity: {name: ML371KL, email: "304002195+ML371KL@users.noreply.github.com"}
+record: data/assumptions/worlds_source.json
+template: data/assumptions/assumptions_template.yaml
+
+steps:
+  # ---------------------------------------------------------------- файлы версии
+  - id: record
+    kind: install
+    title: "запись миров {version} побайтово (CRLF), рецепт, входы со своей строкой 1, описание рецепта"
+    files:
+      - {src: record/worlds_source.json, dst: data/assumptions/worlds_source.json}
+      - {src: record/worlds_source.csv, dst: data/assumptions/worlds_source.csv}
+      - {src: recipe/worlds_recipe.py, dst: data/assumptions/worlds_recipe.py}
+      - src: inputs/worlds_inputs.yaml
+        dst: data/assumptions/worlds_inputs.yaml
+        verify: body
+        keep_lines: [1]
+        own_lines: {1: "# Входы записи для сборки макро-миров — книга-источник (850oa) (WORLDS-RECIPE.md); копия общей записи {record.curve_date_ru} (версия миров {version}) для книги «Ленты» (D6)."}
+      # Описание рецепта: общий документ версии, свои строки «Ленты» — 3 (что лежит в этом репозитории), 57 и 72
+      # (где у «Ленты» эффекты и зарплаты; общий текст говорит о банках). Номера строк — документа версии 1.7:
+      # если документ новой версии сдвинет строки, `verify: result` не поймает — сверить дифф описания глазами.
+      - src: doc/WORLDS-RECIPE.md
+        dst: data/assumptions/WORLDS-RECIPE.md
+        verify: result
+        subst: {"<<book_gen>>": "{book_gen}"}
+        keep_lines: [3, 57, 72]
+        own_lines: {3: "> В этом репозитории — копия общей записи миров {record.curve_date_ru} (версия миров {version}) для книги «Ленты» (DESIGN D6): `worlds_source.json` и `worlds_source.csv` — побайтово, рецепт и входы — функционально те же (`python -B worlds_recipe.py --check` воспроизводит запись). Номера версий ниже (1.3.1, 1.4, 1.5, 1.7) — версии книги-источника (850oa); пути листов `evidence/book-1.x/` — её листы; эффекты пересборок на заголовок книги-источника здесь не приводятся."}
+  - id: bump
+    kind: run
+    when: change
+    title: "номер книги {book.from_version} → младший разряд + 1; шапка шаблона; лист гейтов новой версии"
+    cmd: ["{python}", "-B", "ops/tools/worlds_book.py", "bump"]
+  - id: state
+    kind: state
+    title: "состояние: книга на мирах {version}"
+  - id: recipe-check
+    kind: run
+    title: "рецепт воспроизводит запись {version}"
+    cmd: ["{python}", "-B", "data/assumptions/worlds_recipe.py", "--check"]
+  - id: refresh-check
+    kind: run
+    title: "запись строго согласована с рецептом и входами (refresh_worlds --check)"
+    cmd: ["{python}", "-B", "ops/tools/refresh_worlds.py", "--check"]
+
+  # ---------------------------------------------------------------- ключи происхождения
+  - id: provenance
+    kind: set
+    title: "шаблон: дата кривых миров = дата снимка записи {version}"
+    file: data/assumptions/assumptions_template.yaml
+    values:
+      meta.curve_as_of: "{record.curve_date}"
+  - id: freeze
+    kind: run
+    when: change
+    title: "журнал прежней версии книги {book.from_version} заморожен (метки → текст)"
+    cmd: ["{python}", "-B", "ops/tools/render_numbers.py", "--freeze", "data/assumptions/V{book.from_version}-CHANGES.md"]
+
+  # ---------------------------------------------------------------- сборка и таблицы
+  - id: build
+    kind: run
+    title: "машинная книга из шаблона и записи (LT — блок curve_lt, π — lt_inflation)"
+    cmd: ["{python}", "-B", "data/assumptions/build_assumptions.py"]
+  - id: fast
+    kind: run
+    title: "проба книги: выпуск на книжных входах, инварианты, гейты на дату книги"
+    cmd: ["{python}", "-B", "-m", "model.book_results", "--fast"]
+  - id: tables
+    kind: run
+    title: "таблицы книги: results.json, run_output.txt (полоса 2 000, зерно книги)"
+    cmd: ["{python}", "-B", "-m", "model.book_results"]
+    timeout: 10800
+  - id: quick
+    kind: quick
+    title: "числа книги из таблиц: точка, медиана, печать, низ, верх, миры"
+    cmd: ["{python}", "-B", "ops/tools/worlds_book.py", "quick", "--out", "var/adopt/quick.json"]
+    out: var/adopt/quick.json
+
+  # ---------------------------------------------------------------- гейты
+  - id: gate-sweep
+    kind: run
+    title: "развёртка гейтов по датам оценки (лист книги {book.version})"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/book-{book.version}/gates/gate_sweep.py"]
+    timeout: 7200
+  - id: gates
+    kind: gates
+    title: "гейты на дату книги"
+    file: data/assumptions/evidence/book-{book.version}/gates/out/gate_sweep.json
+    path: book_date.gates
+    flag: mass
+  - id: gate-masses
+    kind: rule
+    title: "массы объяснений гейтов: на дату книги и коридор дрейфа = развёртка"
+    module: ops/tools/worlds_rules.py
+    function: gate_masses
+    comments_flag: false
+
+  # ---------------------------------------------------------------- прогулка и журналы (только при смене версии)
+  - id: walk
+    kind: run
+    when: change
+    title: "прогулка книги {book.from_version} → {book.version}: номер, мир M с датой кривых, миры N и H (точка)"
+    cmd: ["{python}", "-B", "ops/tools/worlds_book.py", "walk"]
+  - id: walk-median
+    kind: run
+    when: change
+    title: "прогулка с медианой полосы на каждом шаге (тяжёлый: ≈5 полос)"
+    cmd: ["{python}", "-B", "ops/tools/worlds_book.py", "walk", "--median"]
+    timeout: 21600
+  - id: journal
+    kind: journal
+    when: change
+    title: "журнал версии {book.version} и запись истории"
+    entries:
+      - file: data/assumptions/V{book.version}-CHANGES.md
+        text: |
+          # Книга допущений LENT: журнал версии {book.version}
+
+          Дата: {today_ru}. Тег: `book-{book.version}` (ставится после выкладки). Журнал прежней версии — `V{book.from_version}-CHANGES.md` (заморожен: его числа — текст).
+
+          **Суждения, факты, цена и мост не менялись.** Версия {book.version} — миры ставок {version} общего источника семейства 850 ({labels.walk_step}): запись `worlds_source.json` sha256 `{record.sha256}`, снимок {record.curve_date_ru}; принята командой `ops/tools/adopt_worlds.py --version {version}` (манифест `worlds_dependents.yaml`). Дата кривых книги `meta.curve_as_of` — {record.curve_date}.
+
+          **Печатаемое число — медиана ≈<!--=headline.printed_central r0-->…<!--/--> ₽** (точная <!--=headline.central r1-->…<!--/-->; книга {book.from_version} — {n.median_before}, печать {n.print_before}); полоса 80 % <!--=headline.printed_band[0] r0-->…<!--/-->–<!--=headline.printed_band[1] r0-->…<!--/--> ₽. Точка при центральных значениях <!--=fair_value.central r1-->…<!--/--> ₽ (было {n.point_before}), ось ставок <!--=fair_value.low r1-->…<!--/-->–<!--=fair_value.high r1-->…<!--/--> ₽ (было {n.low_before}–{n.high_before}).
+
+          Разложение — прогулка `evidence/book-{book.version}/walk/out/walk.txt`; гейты по датам — `evidence/book-{book.version}/gates/out/gate_sweep.txt` (массы объяснений — правилом `ops/tools/worlds_rules.py:gate_masses`); тексты объяснений гейтов, раздел 2 книги и суждения (A-P1m, A-V7) — просмотр ведущего.
+      - file: docs/CHANGELOG.md
+        before: "## "
+        text: |
+          ## Книга {book.version}: миры ставок {version} ({today_ru})
+
+          Приём версии миров {version} командой `ops/tools/adopt_worlds.py --version {version}` (журнал версии — `data/assumptions/V{book.version}-CHANGES.md`). Запись `{record.sha256}` (снимок {record.curve_date_ru}), `meta.curve_as_of` — {record.curve_date}; суждения, факты, цена и мост — книги {book.from_version}. Медиана {n.median_before} → {n.median_after} ₽ (печать {n.print_before} → {n.print_after}), точка {n.point_before} → {n.point_after} ₽.
+
+  # ---------------------------------------------------------------- тексты и сторож
+  - id: render
+    kind: run
+    title: "числа документов метками из results.json"
+    cmd: ["{python}", "-B", "ops/tools/render_numbers.py"]
+  - id: render-check
+    kind: run
+    title: "документы равны перерисовке"
+    cmd: ["{python}", "-B", "ops/tools/render_numbers.py", "--check"]
+  - id: guard
+    kind: run
+    title: "сторож: книга стоит на версии состояния, читатели миров названы"
+    cmd: ["{python}", "-B", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_worlds_dependents.py"]
+
+# Листы и инструменты, которые читают запись миров или её копии (сторож сверяет список с деревом). step — шаг
+# манифеста, который их запускает; пусто — не запускается при приёме (почему — в note).
+readers:
+  data/assumptions/build_assumptions.py: {step: build}
+  data/assumptions/worlds_recipe.py: {step: recipe-check}
+  ops/tools/refresh_worlds.py: {step: refresh-check}
+  ops/tools/adopt_worlds.py: {step: ""}
+  ops/tools/worlds_book.py: {step: walk}
+  data/assumptions/evidence/book-1.2/worlds/worlds_tables.py: {step: "", note: "таблицы раздела 2 книги 1.2 против книги 1.1 (BASE_COMMIT 62f858a) — лист версии 1.2, заморожен"}
+  data/assumptions/evidence/book-1.2/worlds/quick.py: {step: "", note: "быстрые числа этапа 1 книги 1.2 (окно Магнита, выпуск 26.10) — лист версии 1.2, заморожен"}
+  data/assumptions/evidence/book-1.0/worlds-calendar/worlds_check.py: {step: "", note: "календарь миров записи 1.4 (папка передачи) — лист книги 1.0, заморожен"}
+  data/assumptions/evidence/book-1.0/network/revsim.py: {step: "", note: "суждения листа «Сеть» на мирах записи 1.4 литералами — суждение версии 1.0, с мирами не пересчитывается"}
+
+# Числа, которые зависят от миров, но правилом не пересчитываются: суждение (просмотр ведущего при приёме).
+judgement:
+  joint.world_prob_market_implied: "A-P1m 10/25/65 — суждение; контроль results.json → checks.market_implied_10y"
+  valuation.governance_discount: "A-V7, неподвижная точка g на медиане (в 1.2: 0,06415 → 0,06413 не записано) — открытый вопрос: правило записи не установлено"
+  gate_explanations.yaml (тексты): "числа текстов объяснений (EV/EBITDA клеток, доли терминала, r_u, V0) — по gate_sweep.txt руками"
+  tests/test_median_diagnostics.py (OUTSIDE_MARKET): "проба «рынок за низом оси» — окно считается, точку внутри выбирает человек"
+  tests/test_gates_and_blocking.py (наборы клеток): "наборы клеток гейтов в тестах — зеркало текста объяснений"
+  ASSUMPTIONS-BOOK.md §2: "таблицы миров раздела 2 (A-M1…A-M6) — числами, не метками"

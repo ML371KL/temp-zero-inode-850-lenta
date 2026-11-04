@@ -51,7 +51,9 @@ def test_the_book_loads_and_is_version_one_point_two(A):
     """Версия 1.2 — миры ставок после решения Банка России 23.10.2026 (запись
     28.10.2026); суждения 1.0 и четыре правила расчёта по внешнему аудиту
     30.09.2026 (версия 1.1), каждое включено ключом книги (умолчания ключей — версия 1.0)."""
-    assert A["meta"]["version"] == "1.2"
+    assert f"V{A['meta']['version']}-CHANGES.md" == max(
+        (p.name for p in BOOK_DIR.glob("V*-CHANGES.md")),
+        key=lambda name: tuple(int(x) for x in name[1:-len("-CHANGES.md")].split("."))), "журнал текущей версии"
     assert A["meta"]["company"] == {"name": "Лента", "ticker": "LENT"}
     assert A["valuation"]["headline"]["method"] == "intrinsic"
     assert A["valuation"]["uncertainty"]["axis_merge"] == "add"
@@ -61,13 +63,15 @@ def test_the_book_loads_and_is_version_one_point_two(A):
 
 
 def test_the_world_record_is_stored_byte_for_byte():
-    """D6, решение ведущего F35: `worlds_source.json` — sha256 1e905cb7… (запись
-    28.10.2026, книга 1.2; до неё — 7296567d…, запись 18.09.2026) на ХРАНИМЫХ
-    байтах (не после нормализации переводов строк), `.csv` — тот же канон записи;
+    """D6, решение ведущего F35: `worlds_source.json` и `.csv` — побайтовые копии
+    записи версии миров книги: sha256 на ХРАНИМЫХ байтах (не после нормализации
+    переводов строк) = хэшам состояния `worlds_state.json` (их пишет команда приёма
+    `ops/tools/adopt_worlds.py` по индексу общего источника миров);
     `.gitattributes` снимает с обоих преобразование текста."""
+    state = json.loads((BOOK_DIR / "worlds_state.json").read_text(encoding="utf-8"))
     data = (BOOK_DIR / "worlds_source.json").read_bytes()
-    assert hashlib.sha256(data).hexdigest().startswith("1e905cb7")
-    assert hashlib.sha256((BOOK_DIR / "worlds_source.csv").read_bytes()).hexdigest().startswith("5fc8e86b")
+    assert hashlib.sha256(data).hexdigest() == state["record_sha256"]
+    assert hashlib.sha256((BOOK_DIR / "worlds_source.csv").read_bytes()).hexdigest() == state["record_csv_sha256"]
     # Канон записан с переводами строк CRLF — поэтому и нужен `-text`: git с
     # `text=auto eol=lf` превратил бы их в LF и сменил sha256.
     assert b"\r\n" in data

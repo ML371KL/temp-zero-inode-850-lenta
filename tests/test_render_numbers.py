@@ -19,13 +19,17 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 FIX = "python ops/tools/render_numbers.py"
+# Журналы версий книги по номеру: метки несёт журнал текущей версии, прежние заморожены (номер новой версии и
+# заморозку прежнего журнала делает команда приёма миров `ops/tools/adopt_worlds.py` — списки не правятся руками).
+_JOURNALS = sorted((p.name for p in (ROOT / "data" / "assumptions").glob("V*-CHANGES.md")),
+                   key=lambda name: tuple(int(x) for x in name[1:-len("-CHANGES.md")].split(".")))
 PLACEHOLDER = "⟨ядро⟩"
 # Документы, которые печатают числа результатов книги метками: книга и журнал
 # ТЕКУЩЕЙ версии, обзор, методика, витрина, решения и справочник. Документ,
 # потерявший все метки (число вписали руками), выпадает из обхода
 # `documents()` молча — этот список ловит именно это.
 MARKED_DOCUMENTS = (
-    "data/assumptions/ASSUMPTIONS-BOOK.md", "data/assumptions/V1.2-CHANGES.md", "README.md",
+    "data/assumptions/ASSUMPTIONS-BOOK.md", f"data/assumptions/{_JOURNALS[-1]}", "README.md",
     "docs/MODEL.md", "docs/DASHBOARD.md", "docs/DECISIONS.md", "docs/MANUAL.md",
 )
 # Документы истории: журналы прежних версий книги и датированная история правок.
@@ -33,7 +37,7 @@ MARKED_DOCUMENTS = (
 # (до 06.10.2026 так были размечены журнал 1.0 и запись истории от 30.09.2026).
 # Перед пересчётом таблиц новой версии журнал прежней замораживается
 # (`render_numbers.py --freeze`), в датированных записях числа пишутся без меток.
-FROZEN_DOCUMENTS = ("data/assumptions/V1.0-CHANGES.md", "data/assumptions/V1.1-CHANGES.md", "docs/CHANGELOG.md")
+FROZEN_DOCUMENTS = tuple(f"data/assumptions/{name}" for name in _JOURNALS[:-1]) + ("docs/CHANGELOG.md",)
 # Тексты, где доля оси в полосе A-V9 называется «вклад» (доля квадрата ранговой
 # корреляции оси с центром), а не «дисперсия» (внешний аудит 30.09.2026, S01).
 CONTRIBUTION_DOCUMENTS = (
@@ -236,7 +240,7 @@ def test_history_documents_carry_no_live_marks(tool):
         text = (ROOT / name).read_text(encoding="utf-8")
         assert tool.freeze(text) == text, f"{name}: метки в документе истории — `{FIX} --freeze {name}`"
     marked = {path.relative_to(ROOT).as_posix() for path, _ in tool.documents()}
-    journals = sorted(p.name for p in (ROOT / "data" / "assumptions").glob("V*-CHANGES.md"))
+    journals = _JOURNALS
     current = [name for name in journals if f"data/assumptions/{name}" in marked]
     assert current == [journals[-1]], f"метки несёт только журнал текущей версии: {current} из {journals}"
 

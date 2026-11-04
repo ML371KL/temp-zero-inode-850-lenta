@@ -60,12 +60,13 @@ def test_the_curve_date_and_the_terminal_level_come_from_the_record():
     `curve_lt` записи (без него N/H остались бы на 9,0 / 12,7)."""
     A = book()
     record = json.loads(RECORD.read_text(encoding="utf-8"))
-    assert A["meta"]["curve_as_of"] == record["m_inflation"]["curve_date"] == record["asof"] == "2026-10-28"
+    state = json.loads((BOOK_DIR / "worlds_state.json").read_text(encoding="utf-8"))
+    assert A["meta"]["curve_as_of"] == record["m_inflation"]["curve_date"] == record["asof"] == state["curve_date"]
     assert A["meta"]["valuation_date"] == "2026-09-18", "цена и дата оценки книги — версии 1.1"
     for world in ("N", "H", "M"):
         assert A["worlds"][world]["zero_curve"]["LT"] == pytest.approx(record["curve_lt"][world] / 100.0, abs=1e-12)
         assert A["worlds"][world]["lt"]["inflation"] == pytest.approx(record["lt_inflation"][world] / 100.0, abs=1e-12)
-    assert record["curve_lt"] == {"N": 8.9, "H": 12.6, "M": 16.7}
+    assert set(record["curve_lt"]) == {"N", "H", "M"}, "запись без блока curve_lt — уровень терминала не по правилу"
 
 
 def test_the_walk_starts_in_book_1_1_and_ends_in_the_tables_of_the_book(walk):
