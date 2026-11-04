@@ -51,9 +51,10 @@ def test_the_book_loads_and_is_version_one_point_two(A):
     """Версия 1.2 — миры ставок после решения Банка России 23.10.2026 (запись
     28.10.2026); суждения 1.0 и четыре правила расчёта по внешнему аудиту
     30.09.2026 (версия 1.1), каждое включено ключом книги (умолчания ключей — версия 1.0)."""
-    assert f"V{A['meta']['version']}-CHANGES.md" == max(
-        (p.name for p in BOOK_DIR.glob("V*-CHANGES.md")),
-        key=lambda name: tuple(int(x) for x in name[1:-len("-CHANGES.md")].split("."))), "журнал текущей версии"
+    # Номер книги — не литерал: его пишет команда приёма миров (ops/tools/adopt_worlds.py, младший разряд + 1);
+    # таблицы книги несут тот же номер (их свежесть — tests/test_book_regression.py).
+    results = json.loads((BOOK_DIR / "results.json").read_text(encoding="utf-8"))
+    assert A["meta"]["version"] == results["book_version"]
     assert A["meta"]["company"] == {"name": "Лента", "ticker": "LENT"}
     assert A["valuation"]["headline"]["method"] == "intrinsic"
     assert A["valuation"]["uncertainty"]["axis_merge"] == "add"
