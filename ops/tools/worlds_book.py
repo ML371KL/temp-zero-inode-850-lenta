@@ -149,11 +149,16 @@ def walk(median: bool, draws: int | None) -> int:
     steps.append({"name": f"{label}, мир M: рынок и дата кривых {ru(str(A1['meta']['curve_as_of']))}",
                   "from_end": ["worlds.M", "meta.curve_as_of"]})
     steps.append({"name": f"{label}, миры N и H", "from_end": ["worlds.N", "worlds.H"]})
+    g0, g1 = A0["valuation"]["governance_discount"], A1["valuation"]["governance_discount"]
+    if g0 != g1:                                     # шаг манифеста governance: неподвижная точка g на медиане книги
+        steps.append({"name": f"Дисконт за управление g (A-V7): неподвижная точка на медиане книги {v1} — "
+                              f"{100 * g0:.3f} → {100 * g1:.3f} %".replace(".", ","),
+                      "from_end": ["valuation.governance_discount", "valuation.governance_components"]})
     wdir = EVIDENCE / f"book-{v1}" / "walk"
     (wdir / "out").mkdir(parents=True, exist_ok=True)
     head = (f"# Прогулка книги {v0} → {v1}: правки по одной, накопительно (ops/tools/walk_book.py).\n"
             f"# Шаги пишет ops/tools/worlds_book.py walk (команда приёма миров {wv}): номер версии, мир M с датой кривых,\n"
-            f"# миры N и H; суждения, факты, цена и мост не меняются.\n")
+            f"# миры N и H, дисконт за управление g (неподвижная точка на медиане); суждения, факты, цена и мост не меняются.\n")
     (wdir / "steps.yaml").write_text(head + yaml.safe_dump(steps, allow_unicode=True, sort_keys=False, width=1000),
                                      encoding="utf-8", newline="\n")
     cmd = [sys.executable, "-B", str(ROOT / "ops" / "tools" / "walk_book.py"), "--start", str(var / "walk-start.yaml"),
