@@ -49,10 +49,11 @@ RETRY_STATUS = (408, 425, 429, 500, 502, 503, 504)
 
 # Хост → файл сертификатов, которым он доверяется ВДОБАВОК к обычному
 # хранилищу (файл — в `indicators/tls/`, происхождение и отпечатки — в шапке
-# файла и в тесте). У 850oa так доверялся Росстат (корень Минцифры); сборщиков
-# с таким хостом здесь пока нет, механизм оставлен.
+# файла и в тесте tests/test_tls.py). С 23.11.2026 iss.moex.com отдаёт цепочку
+# «Russian Trusted Sub CA ← Root CA» (Минцифры), корня которой в хранилище сервера
+# нет: 24.11 утренний сбор упал на moex_curve/moex_quote. Доверие — только ему.
 TLS_DIR = Path(__file__).resolve().parent / "tls"
-EXTRA_CA: dict[str, Path] = {}
+EXTRA_CA: dict[str, Path] = {"iss.moex.com": TLS_DIR / "russian_trusted_ca.pem"}
 
 _last_call: dict[str, float] = {}
 
